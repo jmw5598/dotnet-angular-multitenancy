@@ -1,14 +1,17 @@
 import { createAction, props } from "@ngrx/store";
+import { Credentials, AuthenticatedUser, ResponseMessage } from "@xyz/office/modules/core/models";
 
 export const authenticateUserRequest = createAction(
   '[Authentication] Authenticate User Request',
-  props<{ username: string, password: string }>()
+  props<{ credentials: Credentials }>()
 );
 
 export const authenticateUserSuccess = createAction(
-  '[Authentication] Authenticate User Success'
+  '[Authentication] Authenticate User Success',
+  props<{ authenticatedUser: AuthenticatedUser }>()
 );
 
 export const authenticateUserFailure = createAction(
-  '[Authentication] Authenticate User Failure'
+  '[Authentication] Authenticate User Failure',
+  props<{ message: ResponseMessage }>()
 );

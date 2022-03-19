@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthenticatedGuard } from '@xyz/office/modules/authentication/guards';
+
 const routes: Routes = [
   {
     path: 'auth',
@@ -9,6 +11,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [AuthenticatedGuard],
     loadChildren: () => 
       import('./modules/application/application.module').then(m => m.ApplicationModule)
   },
