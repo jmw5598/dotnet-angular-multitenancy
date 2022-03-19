@@ -33,10 +33,19 @@ export class LoginComponent implements OnInit {
   }
 
   public loginUser(credentials: Credentials): void {
-    if (this.loginForm.invalid) return;
-    this._store.dispatch(fromAuthentication.authenticateUserFailure({ message: { status: ResponseStatus.ERROR, message: 'Invalid username/password!'}}));
-    // this._store.dispatch(
-    //   fromAuthentication.authenticateUserRequest({ credentials })
-    // )
+    if (this.loginForm.valid) {
+      console.log('submit', this.loginForm.value);
+      this._store.dispatch(fromAuthentication.authenticateUserFailure({ message: { status: ResponseStatus.ERROR, message: 'Invalid username/password!'}}));
+      // this._store.dispatch(
+      //   fromAuthentication.authenticateUserRequest({ credentials })
+      // )
+    } else {
+      Object.values(this.loginForm.controls).forEach(control => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+        }
+      });
+    }
   }
 }
