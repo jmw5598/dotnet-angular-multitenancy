@@ -31,4 +31,12 @@ export const passwordResetRequestFailure = createAction(
   props<{ message: ResponseMessage }>()
 );
 
+export const logoutUserRequest = createAction(
+  '[Authentication] Logout User Request'
+);
+
+export const logoutUserSuccess = createAction(
+  '[Authentication] Logout User Success'
+);
+
 // @TODO actions to actually do the reset and success/failure for that action

@@ -1,5 +1,4 @@
-import { Action, ActionType, createReducer, on } from "@ngrx/store";
-import { OnReducer } from "@ngrx/store/src/reducer_creator";
+import { createReducer, on } from "@ngrx/store";
 import { AuthenticatedUser, ResponseMessage } from "../../core/models";
 
 import * as fromAuthentication from './authentication.actions';
@@ -34,6 +33,13 @@ const handlePasswordResetRequestResponse = (state: AuthenticationState, { messag
   passwordResetRequestResponseMessage: message
 } as AuthenticationState);
 
+const handleLogoutUserSuccess = (state: AuthenticationState) => ({
+  ...state,
+  authenticatedUser: null,
+  loginResponseMessage: null,
+  passwordResetRequestResponseMessage: null
+} as AuthenticationState);
+
 export const reducer = createReducer(
   initialAuthenticationState,
   on(fromAuthentication.loginUserSuccess, handleLoginUserSuccess),
@@ -42,4 +48,5 @@ export const reducer = createReducer(
     fromAuthentication.passwordResetRequestSuccess, 
     fromAuthentication.passwordResetRequestFailure, 
     handlePasswordResetRequestResponse),
+  on(fromAuthentication.logoutUserSuccess, handleLogoutUserSuccess),
 );

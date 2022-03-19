@@ -1,88 +1,61 @@
 <nz-layout nzTheme="light">
-      <nz-sider nzCollapsible nzWidth="200px" nzTheme="light">
-        <div class="logo"></div>
-        <ul nz-menu nzTheme="light" nzMode="inline">
+  <nz-sider nzCollapsible nzWidth="200px" nzTheme="light">
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-menu-item>
+        <i nz-icon nzType="pie-chart"></i>
+        <span>Option 1</span>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="desktop"></i>
+        <span>Option 2</span>
+      </li>
+      <li nz-submenu nzTitle="User" nzIcon="user">
+        <ul>
+          <li nz-menu-item>Tom</li>
+          <li nz-menu-item>Bill</li>
+          <li nz-menu-item>Alex</li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="Team" nzIcon="team">
+        <ul>
+          <li nz-menu-item>Team 1</li>
+          <li nz-menu-item>Team 2</li>
+        </ul>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="file"></i>
+        <span>File</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="flex flex-row justify-content-end align-items-center">
+      <nz-avatar
+          class="mr-4"
+          nz-dropdown 
+          [nzDropdownMenu]="menu" 
+          [nzShape]="'circle'" 
+          [nzSize]="'large'" 
+          [nzIcon]="'user'"
+          nzPlacement="bottomRight">
+      </nz-avatar>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
           <li nz-menu-item>
-            <i nz-icon nzType="pie-chart"></i>
-            <span>Option 1</span>
-          </li>
-          <li nz-menu-item>
-            <i nz-icon nzType="desktop"></i>
-            <span>Option 2</span>
-          </li>
-          <li nz-submenu nzTitle="User" nzIcon="user">
-            <ul>
-              <li nz-menu-item>Tom</li>
-              <li nz-menu-item>Bill</li>
-              <li nz-menu-item>Alex</li>
-            </ul>
-          </li>
-          <li nz-submenu nzTitle="Team" nzIcon="team">
-            <ul>
-              <li nz-menu-item>Team 1</li>
-              <li nz-menu-item>Team 2</li>
-            </ul>
-          </li>
-          <li nz-menu-item>
-            <i nz-icon nzType="file"></i>
-            <span>File</span>
+            <a routerLink="/auth/logging-out">Log out</a>
           </li>
         </ul>
-      </nz-sider>
-      <nz-layout>
-        <nz-header></nz-header>
-        <nz-content>
+      </nz-dropdown-menu>
+    </nz-header>
+      <nz-content>
           <nz-breadcrumb>
             <nz-breadcrumb-item>User</nz-breadcrumb-item>
             <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
           </nz-breadcrumb>
           <div class="inner-content">Bill is a cat.</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-      </nz-layout>
-    </nz-layout>
-
-<!-- <nz-layout>
-  <nz-sider nzCollapsible [nzCollapsed]="isCollapsed$ | async" [nzTrigger]="null">
-    <div class="logo"></div>
-    <div>
-      <ul nz-menu nzTheme="light" nzMode="inline">
-        <li nz-submenu nzTitle="User" nzIcon="user">
-          <ul>
-            <li nz-menu-item>Tom</li>
-            <li nz-menu-item>Bill</li>
-            <li nz-menu-item>Alex</li>
-          </ul>
-        </li>
-        <li nz-submenu nzTitle="Team" nzIcon="team">
-          <ul>
-            <li nz-menu-item>Team 1</li>
-            <li nz-menu-item>Team 2</li>
-          </ul>
-        </li>
-        <li nz-menu-item>
-          <i nz-icon nzType="file"></i>
-          <span>File</span>
-        </li>
-      </ul>
-    </div>
-  </nz-sider>
-  <nz-layout>
-    <nz-header>
-      <i
-        class="trigger"
-        nz-icon
-        [nzType]="(isCollapsed$ | async) ? 'menu-unfold' : 'menu-fold'"
-        (click)="onToggleNavigationMenu()"
-      ></i>
-    </nz-header>
-    <nz-content>
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>User</nz-breadcrumb-item>
-        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-      </nz-breadcrumb>
-      <div class="inner-content">Bill is a cat.</div>
-    </nz-content>
-    <nz-footer>©2020 Boiler Plate Template</nz-footer>
+      </nz-content>
+      <nz-footer>©2022</nz-footer>
   </nz-layout>
-</nz-layout> -->
+</nz-layout>
+

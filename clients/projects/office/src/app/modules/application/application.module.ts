@@ -5,6 +5,8 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 import { ApplicationRoutingModule } from './application-routing.module';
 
@@ -22,7 +24,9 @@ import { NavigationMenuComponent } from './components/navigation-menu/navigation
     NzLayoutModule,
     NzBreadCrumbModule,
     NzMenuModule,
-    NzIconModule
+    NzIconModule,
+    NzDropDownModule,
+    NzAvatarModule
   ]
 })
 export class ApplicationModule { }

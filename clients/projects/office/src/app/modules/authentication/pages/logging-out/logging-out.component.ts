@@ -1,5 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
+import { filter, from, take } from 'rxjs';
+
+import * as fromAuthentication from '../../store';
 
 @Component({
   selector: 'xyz-logging-out',
@@ -9,10 +15,17 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
   animations: [fadeAnimation]
 })
 export class LoggingOutComponent implements OnInit {
-
-  constructor() { }
+  constructor(
+    private _store: Store<fromAuthentication.AuthenticationState>,
+    private _router: Router
+  ) { }
 
   ngOnInit(): void {
+    this._store.dispatch(fromAuthentication.logoutUserRequest());
+    this._store.select(fromAuthentication.selectAuthenticatedUser)
+      .pipe(take(1))
+      .subscribe(authenticatedUser => {
+        setTimeout(() => this._router.navigateByUrl('/auth/login'), 500);
+      });
   }
-
 }
