@@ -8,12 +8,14 @@ export const authenticationFeatureKey = 'authentication';
 
 export interface AuthenticationState {
   loginResponseMessage: ResponseMessage | null,
-  authenticatedUser: AuthenticatedUser | null
+  authenticatedUser: AuthenticatedUser | null,
+  passwordResetRequestResponseMessage: ResponseMessage | null,
 }
 
 export const initialAuthenticationState: AuthenticationState = {
   loginResponseMessage: null,
-  authenticatedUser: null
+  authenticatedUser: null,
+  passwordResetRequestResponseMessage: null
 }
 
 const handleLoginUserSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
@@ -26,8 +28,17 @@ const handleLoginUserFailure = (state: AuthenticationState, { message }: any) =>
   loginResponseMessage: message
 } as AuthenticationState);
 
+const handlePasswordResetRequestResponse = (state: AuthenticationState, { message }: any) => ({
+  ...state,
+  passwordResetRequestResponseMessage: message
+} as AuthenticationState);
+
 export const reducer = createReducer(
   initialAuthenticationState,
-  on(fromAuthentication.authenticateUserSuccess, handleLoginUserSuccess),
-  on(fromAuthentication.authenticateUserFailure, handleLoginUserFailure)
+  on(fromAuthentication.loginUserSuccess, handleLoginUserSuccess),
+  on(fromAuthentication.loginUserFailure, handleLoginUserFailure),
+  on(
+    fromAuthentication.passwordResetRequestSuccess, 
+    fromAuthentication.passwordResetRequestFailure, 
+    handlePasswordResetRequestResponse),
 );

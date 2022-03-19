@@ -18,6 +18,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { LoggingInComponent } from './pages/logging-in/logging-in.component';
 import { LoggingOutComponent } from './pages/logging-out/logging-out.component';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { LoggingOutComponent } from './pages/logging-out/logging-out.component';
     LoginComponent,
     ForgotPasswordComponent,
     LoggingInComponent,
-    LoggingOutComponent
+    LoggingOutComponent,
+    RegisterComponent
   ],
   imports: [
     CommonModule,

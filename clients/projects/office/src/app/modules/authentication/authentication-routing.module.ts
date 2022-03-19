@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from "./pages/forgot-password/forgot-password
 import { LoggingInComponent } from "./pages/logging-in/logging-in.component";
 import { LoggingOutComponent } from "./pages/logging-out/logging-out.component";
 import { LoginComponent } from "./pages/login/login.component";
+import { RegisterComponent } from "./pages/register/register.component";
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'forgot-password',
         component: ForgotPasswordComponent
+      },
+      {
+        path: 'register',
+        component: RegisterComponent
       },
       {
         path: '**',

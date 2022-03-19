@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { Credentials, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
@@ -7,7 +7,6 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable } from 'rxjs';
 
 import * as fromAuthentication from '../../store';
-import { buildLoginForm } from './login-form.builder';
 
 @Component({
   selector: 'xyz-login',
@@ -25,19 +24,19 @@ export class LoginComponent implements OnInit {
     private _store: Store<fromAuthentication.AuthenticationState>,
     private _formBuilder: FormBuilder
   ) {
-    this.loginForm = buildLoginForm(this._formBuilder);
+    this.loginForm = this._buildLoginForm();
   }
 
   ngOnInit(): void {
     this.loginResponseMessage$ = this._store.select(fromAuthentication.selectedLoginResponseMessage);
   }
 
-  public loginUser(credentials: Credentials): void {
+  public onLoginUser(credentials: Credentials): void {
     if (this.loginForm.valid) {
       console.log('submit', this.loginForm.value);
-      this._store.dispatch(fromAuthentication.authenticateUserFailure({ message: { status: ResponseStatus.ERROR, message: 'Invalid username/password!'}}));
+      this._store.dispatch(fromAuthentication.loginUserFailure({ message: { status: ResponseStatus.ERROR, message: 'Invalid username/password!'}}));
       // this._store.dispatch(
-      //   fromAuthentication.authenticateUserRequest({ credentials })
+      //   fromAuthentication.loginUserRequest({ credentials })
       // )
     } else {
       Object.values(this.loginForm.controls).forEach(control => {
@@ -47,5 +46,13 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+  }
+
+  private _buildLoginForm(): FormGroup {
+    return this._formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]],
+      rememberMe: [false, [Validators.required]]
+    });
   }
 }

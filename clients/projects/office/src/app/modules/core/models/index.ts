@@ -3,6 +3,7 @@ export * from './authentication/credentials.model';
 export * from './authentication/authenticated-status.enum';
 export * from './authentication/authenticated-user.model';
 export * from './authentication/authentication-response.model';
+export * from './authentication/password-reset.model';
 
 // paging
 export * from './paging/page-request.model';

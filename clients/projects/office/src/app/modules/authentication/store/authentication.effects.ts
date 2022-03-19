@@ -16,15 +16,32 @@ export class AuthenticationEffects {
 
   public loginUserReqeust$ = createEffect(() => this._actions
     .pipe(
-      ofType(fromAuthentication.authenticateUserRequest),
-      exhaustMap(({ credentials: Credentials }) => this._authenticationService.loginUser(Credentials)
+      ofType(fromAuthentication.loginUserRequest),
+      exhaustMap(({ credentials }) => this._authenticationService.loginUser(credentials)
         .pipe(
           mergeMap(authenticatedUser => 
-            of(fromAuthentication.authenticateUserSuccess({ authenticatedUser: authenticatedUser }))),
+            of(fromAuthentication.loginUserSuccess({ authenticatedUser: authenticatedUser }))),
           catchError(error => 
-            of(fromAuthentication.authenticateUserFailure({ message: {
+            of(fromAuthentication.loginUserFailure({ message: {
               status: ResponseStatus.ERROR,
               message: error?.message || 'Invalid username/password!'
+            } as ResponseMessage })))
+        )
+      )
+    )
+  );
+
+  public passwordResetReqeust$ = createEffect(() => this._actions
+    .pipe(
+      ofType(fromAuthentication.passwordResetRequest),
+      exhaustMap(({ request }) => this._authenticationService.requestPasswordReset(request)
+        .pipe(
+          mergeMap(message => 
+            of(fromAuthentication.passwordResetRequestSuccess({ message }))),
+          catchError(error => 
+            of(fromAuthentication.passwordResetRequestFailure({ message: {
+              status: ResponseStatus.ERROR,
+              message: error?.message || 'Error sending password reset request!'
             } as ResponseMessage })))
         )
       )
