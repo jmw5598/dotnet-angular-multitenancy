@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 @Component({
@@ -10,9 +11,10 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 })
 export class LoggingInComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
+    setTimeout(() => this._router.navigateByUrl('/'), 500);
   }
 
 }

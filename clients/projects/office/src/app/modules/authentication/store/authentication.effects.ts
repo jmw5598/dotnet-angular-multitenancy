@@ -1,17 +1,19 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, mergeMap, of } from "rxjs";
+import { catchError, exhaustMap, mergeMap, of, tap } from "rxjs";
 
-import { Credentials, ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
+import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
 import { AuthenticationService } from "../services/authentication.service";
 
 import * as fromAuthentication from './authentication.actions';
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthenticationEffects {
   constructor(
     private _actions: Actions,
-    private _authenticationService: AuthenticationService
+    private _authenticationService: AuthenticationService,
+    private _router: Router
   ) { }
 
   public loginUserReqeust$ = createEffect(() => this._actions
@@ -30,6 +32,12 @@ export class AuthenticationEffects {
       )
     )
   );
+
+  public loginUserSuccess$ = createEffect(() => this._actions
+    .pipe(
+      ofType(fromAuthentication.loginUserSuccess),
+      tap(message => this._router.navigateByUrl('/auth/logging-in'))
+    ), { dispatch: false });
 
   public passwordResetReqeust$ = createEffect(() => this._actions
     .pipe(

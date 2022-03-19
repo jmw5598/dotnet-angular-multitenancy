@@ -33,11 +33,7 @@ export class LoginComponent implements OnInit {
 
   public onLoginUser(credentials: Credentials): void {
     if (this.loginForm.valid) {
-      console.log('submit', this.loginForm.value);
-      this._store.dispatch(fromAuthentication.loginUserFailure({ message: { status: ResponseStatus.ERROR, message: 'Invalid username/password!'}}));
-      // this._store.dispatch(
-      //   fromAuthentication.loginUserRequest({ credentials })
-      // )
+      this._store.dispatch(fromAuthentication.loginUserRequest({ credentials }))
     } else {
       Object.values(this.loginForm.controls).forEach(control => {
         if (control.invalid) {

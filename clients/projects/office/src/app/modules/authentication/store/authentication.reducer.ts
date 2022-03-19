@@ -20,7 +20,8 @@ export const initialAuthenticationState: AuthenticationState = {
 
 const handleLoginUserSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
   ...state,
-  authenticatedUser: authenticatedUser
+  authenticatedUser: authenticatedUser,
+  loginResponseMessage: null
 } as AuthenticationState);
 
 const handleLoginUserFailure = (state: AuthenticationState, { message }: any) => ({
