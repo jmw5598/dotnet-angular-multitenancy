@@ -1,11 +1,13 @@
 <nz-card style="width:376px;" [@fadeAnimation]>
-  <nz-alert
-    *ngIf="loginResponseMessage$ | async as message"
-    nzType="error"
-    [nzMessage]="(message?.status | titlecase) || ''"
-    nzShowIcon
-  ></nz-alert>
   <form nz-form [formGroup]="loginForm" class="login-form" (ngSubmit)="loginUser(loginForm.value)">
+    <nz-page-header nzTitle="Log In" class="px-0 pb-3 pt-0"></nz-page-header>
+    <nz-alert
+      class="mx-0 mb-4"
+      *ngIf="loginResponseMessage$ | async as message"
+      nzType="error"
+      [nzMessage]="(message?.message) || ''"
+      nzShowIcon
+    ></nz-alert>
     <nz-form-item>
       <nz-form-control nzErrorTip="Please input your username!">
         <nz-input-group nzPrefixIcon="user">
