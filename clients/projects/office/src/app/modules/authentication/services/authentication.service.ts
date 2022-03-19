@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AuthenticatedStatus, AuthenticatedUser, Credentials, PasswordReset, ResponseMessage, ResponseStatus } from '../../core/models';
+
+import { AuthenticatedStatus, AuthenticatedUser, Credentials, PasswordReset, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
+import { EnvironmentService } from '@xyz/office/modules/core/services';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-
-  constructor() { }
+  constructor(
+    private _environmentService: EnvironmentService,
+    private _http: HttpClient
+  ) { }
 
   public loginUser(credentials: Credentials): Observable<AuthenticatedUser> {
     return of({

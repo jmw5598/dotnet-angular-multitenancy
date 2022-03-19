@@ -43,7 +43,10 @@ const storeModuleRuntimeChecks = {
     EffectsModule.forRoot([...rootEffects]),
     StoreDevtoolsModule.instrument({ name: 'Xyz Project Store', logOnly: environment.production, }),
   ],
-  providers: [{ provide: NZ_I18N, useValue: en_US }],
+  providers: [
+    { provide: NZ_I18N, useValue: en_US },
+    { provide: Window, useValue: window },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
