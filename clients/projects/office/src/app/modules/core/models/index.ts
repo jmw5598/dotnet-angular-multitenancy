@@ -14,3 +14,6 @@ export * from './paging/sort.model';
 // api
 export * from './api/reponse-message.model';
 export * from './api/response-status.enum';
+
+// navigation
+export * from './navigation/navigation-link.model';

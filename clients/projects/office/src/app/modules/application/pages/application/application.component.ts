@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationLink } from '@xyz/office/modules/core/models';
 import { Observable } from 'rxjs';
+import { defaultNavigationMenu } from '../../constants/navigation-menu.defaults';
 import { NavigationMenuService } from '../../services/navigation-menu.service';
 
 @Component({
@@ -9,6 +11,8 @@ import { NavigationMenuService } from '../../services/navigation-menu.service';
 })
 export class ApplicationComponent implements OnInit {
   public isCollapsed$: Observable<boolean>;
+
+  public defaultNavigationMenu: NavigationLink[] = defaultNavigationMenu;
 
   constructor(private _navigationMenuService: NavigationMenuService) {
     this.isCollapsed$ = this._navigationMenuService.isCollapsed();

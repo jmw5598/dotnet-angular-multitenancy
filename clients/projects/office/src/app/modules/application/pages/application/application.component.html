@@ -2,31 +2,24 @@
   <nz-sider nzCollapsible nzWidth="200px" nzTheme="light">
     <div class="logo"></div>
     <ul nz-menu nzTheme="light" nzMode="inline">
-      <li nz-menu-item>
-        <i nz-icon nzType="pie-chart"></i>
-        <span>Option 1</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="desktop"></i>
-        <span>Option 2</span>
-      </li>
-      <li nz-submenu nzTitle="User" nzIcon="user">
-        <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Team" nzIcon="team">
-        <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
-        </ul>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="file"></i>
-        <span>File</span>
-      </li>
+      <ng-container *ngFor="let link of defaultNavigationMenu">
+        <ng-container *ngIf="link?.children?.length; else singleNavigationLinkTemplate">
+          <li nz-submenu [nzTitle]="link.label" [nzIcon]="link?.icon || ''">
+            <ul>
+              <ng-container *ngFor="let sublink of link?.children">
+                <li nz-menu-item>
+                  <a [routerLink]="sublink?.routerLink || ''">Tom</a></li>
+              </ng-container>
+            </ul>
+          </li>
+        </ng-container>
+        <ng-template #singleNavigationLinkTemplate>
+          <li nz-menu-item>
+            <i nz-icon [nzType]="link?.icon || ''"></i>
+            <span><a [routerLink]="[link?.routerLink || '']">{{ link?.label || '' }}</a></span>
+          </li>
+        </ng-template>
+      </ng-container>
     </ul>
   </nz-sider>
   <nz-layout>
