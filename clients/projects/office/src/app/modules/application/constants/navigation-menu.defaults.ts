@@ -18,7 +18,7 @@ export const defaultNavigationMenu: NavigationLink[] = [
   },
   {
     label: 'Settings',
-    routerLink: 'setting',
+    routerLink: 'settings',
     icon: 'setting'
   }
   // @Note: Below is an example of submenu link

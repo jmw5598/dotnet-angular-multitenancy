@@ -1,0 +1,21 @@
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { SettingsComponent } from "./pages/settings/settings.component";
+
+const routes: Routes = [
+  {
+    path: '',
+    component: SettingsComponent
+  },
+  {
+    path: '**',
+    redirectTo: '',
+    pathMatch: 'full'
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class SettingsRoutingModule { }
