@@ -9,12 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Xyz.Core.Entities;
 
 namespace Xyz.Multitenancy.Data
 {
-    public class AuthenticationDbContext : DbContext
+    public class AuthenticationDbContext : IdentityDbContext
     {
         public DbSet<Tenant> Tenants { get; set; }
 
@@ -26,13 +28,21 @@ namespace Xyz.Multitenancy.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<IdentityUser>().ToTable("asp_net_users");
+            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("asp_net_user_tokens");
+            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("asp_net_user_logins");
+            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("asp_net_user_claims");
+            modelBuilder.Entity<IdentityRole>().ToTable("asp_net_roles");
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("asp_net_user_roles");
+            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("asp_net_role_claims");
+
             modelBuilder.Entity<ApplicationUser>()
              .HasMany(x => x.Tenants)
              .WithMany(x => x.Users)
-             .UsingEntity<Dictionary<string, object>>("UserTenants",
+             .UsingEntity<Dictionary<string, object>>("user_tenants",
                  x => x.HasOne<Tenant>().WithMany().HasForeignKey("TenantId"),
                  x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
-                 x => x.ToTable("UserTenants"));
+                 x => x.ToTable("user_tenants"));
         }
 
         /// <summary>
@@ -49,7 +59,7 @@ namespace Xyz.Multitenancy.Data
 
                 var builder = new DbContextOptionsBuilder<AuthenticationDbContext>();
                 var connectionString = configuration.GetConnectionString("XyzMultitenancy");
-                builder.UseNpgsql(connectionString);
+                builder.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();;
 
                 return new AuthenticationDbContext(builder.Options);
             }
