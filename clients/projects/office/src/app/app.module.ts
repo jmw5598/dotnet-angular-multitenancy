@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 import { ROOT_REDUCERS, metaReducers, rootEffects } from './store';
 
 import { environment } from '@xyz/office/env/environment';
+import { CoreModule } from './modules/core/core.module';
 
 registerLocaleData(en);
 
@@ -36,6 +37,7 @@ const storeModuleRuntimeChecks = {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    CoreModule,
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,

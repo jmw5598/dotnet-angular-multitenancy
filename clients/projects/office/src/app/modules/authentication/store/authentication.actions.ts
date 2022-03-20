@@ -39,4 +39,9 @@ export const logoutUserSuccess = createAction(
   '[Authentication] Logout User Success'
 );
 
+export const refreshAccessToken = createAction(
+  '[Authentication] Refresh Access Token'
+  // @TODO accept props??
+);
+
 // @TODO actions to actually do the reset and success/failure for that action
