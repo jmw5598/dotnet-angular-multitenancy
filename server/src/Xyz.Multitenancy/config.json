@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "XyzMultitenancy": "server=localhost;port=3306;database=xyz_multitenancy;user=user;password=password"
+  }
+}
