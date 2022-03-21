@@ -1,5 +1,5 @@
 {
   "ConnectionStrings": {
-    "XyzMultitenancy": "server=localhost;port=3306;database=xyz_multitenancy;user=user;password=password"
+    "XyzMultitenancy": "Server=localhost;Port=5432;Database=xyz_multitenancy;User Id=xyz;Password=password;"
   }
 }
