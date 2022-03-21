@@ -2,6 +2,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Xyz.Core\Xyz.Core.csproj" />
+    <ProjectReference Include="..\Xyz.Multitenancy\Xyz.Multitenancy.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3" />
   </ItemGroup>
 
   <PropertyGroup>
