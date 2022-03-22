@@ -14,7 +14,8 @@ namespace Xyz.Api.Controllers
         private IAuthenticationService _authenticationService;
 
         public AuthenticationController(
-            ILogger<AuthenticationController> logger, IAuthenticationService authenticationService)
+            ILogger<AuthenticationController> logger,
+            IAuthenticationService authenticationService)
         {
             this._logger = logger;
             this._authenticationService = authenticationService;
@@ -27,7 +28,7 @@ namespace Xyz.Api.Controllers
             {
                 var credentials = new Credentials
                 {
-                    Username = loginRequestDto.Username,
+                    UserName = loginRequestDto.UserName,
                     Password = loginRequestDto.Password
                 };
 
@@ -45,7 +46,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return this._authenticationService.Register();
+                return Ok(await this._authenticationService.Register());
             }
             catch (Exception e)
             {

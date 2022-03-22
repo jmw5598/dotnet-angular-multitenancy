@@ -53,16 +53,16 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<AuthenticationDbContext>(options =>
-    options.UseNpgsql(
-        multitenancyConfiguration.GetConnectionString("XyzMultitenancy")));
+    options.UseNpgsql(multitenancyConfiguration.GetConnectionString("XyzMultitenancy"))
+        .UseSnakeCaseNamingConvention());
 
 // Tenant specific context for tenant database, this is dynamically set after tenant is resolved per request
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
-    options.UseNpgsql(
-        multitenancyConfiguration.GetConnectionString("XyzMultitenancy")));
+    options.UseNpgsql(multitenancyConfiguration.GetConnectionString("XyzMultitenancy"))
+        .UseSnakeCaseNamingConvention());
 
 // For Identity
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthenticationDbContext>()
     .AddDefaultTokenProviders();
 
