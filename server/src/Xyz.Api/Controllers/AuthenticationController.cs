@@ -31,7 +31,7 @@ namespace Xyz.Api.Controllers
                     Password = loginRequestDto.Password
                 };
 
-                return this._authenticationService.Login(credentials);
+                return Ok(await this._authenticationService.Login(credentials));
             }
             catch (Exception e)
             {
