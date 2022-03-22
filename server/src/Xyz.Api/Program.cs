@@ -6,7 +6,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 using Xyz.Core.Entities;
+using Xyz.Core.Interfaces;
 using Xyz.Infrastructure.Data;
+using Xyz.Infrastructure.Services;
 using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Models;
@@ -47,6 +49,7 @@ builder.Services.Configure<TenantsConfiguration>(tenantsConfiguration);
 
 // Add servicse
 builder.Services.AddScoped<ITenantAccessor<Tenant>, TenantAccessor<Tenant>>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<AuthenticationDbContext>(options =>
