@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
+using Xyz.Api.Models;
+using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 
 namespace Xyz.Api.Controllers
@@ -19,11 +21,17 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<object> Login()
+        public async Task<object> Login(LoginRequestDto loginRequestDto)
         {
             try
             {
-                return this._authenticationService.Login();
+                var credentials = new Credentials
+                {
+                    Username = loginRequestDto.Username,
+                    Password = loginRequestDto.Password
+                };
+
+                return this._authenticationService.Login(credentials);
             }
             catch (Exception e)
             {

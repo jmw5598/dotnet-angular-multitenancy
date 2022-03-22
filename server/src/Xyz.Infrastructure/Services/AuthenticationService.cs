@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 
+using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 using Xyz.Multitenancy.Data;
 
@@ -17,9 +18,9 @@ namespace Xyz.Infrastructure.Services
             this._context = context;
         }
 
-        public async Task<object> Login()
+        public async Task<object> Login(Credentials credentials)
         {
-            return new {};
+            return credentials;
         }
 
         public async Task<object> Register()
