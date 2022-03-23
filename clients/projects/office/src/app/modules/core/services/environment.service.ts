@@ -33,16 +33,17 @@ export class EnvironmentService {
   public getBaseApiUrl(): string {
     const subdomain: string = this.getSubdomain();
     const port: string = this._env.api.port?.length ? `:${this._env.api.port}` : ''; 
-    return `${this._env.api.protocol}://${subdomain}.${this._env.api.domain}${port}/${this._env.api.apiSlug}`;
+    return `${this._env.api.protocol}://${subdomain?.length ? subdomain + '.' : ''}${this._env.api.domain}${port}/${this._env.api.apiSlug}`;
   }
 
   public getBaseAuthUrl(): string {
     const subdomain: string = this.getSubdomain();
     const port: string = this._env.api.port?.length ? `:${this._env.api.port}` : ''; 
-    return `${this._env.api.protocol}://${subdomain}.${this._env.api.domain}${port}/${this._env.api.authSlug}`;
+    return `${this._env.api.protocol}://${subdomain?.length ? subdomain + '.' : ''}${this._env.api.domain}${port}/${this._env.api.authSlug}`;
   }
 
   public getSubdomain(): string {
-    return this._window.location.hostname.split(".")[0]
+    const hostnameParts: string[] = this._window.location.hostname.split(".");
+    return hostnameParts?.length > 1 ? hostnameParts[0] : '';
   }
 }

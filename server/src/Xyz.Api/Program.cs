@@ -97,6 +97,20 @@ builder.Services.AddAuthorization(options =>
 });
 
 
+// Cors Configuration
+var  XyzCorsOrigins = "XyzCorsOrigins";
+
+// Add Policy for Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: XyzCorsOrigins,
+        builder =>
+        {
+            builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
+});
+
+
 // Build application
 var app = builder.Build();
 
@@ -108,6 +122,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(XyzCorsOrigins);
 
 app.UseHttpsRedirection();
 

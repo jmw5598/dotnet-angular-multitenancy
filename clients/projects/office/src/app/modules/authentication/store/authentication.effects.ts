@@ -23,11 +23,12 @@ export class AuthenticationEffects {
         .pipe(
           mergeMap(authenticatedUser => 
             of(fromAuthentication.loginUserSuccess({ authenticatedUser: authenticatedUser }))),
-          catchError(error => 
-            of(fromAuthentication.loginUserFailure({ message: {
+          catchError(error => {
+            return of(fromAuthentication.loginUserFailure({ message: {
               status: ResponseStatus.ERROR,
-              message: error?.message || 'Invalid username/password!'
-            } as ResponseMessage })))
+              message: error?.error || 'Invalid username/password!'
+            } as ResponseMessage }))
+          })
         )
       )
     )

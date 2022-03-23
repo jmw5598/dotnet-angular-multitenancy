@@ -32,7 +32,14 @@ namespace Xyz.Api.Controllers
                     Password = loginRequestDto.Password
                 };
 
-                return Ok(await this._authenticationService.Login(credentials));
+                var authenticatedUser = await this._authenticationService.Login(credentials);
+
+                if (authenticatedUser == null)
+                {
+                    return Unauthorized("Invalid username/password");
+                }
+
+                return Ok(authenticatedUser);
             }
             catch (Exception e)
             {

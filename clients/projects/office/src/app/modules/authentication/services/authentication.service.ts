@@ -15,11 +15,16 @@ export class AuthenticationService {
   ) { }
 
   public loginUser(credentials: Credentials): Observable<AuthenticatedUser> {
-    return of({
-      status: AuthenticatedStatus.AUTHENTICATED,
-      accessToken: 'kasjdfkljasld;fasdf',
-      refreshToken: 'asjdkfljaskldjflasjdf'
-    } as AuthenticatedUser);
+    // return of({
+    //   status: AuthenticatedStatus.AUTHENTICATED,
+    //   accessToken: 'kasjdfkljasld;fasdf',
+    //   refreshToken: 'asjdkfljaskldjflasjdf'
+    // } as AuthenticatedUser);
+
+    return this._http.post<AuthenticatedUser>(
+      `${this._environmentService.getBaseAuthUrl()}/login`, 
+      credentials
+    );
   }
 
   public requestPasswordReset(request: PasswordReset): Observable<ResponseMessage> {
@@ -28,4 +33,7 @@ export class AuthenticationService {
       message: 'Success, please check your email!'
     } as ResponseMessage)
   }
+
+  // Change Password
+
 }
