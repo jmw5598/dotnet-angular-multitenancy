@@ -40,6 +40,11 @@ const handleLogoutUserSuccess = (state: AuthenticationState) => ({
   passwordResetRequestResponseMessage: null
 } as AuthenticationState);
 
+const handleSetAuthenticatedUser = (state: AuthenticationState, { authenticatedUser }: any) => ({
+  ...state,
+  authenticatedUser: authenticatedUser
+} as AuthenticationState);
+
 export const reducer = createReducer(
   initialAuthenticationState,
   on(fromAuthentication.loginUserSuccess, handleLoginUserSuccess),
@@ -49,4 +54,5 @@ export const reducer = createReducer(
     fromAuthentication.passwordResetRequestFailure, 
     handlePasswordResetRequestResponse),
   on(fromAuthentication.logoutUserSuccess, handleLogoutUserSuccess),
+  on(fromAuthentication.setAuthenticatedUser, handleSetAuthenticatedUser)
 );

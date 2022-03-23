@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, mergeMap, of, switchMap, tap } from "rxjs";
 
-import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
+import { ResponseMessage, ResponseStatus, AuthenticatedUser } from "@xyz/office/modules/core/models";
 import { AuthenticationService } from "../services/authentication.service";
 
 import * as fromAuthentication from './authentication.actions';
-import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthenticationEffects {
@@ -21,8 +21,10 @@ export class AuthenticationEffects {
       ofType(fromAuthentication.loginUserRequest),
       exhaustMap(({ credentials }) => this._authenticationService.loginUser(credentials)
         .pipe(
-          mergeMap(authenticatedUser => 
-            of(fromAuthentication.loginUserSuccess({ authenticatedUser: authenticatedUser }))),
+          mergeMap(authenticatedUser => {
+            this._authenticationService.cacheAuthenticatedUser(authenticatedUser);
+            return of(fromAuthentication.loginUserSuccess({ authenticatedUser: authenticatedUser }))
+          }),
           catchError(error => {
             return of(fromAuthentication.loginUserFailure({ message: {
               status: ResponseStatus.ERROR,
@@ -61,7 +63,7 @@ export class AuthenticationEffects {
     .pipe(
       ofType(fromAuthentication.logoutUserRequest),
       switchMap(() => {
-        // @Note - do any side effects before logginout...
+        this._authenticationService.removeCachedAuthenticatedUser();
         return of(fromAuthentication.logoutUserSuccess());
       })
     ));

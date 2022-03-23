@@ -1,8 +1,11 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtTokenInterceptor } from './interceptors';
 import { CACHE_SERVICE, SessionCacheService } from './services';
+import { authenticatedUserInitializer } from './initializers/authenticated-user.initializer';
+import { Store } from '@ngrx/store';
+import { AuthenticationService } from '../authentication/services/authentication.service';
 
 const jwtTokenInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
@@ -20,6 +23,13 @@ const cacheProvider = {
   useExisting: SessionCacheService
 }
 
+const authenticationUserAppInitializer = { 
+  provide: APP_INITIALIZER, 
+  useFactory: authenticatedUserInitializer, 
+  multi: true,
+  deps: [Store, AuthenticationService]
+}
+
 @NgModule({
   declarations: [],
   imports: [
@@ -28,7 +38,8 @@ const cacheProvider = {
   providers: [
     jwtTokenInterceptorProvider,
     windowProvider,
-    cacheProvider
+    cacheProvider,
+    authenticationUserAppInitializer
   ]
 })
 export class CoreModule { }

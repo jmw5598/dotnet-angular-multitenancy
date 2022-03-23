@@ -44,4 +44,9 @@ export const refreshAccessToken = createAction(
   // @TODO accept props??
 );
 
+export const setAuthenticatedUser = createAction(
+  '[Authentication] Set Authenticated User',
+  props<{ authenticatedUser: AuthenticatedUser | null }>()
+);
+
 // @TODO actions to actually do the reset and success/failure for that action
