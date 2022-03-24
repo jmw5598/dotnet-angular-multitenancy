@@ -11,6 +11,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzStepsModule } from 'ng-zorro-antd/steps';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 
@@ -42,7 +43,8 @@ import { RegisterComponent } from './pages/register/register.component';
     NzCardModule,
     NzAlertModule,
     NzPageHeaderModule,
-    NzSpinModule
+    NzSpinModule,
+    NzStepsModule
   ]
 })
 export class AuthenticationModule { }
