@@ -21,6 +21,10 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { LoggingInComponent } from './pages/logging-in/logging-in.component';
 import { LoggingOutComponent } from './pages/logging-out/logging-out.component';
 import { RegisterComponent } from './pages/register/register.component';
+import { RegistrationUserFormComponent } from './components/registration-user-form/registration-user-form.component';
+import { RegistrationProfileFormComponent } from './components/registration-profile-form/registration-profile-form.component';
+import { RegistrationPlanFormComponent } from './components/registration-plan-form/registration-plan-form.component';
+import { RegistrationCompanyFormComponent } from './components/registration-company-form/registration-company-form.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +33,11 @@ import { RegisterComponent } from './pages/register/register.component';
     ForgotPasswordComponent,
     LoggingInComponent,
     LoggingOutComponent,
-    RegisterComponent
+    RegisterComponent,
+    RegistrationUserFormComponent,
+    RegistrationProfileFormComponent,
+    RegistrationPlanFormComponent,
+    RegistrationCompanyFormComponent
   ],
   imports: [
     CommonModule,

@@ -12,6 +12,8 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 export class RegisterComponent implements OnInit {
   public registerForm: FormGroup;
 
+  public currentStepIndex: number = 0;
+
   constructor(
     private _formBuilder: FormBuilder
   ) {
@@ -21,7 +23,15 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public onPreviousStep(): void {
+    this.currentStepIndex -= 1;
+  }
+
+  public onNextStep(): void {
+    this.currentStepIndex += 1;
+  }
+
   public onRegister(formValue: any): void {
-    console.log("registering ", formValue);
+    alert('done!!!!');
   }
 }
