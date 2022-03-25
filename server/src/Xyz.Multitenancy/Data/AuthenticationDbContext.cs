@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
+using Xyz.Multitenancy.Extensions;
 using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Data
@@ -36,6 +36,8 @@ namespace Xyz.Multitenancy.Data
                  x => x.HasOne<Tenant>().WithMany().HasForeignKey("TenantId"),
                  x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
                  x => x.ToTable("user_tenants"));
+
+            modelBuilder.SeedIdentityRoles();
         }
 
         /// <summary>
