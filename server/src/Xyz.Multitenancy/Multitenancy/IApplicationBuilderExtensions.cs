@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Multitenancy
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Multitenancy.Data;
 
 namespace Xyz.Multitenancy.Multitenancy

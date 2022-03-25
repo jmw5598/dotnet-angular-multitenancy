@@ -5,7 +5,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Data
 {

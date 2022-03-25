@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 using Xyz.Multitenancy.Data;

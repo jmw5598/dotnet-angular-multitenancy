@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 using Xyz.Multitenancy.Models;
 using Xyz.Multitenancy.Multitenancy;
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Tenant;
 
 namespace Xyz.Infrastructure.Data
 {

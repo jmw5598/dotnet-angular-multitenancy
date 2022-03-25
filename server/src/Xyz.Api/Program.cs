@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Interfaces;
 using Xyz.Infrastructure.Data;
 using Xyz.Infrastructure.Services;

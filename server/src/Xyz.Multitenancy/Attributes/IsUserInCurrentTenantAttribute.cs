@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Multitenancy.Multitenancy;
 
 namespace Xyz.Multitenancy.Attributes

@@ -1,4 +1,4 @@
-namespace Xyz.Core.Entities
+namespace Xyz.Core.Entities.Tenant
 {
     public class VehicleModel
     {

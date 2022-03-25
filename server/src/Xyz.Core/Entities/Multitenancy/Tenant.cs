@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Xyz.Core.Entities
+namespace Xyz.Core.Entities.Multitenancy
 {
     /// <summary>
     /// Tenant information

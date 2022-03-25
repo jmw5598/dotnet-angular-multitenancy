@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using Xyz.Core.Entities;
+using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Multitenancy
 {

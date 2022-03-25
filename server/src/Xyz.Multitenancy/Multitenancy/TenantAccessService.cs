@@ -1,4 +1,4 @@
-﻿using Xyz.Core.Entities;
+﻿using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Multitenancy
 {
