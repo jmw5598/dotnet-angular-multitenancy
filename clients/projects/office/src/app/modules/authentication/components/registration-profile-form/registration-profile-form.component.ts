@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ControlContainer, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'xyz-registration-profile-form',
@@ -7,10 +8,12 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationProfileFormComponent implements OnInit {
+  public formGroup: FormGroup;
 
-  constructor() { }
+  constructor(private _controlContainer: ControlContainer) {
+    this.formGroup = (this._controlContainer.control as FormGroup).get('profile') as FormGroup;
+  }
 
   ngOnInit(): void {
   }
-
 }

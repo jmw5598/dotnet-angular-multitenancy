@@ -12,6 +12,7 @@ import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 
@@ -54,7 +55,8 @@ import { RegistrationCompleteComponent } from './components/registration-complet
     NzAlertModule,
     NzPageHeaderModule,
     NzSpinModule,
-    NzStepsModule
+    NzStepsModule,
+    NzIconModule
   ]
 })
 export class AuthenticationModule { }

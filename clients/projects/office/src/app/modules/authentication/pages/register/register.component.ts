@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 @Component({
@@ -17,7 +17,22 @@ export class RegisterComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder
   ) {
-    this.registerForm = this._formBuilder.group({});
+    this.registerForm = this._formBuilder.group({
+      user: this._formBuilder.group({
+        username: ['', [Validators.required]],
+        password: ['', [Validators.required]],
+        confirmPassword: ['', [Validators.required]]
+      }),
+      profile: this._formBuilder.group({
+
+      }),
+      company: this._formBuilder.group({
+        
+      }),
+      plan: this._formBuilder.group({
+        
+      })
+    });
   }
 
   ngOnInit(): void {
