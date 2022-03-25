@@ -33,5 +33,6 @@ export class RegisterComponent implements OnInit {
 
   public onRegister(formValue: any): void {
     alert('done!!!!');
+    this.currentStepIndex +=1;
   }
 }

@@ -25,6 +25,7 @@ import { RegistrationUserFormComponent } from './components/registration-user-fo
 import { RegistrationProfileFormComponent } from './components/registration-profile-form/registration-profile-form.component';
 import { RegistrationPlanFormComponent } from './components/registration-plan-form/registration-plan-form.component';
 import { RegistrationCompanyFormComponent } from './components/registration-company-form/registration-company-form.component';
+import { RegistrationCompleteComponent } from './components/registration-complete/registration-complete.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RegistrationCompanyFormComponent } from './components/registration-comp
     RegistrationUserFormComponent,
     RegistrationProfileFormComponent,
     RegistrationPlanFormComponent,
-    RegistrationCompanyFormComponent
+    RegistrationCompanyFormComponent,
+    RegistrationCompleteComponent
   ],
   imports: [
     CommonModule,
