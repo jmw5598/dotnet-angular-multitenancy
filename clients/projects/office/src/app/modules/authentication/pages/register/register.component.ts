@@ -1,8 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
-import { Registration } from '@xyz/office/modules/core/models';
+import { Registration, ResponseMessage } from '@xyz/office/modules/core/models';
+import { MatchValidators } from '@xyz/office/modules/core/validators';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
+import { Observable } from 'rxjs';
+
+import * as fromAuthentication from '../../store';
 
 @Component({
   selector: 'xyz-register',
@@ -11,19 +16,24 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   public registerForm: FormGroup;
 
   public currentStepIndex: number = 0;
 
+  public registrationResponseMessage$!: Observable<ResponseMessage | null>;
+
   constructor(
-    private _formBuilder: FormBuilder
+    private _formBuilder: FormBuilder,
+    private _store: Store<fromAuthentication.AuthenticationState>
   ) {
     this.registerForm = this._formBuilder.group({
       user: this._formBuilder.group({
-        username: ['', [Validators.required]],
+        username: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required]],
         confirmPassword: ['', [Validators.required]]
+      }, { 
+        validators: MatchValidators.mustMatch('password', 'confirmPassword') 
       }),
       profile: this._formBuilder.group({
         firstName: ['', [Validators.required]],
@@ -39,6 +49,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.registrationResponseMessage$ = this._store.select(fromAuthentication.selectRegistartionResponseMessage);
   }
 
   public onPreviousStep(): void {
@@ -50,8 +61,12 @@ export class RegisterComponent implements OnInit {
   }
 
   public onRegister(registration: Registration): void {
-    alert('done!!!!');
-    console.log("registration is ", registration);
+    this._store.dispatch(fromAuthentication.registrationRequest({ registration: registration }));
     this.currentStepIndex +=1;
+  }
+
+  ngOnDestroy(): void {
+    this.registerForm.reset();
+    this._store.dispatch(fromAuthentication.setRegistrationResponseMessage({ message: null }));
   }
 }

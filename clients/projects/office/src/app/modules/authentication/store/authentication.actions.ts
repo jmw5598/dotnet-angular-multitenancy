@@ -1,5 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { Credentials, AuthenticatedUser, ResponseMessage, PasswordReset } from "@xyz/office/modules/core/models";
+import { 
+  Credentials, 
+  AuthenticatedUser, 
+  ResponseMessage, 
+  PasswordReset, 
+  Registration } from "@xyz/office/modules/core/models";
 
 export const loginUserRequest = createAction(
   '[Authentication] Login User Request',
@@ -47,6 +52,26 @@ export const refreshAccessToken = createAction(
 export const setAuthenticatedUser = createAction(
   '[Authentication] Set Authenticated User',
   props<{ authenticatedUser: AuthenticatedUser | null }>()
+);
+
+export const registrationRequest = createAction(
+  '[Authentication] Registration Request',
+  props<{ registration: Registration }>()
+);
+
+export const registrationRequestSuccess = createAction(
+  '[Authentication] Registration Request Success',
+  props<{ message: ResponseMessage | null }>()
+);
+
+export const registrationRequestFailure = createAction(
+  '[Authentication] Registration Request Failure',
+  props<{ message: ResponseMessage | null }>()
+);
+
+export const setRegistrationResponseMessage = createAction(
+  '[Authentication] Set Registration Response Message',
+  props<{ message: ResponseMessage | null }>()
 );
 
 // @TODO actions to actually do the reset and success/failure for that action

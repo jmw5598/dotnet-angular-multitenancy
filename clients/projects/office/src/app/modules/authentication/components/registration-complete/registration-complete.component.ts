@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 
 @Component({
   selector: 'xyz-registration-complete',
@@ -6,11 +7,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./registration-complete.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegistrationCompleteComponent implements OnInit {
+export class RegistrationCompleteComponent {
+  @Input()
+  public message: ResponseMessage | null = null;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  public ResponseStatus = ResponseStatus;
 }

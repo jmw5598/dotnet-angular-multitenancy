@@ -19,49 +19,99 @@
       class="w-100 mt-3" 
       (ngSubmit)="onRegister(registerForm.value)">
     <ng-container [ngSwitch]="currentStepIndex">
+
+      <!-- User Details Step-->
       <ng-container *ngSwitchCase="0">
         <xyz-registration-user-form></xyz-registration-user-form>
+        <button 
+            [disabled]="registerForm?.get('user')?.invalid"
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex < 3" 
+            nz-button 
+            nzType="default" 
+            (click)="onNextStep()">
+          <span>Next</span>
+        </button>
       </ng-container>
+
+      <!-- Profile Step -->
       <ng-container *ngSwitchCase="1">
         <xyz-registration-profile-form></xyz-registration-profile-form>
+        <button 
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex > 0"
+            nz-button 
+            nzType="default" 
+            (click)="onPreviousStep()">
+          <span>Previous</span>
+        </button>
+        <button 
+            [disabled]="registerForm?.get('profile')?.invalid"
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex < 3" 
+            nz-button 
+            nzType="default" 
+            (click)="onNextStep()">
+          <span>Next</span>
+        </button>
       </ng-container>
+
+      <!-- Company Step -->
       <ng-container *ngSwitchCase="2">
         <xyz-registration-company-form></xyz-registration-company-form>
+        <button 
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex > 0"
+            nz-button 
+            nzType="default" 
+            (click)="onPreviousStep()">
+          <span>Previous</span>
+        </button>
+        <button 
+            [disabled]="registerForm?.get('company')?.invalid"
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex < 3" 
+            nz-button 
+            nzType="default" 
+            (click)="onNextStep()">
+          <span>Next</span>
+        </button>
       </ng-container>
+
+      <!-- Plan Step -->
       <ng-container *ngSwitchCase="3">
         <xyz-registration-plan-form></xyz-registration-plan-form>
+        <button 
+            class="mr-1"
+            type="button"
+            *ngIf="currentStepIndex > 0"
+            nz-button 
+            nzType="default" 
+            (click)="onPreviousStep()">
+          <span>Previous</span>
+        </button>
+        <button 
+            [disabled]="registerForm.invalid"
+            type="submit"
+            *ngIf="currentStepIndex === 3"
+            nz-button 
+            nzType="primary">
+          <span>Register</span>
+        </button>
       </ng-container>
+
+      <!-- Complete Step -->
       <ng-container *ngSwitchCase="4">
-        <xyz-registration-complete></xyz-registration-complete>
+        <xyz-registration-complete 
+            [message]="registrationResponseMessage$ | async">
+        </xyz-registration-complete>
       </ng-container>
     </ng-container>
-    <div class="steps-actions">
-      <button 
-          class="mr-1"
-          type="button"
-          *ngIf="currentStepIndex > 0"
-          nz-button 
-          nzType="default" 
-          (click)="onPreviousStep()">
-        <span>Previous</span>
-      </button>
-      <button 
-          class="mr-1"
-          type="button"
-          *ngIf="currentStepIndex < 3" 
-          nz-button 
-          nzType="default" 
-          (click)="onNextStep()">
-        <span>Next</span>
-      </button>
-      <button 
-          type="submit"
-          *ngIf="currentStepIndex === 3"
-          nz-button 
-          nzType="primary">
-        <span>Register</span>
-      </button>
-    </div>
     <div>Or <a routerLink="/auth/login">log in now!</a></div>
   </form>
 </nz-card>

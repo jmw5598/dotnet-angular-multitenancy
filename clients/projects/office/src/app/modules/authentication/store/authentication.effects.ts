@@ -40,7 +40,9 @@ export class AuthenticationEffects {
     .pipe(
       ofType(fromAuthentication.loginUserSuccess),
       tap(message => this._router.navigateByUrl('/auth/logging-in'))
-    ), { dispatch: false });
+    ),
+    { dispatch: false }
+  );
 
   public passwordResetReqeust$ = createEffect(() => this._actions
     .pipe(
@@ -66,5 +68,27 @@ export class AuthenticationEffects {
         this._authenticationService.removeCachedAuthenticatedUser();
         return of(fromAuthentication.logoutUserSuccess());
       })
-    ));
+    )
+  );
+
+  public registrationRequest$ = createEffect(() => this._actions
+    .pipe(
+      ofType(fromAuthentication.registrationRequest),
+      exhaustMap(({ registration }) => this._authenticationService.register(registration)
+        .pipe(
+          mergeMap(responseMessage => {
+            return of(fromAuthentication.registrationRequestSuccess({ 
+              message: responseMessage 
+            }));
+          }),
+          catchError(error => {
+            return of(fromAuthentication.registrationRequestFailure({ message: {
+              status: ResponseStatus.ERROR,
+              message: error?.error || 'New registration failed. Please try again!'
+            } as ResponseMessage }));
+          })
+        )
+      )
+    )
+  );
 }

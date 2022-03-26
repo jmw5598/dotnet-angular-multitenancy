@@ -78,6 +78,20 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> Register()
         {
+            // create transation
+            // create tenant entry
+            // create company,
+            // create company_tenant entry
+            // create profile
+
+            // create user with company and profile and tenant
+
+            // save user
+
+            // create user_tenant entry
+
+            // commit transation
+
             var registeredUser = await this._userManager.CreateAsync(
                 new ApplicationUser
                 {

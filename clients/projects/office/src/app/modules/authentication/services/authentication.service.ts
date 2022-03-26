@@ -2,9 +2,16 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { AuthenticatedUser, Credentials, PasswordReset, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 import { EnvironmentService, ICacheService, CACHE_SERVICE } from '@xyz/office/modules/core/services';
 import { CacheKeys } from '../../constants';
+
+import { 
+  AuthenticatedUser, 
+  Credentials, 
+  PasswordReset, 
+  ResponseMessage, 
+  ResponseStatus,
+  Registration } from '@xyz/office/modules/core/models';
 
 
 @Injectable({
@@ -19,12 +26,6 @@ export class AuthenticationService {
   ) { }
 
   public loginUser(credentials: Credentials): Observable<AuthenticatedUser> {
-    // return of({
-    //   status: AuthenticatedStatus.AUTHENTICATED,
-    //   accessToken: 'kasjdfkljasld;fasdf',
-    //   refreshToken: 'asjdkfljaskldjflasjdf'
-    // } as AuthenticatedUser);
-
     return this._http.post<AuthenticatedUser>(
       `${this._environmentService.getBaseAuthUrl()}/login`, 
       credentials
@@ -39,6 +40,14 @@ export class AuthenticationService {
   }
 
   // Change Password
+
+  public register(registration: Registration): Observable<ResponseMessage> {
+    // @TODO make API call
+    return of({
+      status: ResponseStatus.SUCCESS,
+      message: 'Successfull registration!'
+    });
+  }
 
   public getCachedAuthenticatedUser(): AuthenticatedUser | null {
     return this._cacheService.getItem(CacheKeys.AUTHENTICATED_USER);

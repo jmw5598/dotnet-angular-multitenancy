@@ -9,12 +9,14 @@ export interface AuthenticationState {
   loginResponseMessage: ResponseMessage | null,
   authenticatedUser: AuthenticatedUser | null,
   passwordResetRequestResponseMessage: ResponseMessage | null,
+  registrationRequestResponseMessage: ResponseMessage | null
 }
 
 export const initialAuthenticationState: AuthenticationState = {
   loginResponseMessage: null,
   authenticatedUser: null,
-  passwordResetRequestResponseMessage: null
+  passwordResetRequestResponseMessage: null,
+  registrationRequestResponseMessage: null
 }
 
 const handleLoginUserSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
@@ -45,6 +47,11 @@ const handleSetAuthenticatedUser = (state: AuthenticationState, { authenticatedU
   authenticatedUser: authenticatedUser
 } as AuthenticationState);
 
+const handleRegistrationRequestResponse = (state: AuthenticationState, { message }: any) => ({
+  ...state,
+  registrationRequestResponseMessage: message
+} as AuthenticationState);
+
 export const reducer = createReducer(
   initialAuthenticationState,
   on(fromAuthentication.loginUserSuccess, handleLoginUserSuccess),
@@ -54,5 +61,11 @@ export const reducer = createReducer(
     fromAuthentication.passwordResetRequestFailure, 
     handlePasswordResetRequestResponse),
   on(fromAuthentication.logoutUserSuccess, handleLogoutUserSuccess),
-  on(fromAuthentication.setAuthenticatedUser, handleSetAuthenticatedUser)
+  on(fromAuthentication.setAuthenticatedUser, handleSetAuthenticatedUser),
+  on(
+    fromAuthentication.registrationRequestSuccess,
+    fromAuthentication.registrationRequestFailure,
+    fromAuthentication.setRegistrationResponseMessage,
+    handleRegistrationRequestResponse
+  )
 );

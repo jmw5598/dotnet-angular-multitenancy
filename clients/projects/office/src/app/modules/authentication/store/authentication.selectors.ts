@@ -19,3 +19,8 @@ export const selectedPasswordResetRequestResponseMessage = createSelector(
   selectAuthenticationState,
   (state: fromAuthentication.AuthenticationState) => state.passwordResetRequestResponseMessage
 );
+
+export const selectRegistartionResponseMessage = createSelector(
+  selectAuthenticationState,
+  (state: fromAuthentication.AuthenticationState) => state.registrationRequestResponseMessage
+);
