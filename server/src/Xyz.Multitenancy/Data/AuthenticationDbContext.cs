@@ -12,6 +12,9 @@ namespace Xyz.Multitenancy.Data
     public class AuthenticationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public DbSet<Tenant> Tenants => Set<Tenant>();
+        public DbSet<Plan> Plans => Set<Plan>();
+        public DbSet<Company> Companies => Set<Company>();
+        public DbSet<Profile> Profiles => Set<Profile>();
 
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
         {

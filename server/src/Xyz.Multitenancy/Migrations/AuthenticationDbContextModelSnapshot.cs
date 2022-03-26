@@ -130,18 +130,18 @@ namespace Xyz.Multitenancy.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("62308887-6c0b-4401-b13e-373979018e74"),
-                            RoleId = new Guid("c42bb479-82a1-4724-8178-305d32cf64ab")
+                            UserId = new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084"),
+                            RoleId = new Guid("1d865752-1435-4676-b533-307095b165fe")
                         },
                         new
                         {
-                            UserId = new Guid("62308887-6c0b-4401-b13e-373979018e74"),
-                            RoleId = new Guid("3bd6921a-a793-467c-9058-cbd895b76008")
+                            UserId = new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084"),
+                            RoleId = new Guid("da821245-d08c-4e6a-90dd-07896de4459d")
                         },
                         new
                         {
-                            UserId = new Guid("62308887-6c0b-4401-b13e-373979018e74"),
-                            RoleId = new Guid("4a653a65-d1e5-44b2-8cca-8b204905cfa6")
+                            UserId = new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084"),
+                            RoleId = new Guid("503ae32a-3bb9-45f3-8f01-45195b6aa121")
                         });
                 });
 
@@ -222,22 +222,22 @@ namespace Xyz.Multitenancy.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c42bb479-82a1-4724-8178-305d32cf64ab"),
-                            ConcurrencyStamp = "f562379f-4324-450d-be22-3730716df92d",
+                            Id = new Guid("1d865752-1435-4676-b533-307095b165fe"),
+                            ConcurrencyStamp = "36e57d73-258f-4329-8d35-89edd9acf08b",
                             Name = "ROOT",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
-                            Id = new Guid("3bd6921a-a793-467c-9058-cbd895b76008"),
-                            ConcurrencyStamp = "1c92375a-3ba0-4bd2-b24c-218a3a6263dd",
+                            Id = new Guid("da821245-d08c-4e6a-90dd-07896de4459d"),
+                            ConcurrencyStamp = "3337431a-f85c-4b60-a356-a6380c914444",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("4a653a65-d1e5-44b2-8cca-8b204905cfa6"),
-                            ConcurrencyStamp = "72ef4205-22ac-44b3-a6a2-a0483b6d2a67",
+                            Id = new Guid("503ae32a-3bb9-45f3-8f01-45195b6aa121"),
+                            ConcurrencyStamp = "8adfae93-f815-4b27-aa6d-76deb86ab7eb",
                             Name = "USER",
                             NormalizedName = "USER"
                         });
@@ -326,19 +326,37 @@ namespace Xyz.Multitenancy.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("62308887-6c0b-4401-b13e-373979018e74"),
+                            Id = new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "348caab0-7a64-45c7-bb78-0caf20a89d10",
+                            ConcurrencyStamp = "5d3f8342-6291-40b6-825f-3ee59f5417c1",
                             Email = "jmw5598@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JMW5598@gmail.com",
                             NormalizedUserName = "JMW5598@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHewMAknHX56M9TEOEHTJhY1pJ8CA9yZ3EitGmMzB0suZybMiuh5VIQWbdL8ZjoRdA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJm4TBn1NdhqWZw28vg47ZaGaJ2Bd8nKPmOhxgK6qnQO0iBxbSbCfS9tSN76pABQqA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false,
                             UserName = "jmw5598@gmail.com"
                         });
+                });
+
+            modelBuilder.Entity("Xyz.Core.Entities.Multitenancy.Company", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_companies");
+
+                    b.ToTable("companies", (string)null);
                 });
 
             modelBuilder.Entity("Xyz.Core.Entities.Multitenancy.Plan", b =>
@@ -367,19 +385,42 @@ namespace Xyz.Multitenancy.Migrations
                         .HasColumnName("renewal_rate");
 
                     b.HasKey("Id")
-                        .HasName("pk_plan");
+                        .HasName("pk_plans");
 
-                    b.ToTable("plan", (string)null);
+                    b.ToTable("plans", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4dd2a52c-5d0a-488a-87b4-4ee4df4c17fe"),
+                            Id = new Guid("b0452734-e4f4-4e1d-bc3a-2ed0063c538a"),
                             MaxUserCount = 5,
                             Name = "Free",
                             Price = 0.00m,
                             RenewalRate = "MONTHLY"
                         });
+                });
+
+            modelBuilder.Entity("Xyz.Core.Entities.Multitenancy.Profile", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("first_name");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("last_name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_profiles");
+
+                    b.ToTable("profiles", (string)null);
                 });
 
             modelBuilder.Entity("Xyz.Core.Entities.Multitenancy.Tenant", b =>

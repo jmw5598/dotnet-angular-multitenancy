@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Xyz.Multitenancy.Migrations
 {
-    public partial class InitialEntitiesForMultitenancy : Migration
+    public partial class InitialMultitenancyDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,7 +50,19 @@ namespace Xyz.Multitenancy.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "plan",
+                name: "companies",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_companies", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "plans",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -61,7 +73,20 @@ namespace Xyz.Multitenancy.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_plan", x => x.id);
+                    table.PrimaryKey("pk_plans", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "profiles",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    first_name = table.Column<string>(type: "text", nullable: false),
+                    last_name = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_profiles", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,14 +242,30 @@ namespace Xyz.Multitenancy.Migrations
                 columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
                 values: new object[,]
                 {
-                    { new Guid("8ada2318-eaed-4ec8-b02b-320970ae1989"), "c96d43db-f8f4-43e4-9811-8ef34e9add3c", "USER", "USER" },
-                    { new Guid("daed4d3e-a8b2-4fec-b35b-9266b029f591"), "c72c2b1f-c599-4c2f-8008-6f7cb34cc076", "ADMIN", "ADMIN" }
+                    { new Guid("1d865752-1435-4676-b533-307095b165fe"), "36e57d73-258f-4329-8d35-89edd9acf08b", "ROOT", "ROOT" },
+                    { new Guid("503ae32a-3bb9-45f3-8f01-45195b6aa121"), "8adfae93-f815-4b27-aa6d-76deb86ab7eb", "USER", "USER" },
+                    { new Guid("da821245-d08c-4e6a-90dd-07896de4459d"), "3337431a-f85c-4b60-a356-a6380c914444", "ADMIN", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
-                table: "plan",
+                table: "asp_net_users",
+                columns: new[] { "id", "access_failed_count", "concurrency_stamp", "email", "email_confirmed", "lockout_enabled", "lockout_end", "normalized_email", "normalized_user_name", "password_hash", "phone_number", "phone_number_confirmed", "security_stamp", "two_factor_enabled", "user_name" },
+                values: new object[] { new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084"), 0, "5d3f8342-6291-40b6-825f-3ee59f5417c1", "jmw5598@gmail.com", true, false, null, "JMW5598@gmail.com", "JMW5598@GMAIL.COM", "AQAAAAEAACcQAAAAEJm4TBn1NdhqWZw28vg47ZaGaJ2Bd8nKPmOhxgK6qnQO0iBxbSbCfS9tSN76pABQqA==", null, false, null, false, "jmw5598@gmail.com" });
+
+            migrationBuilder.InsertData(
+                table: "plans",
                 columns: new[] { "id", "max_user_count", "name", "price", "renewal_rate" },
-                values: new object[] { new Guid("e770d388-0818-44a1-8e7e-9dbfa928806c"), 5, "Free", 0.00m, "MONTHLY" });
+                values: new object[] { new Guid("b0452734-e4f4-4e1d-bc3a-2ed0063c538a"), 5, "Free", 0.00m, "MONTHLY" });
+
+            migrationBuilder.InsertData(
+                table: "asp_net_user_roles",
+                columns: new[] { "role_id", "user_id" },
+                values: new object[,]
+                {
+                    { new Guid("1d865752-1435-4676-b533-307095b165fe"), new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084") },
+                    { new Guid("503ae32a-3bb9-45f3-8f01-45195b6aa121"), new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084") },
+                    { new Guid("da821245-d08c-4e6a-90dd-07896de4459d"), new Guid("462a12cd-42c8-4fa1-9ce3-327466e1d084") }
+                });
 
             migrationBuilder.CreateIndex(
                 name: "ix_asp_net_role_claims_role_id",
@@ -293,7 +334,13 @@ namespace Xyz.Multitenancy.Migrations
                 name: "asp_net_user_tokens");
 
             migrationBuilder.DropTable(
-                name: "plan");
+                name: "companies");
+
+            migrationBuilder.DropTable(
+                name: "plans");
+
+            migrationBuilder.DropTable(
+                name: "profiles");
 
             migrationBuilder.DropTable(
                 name: "user_tenants");
