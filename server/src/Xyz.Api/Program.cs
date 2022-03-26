@@ -58,6 +58,7 @@ builder.Services.Configure<TenantsConfiguration>(tenantsConfiguration);
 builder.Services.AddScoped<ITenantAccessor<Tenant>, TenantAccessor<Tenant>>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPlansService, PlansService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<AuthenticationDbContext>(options =>
