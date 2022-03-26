@@ -4,6 +4,11 @@ export * from './authentication/authenticated-status.enum';
 export * from './authentication/authenticated-user.model';
 export * from './authentication/authentication-response.model';
 export * from './authentication/password-reset.model';
+export * from './authentication/registration-company.model';
+export * from './authentication/registration-plan.model';
+export * from './authentication/registration-profile.model';
+export * from './authentication/registration-user.model';
+export * from './authentication/registration.model';
 
 // paging
 export * from './paging/page-request.model';

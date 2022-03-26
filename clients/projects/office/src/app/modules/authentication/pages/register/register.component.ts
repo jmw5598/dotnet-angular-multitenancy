@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { Registration } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 @Component({
@@ -24,13 +26,14 @@ export class RegisterComponent implements OnInit {
         confirmPassword: ['', [Validators.required]]
       }),
       profile: this._formBuilder.group({
-
+        firstName: ['', [Validators.required]],
+        lastName: ['', [Validators.required]]
       }),
       company: this._formBuilder.group({
-        
+        name: ['', [Validators.required]]
       }),
       plan: this._formBuilder.group({
-        
+        id: [null, [Validators.required]]
       })
     });
   }
@@ -46,8 +49,9 @@ export class RegisterComponent implements OnInit {
     this.currentStepIndex += 1;
   }
 
-  public onRegister(formValue: any): void {
+  public onRegister(registration: Registration): void {
     alert('done!!!!');
+    console.log("registration is ", registration);
     this.currentStepIndex +=1;
   }
 }
