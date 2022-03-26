@@ -11,7 +11,7 @@ namespace Xyz.Multitenancy.Data
 {
     public class AuthenticationDbContext : IdentityDbContext
     {
-        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Tenant> Tenants => Set<Tenant>();
 
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
         {

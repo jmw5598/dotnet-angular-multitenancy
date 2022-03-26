@@ -8,6 +8,6 @@ namespace Xyz.Multitenancy.Models
 {
     public class TenantsConfiguration
     {
-        public IDictionary<string, string> ConnectionStrings { get; set; }
+        public IDictionary<string, string> ConnectionStrings { get; set; } = default!;
     }
 }

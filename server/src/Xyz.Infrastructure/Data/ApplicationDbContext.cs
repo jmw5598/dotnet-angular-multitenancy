@@ -10,16 +10,16 @@ using Xyz.Core.Entities.Tenant;
 namespace Xyz.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
-    {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+    { 
+        private readonly ITenantAccessor<Tenant> _tenantAccessor;
         private readonly IOptions<TenantsConfiguration> _configuration;
 
 
         // Entity Datasets
-        public DbSet<Vehicle> Vehicles { get; set; }
-        public DbSet<VehicleMake> VehicleMakes { get; set; }
-        public DbSet<VehicleModel> VehicleModels { get; set; }
-        public DbSet<VehicleType> VehicleTypes { get; set; }
+        public DbSet<Vehicle> Vehicles => Set<Vehicle>();
+        public DbSet<VehicleMake> VehicleMakes => Set<VehicleMake>();
+        public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
+        public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
 
 
         public ApplicationDbContext(
@@ -28,6 +28,8 @@ namespace Xyz.Infrastructure.Data
             ITenantAccessor<Tenant> tenantAccessor) : base(CreateDbContextOptions(tenantAccessor, configuration))
         {
 
+            this._tenantAccessor = tenantAccessor;
+            this._configuration = configuration;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

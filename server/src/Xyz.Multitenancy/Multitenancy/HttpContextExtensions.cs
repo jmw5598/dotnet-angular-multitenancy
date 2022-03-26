@@ -15,11 +15,11 @@ namespace Xyz.Multitenancy.Multitenancy
         /// <typeparam name="T"></typeparam>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static T GetTenant<T>(this HttpContext context) where T : Tenant
+        public static T? GetTenant<T>(this HttpContext context) where T : Tenant
         {
             if (!context.Items.ContainsKey(MultiTenantConstants.HttpContextTenantKey))
                 return null;
-            return context.Items[MultiTenantConstants.HttpContextTenantKey] as T;
+            return context?.Items[MultiTenantConstants.HttpContextTenantKey] as T;
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Xyz.Multitenancy.Multitenancy
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        public static Tenant GetTenant(this HttpContext context)
+        public static Tenant? GetTenant(this HttpContext context)
         {
             return context.GetTenant<Tenant>();
         }

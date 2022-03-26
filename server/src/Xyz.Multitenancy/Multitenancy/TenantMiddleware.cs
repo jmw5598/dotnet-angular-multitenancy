@@ -18,7 +18,10 @@ namespace Xyz.Multitenancy.Multitenancy
             if (!context.Items.ContainsKey(MultiTenantConstants.HttpContextTenantKey))
             {
                 var tenantService = context.RequestServices.GetService(typeof(TenantAccessService<T>)) as TenantAccessService<T>;
-                context.Items.Add(MultiTenantConstants.HttpContextTenantKey, await tenantService.GetTenantAsync());
+                if (tenantService != null)
+                {
+                    context.Items.Add(MultiTenantConstants.HttpContextTenantKey, await tenantService.GetTenantAsync());
+                }
             }
 
             //Continue processing

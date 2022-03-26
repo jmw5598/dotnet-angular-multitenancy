@@ -16,10 +16,10 @@ namespace Xyz.Multitenancy.Security
 
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, InCurrentTenantRequirement requirement)
         {
-            var tenantId = _httpContextAccessor.HttpContext.GetTenant().Guid;
+            string? tenantId = _httpContextAccessor.HttpContext?.GetTenant()?.Guid;
 
-            if (context.User.HasClaim(MultiTenantConstants.TenantClaim, tenantId) 
-                || context.User.HasClaim(MultiTenantConstants.TenantClaimSchema, tenantId))
+            if (tenantId != null && (context.User.HasClaim(MultiTenantConstants.TenantClaim, tenantId) 
+                || context.User.HasClaim(MultiTenantConstants.TenantClaimSchema, tenantId)))
             {
                 context.Succeed(requirement);
             }

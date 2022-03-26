@@ -76,25 +76,28 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> Register()
         {
-            // var registeredUser = await this._userManager.CreateAsync(
-            //     new ApplicationUser
-            //     {
-            //         UserName = "jmw5598@gmail.com",
-            //         Email = "jmw5598@gmail.com",
-            //         EmailConfirmed = true
-            //     }, "Password@123");
+            var registeredUser = await this._userManager.CreateAsync(
+                new ApplicationUser
+                {
+                    UserName = "jmw5598@gmail.com",
+                    Email = "jmw5598@gmail.com",
+                    EmailConfirmed = true
+                }, "Password@123");
+
+            // Look into how to seed roles?
+            //this._roleManager.
 
             return new {}; //registeredUser == null ? new {} : registeredUser;
         }
 
         public async Task<object> ForgotPassword()
         {
-            return new {};
+            return await Task.FromResult(new {});
         }
 
         public async Task<object> ChangePassword()
         {
-            return new {};
+            return await Task.FromResult(new {});
         }
     }
 }

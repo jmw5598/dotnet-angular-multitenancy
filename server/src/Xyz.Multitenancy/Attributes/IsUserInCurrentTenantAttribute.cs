@@ -19,13 +19,14 @@ namespace Xyz.Multitenancy.Attributes
                 var signInManager = httpContext.RequestServices.GetService(typeof(Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser>)) as SignInManager<ApplicationUser>;
                 var userClaimsPrinciple = httpContext.User;
 
-                if (userClaimsPrinciple != null && signInManager.IsSignedIn(userClaimsPrinciple))
+                if (userClaimsPrinciple != null && signInManager != null && signInManager.IsSignedIn(userClaimsPrinciple))
                 {
-                    var tenantId = httpContext.GetTenant().Guid;
-                    var tenantName = httpContext.GetTenant().Name;
+                    string? tenantId = httpContext?.GetTenant()?.Guid;
+                    string? tenantName = httpContext?.GetTenant()?.Name;
 
-                    if (userClaimsPrinciple.HasClaim(MultiTenantConstants.TenantClaimSchema, tenantId)
-                            || userClaimsPrinciple.HasClaim(MultiTenantConstants.TenantClaim, tenantId))
+                    if (tenantId != null 
+                            && (userClaimsPrinciple.HasClaim(MultiTenantConstants.TenantClaimSchema, tenantId)
+                            || userClaimsPrinciple.HasClaim(MultiTenantConstants.TenantClaim, tenantId)))
                     {
                         context.Result = new UnauthorizedObjectResult(@$"User doesn't not have access to {tenantName}");
                     }

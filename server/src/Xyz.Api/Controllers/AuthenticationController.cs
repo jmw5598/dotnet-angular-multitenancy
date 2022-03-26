@@ -67,7 +67,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return this._authenticationService.ForgotPassword();
+                return await this._authenticationService.ForgotPassword();
             }
             catch (Exception e)
             {
@@ -81,7 +81,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return this._authenticationService.ChangePassword();
+                return await this._authenticationService.ChangePassword();
             }
             catch (Exception e)
             {

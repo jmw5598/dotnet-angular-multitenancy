@@ -29,7 +29,7 @@ namespace Xyz.Multitenancy.Multitenancy
         /// <returns></returns>
         public async Task<Tenant> GetTenantAsync(string domainName, string ipAddress, string name)
         {
-            Tenant tenant = null;
+            Tenant? tenant = null;
 
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -53,7 +53,7 @@ namespace Xyz.Multitenancy.Multitenancy
             return await Task.FromResult(tenant);
         }
 
-        private Tenant TryGetTenantFromDomainName(string domainName, string ipAddress)
+        private Tenant? TryGetTenantFromDomainName(string domainName, string ipAddress)
         {
 
             if (string.IsNullOrWhiteSpace(domainName))
@@ -62,7 +62,7 @@ namespace Xyz.Multitenancy.Multitenancy
             }
             else
             {
-                Tenant tenant = null;
+                Tenant? tenant = null;
 
                 try
                 {
@@ -86,7 +86,7 @@ namespace Xyz.Multitenancy.Multitenancy
             }
         }
 
-        private Tenant TryGetTenantFromIp(string ipAddress)
+        private Tenant? TryGetTenantFromIp(string ipAddress)
         {
             if (string.IsNullOrWhiteSpace(ipAddress))
             {
@@ -94,7 +94,7 @@ namespace Xyz.Multitenancy.Multitenancy
             }
             else
             {
-                Tenant tenant = null;
+                Tenant? tenant = null;
 
                 try
                 {
@@ -118,9 +118,11 @@ namespace Xyz.Multitenancy.Multitenancy
             }
         }
 
-        private Tenant GetDefaultTenant()
+        private Tenant? GetDefaultTenant()
         {
-            return _multitenantConfiguration.Tenants.SingleOrDefault(tenant => tenant.Name.ToLowerInvariant() == _multitenantConfiguration.DefaultTenant.ToLowerInvariant());
+            return _multitenantConfiguration.Tenants
+                .SingleOrDefault(tenant => 
+                    tenant.Name.ToLowerInvariant() == _multitenantConfiguration.DefaultTenant.ToLowerInvariant());
         }
     }
 }

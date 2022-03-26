@@ -35,12 +35,12 @@ namespace Xyz.Infrastructure.Services
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
-            return token;
+            return await Task.FromResult(token);
         }
 
         public async Task<IEnumerable<Claim>> DecodeJwtSecurityToken(JwtSecurityToken token)
         {
-            return null;
+            return await Task.FromResult(new List<Claim>());
         }
     }
 }
