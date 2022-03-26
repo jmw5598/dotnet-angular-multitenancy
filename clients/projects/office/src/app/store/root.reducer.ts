@@ -4,9 +4,11 @@ import { Action, ActionReducer, ActionReducerMap } from "@ngrx/store";
 import { environment } from '@xyz/office/env/environment';
 
 import * as fromAuthentication from '@xyz/office/modules/authentication/store';
+import * as fromPlans from './plans';
 
 export interface RootState {
-  [fromAuthentication.authenticationFeatureKey]: fromAuthentication.AuthenticationState;
+  [fromAuthentication.authenticationFeatureKey]: fromAuthentication.AuthenticationState,
+  [fromPlans.plansFeatureKey]: fromPlans.PlansState,
   // router: fromRouter.RouterReducerState<any>;
 }
 
@@ -14,6 +16,7 @@ export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<RootState, Acti
   'Root reducers token', {
   factory: () => ({
     [fromAuthentication.authenticationFeatureKey]: fromAuthentication.reducer,
+    [fromPlans.plansFeatureKey]: fromPlans.reducer,
     // router: fromRouter.routerReducer,
   }),
 });
@@ -38,5 +41,6 @@ export const metaReducers: MetaReducer<RootState>[] = !environment.production
   : [];
 
 export const rootEffects: any[] = [
-  fromAuthentication.AuthenticationEffects
+  fromAuthentication.AuthenticationEffects,
+  fromPlans.PlansEffects
 ];
