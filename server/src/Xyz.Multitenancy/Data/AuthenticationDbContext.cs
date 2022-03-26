@@ -9,7 +9,7 @@ using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Data
 {
-    public class AuthenticationDbContext : IdentityDbContext
+    public class AuthenticationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public DbSet<Tenant> Tenants => Set<Tenant>();
 
@@ -21,13 +21,13 @@ namespace Xyz.Multitenancy.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<IdentityUser>().ToTable("asp_net_users");
-            modelBuilder.Entity<IdentityUserToken<string>>().ToTable("asp_net_user_tokens");
-            modelBuilder.Entity<IdentityUserLogin<string>>().ToTable("asp_net_user_logins");
-            modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("asp_net_user_claims");
-            modelBuilder.Entity<IdentityRole>().ToTable("asp_net_roles");
-            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("asp_net_user_roles");
-            modelBuilder.Entity<IdentityRoleClaim<string>>().ToTable("asp_net_role_claims");
+            modelBuilder.Entity<ApplicationUser>().ToTable("asp_net_users");
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("asp_net_user_tokens");
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("asp_net_user_logins");
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("asp_net_user_claims");
+            modelBuilder.Entity<ApplicationRole>().ToTable("asp_net_roles");
+            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("asp_net_user_roles");
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("asp_net_role_claims");
 
             modelBuilder.Entity<ApplicationUser>()
              .HasMany(x => x.Tenants)
@@ -37,7 +37,8 @@ namespace Xyz.Multitenancy.Data
                  x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
                  x => x.ToTable("user_tenants"));
 
-            modelBuilder.SeedIdentityRoles();
+            modelBuilder.SeedApplicationUsersAndRoles();
+            modelBuilder.SeedPlans();
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Xyz.Core.Entities.Multitenancy
@@ -14,8 +13,7 @@ namespace Xyz.Core.Entities.Multitenancy
         /// <summary>
         /// The tenant Id
         /// </summary>
-        [Key]
-        public int Id { get; set; } = default!;
+        public Guid Id { get; set; } = new Guid();
 
         [Column(TypeName = "varchar(36)")]
         public string Guid { get; set; } = default!;
@@ -40,6 +38,8 @@ namespace Xyz.Core.Entities.Multitenancy
         public string DomainNames { get; set; } = default!;
 
         public string ConnectionString { get; set; } = default!;
+
+        public bool IsActive { get; set; }
 
         public ICollection<ApplicationUser> Users { get; set; } = default!;
     }

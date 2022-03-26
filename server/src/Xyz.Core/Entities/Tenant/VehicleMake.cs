@@ -2,6 +2,6 @@ namespace Xyz.Core.Entities.Tenant
 {
     public class VehicleMake
     {
-        public string Id { get; set; } = default!;
+        public Guid Id { get; set; } = default!;
     }
 }

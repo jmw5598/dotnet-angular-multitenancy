@@ -17,7 +17,7 @@ namespace Xyz.Infrastructure.Services
         private ILogger<AuthenticationService> _logger;
         private IConfiguration _configuration;
         private UserManager<ApplicationUser> _userManager;
-        private RoleManager<IdentityRole> _roleManager;
+        private RoleManager<ApplicationRole> _roleManager;
         private AuthenticationDbContext _context;
         private ITokenService _tokenService;
 
@@ -25,7 +25,7 @@ namespace Xyz.Infrastructure.Services
             ILogger<AuthenticationService> logger, 
             IConfiguration configuration,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+            RoleManager<ApplicationRole> roleManager,
             AuthenticationDbContext context,
             ITokenService tokenService)
         {
@@ -37,12 +37,14 @@ namespace Xyz.Infrastructure.Services
             this._tokenService = tokenService;
         }
 
-        public async Task<object> Login(Credentials credentials)
+        public async Task<AuthenticatedUser> Login(Credentials credentials)
         {
             var user = await this._userManager.FindByNameAsync(credentials.UserName);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, credentials.Password))
             {
+                // @TODO Check if user is active and tenant is active
+
                 // Get roles
                 var userRoles = await this._userManager.GetRolesAsync(user);
 

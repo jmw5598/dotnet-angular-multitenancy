@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Xyz.Multitenancy.Migrations
 {
-    public partial class InitialMultitenancyDb : Migration
+    public partial class InitialEntitiesForMultitenancy : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace Xyz.Multitenancy.Migrations
                 name: "asp_net_roles",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     concurrency_stamp = table.Column<string>(type: "text", nullable: true)
@@ -28,8 +28,7 @@ namespace Xyz.Multitenancy.Migrations
                 name: "asp_net_users",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
-                    discriminator = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -51,17 +50,32 @@ namespace Xyz.Multitenancy.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "plan",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "text", nullable: false),
+                    price = table.Column<decimal>(type: "numeric", nullable: false),
+                    renewal_rate = table.Column<string>(type: "varchar(24)", nullable: false),
+                    max_user_count = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_plan", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "tenants",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     guid = table.Column<string>(type: "varchar(36)", nullable: false),
                     name = table.Column<string>(type: "varchar(100)", nullable: false),
                     display_name = table.Column<string>(type: "varchar(100)", nullable: false),
                     ip_addresses = table.Column<string>(type: "text", nullable: false),
                     domain_names = table.Column<string>(type: "text", nullable: false),
-                    connection_string = table.Column<string>(type: "text", nullable: false)
+                    connection_string = table.Column<string>(type: "text", nullable: false),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -74,7 +88,7 @@ namespace Xyz.Multitenancy.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    role_id = table.Column<string>(type: "text", nullable: false),
+                    role_id = table.Column<Guid>(type: "uuid", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
                 },
@@ -95,7 +109,7 @@ namespace Xyz.Multitenancy.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
                 },
@@ -117,7 +131,7 @@ namespace Xyz.Multitenancy.Migrations
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     provider_key = table.Column<string>(type: "text", nullable: false),
                     provider_display_name = table.Column<string>(type: "text", nullable: true),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -134,8 +148,8 @@ namespace Xyz.Multitenancy.Migrations
                 name: "asp_net_user_roles",
                 columns: table => new
                 {
-                    user_id = table.Column<string>(type: "text", nullable: false),
-                    role_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    role_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -158,7 +172,7 @@ namespace Xyz.Multitenancy.Migrations
                 name: "asp_net_user_tokens",
                 columns: table => new
                 {
-                    user_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     value = table.Column<string>(type: "text", nullable: true)
@@ -178,8 +192,8 @@ namespace Xyz.Multitenancy.Migrations
                 name: "user_tenants",
                 columns: table => new
                 {
-                    asp_net_user_id = table.Column<string>(type: "text", nullable: false),
-                    tenant_id = table.Column<int>(type: "integer", nullable: false)
+                    asp_net_user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    tenant_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -197,6 +211,20 @@ namespace Xyz.Multitenancy.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "asp_net_roles",
+                columns: new[] { "id", "concurrency_stamp", "name", "normalized_name" },
+                values: new object[,]
+                {
+                    { new Guid("8ada2318-eaed-4ec8-b02b-320970ae1989"), "c96d43db-f8f4-43e4-9811-8ef34e9add3c", "USER", "USER" },
+                    { new Guid("daed4d3e-a8b2-4fec-b35b-9266b029f591"), "c72c2b1f-c599-4c2f-8008-6f7cb34cc076", "ADMIN", "ADMIN" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "plan",
+                columns: new[] { "id", "max_user_count", "name", "price", "renewal_rate" },
+                values: new object[] { new Guid("e770d388-0818-44a1-8e7e-9dbfa928806c"), 5, "Free", 0.00m, "MONTHLY" });
 
             migrationBuilder.CreateIndex(
                 name: "ix_asp_net_role_claims_role_id",
@@ -263,6 +291,9 @@ namespace Xyz.Multitenancy.Migrations
 
             migrationBuilder.DropTable(
                 name: "asp_net_user_tokens");
+
+            migrationBuilder.DropTable(
+                name: "plan");
 
             migrationBuilder.DropTable(
                 name: "user_tenants");
