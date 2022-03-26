@@ -13,7 +13,7 @@ namespace Xyz.Core.Entities.Multitenancy
         /// <summary>
         /// The tenant Id
         /// </summary>
-        public Guid Id { get; set; } = new Guid();
+        public Guid Id { get; set; } = default!;
 
         [Column(TypeName = "varchar(36)")]
         public string Guid { get; set; } = default!;
