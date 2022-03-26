@@ -5,7 +5,7 @@ export const selectPlansState = createFeatureSelector<fromPlans.PlansState>(
   fromPlans.plansFeatureKey
 );
 
-export const selectAuthenticatedUser = createSelector(
+export const selectAvailablePlans = createSelector(
   selectPlansState,
   (state: fromPlans.PlansState) => state.availablePlans
 );

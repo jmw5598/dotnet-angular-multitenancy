@@ -1,10 +1,14 @@
 <div [formGroup]="formGroup">
   <h3 class="my-5">Select a Plan</h3>
-  <nz-form-item>
+  <nz-form-item *ngIf="plans">
     <nz-form-control nzErrorTip="Please select a Plan!">
-      <nz-input-group nzPrefixIcon="user">
-        <input type="text" nz-input formControlName="id" placeholder="Plan" />
-      </nz-input-group>
+      <nz-select formControlName="id">
+        <nz-option 
+            *ngFor="let plan of plans" 
+            [nzValue]="plan.id"
+            [nzLabel]="plan.name + ' - ' + (plan.renewalRate | titlecase) + ' (' + plan.maxUserCount + ' Users)'">
+        </nz-option>
+      </nz-select>
     </nz-form-control>
   </nz-form-item>
 </div>

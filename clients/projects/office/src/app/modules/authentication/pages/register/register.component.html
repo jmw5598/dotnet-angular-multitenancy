@@ -41,7 +41,6 @@
         <button 
             class="mr-1"
             type="button"
-            *ngIf="currentStepIndex > 0"
             nz-button 
             nzType="default" 
             (click)="onPreviousStep()">
@@ -51,7 +50,6 @@
             [disabled]="registerForm?.get('profile')?.invalid"
             class="mr-1"
             type="button"
-            *ngIf="currentStepIndex < 3" 
             nz-button 
             nzType="default" 
             (click)="onNextStep()">
@@ -65,7 +63,6 @@
         <button 
             class="mr-1"
             type="button"
-            *ngIf="currentStepIndex > 0"
             nz-button 
             nzType="default" 
             (click)="onPreviousStep()">
@@ -75,7 +72,6 @@
             [disabled]="registerForm?.get('company')?.invalid"
             class="mr-1"
             type="button"
-            *ngIf="currentStepIndex < 3" 
             nz-button 
             nzType="default" 
             (click)="onNextStep()">
@@ -85,20 +81,20 @@
 
       <!-- Plan Step -->
       <ng-container *ngSwitchCase="3">
-        <xyz-registration-plan-form></xyz-registration-plan-form>
+        <xyz-registration-plan-form
+            [plans]="availablePlans$ | async">
+        </xyz-registration-plan-form>
         <button 
             class="mr-1"
             type="button"
-            *ngIf="currentStepIndex > 0"
             nz-button 
             nzType="default" 
             (click)="onPreviousStep()">
           <span>Previous</span>
         </button>
         <button 
-            [disabled]="registerForm.invalid"
+            [disabled]="registerForm.get('plan')?.invalid"
             type="submit"
-            *ngIf="currentStepIndex === 3"
             nz-button 
             nzType="primary">
           <span>Register</span>

@@ -8,6 +8,9 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable } from 'rxjs';
 
 import * as fromAuthentication from '../../store';
+import * as fromPlans from '@xyz/office/store/plans';
+import * as fromRoot from '@xyz/office/store';
+import { Plan } from '@xyz/office/modules/core/entities';
 
 @Component({
   selector: 'xyz-register',
@@ -22,10 +25,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public currentStepIndex: number = 0;
 
   public registrationResponseMessage$!: Observable<ResponseMessage | null>;
+  public availablePlans$!: Observable<Plan[] | null>;
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _store: Store<fromAuthentication.AuthenticationState>
+    private _store: Store<fromRoot.RootState>
   ) {
     this.registerForm = this._formBuilder.group({
       user: this._formBuilder.group({
@@ -50,6 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.registrationResponseMessage$ = this._store.select(fromAuthentication.selectRegistartionResponseMessage);
+    this.availablePlans$ = this._store.select(fromPlans.selectAvailablePlans);
   }
 
   public onPreviousStep(): void {

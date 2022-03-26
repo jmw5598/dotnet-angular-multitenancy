@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AvailablePlansLoadedGuard } from "../core/guards/available-plans-loaded.guard";
 import { AuthenticationComponent } from "./pages/authentication/authentication.component";
 import { ForgotPasswordComponent } from "./pages/forgot-password/forgot-password.component";
 import { LoggingInComponent } from "./pages/logging-in/logging-in.component";
@@ -30,6 +31,7 @@ const routes: Routes = [
       },
       {
         path: 'register',
+        canActivate: [AvailablePlansLoadedGuard],
         component: RegisterComponent
       },
       {
