@@ -20,21 +20,26 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<ValidationResult> VerifyEmail(string email)
         {
+            var foundEmail = this._context.Users
+                .FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
+            
             return await Task.FromResult(
                 new ValidationResult
                 {
-                    IsValid = true
+                    IsValid = foundEmail == null
                 }
             );
         }
 
         public async Task<ValidationResult> VerifyUserName(string userName)
         {
-            // @TODO
+            var foundUserName = this._context.Users
+                .FirstOrDefault(user => user.UserName.ToLower() == userName.ToLower());
+
             return await Task.FromResult(
                 new ValidationResult
                 {
-                    IsValid = true
+                    IsValid = foundUserName == null
                 }
             );
         }

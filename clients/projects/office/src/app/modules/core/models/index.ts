@@ -19,7 +19,7 @@ export * from './paging/sort.model';
 // api
 export * from './api/reponse-message.model';
 export * from './api/response-status.enum';
-export * from './api/validator-result.model';
+export * from './api/validation-result.model';
 
 // navigation
 export * from './navigation/navigation-link.model';

@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+
 using Xyz.Core.Interfaces;
+using Xyz.Core.Models;
 
 namespace Xyz.Api.Controllers
 {
@@ -16,19 +18,12 @@ namespace Xyz.Api.Controllers
             this._usersService = usersService;
         }
 
-        [HttpHead("verify/email")]
-        public async Task<ActionResult> VerifyEmail([FromQuery] string email)
+        [HttpGet("verify/email")]
+        public async Task<ActionResult<ValidationResult>> VerifyEmail([FromQuery] string email)
         {
             try
             {
-                var isEmailInUse = await this._usersService.VerifyEmail(email);
-
-                if (isEmailInUse)
-                {
-                    return NoContent();
-                }
-
-                return NotFound("Email is currently not in use!");
+                return Ok(await this._usersService.VerifyEmail(email));
             }
             catch (Exception ex)
             {
@@ -38,18 +33,11 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpHead("verify/username")]
-        public async Task<ActionResult> VerifyUserName([FromQuery] string userName)
+        public async Task<ActionResult<ValidationResult>> VerifyUserName([FromQuery] string userName)
         {
             try
             {
-                var isEmailInUse = await this._usersService.VerifyUserName(userName);
-                
-                if (isEmailInUse)
-                {
-                    return NoContent();
-                }
-
-                return NotFound("Username is currently not in use!");
+                return Ok(await this._usersService.VerifyUserName(userName));
             }
             catch (Exception ex)
             {

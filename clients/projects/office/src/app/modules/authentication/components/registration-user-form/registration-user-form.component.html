@@ -1,10 +1,15 @@
 <div [formGroup]="formGroup">
   <h3 class="my-5">Login Details</h3>
   <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your Email!">
+    <nz-form-control [nzErrorTip]="emailErrorTemplate">
       <nz-input-group nzPrefixIcon="user">
         <input type="text" nz-input formControlName="username" placeholder="Email" />
       </nz-input-group>
+      <ng-template #emailErrorTemplate let-control>
+        <ng-container *ngIf="control.hasError('required')">Email is required!</ng-container>
+        <ng-container *ngIf="control.hasError('emailExists')">Email already exists!</ng-container>
+        <ng-container *ngIf="control.hasError('email')">Invalid email format!</ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

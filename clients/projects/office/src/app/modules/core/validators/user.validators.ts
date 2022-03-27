@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn } from "@angular/forms";
 import { catchError, debounceTime, filter, map, Observable, of, switchMap, take } from "rxjs";
-import { ValidatorResult } from "../models";
+import { ValidationResult } from "../models";
 import { UsersService } from "../services/users.service";
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UserValidators  {
         take(1),
         switchMap(() => this._usersService.verifyEmail(control.value)
           .pipe(
-            map((result: ValidatorResult) => result.isValid ? of(null) : of({ emailExists: true })),
+            map((result: ValidationResult) => result.isValid ? null : { emailExists: true }),
             catchError(error => of(null))
           )
         )
@@ -36,7 +36,7 @@ export class UserValidators  {
         take(1),
         switchMap(() => this._usersService.verifyUserName(control.value)
           .pipe(
-            map((result: ValidatorResult) => result.isValid ? of(null) : of({ userNameExists: true })),
+            map((result: ValidationResult) => result.isValid ? null : { userNameExists: true }),
             catchError(error => of(null))
           )
         )
