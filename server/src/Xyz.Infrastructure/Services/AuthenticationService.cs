@@ -76,7 +76,7 @@ namespace Xyz.Infrastructure.Services
             return null;
         }
 
-        public async Task<object> Register()
+        public async Task<object> Register(Registration registration)
         {
             // create transation
             // create tenant entry
@@ -92,17 +92,17 @@ namespace Xyz.Infrastructure.Services
 
             // commit transation
 
-            var registeredUser = await this._userManager.CreateAsync(
-                new ApplicationUser
-                {
-                    UserName = "jmw5598@gmail.com",
-                    Email = "jmw5598@gmail.com",
-                    EmailConfirmed = true
-                }, "Password@123");
+            // var registeredUser = await this._userManager.CreateAsync(
+            //     new ApplicationUser
+            //     {
+            //         UserName = "jmw5598@gmail.com",
+            //         Email = "jmw5598@gmail.com",
+            //         EmailConfirmed = true
+            //     }, "Password@123");
 
             // Look into how to seed roles?
             //this._roleManager.
-
+            throw new Exception("Error registering new account!");
             return new {}; //registeredUser == null ? new {} : registeredUser;
         }
 

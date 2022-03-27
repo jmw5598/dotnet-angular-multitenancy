@@ -28,7 +28,7 @@ export class AuthenticationEffects {
           catchError(error => {
             return of(fromAuthentication.loginUserFailure({ message: {
               status: ResponseStatus.ERROR,
-              message: error?.error || 'Invalid username/password!'
+              message: error?.error?.message || 'Invalid username/password!'
             } as ResponseMessage }))
           })
         )
@@ -54,7 +54,7 @@ export class AuthenticationEffects {
           catchError(error => 
             of(fromAuthentication.passwordResetRequestFailure({ message: {
               status: ResponseStatus.ERROR,
-              message: error?.message || 'Error sending password reset request!'
+              message: error?.error?.message || 'Error sending password reset request!'
             } as ResponseMessage })))
         )
       )
@@ -84,7 +84,7 @@ export class AuthenticationEffects {
           catchError(error => {
             return of(fromAuthentication.registrationRequestFailure({ message: {
               status: ResponseStatus.ERROR,
-              message: error?.error || 'New registration failed. Please try again!'
+              message: error?.error?.message || 'New registration failed. Please try again!'
             } as ResponseMessage }));
           })
         )

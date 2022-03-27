@@ -5,7 +5,7 @@ namespace Xyz.Core.Interfaces
     public interface IAuthenticationService
     {
         public Task<AuthenticatedUser> Login(Credentials crendentials);
-        public Task<object> Register();
+        public Task<object> Register(Registration registration);
         public Task<object> ForgotPassword();
         public Task<object> ChangePassword();
     }

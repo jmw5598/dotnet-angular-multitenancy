@@ -42,11 +42,14 @@ export class AuthenticationService {
   // Change Password
 
   public register(registration: Registration): Observable<ResponseMessage> {
-    // @TODO make API call
-    return of({
-      status: ResponseStatus.SUCCESS,
-      message: 'Successfull registration!'
-    });
+    return this._http.post<ResponseMessage>(
+      `${this._environmentService.getBaseAuthUrl()}/register`,
+      registration
+    );
+    // return of({
+    //   status: ResponseStatus.SUCCESS,
+    //   message: 'Successfull registration!'
+    // });
   }
 
   public getCachedAuthenticatedUser(): AuthenticatedUser | null {

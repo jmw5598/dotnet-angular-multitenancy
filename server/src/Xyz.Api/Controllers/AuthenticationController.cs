@@ -36,7 +36,13 @@ namespace Xyz.Api.Controllers
 
                 if (authenticatedUser == null)
                 {
-                    return Unauthorized("Invalid username/password");
+                    return Unauthorized(
+                        new ResponseMessage
+                        {
+                            Status = ResponseStatus.ERROR,
+                            Message = "Invalid username/password!"
+                        }
+                    );
                 }
 
                 return Ok(authenticatedUser);
@@ -44,7 +50,13 @@ namespace Xyz.Api.Controllers
             catch (Exception e)
             {
                 this._logger.LogError($"There was an error, {e.Message}");
-                return BadRequest(e.Message);
+                return BadRequest(
+                    new ResponseMessage
+                    {
+                        Status = ResponseStatus.ERROR,
+                        Message = e.Message
+                    }
+                );
             }
         }
 
@@ -53,12 +65,20 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._authenticationService.Register());
+                return Ok(
+                    await this._authenticationService.Register(registrationDto.ToRegistration())
+                );
             }
             catch (Exception e)
             {
                 this._logger.LogError($"There was an error, {e.Message}");
-                return BadRequest(e.Message);
+                return BadRequest(
+                    new ResponseMessage
+                    {
+                        Status = ResponseStatus.ERROR,
+                        Message = e.Message
+                    }
+                );
             }
         }
 
