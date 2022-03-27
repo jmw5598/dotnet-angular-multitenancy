@@ -8,6 +8,8 @@ namespace Xyz.Core.Entities.Multitenancy
         public SubscriptionRenewalRate RenewalRate { get; set; } = default!;
         public int MaxUserCount { get; set; }
 
+        public decimal Price { get; set; }
+
         public Tenant Tenant { get; set; } = default!;
 
         public Guid PlanId { get; set; } = default!;
