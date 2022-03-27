@@ -22,7 +22,7 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<object> Login(LoginRequestDto loginRequestDto)
+        public async Task<object> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<object> Register()
+        public async Task<object> Register([FromBody] RegistrationDto registrationDto)
         {
             try
             {
