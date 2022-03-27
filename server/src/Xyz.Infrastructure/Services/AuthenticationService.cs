@@ -78,36 +78,46 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> Register(Registration registration)
         {
-            // create transation
-            // create tenant entry
-            // create company,
-            // create company_tenant entry
-            // create profile
+            using var transaction = this._context.Database.BeginTransaction();
 
-            // create user with company and profile and tenant
-
-            // save user
-
-            // create user_tenant entry
-
-            // commit transation
-
-            // var registeredUser = await this._userManager.CreateAsync(
-            //     new ApplicationUser
-            //     {
-            //         UserName = "jmw5598@gmail.com",
-            //         Email = "jmw5598@gmail.com",
-            //         EmailConfirmed = true
-            //     }, "Password@123");
-
-            // Look into how to seed roles?
-            //this._roleManager.
-            // throw new Exception("Error registering new account!");
-            return new ResponseMessage
+            try 
             {
-                Status = ResponseStatus.SUCCESS,
-                Message = "Your account was create!\n  Please check your email for a confirmation!"
-            }; //registeredUser == null ? new {} : registeredUser;
+                // create tenant entry (subdomain? should this be in the registraiton form?)
+                // create company,
+                // create company_tenant entry
+                // create profile
+
+                // create user with company and profile and tenant
+
+                // save user
+
+                // create user_tenant entry
+
+                // commit transation
+
+                // var registeredUser = await this._userManager.CreateAsync(
+                //     new ApplicationUser
+                //     {
+                //         UserName = "jmw5598@gmail.com",
+                //         Email = "jmw5598@gmail.com",
+                //         EmailConfirmed = true
+                //     }, "Password@123");
+
+                // Look into how to seed roles?
+                //this._roleManager.
+                // throw new Exception("Error registering new account!");
+                return new ResponseMessage
+                {
+                    Status = ResponseStatus.SUCCESS,
+                    Message = "Your account was create!\n  Please check your email for a confirmation!"
+                }; //registeredUser == null ? new {} : registeredUser;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                this._logger.LogError("Error registering new account!");
+                throw new Exception("Error registering new account!");
+            }
         }
 
         public async Task<object> ForgotPassword()

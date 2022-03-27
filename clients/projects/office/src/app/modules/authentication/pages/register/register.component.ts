@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { Registration, ResponseMessage } from '@xyz/office/modules/core/models';
-import { MatchValidators, UserValidators } from '@xyz/office/modules/core/validators';
+import { MatchValidators, UserValidators, ValidationPatterns } from '@xyz/office/modules/core/validators';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable } from 'rxjs';
 
@@ -35,8 +35,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerForm = this._formBuilder.group({
       user: this._formBuilder.group({
         username: ['', [Validators.required, Validators.email], [this._userValidators.validateEmail()]],
-        password: ['', [Validators.required]],
-        confirmPassword: ['', [Validators.required]]
+        password: ['', [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern(ValidationPatterns.password)
+        ]],
+        confirmPassword: ['', [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.pattern(ValidationPatterns.password)
+        ]]
       }, { 
         validators: MatchValidators.mustMatch('password', 'confirmPassword') 
       }),
