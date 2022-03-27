@@ -41,6 +41,14 @@ namespace Xyz.Core.Entities.Multitenancy
 
         public bool IsActive { get; set; }
 
+        public bool IsConfigured { get; set; }
+
+        public Guid CompanyId { get; set; } = default!;
+        public Company Company { get; set; } = default!;
+        
+        public Guid TenantPlanId { get; set; } = default!;
+        public TenantPlan TenantPlan { get; set; } = default!;
+
         public ICollection<ApplicationUser> Users { get; set; } = default!;
     }
 }

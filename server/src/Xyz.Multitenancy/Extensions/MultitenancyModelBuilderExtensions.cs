@@ -11,25 +11,38 @@ namespace Xyz.Multitenancy.Extensions
         public static void SeedApplicationUsersAndRoles(this ModelBuilder modelBuilder)
         {
             // Create Roles
-            var rootRole = new ApplicationRole { 
+            var rootRole = new ApplicationRole 
+            { 
                 Id = Guid.NewGuid(),
                 Name = Roles.ROOT, 
                 NormalizedName = Roles.ROOT 
             };
 
-            var adminRole = new ApplicationRole { 
+            var adminRole = new ApplicationRole 
+            {
                 Id = Guid.NewGuid(), 
                 Name = Roles.ADMIN, 
                 NormalizedName = Roles.ADMIN
             };
 
-            var userRole = new ApplicationRole { 
+            var userRole = new ApplicationRole
+            { 
                 Id = Guid.NewGuid(),
                 Name = Roles.USER, 
                 NormalizedName = Roles.USER 
             };
 
             modelBuilder.Entity<ApplicationRole>().HasData(rootRole, adminRole, userRole);
+
+            // Create User Profile
+            var profile = new Profile
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "Jason",
+                LastName = "White"
+            };
+
+            modelBuilder.Entity<Profile>().HasData(profile);
     
             // Create User
             var user = new ApplicationUser { 
@@ -38,7 +51,8 @@ namespace Xyz.Multitenancy.Extensions
                 NormalizedEmail = "JMW5598@gmail.com",
                 EmailConfirmed = true,
                 UserName = "jmw5598@gmail.com",
-                NormalizedUserName = "JMW5598@GMAIL.COM"
+                NormalizedUserName = "JMW5598@GMAIL.COM",
+                ProfileId = profile.Id
             };
 
             PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();

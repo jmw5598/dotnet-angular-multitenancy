@@ -15,6 +15,7 @@ namespace Xyz.Multitenancy.Data
         public DbSet<Plan> Plans => Set<Plan>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<Profile> Profiles => Set<Profile>();
+        public DbSet<TenantPlan> TenantPlans => Set<TenantPlan>();
 
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
         {
