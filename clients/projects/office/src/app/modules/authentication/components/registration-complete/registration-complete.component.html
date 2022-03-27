@@ -1,21 +1,22 @@
-<div class="d-block mx-auto">
-  <div *ngIf="message" class="d-flex flex-column justify-content-center">
+<div class="">
+  <div *ngIf="message" class="flex flex-column justify-content-center">
     <i *ngIf="message?.status === ResponseStatus.SUCCESS; else errorIconTemplate"
+        class="my-4"
         nz-icon 
         [nzType]="'check-circle'" 
         [nzTheme]="'twotone'" 
         [nzTwotoneColor]="'#52c41a'"
-        style="font-size: 4rem;">
+        style="font-size: 5rem;">
     </i>
     <ng-template #errorIconTemplate>
       <i nz-icon 
+          class="my-4"
           [nzType]="'exclamation-circle'" 
           [nzTheme]="'twotone'" 
           [nzTwotoneColor]="'#eb3434'"
-          style="font-size: 4rem;">
+          style="font-size: 5rem;">
       </i>
     </ng-template>
-    <p>{{ message?.message }}</p>
-    <pre>{{ message | json }}</pre>
+    <span class="text-center">{{ message?.message }}</span>
   </div>
 </div>
