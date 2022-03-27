@@ -102,8 +102,12 @@ namespace Xyz.Infrastructure.Services
 
             // Look into how to seed roles?
             //this._roleManager.
-            throw new Exception("Error registering new account!");
-            return new {}; //registeredUser == null ? new {} : registeredUser;
+            // throw new Exception("Error registering new account!");
+            return new ResponseMessage
+            {
+                Status = ResponseStatus.SUCCESS,
+                Message = "Your account was create!\n  Please check your email for a confirmation!"
+            }; //registeredUser == null ? new {} : registeredUser;
         }
 
         public async Task<object> ForgotPassword()

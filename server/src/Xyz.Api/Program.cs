@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using Xyz.Core.Entities.Multitenancy;
@@ -23,8 +24,9 @@ var configuration = builder.Configuration;
 builder.Services.AddControllers()
     .AddJsonOptions(x =>
     {
+
         // serialize enums as strings in api responses (e.g. Role)
-        x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
     });
     
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
