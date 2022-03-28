@@ -1,5 +1,5 @@
 <div class="">
-  <div *ngIf="message" class="flex flex-column justify-content-center">
+  <div *ngIf="message; else processingRegistrationTemplate" class="flex flex-column justify-content-center">
     <i *ngIf="message?.status === ResponseStatus.SUCCESS; else errorIconTemplate"
         class="my-4"
         nz-icon 
@@ -19,4 +19,14 @@
     </ng-template>
     <span class="text-center">{{ message?.message }}</span>
   </div>
+  <ng-template #processingRegistrationTemplate>
+    <div style="min-height: 150px;">
+      <nz-spin 
+          class="flex flex-row justify-content-center align-items-center"
+          nzSimple 
+          nzTip="Creating your Account..."
+          [nzSize]="'large'">
+      </nz-spin>
+    </div>
+  </ng-template>
 </div>
