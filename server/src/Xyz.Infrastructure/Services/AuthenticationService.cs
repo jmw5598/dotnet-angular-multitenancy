@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Linq;
 
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
@@ -82,35 +83,62 @@ namespace Xyz.Infrastructure.Services
 
             try 
             {
-                // create tenant entry (subdomain? should this be in the registraiton form?)
-                // create company,
-                // create company_tenant entry
-                // create profile
+                var role = await this._roleManager.FindByNameAsync(Roles.ADMIN);
 
-                // create user with company and profile and tenant
+                var plan = this._context.Plans.Find(registration.Plan.Id);
 
-                // save user
+                if (plan == null)
+                {
+                    throw new Exception("Error finding selected plan!");
+                }
 
-                // create user_tenant entry
+                var tenant = new Tenant
+                {
+                    Name = registration.Company.Name.ToLower().Replace(" " , ""),
+                    DisplayName = registration.Company.Name,
+                    Guid = Guid.NewGuid().ToString(),
+                    Company = registration.Company,
+                    IsActive = false,
+                    IsConfigured = false,
+                    TenantPlan = new TenantPlan
+                    {
+                        MaxUserCount = plan.MaxUserCount,
+                        PlanId = plan.Id,
+                        Price = plan.Price,
+                        RenewalRate = plan.RenewalRate
+                    },
+                    DomainNames = "",
+                    ConnectionString = "",
+                    IpAddresses = ""
+                };
 
-                // commit transation
+                // this._context.Tenants.Add(tenant);
+                // this._context.SaveChanges();
 
-                // var registeredUser = await this._userManager.CreateAsync(
-                //     new ApplicationUser
-                //     {
-                //         UserName = "jmw5598@gmail.com",
-                //         Email = "jmw5598@gmail.com",
-                //         EmailConfirmed = true
-                //     }, "Password@123");
+                registration.User.Tenants = new List<Tenant>{ tenant };
+                registration.User.Profile = registration.Profile;
 
-                // Look into how to seed roles?
-                //this._roleManager.
-                // throw new Exception("Error registering new account!");
+                var userIdentityResult = await this._userManager.CreateAsync(registration.User, registration.RawPassword);
+                
+                if (!userIdentityResult.Succeeded)
+                {
+                    throw new Exception("Error creating new user!");
+                }
+
+                var addRoleIdentityResult = await this._userManager.AddToRoleAsync(registration.User, Roles.ADMIN);
+
+                if (!addRoleIdentityResult.Succeeded)
+                {
+                    throw new Exception("Error adding role to new user");
+                }
+
+                transaction.Commit();
+
                 return new ResponseMessage
                 {
                     Status = ResponseStatus.SUCCESS,
                     Message = "Your account was create!\n  Please check your email for a confirmation!"
-                }; //registeredUser == null ? new {} : registeredUser;
+                };
             }
             catch (Exception e)
             {

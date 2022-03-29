@@ -8,9 +8,47 @@ namespace Xyz.Multitenancy.Extensions
 {
     public static class MultitenancyModelBuilderExtensions
     {
-        public static void SeedApplicationUsersAndRoles(this ModelBuilder modelBuilder)
+        public static void SeedDevUserAccount(this ModelBuilder modelBuilder)
         {
-            // Create Roles
+            var devPlan = new Plan
+            {
+                Id = Guid.NewGuid(),
+                Name = "Dev",
+                MaxUserCount = 5,
+                Price = 0,
+                RenewalRate = SubscriptionRenewalRate.MONTHLY
+            };
+
+            var company = new Company
+            {
+                Id = Guid.NewGuid(),
+                Name = "Dev Company"
+            };
+
+            var tenantPlan = new TenantPlan
+            {
+                Id = Guid.NewGuid(),
+                MaxUserCount = devPlan.MaxUserCount,
+                Price = devPlan.Price,
+                RenewalRate = devPlan.RenewalRate,
+                PlanId = devPlan.Id
+            };
+
+            var tenant = new Tenant
+            {
+                Id = Guid.NewGuid(),
+                Name = company.Name.Trim().ToLower().Replace(" ", ""),
+                DisplayName = company.Name,
+                DomainNames = "",
+                IpAddresses = "",
+                ConnectionString = "TODO",
+                Guid = Guid.NewGuid().ToString(),
+                IsActive = true,
+                IsConfigured = true,
+                CompanyId = company.Id,
+                TenantPlanId = tenantPlan.Id
+            };
+
             var rootRole = new ApplicationRole 
             { 
                 Id = Guid.NewGuid(),
@@ -29,12 +67,9 @@ namespace Xyz.Multitenancy.Extensions
             { 
                 Id = Guid.NewGuid(),
                 Name = Roles.USER, 
-                NormalizedName = Roles.USER 
+                NormalizedName = Roles.USER
             };
 
-            modelBuilder.Entity<ApplicationRole>().HasData(rootRole, adminRole, userRole);
-
-            // Create User Profile
             var profile = new Profile
             {
                 Id = Guid.NewGuid(),
@@ -42,9 +77,6 @@ namespace Xyz.Multitenancy.Extensions
                 LastName = "White"
             };
 
-            modelBuilder.Entity<Profile>().HasData(profile);
-    
-            // Create User
             var user = new ApplicationUser { 
                 Id = Guid.NewGuid(),
                 Email = "jmw5598@gmail.com",
@@ -57,8 +89,16 @@ namespace Xyz.Multitenancy.Extensions
 
             PasswordHasher<ApplicationUser> ph = new PasswordHasher<ApplicationUser>();
             user.PasswordHash = ph.HashPassword(user, "Password@123");
+            
 
+            modelBuilder.Entity<Plan>().HasData(devPlan);
+            modelBuilder.Entity<Company>().HasData(company);
+            modelBuilder.Entity<Tenant>().HasData(tenant);
+            modelBuilder.Entity<TenantPlan>().HasData(tenantPlan);
+            modelBuilder.Entity<ApplicationRole>().HasData(rootRole, adminRole, userRole);
+            modelBuilder.Entity<Profile>().HasData(profile);
             modelBuilder.Entity<ApplicationUser>().HasData(user);
+            modelBuilder.Entity("user_tenants").HasData(new { TenantId = tenant.Id, AspNetUserId = user.Id });
 
             // Set Roles For User
             modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
@@ -88,6 +128,32 @@ namespace Xyz.Multitenancy.Extensions
                     MaxUserCount = 5
                 }
             );
+        }
+
+        public static void SeedRoles(this ModelBuilder modelBuilder)
+        {
+            var rootRole = new ApplicationRole 
+            { 
+                Id = Guid.NewGuid(),
+                Name = Roles.ROOT, 
+                NormalizedName = Roles.ROOT 
+            };
+
+            var adminRole = new ApplicationRole 
+            {
+                Id = Guid.NewGuid(), 
+                Name = Roles.ADMIN, 
+                NormalizedName = Roles.ADMIN
+            };
+
+            var userRole = new ApplicationRole
+            { 
+                Id = Guid.NewGuid(),
+                Name = Roles.USER, 
+                NormalizedName = Roles.USER
+            };
+
+            modelBuilder.Entity<ApplicationRole>().HasData(rootRole, adminRole, userRole);
         }
     }
 }

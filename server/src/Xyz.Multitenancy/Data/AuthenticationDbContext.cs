@@ -19,6 +19,7 @@ namespace Xyz.Multitenancy.Data
 
         public AuthenticationDbContext(DbContextOptions<AuthenticationDbContext> options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,7 +42,7 @@ namespace Xyz.Multitenancy.Data
                  x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
                  x => x.ToTable("user_tenants"));
 
-            modelBuilder.SeedApplicationUsersAndRoles();
+            modelBuilder.SeedDevUserAccount();
             modelBuilder.SeedPlans();
         }
 
