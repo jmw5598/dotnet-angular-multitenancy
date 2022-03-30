@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -56,19 +57,14 @@ namespace Xyz.Infrastructure.Services
 
             if (user != null && await _userManager.CheckPasswordAsync(user, credentials.Password))
             {
-                // @TODO Check if user is active and tenant is active
-
-                // Get roles
-                var userRoles = await this._userManager.GetRolesAsync(user);
-
-                // Get claims
-                // public tenants = this._context.Tenants.Fin
-
                 var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(MultiTenantConstants.TenantClaim, tenant.Guid)
                 };
+
+                var userRoles = await this._userManager.GetRolesAsync(user);
 
                 foreach (var userRole in userRoles)
                 {
