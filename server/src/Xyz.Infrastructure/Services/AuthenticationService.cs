@@ -10,17 +10,20 @@ using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 using Xyz.Multitenancy.Data;
+using Xyz.Multitenancy.Multitenancy;
 
 namespace Xyz.Infrastructure.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private ILogger<AuthenticationService> _logger;
-        private IConfiguration _configuration;
-        private UserManager<ApplicationUser> _userManager;
-        private RoleManager<ApplicationRole> _roleManager;
-        private AuthenticationDbContext _context;
-        private ITokenService _tokenService;
+        private readonly ILogger<AuthenticationService> _logger;
+        private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly AuthenticationDbContext _context;
+        private readonly ITokenService _tokenService;
+        private readonly ITenantAccessor<Tenant> _tenantAccessor;
+
 
         public AuthenticationService(
             ILogger<AuthenticationService> logger, 
@@ -28,7 +31,8 @@ namespace Xyz.Infrastructure.Services
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             AuthenticationDbContext context,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            ITenantAccessor<Tenant> tenanatAccessor)
         {
             this._logger = logger;
             this._configuration = configuration;
@@ -36,10 +40,18 @@ namespace Xyz.Infrastructure.Services
             this._roleManager = roleManager;
             this._context = context;
             this._tokenService = tokenService;
+            this._tenantAccessor = tenanatAccessor;
         }
 
         public async Task<AuthenticatedUser> Login(Credentials credentials)
         {
+            var tenant = this._tenantAccessor.Tenant;
+
+            if (tenant == null || tenant.IsActive || tenant.IsActive)
+            {
+                throw new Exception("Account is still being setup or is inactive! Please try again later!");
+            }
+
             var user = await this._userManager.FindByNameAsync(credentials.UserName);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, credentials.Password))
