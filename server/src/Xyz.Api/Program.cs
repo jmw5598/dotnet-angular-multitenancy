@@ -109,6 +109,11 @@ builder.Services.AddAuthorization(options =>
 });
 
 
+// Add Multitenancy
+builder.Services.AddMultiTenancy()
+    .WithResolutionStrategy<HostResolutionStrategy>()
+    .WithStore<TenantsDbStore>();
+
 // Cors Configuration
 var  XyzCorsOrigins = "XyzCorsOrigins";
 
@@ -134,6 +139,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMultiTenancy();
 
 app.UseCors(XyzCorsOrigins);
 

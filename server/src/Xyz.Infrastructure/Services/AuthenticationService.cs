@@ -48,7 +48,7 @@ namespace Xyz.Infrastructure.Services
         {
             var tenant = this._tenantAccessor.Tenant;
 
-            if (tenant == null || tenant.IsActive || tenant.IsActive)
+            if (tenant == null || !tenant.IsActive || !tenant.IsActive)
             {
                 throw new Exception("Account is still being setup or is inactive! Please try again later!");
             }
