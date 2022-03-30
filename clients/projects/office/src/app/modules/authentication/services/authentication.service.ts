@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { delay, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 import { EnvironmentService, ICacheService, CACHE_SERVICE } from '@xyz/office/modules/core/services';
@@ -39,17 +39,11 @@ export class AuthenticationService {
     } as ResponseMessage)
   }
 
-  // Change Password
-
   public register(registration: Registration): Observable<ResponseMessage> {
     return this._http.post<ResponseMessage>(
       `${this._environmentService.getBaseAuthUrl()}/register`,
       registration
     );
-    // return of({
-    //   status: ResponseStatus.SUCCESS,
-    //   message: 'Successfull registration!'
-    // });
   }
 
   public getCachedAuthenticatedUser(): AuthenticatedUser | null {

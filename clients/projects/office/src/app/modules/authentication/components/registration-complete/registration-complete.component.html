@@ -1,4 +1,4 @@
-<div class="">
+<div class="flex flex-column justify-content-center" style="min-height: 175px;">
   <div *ngIf="message; else processingRegistrationTemplate" class="flex flex-column justify-content-center">
     <i *ngIf="message?.status === ResponseStatus.SUCCESS; else errorIconTemplate"
         class="my-4"
@@ -20,7 +20,7 @@
     <span class="text-center">{{ message?.message }}</span>
   </div>
   <ng-template #processingRegistrationTemplate>
-    <div style="min-height: 150px;">
+    <div>
       <nz-spin 
           class="flex flex-row justify-content-center align-items-center"
           nzSimple 

@@ -112,9 +112,6 @@ namespace Xyz.Infrastructure.Services
                     IpAddresses = ""
                 };
 
-                // this._context.Tenants.Add(tenant);
-                // this._context.SaveChanges();
-
                 registration.User.Tenants = new List<Tenant>{ tenant };
                 registration.User.Profile = registration.Profile;
 
@@ -143,7 +140,7 @@ namespace Xyz.Infrastructure.Services
             catch (Exception e)
             {
                 transaction.Rollback();
-                this._logger.LogError("Error registering new account!");
+                this._logger.LogError("Error registering new account!", e);
                 throw new Exception("Error registering new account!");
             }
         }
