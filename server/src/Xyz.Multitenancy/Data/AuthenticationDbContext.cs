@@ -42,7 +42,8 @@ namespace Xyz.Multitenancy.Data
                  x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
                  x => x.ToTable("user_tenants"));
 
-            modelBuilder.SeedDevUserAccount();
+            modelBuilder.SeedDevLocalhostTenant(); // For Dev only
+            modelBuilder.SeedDevUserAccount();  // For Dev only
             modelBuilder.SeedPlans();
         }
 

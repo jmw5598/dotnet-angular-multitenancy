@@ -130,6 +130,53 @@ namespace Xyz.Multitenancy.Extensions
             );
         }
 
+        public static void SeedDevLocalhostTenant(this ModelBuilder modelBuilder)
+        {
+            var company = new Company
+            {
+                Id = Guid.NewGuid(),
+                Name = "Localhost"
+            };
+
+            var plan = new Plan
+            {
+                Id = Guid.NewGuid(),
+                MaxUserCount = 5,
+                Name = "Localhost Dev Plan",
+                Price = 0,
+                RenewalRate = SubscriptionRenewalRate.MONTHLY
+            };
+
+            var tenantPlan = new TenantPlan
+            {
+                Id = Guid.NewGuid(),
+                MaxUserCount = plan.MaxUserCount,
+                Price = plan.Price,
+                RenewalRate = SubscriptionRenewalRate.MONTHLY,
+                PlanId = plan.Id
+            };
+            
+            var tenant = new Tenant
+            {
+                Id = Guid.NewGuid(),
+                CompanyId = company.Id,
+                DisplayName = company.Name,
+                DomainNames = "",
+                Guid = Guid.NewGuid().ToString(),
+                IpAddresses = "",
+                IsActive = false,
+                IsConfigured = false,
+                Name = company.Name.Trim().ToLower(),
+                TenantPlanId = tenantPlan.Id,
+                ConnectionString = ""
+            };
+            
+            modelBuilder.Entity<Company>().HasData(company);
+            modelBuilder.Entity<Plan>().HasData(plan);
+            modelBuilder.Entity<TenantPlan>().HasData(tenantPlan);
+            modelBuilder.Entity<Tenant>().HasData(tenant);
+        }
+
         public static void SeedRoles(this ModelBuilder modelBuilder)
         {
             var rootRole = new ApplicationRole 
