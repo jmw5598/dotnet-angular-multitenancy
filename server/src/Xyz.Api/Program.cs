@@ -62,6 +62,7 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPlansService, PlansService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<AuthenticationDbContext>(options =>

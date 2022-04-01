@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
+using Xyz.Multitenancy.Security;
 
 namespace Xyz.Api.Controllers
 {
@@ -27,8 +29,9 @@ namespace Xyz.Api.Controllers
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Errer verifying email!");
-                return BadRequest("Error verifying email!");
+                var errorMessage = "Error verifying email!";
+                this._logger.LogError(errorMessage);
+                return BadRequest(errorMessage);
             }
         }
 
@@ -41,8 +44,9 @@ namespace Xyz.Api.Controllers
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Errer verifying email!");
-                return BadRequest("Error verifying email!");
+                var errorMessage = "Error verifying email!";
+                this._logger.LogError(errorMessage);
+                return BadRequest(errorMessage);
             }
         }
     }

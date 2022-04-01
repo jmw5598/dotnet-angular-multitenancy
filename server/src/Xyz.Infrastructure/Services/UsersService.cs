@@ -43,5 +43,15 @@ namespace Xyz.Infrastructure.Services
                 }
             );
         }
+
+        public async Task<object> GetUserSettings(string userId)
+        {
+            return new {}; // @TODO
+        }
+
+        public async Task<object> GetUserPermissions(string userId)
+        {
+            return new {}; // @TODO
+        }
     }
 }
