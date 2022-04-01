@@ -10,6 +10,8 @@ namespace Xyz.Multitenancy.Extensions
     {
         public static void SeedDevUserAccount(this ModelBuilder modelBuilder)
         {
+            var devCompanyConnectionString = "Server=localhost;Port=5432;Database=xyz_dev_company;User Id=xyz;Password=password;";
+
             var devPlan = new Plan
             {
                 Id = Guid.NewGuid(),
@@ -41,7 +43,7 @@ namespace Xyz.Multitenancy.Extensions
                 DisplayName = company.Name,
                 DomainNames = "",
                 IpAddresses = "",
-                ConnectionString = "TODO",
+                ConnectionString = devCompanyConnectionString,
                 Guid = Guid.NewGuid().ToString(),
                 IsActive = true,
                 IsConfigured = true,
@@ -132,6 +134,8 @@ namespace Xyz.Multitenancy.Extensions
 
         public static void SeedDevLocalhostTenant(this ModelBuilder modelBuilder)
         {
+            var localhostCompanyConnectionString = "Server=localhost;Port=5432;Database=xyz_localhost_company;User Id=xyz;Password=password;";
+
             var company = new Company
             {
                 Id = Guid.NewGuid(),
@@ -168,7 +172,7 @@ namespace Xyz.Multitenancy.Extensions
                 IsConfigured = false,
                 Name = company.Name.Trim().ToLower(),
                 TenantPlanId = tenantPlan.Id,
-                ConnectionString = ""
+                ConnectionString = localhostCompanyConnectionString
             };
             
             modelBuilder.Entity<Company>().HasData(company);
