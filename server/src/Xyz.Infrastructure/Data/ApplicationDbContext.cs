@@ -1,11 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Design;
 
 using Xyz.Multitenancy.Models;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Tenant;
+using Xyz.Infrastructure.Extensions;
 
 namespace Xyz.Infrastructure.Data
 {
@@ -20,7 +23,13 @@ namespace Xyz.Infrastructure.Data
         public DbSet<VehicleMake> VehicleMakes => Set<VehicleMake>();
         public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
         public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
+        public DbSet<Permission> Permissions => Set<Permission>();
+        public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+
+        }
 
         public ApplicationDbContext(
             DbContextOptions<ApplicationDbContext> options,
@@ -35,6 +44,7 @@ namespace Xyz.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.SeedPermissions();
         }
         
 
@@ -44,6 +54,8 @@ namespace Xyz.Infrastructure.Data
             var tenantsConfiguration = configuration.Value;
             string? connectionString = null;
 
+            // @TODO use connection string form db
+
             if (tenant == null || !tenantsConfiguration.ConnectionStrings.TryGetValue(tenant.Name, out connectionString))
             {
                 throw new NullReferenceException($"The connection string was null for the tenant: {tenant?.DisplayName}");
@@ -51,6 +63,25 @@ namespace Xyz.Infrastructure.Data
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
             return optionsBuilder.UseNpgsql(connectionString).Options;
+        }
+
+        /// <summary>
+        /// Taken from here: https://medium.com/oppr/net-core-using-entity-framework-core-in-a-separate-project-e8636f9dc9e5
+        /// </summary>
+        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+        {
+            public ApplicationDbContext CreateDbContext(string[] args)
+            {
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../Xyz.Infrastructure/config.json")
+                    .Build();
+
+                var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                var connectionString = configuration.GetConnectionString("DevCompany");
+                builder.UseNpgsql(connectionString).UseSnakeCaseNamingConvention();
+                return new ApplicationDbContext(builder.Options);
+            }
         }
     }
 }
