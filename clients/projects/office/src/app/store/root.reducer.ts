@@ -39,9 +39,20 @@ export function logger(reducer: ActionReducer<RootState>): ActionReducer<RootSta
   };
 }
 
+// Meta reducer to reset state on logout
+export function resetState(reducer: ActionReducer<RootState>): ActionReducer<RootState> {
+  return (state, action) => {
+    if (action.type === fromAuthentication.logoutUserSuccess.type) {
+      state = undefined;
+    }
+
+    return reducer(state, action);
+  };
+}
+
 export const metaReducers: MetaReducer<RootState>[] = !environment.production
-  ? [logger]
-  : [];
+  ? [logger, resetState]
+  : [resetState];
 
 export const rootEffects: any[] = [
   fromAuthentication.AuthenticationEffects,
