@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { UserPermission } from '@xyz/office/modules/core/entities';
 
-import { PermissionType, UserPermissions, UserPermissionsMap, UserSettings } from '@xyz/office/modules/core/models';
+import { ModulePermissionType, UserPermissions, UserPermissionsMap, UserSettings } from '@xyz/office/modules/core/models';
 import * as fromUser from './user.actions';
 
 export const userFeatureKey = 'user';

@@ -9,7 +9,7 @@ namespace Xyz.Core.Entities.Tenant
         public Guid Id { get; set; }
         
         [Column(TypeName = "varchar(24)")]
-        public PermissionType Type { get; set; }
+        public ModulePermissionType Type { get; set; }
         public string Name { get; set; } = default!;
     }
 }

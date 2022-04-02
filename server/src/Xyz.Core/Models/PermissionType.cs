@@ -1,6 +1,6 @@
 namespace Xyz.Core.Models
 {
-    public enum PermissionType
+    public enum ModulePermissionType
     {
         ACCOUNTS
     }

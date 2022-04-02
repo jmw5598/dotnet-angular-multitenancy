@@ -13,7 +13,7 @@ namespace Xyz.Infrastructure.Extensions
                new Permission
                {
                    Id = Guid.NewGuid(),
-                   Type = PermissionType.ACCOUNTS,
+                   Type = ModulePermissionType.ACCOUNTS,
                    Name = "Accounts Module"
                }
            );

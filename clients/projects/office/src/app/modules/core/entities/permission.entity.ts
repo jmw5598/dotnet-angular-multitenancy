@@ -1,7 +1,7 @@
-import { PermissionType } from "../models";
+import { ModulePermissionType } from "../models";
 
 export interface Permission {
   id: string,
-  type: PermissionType,
+  type: ModulePermissionType,
   name: string
 }
