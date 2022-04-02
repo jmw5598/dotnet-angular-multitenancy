@@ -7,3 +7,5 @@ export enum PermissionType {
 export interface UserPermissions {
   permission: UserPermission
 }
+
+export type UserPermissionsMap = { [key: string]: UserPermission };
