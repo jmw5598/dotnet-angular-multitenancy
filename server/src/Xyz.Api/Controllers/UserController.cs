@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using System.Security.Claims;
+
 using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
 using Xyz.Multitenancy.Security;
@@ -22,12 +24,18 @@ namespace Xyz.Api.Controllers
         }
         
         [HttpGet("settings")]
-        public async Task<ActionResult<object>> GetUserSettings()
+        public async Task<ActionResult<UserSettings>> GetUserSettings()
         {
             try
             {
-                // @TODO get user id
-                return Ok(await this._userService.GetUserSettings("skjdflf"));
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized("Unauthorized!");
+                }
+
+                return Ok(await this._userService.GetUserSettings(userId));
             }
             catch (Exception ex)
             {
@@ -38,12 +46,20 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpGet("permissions")]
-        public async Task<ActionResult<object>> GetUserPermissions()
+        public async Task<ActionResult<UserPermissions>> GetUserPermissions()
         {
             try
             {
-                // @TODO get user id
-                return Ok(await this._userService.GetUserPermissions("kljsldkjfsdf"));
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized("Unauthorized!");
+                }
+
+                return Ok(new UserPermissions {
+                    Permissions = await this._userService.GetUserPermissions(userId)
+                });
             }
             catch (Exception ex)
             {

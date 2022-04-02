@@ -56,9 +56,10 @@ namespace Xyz.Infrastructure.Services
             var user = await this._userManager.FindByNameAsync(credentials.UserName);
 
             if (user != null && await _userManager.CheckPasswordAsync(user, credentials.Password))
-            {
+            {                
                 var authClaims = new List<Claim>
                 {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(MultiTenantConstants.TenantClaim, tenant.Guid)

@@ -52,17 +52,20 @@ namespace Xyz.Infrastructure.Data
         {
             var tenant = tenantAccessor.Tenant;
             var tenantsConfiguration = configuration.Value;
-            string? connectionString = null;
+            string? connectionString = tenant?.ConnectionString;
 
             // @TODO use connection string form db
 
-            if (tenant == null || !tenantsConfiguration.ConnectionStrings.TryGetValue(tenant.Name, out connectionString))
+            if (tenant == null || connectionString == null)
             {
                 throw new NullReferenceException($"The connection string was null for the tenant: {tenant?.DisplayName}");
             }
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            return optionsBuilder.UseNpgsql(connectionString).Options;
+            return optionsBuilder
+                .UseNpgsql(connectionString)
+                .UseSnakeCaseNamingConvention()
+                .Options;
         }
 
         /// <summary>

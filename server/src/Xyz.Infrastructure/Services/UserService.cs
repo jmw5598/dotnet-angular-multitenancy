@@ -1,7 +1,10 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 using Xyz.Infrastructure.Data;
 using Xyz.Core.Interfaces;
+using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Models;
 
 namespace Xyz.Infrastructure.Services
 {
@@ -16,14 +19,35 @@ namespace Xyz.Infrastructure.Services
             this._context = context;
         }
 
-        public async Task<object> GetUserSettings(string userId)
+        public async Task<UserSettings> GetUserSettings(string userId)
         {
-            return new {}; // @TODO
+            try
+            {
+                return await Task.FromResult(new UserSettings { });
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user settings!";
+                this._logger.LogError(errorMessage);
+                throw;
+            }
         }
 
-        public async Task<object> GetUserPermissions(string userId)
+        public async Task<ICollection<UserPermission>> GetUserPermissions(string userId)
         {
-            return new {}; // @TODO
+            try
+            {
+                return await this._context.UserPermissions
+                    .Include(p => p.Permission)
+                    .Select(e => e)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user permissions!";
+                this._logger.LogError(errorMessage);
+                throw;
+            }
         }
     }
 }

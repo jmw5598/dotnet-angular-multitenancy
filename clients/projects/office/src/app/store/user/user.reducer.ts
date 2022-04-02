@@ -1,17 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
+import { UserPermission } from '@xyz/office/modules/core/entities';
 
-import { UserPermissions, UserPermissionsMap, UserSettings } from '@xyz/office/modules/core/models';
+import { PermissionType, UserPermissions, UserSettings } from '@xyz/office/modules/core/models';
 import * as fromUser from './user.actions';
 
 export const userFeatureKey = 'user';
 
 export interface UserState {
   userSettings: UserSettings | null,
-  userPermissionsMap: UserPermissionsMap | null
+  userPermissions: UserPermissions | null,
+  userPermissionsMap: { [key: string]: UserPermission } | null
 }
 
 export const initialUserState: UserState = {
   userSettings: null,
+  userPermissions: null,
   userPermissionsMap: null
 }
 
@@ -22,7 +25,11 @@ const handleGetUserSettingsSuccess = (state: UserState, { settings }: any) => ({
 
 const handleGetUserPermissionsSuccess = (state: UserState, { permissions }: any) => ({
   ...state,
-  userPermissionsMap: new UserPermissionsMap(permissions?.permissions || [])
+  userPermissions: permissions,
+  userPermissionsMap: permissions?.permissions?.reduce((obj: {[key: string]: UserPermission}, permission: UserPermission) => {
+    obj[permission?.permission?.type] = permission
+    return obj
+  }, {} as { [key: string]: UserPermission })
 } as UserState);
 
 export const reducer = createReducer(

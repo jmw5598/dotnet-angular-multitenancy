@@ -1,10 +1,10 @@
-import { UserPermissionType } from "../models";
+import { Permission } from './permission.entity';
 
 export interface UserPermission {
   id: string,
-  type: UserPermissionType,
   canCreate: boolean,
   canRead: boolean,
   canUpdate: boolean,
-  canDelete: boolean
+  canDelete: boolean,
+  permission: Permission
 }
