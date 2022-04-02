@@ -10,6 +10,11 @@ const routes: Routes = [
       import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule)
   },
   {
+    path: 'error',
+    loadChildren: () => 
+      import('./modules/errors/errors.module').then(m => m.ErrorsModule)
+  },
+  {
     path: '',
     canActivate: [AuthenticatedGuard],
     loadChildren: () => 

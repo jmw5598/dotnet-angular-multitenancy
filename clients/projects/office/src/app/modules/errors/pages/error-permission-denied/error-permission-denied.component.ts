@@ -1,0 +1,16 @@
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+
+@Component({
+  selector: 'xyz-error-permission-denied',
+  templateUrl: './error-permission-denied.component.html',
+  styleUrls: ['./error-permission-denied.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class ErrorPermissionDeniedComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+}
