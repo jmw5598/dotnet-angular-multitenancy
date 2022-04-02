@@ -1,8 +1,6 @@
 export * from './permissions.module';
-
-/*
-  pipe should take in permissions map and Type
-
-  canCreate: userPermissionsMap,PermissionType.ACCOUNTS // should return if user can create
-  canUpdate: userPermissionsMap,PermissionType.ACCOUNTS // should return if user can update..
-*/
+export * from './pipes/can-create.pipe';
+export * from './pipes/can-delete.pipe';
+export * from './pipes/can-read.pipe';
+export * from './pipes/can-update.pipe';
+export * from './pipes/has-module-permission.pipe';

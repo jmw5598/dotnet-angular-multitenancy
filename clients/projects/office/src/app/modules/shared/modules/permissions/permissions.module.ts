@@ -5,6 +5,7 @@ import { XyzCanCreatePipe } from './pipes/can-create.pipe';
 import { XyzCanReadPipe } from './pipes/can-read.pipe';
 import { XyzCanUpdatePipe } from './pipes/can-update.pipe';
 import { XyzCanDeletePipe } from './pipes/can-delete.pipe';
+import { XyzHasModulePermissionPipe } from './pipes/has-module-permission.pipe';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { XyzCanDeletePipe } from './pipes/can-delete.pipe';
     XyzCanReadPipe,
     XyzCanUpdatePipe,
     XyzCanDeletePipe,
+    XyzHasModulePermissionPipe,
   ],
   imports: [
     CommonModule
@@ -21,6 +23,7 @@ import { XyzCanDeletePipe } from './pipes/can-delete.pipe';
     XyzCanReadPipe,
     XyzCanUpdatePipe,
     XyzCanDeletePipe,
+    XyzHasModulePermissionPipe
   ]
 })
 export class XyzPermissionsModule { }
