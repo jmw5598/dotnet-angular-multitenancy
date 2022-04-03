@@ -13,5 +13,8 @@ namespace Xyz.Core.Entities.Tenant
         public Guid AspNetUserId { get; set; }
         public Guid PermissionId { get; set; }
         public Permission Permission { get; set; } = default!;
+
+        public Guid? ParentUserPermissionId { get; set; }
+        public UserPermission? ParentUserPermission { get; set; } = default!;
     }
 }
