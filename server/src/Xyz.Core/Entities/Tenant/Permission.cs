@@ -11,5 +11,8 @@ namespace Xyz.Core.Entities.Tenant
         [Column(TypeName = "varchar(24)")]
         public ModulePermissionType Type { get; set; }
         public string Name { get; set; } = default!;
+
+        public Guid? ParentPermissionId { get; set; }
+        public Permission? ParentPermission { get; set; } = default!;
     }
 }

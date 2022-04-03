@@ -9,14 +9,25 @@ namespace Xyz.Infrastructure.Extensions
     {
         public static void SeedPermissions(this ModelBuilder modelBuilder)
         {
-           modelBuilder.Entity<Permission>().HasData(
-               new Permission
-               {
-                   Id = Guid.NewGuid(),
-                   Type = ModulePermissionType.ACCOUNTS,
-                   Name = "Accounts Module"
-               }
-           );
+            var settingsModulePermissions = new Permission
+            {
+                Id = Guid.NewGuid(),
+                Type = ModulePermissionType.SETTINGS,
+                Name = "Settings Module"
+            };
+
+            var userAccountsModulePermission = new Permission
+            {
+                Id = Guid.NewGuid(),
+                Type = ModulePermissionType.USER_ACCOUNTS,
+                Name = "User Accounts Module",
+                ParentPermissionId = settingsModulePermissions.Id
+            };
+
+            modelBuilder.Entity<Permission>().HasData(
+                settingsModulePermissions, 
+                userAccountsModulePermission
+            );
         }
     }
 }

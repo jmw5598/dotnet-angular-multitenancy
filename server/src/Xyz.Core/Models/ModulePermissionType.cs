@@ -2,6 +2,7 @@ namespace Xyz.Core.Models
 {
     public enum ModulePermissionType
     {
-        ACCOUNTS
+        SETTINGS,
+        USER_ACCOUNTS
     }
 }
