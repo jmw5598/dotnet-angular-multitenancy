@@ -4,28 +4,31 @@ export const defaultNavigationMenu: NavigationLink[] = [
   {
     label: 'Dashboard',
     routerLink: '/dashboard',
-    icon: 'dashboard'
+    icon: 'dashboard',
+    requireModulePermissionType: ModulePermissionType.Dashboard
   },
   {
     label: 'Service',
     routerLink: '/service',
-    icon: 'calendar'
+    icon: 'calendar',
+    requireModulePermissionType: ModulePermissionType.Service
   },
   {
     label: 'Inventory',
     routerLink: '/inventory',
-    icon: 'tags'
+    icon: 'tags',
+    requireModulePermissionType: ModulePermissionType.Inventory
   },
   {
     label: 'Settings',
     icon: 'setting',
-    modulePermissionType: ModulePermissionType.Settings,
+    requireModulePermissionType: ModulePermissionType.Settings,
     children: [
       {
         label: 'User Accounts',
         routerLink: '/settings/user-accounts',
         icon: 'user',
-        modulePermissionType: ModulePermissionType.UserAccounts
+        requireModulePermissionType: ModulePermissionType.UserAccounts
       }
     ]
   }

@@ -5,7 +5,7 @@ import { ModulePermissionType, UserPermissionsMap } from '@xyz/office/modules/co
   name: 'xyzHasModulePermission'
 })
 export class XyzHasModulePermissionPipe implements PipeTransform {
-  public transform(userPermissionsMap: UserPermissionsMap | null, type: ModulePermissionType): boolean {
-    return userPermissionsMap ? userPermissionsMap?.hasOwnProperty(type) : false
+  public transform(userPermissionsMap: UserPermissionsMap | null, type: ModulePermissionType | null): boolean {
+    return userPermissionsMap && type ? userPermissionsMap?.hasOwnProperty(type) : false
   }
 }

@@ -1,6 +1,9 @@
 import { UserPermission } from "../../entities/user-permission.entity";
 
 export enum ModulePermissionType {
+  Dashboard = 'dashboard',
+  Service = 'service',
+  Inventory = 'inventroy',
   Settings = 'settings',
   UserAccounts = 'userAccounts'
 }

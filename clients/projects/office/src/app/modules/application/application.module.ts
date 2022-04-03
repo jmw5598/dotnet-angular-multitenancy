@@ -12,6 +12,7 @@ import { ApplicationRoutingModule } from './application-routing.module';
 
 import { ApplicationComponent } from './pages/application/application.component';
 import { NavigationMenuComponent } from './components/navigation-menu/navigation-menu.component';
+import { XyzPermissionsModule } from '../shared/modules/permissions';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { NavigationMenuComponent } from './components/navigation-menu/navigation
   imports: [
     CommonModule,
     ApplicationRoutingModule,
+    XyzPermissionsModule,
     NzLayoutModule,
     NzBreadCrumbModule,
     NzMenuModule,

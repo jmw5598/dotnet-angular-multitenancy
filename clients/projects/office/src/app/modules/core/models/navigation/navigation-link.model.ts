@@ -5,5 +5,5 @@ export interface NavigationLink {
   icon?: string,
   routerLink?: string | string[],
   children?: NavigationLink[],
-  modulePermissionType?: ModulePermissionType
+  requireModulePermissionType: ModulePermissionType | null
 }

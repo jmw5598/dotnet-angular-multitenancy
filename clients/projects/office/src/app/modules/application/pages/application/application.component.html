@@ -1,20 +1,28 @@
 <nz-layout [@fadeAnimation] nzTheme="light">
   <nz-sider nzCollapsible nzWidth="200px" nzTheme="light">
     <div class="logo"></div>
-    <ul nz-menu nzTheme="light" nzMode="inline">
+    <ul 
+        nz-menu 
+        nzTheme="light" 
+        nzMode="inline" 
+        *ngIf="userPermissionsMap$ | async as permissions">
       <ng-container *ngFor="let link of defaultNavigationMenu">
         <ng-container *ngIf="link?.children?.length; else singleNavigationLinkTemplate">
-          <li nz-submenu [nzTitle]="link.label" [nzIcon]="link?.icon || ''">
+          <li 
+              nz-submenu 
+              [nzTitle]="link.label" 
+              [nzIcon]="link?.icon || ''"
+              *ngIf="permissions | xyzHasModulePermission: link.requireModulePermissionType">
             <ul>
               <ng-container *ngFor="let sublink of link?.children">
                 <li nz-menu-item>
-                  <a [routerLink]="sublink?.routerLink || ''">Tom</a></li>
+                  <a [routerLink]="sublink?.routerLink || ''">{{ sublink?.label }}</a></li>
               </ng-container>
             </ul>
           </li>
         </ng-container>
         <ng-template #singleNavigationLinkTemplate>
-          <li nz-menu-item>
+          <li nz-menu-item *ngIf="permissions | xyzHasModulePermission: link.requireModulePermissionType">
             <i nz-icon [nzType]="link?.icon || ''"></i>
             <span><a [routerLink]="[link?.routerLink || '']">{{ link?.label || '' }}</a></span>
           </li>
