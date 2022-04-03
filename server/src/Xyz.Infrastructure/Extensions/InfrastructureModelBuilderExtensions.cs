@@ -12,14 +12,14 @@ namespace Xyz.Infrastructure.Extensions
             var settingsModulePermissions = new Permission
             {
                 Id = Guid.NewGuid(),
-                Type = ModulePermissionType.SETTINGS,
+                Type = ModulePermissionType.Settings,
                 Name = "Settings Module"
             };
 
             var userAccountsModulePermission = new Permission
             {
                 Id = Guid.NewGuid(),
-                Type = ModulePermissionType.USER_ACCOUNTS,
+                Type = ModulePermissionType.UserAccounts,
                 Name = "User Accounts Module",
                 ParentPermissionId = settingsModulePermissions.Id
             };
