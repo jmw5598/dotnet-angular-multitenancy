@@ -5,6 +5,9 @@ import { ErrorNotFoundComponent } from './pages/error-not-found/error-not-found.
 import { ErrorUnauthorizedComponent } from './pages/error-unauthorized/error-unauthorized.component';
 import { ErrorPermissionDeniedComponent } from './pages/error-permission-denied/error-permission-denied.component';
 
+import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+
 import { ErrorsRoutingModule } from './errors-routing.module';
 
 @NgModule({
@@ -15,7 +18,9 @@ import { ErrorsRoutingModule } from './errors-routing.module';
   ],
   imports: [
     CommonModule,
-    ErrorsRoutingModule
+    ErrorsRoutingModule,
+    NzResultModule,
+    NzIconModule
   ]
 })
 export class ErrorsModule { }
