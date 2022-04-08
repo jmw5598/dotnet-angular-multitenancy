@@ -5,8 +5,8 @@ export class Page<T> {
   public totalElements!: number;
   public totalPages!: number;
   public current!: PageRequest;
-  public next!: PageRequest;
-  public previous!: PageRequest;
+  public next?: PageRequest | null;
+  public previous?: PageRequest | null;
 
   constructor(obj: any) {
     Object.assign(this, obj);

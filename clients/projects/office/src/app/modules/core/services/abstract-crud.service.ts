@@ -36,7 +36,7 @@ export abstract class AbstractCrudService<T, ID> implements CrudOperations<T, ID
 
   public findByPage(pageRequest?: PageRequest): Observable<Page<T>> {
     const params: {[key: string]: any} = !pageRequest ? {} : { 
-      pageNumber: pageRequest.page,
+      pageNumber: pageRequest.index,
       pageSize: pageRequest.size,
       sortCol: pageRequest.sort.column,
       sortDir: pageRequest.sort.direction

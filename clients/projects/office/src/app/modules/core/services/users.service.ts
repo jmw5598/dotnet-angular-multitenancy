@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { UserDto } from '../dtos';
 
-import { ValidationResult } from '../models';
+import { Page, PageRequest, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -25,6 +26,13 @@ export class UsersService {
     return this.http.get<ValidationResult>(
       `${this.environmentService.getBaseApiUrl()}/users/verify/username`,
       { params: { userName: userName } }
+    );
+  }
+
+  public searchUsers(pageRequest: PageRequest): Observable<Page<UserDto>> {
+    // @TODO replace with HTTP call
+    return this.http.get<Page<UserDto>>(
+      `${this.environmentService.getBaseApiUrl()}/users/search`
     );
   }
 }

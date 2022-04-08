@@ -1,5 +1,7 @@
-import { Action, combineReducers } from '@ngrx/store';
-import * as fromUserAccounts from '../modules/user-accounts/store';
+import { Action, combineReducers, createFeatureSelector } from '@ngrx/store';
+
+import * as fromUserAccounts from '../modules/user-accounts/store/user-accounts.reducer';
+import { UserAccountsEffects } from '../modules/user-accounts/store/user-accounts.effects';
 
 export const settingsFeatureKey = 'settings';
 
@@ -14,5 +16,9 @@ export function reducers(state: SettingsState | undefined, action: Action) {
 }
 
 export const settingsEffects = [
-  fromUserAccounts.UserAccountsEffects
+  UserAccountsEffects
 ];
+
+export const selectSettingsState = createFeatureSelector<SettingsState>(
+  settingsFeatureKey
+);

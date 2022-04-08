@@ -1,8 +1,13 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+
+using System.Data;
 
 using Xyz.Multitenancy.Data;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
+using Xyz.Core.Dtos;
+using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Infrastructure.Services
 {
@@ -44,14 +49,31 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<object> GetUserSettings(string userId)
+        public async Task<Page<UserDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest)
         {
-            return new {}; // @TODO
-        }
+            var usersSource = this._context.Users
+                .Include(u => u.Roles)
+                .Include(u => u.Tenants)
+                .Include(u => u.Profile)
+                .Where(u => 
+                    u.Tenants
+                        .Where(t => t.Id.ToString() == tenantId)
+                        .Any()
+                    &&
+                     u.Roles
+                        .Where(r => r.Name == Roles.USER)
+                        .Any()
+                )
+                .Select(u => new UserDto
+                {
+                    Id = u.Id,
+                    UserName = u.UserName,
+                    Email = u.Email,
+                    FirstName = u.Profile.FirstName,
+                    LastName = u.Profile.LastName
+                });
 
-        public async Task<object> GetUserPermissions(string userId)
-        {
-            return new {}; // @TODO
+            return await Page<UserDto>.From(usersSource, pageRequest);
         }
     }
 }

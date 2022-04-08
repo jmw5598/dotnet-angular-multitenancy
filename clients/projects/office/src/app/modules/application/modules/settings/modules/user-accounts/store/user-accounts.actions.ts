@@ -1,16 +1,18 @@
 import { createAction, props } from '@ngrx/store';
-import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
+import { UserDto } from '@xyz/office/modules/core/dtos';
+import { Page, PageRequest, ResponseMessage } from '@xyz/office/modules/core/models';
 
-export const getUserAccountsRequest = createAction(
-  '[User Accounts] Get User Accounts Request'
+export const searchUserAccountsRequest = createAction(
+  '[User Accounts] Search User Accounts Request',
+  props<{ pageRequest: PageRequest }>()
 );
 
-export const getUserAccountsRequestSuccess = createAction(
-  '[User Accounts] Get User Accounts Request Success',
-  props<{ page: Page<any> }>()
+export const searchUserAccountsRequestSuccess = createAction(
+  '[User Accounts] Search User Accounts Request Success',
+  props<{ page: Page<UserDto> }>()
 );
 
-export const getUserAccountsRequestFailure = createAction(
-  '[User Accounts] Get User Accounts Request Failure',
+export const searchUserAccountsRequestFailure = createAction(
+  '[User Accounts] Search User Accounts Request Failure',
   props<{ message: ResponseMessage }>()
 );

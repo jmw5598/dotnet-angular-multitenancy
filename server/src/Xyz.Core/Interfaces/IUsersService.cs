@@ -1,4 +1,5 @@
 using Xyz.Core.Models;
+using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Interfaces
 {
@@ -6,5 +7,6 @@ namespace Xyz.Core.Interfaces
     {
         Task<ValidationResult> VerifyEmail(string email);
         Task<ValidationResult> VerifyUserName(string userName);
+        Task<Page<UserDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest);
     }
 }

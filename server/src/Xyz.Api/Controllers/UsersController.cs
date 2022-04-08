@@ -2,8 +2,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 using Xyz.Core.Interfaces;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
+using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
+using Xyz.Multitenancy.Multitenancy;
 
 namespace Xyz.Api.Controllers
 {
@@ -13,11 +16,44 @@ namespace Xyz.Api.Controllers
     {
         private ILogger<UsersController> _logger;
         private IUsersService _usersService;
+        private ITenantAccessor<Tenant> _tenantAccessor;
 
-        public UsersController(ILogger<UsersController> logger, IUsersService usersService)
+        public UsersController(
+            ILogger<UsersController> logger, 
+            IUsersService usersService,
+            ITenantAccessor<Tenant> tenantAccessor)
         {
             this._logger = logger;
             this._usersService = usersService;
+            this._tenantAccessor = tenantAccessor;
+        }
+
+        [Authorize(Policy = PolicyNames.RequireTenant)]
+        [HttpGet("search")]
+        public async Task<ActionResult<Page<UserDto>>> SearchUsersByTenant(
+            [FromQuery] int? index = 0,
+            [FromQuery] int? size = 20
+        )
+        {
+            //@TODO figure out sort
+
+            var tenantId = this._tenantAccessor.Tenant.Id;
+            var pageRequest = new PageRequest
+            {
+                Index = index ?? 0,
+                Size = size ?? 20
+            };
+
+            try
+            {
+                return Ok(await this._usersService.SearchUsersByTenant(tenantId.ToString(), pageRequest));
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error searching users!";
+                this._logger.LogError(errorMessage);
+                return BadRequest(errorMessage);
+            }
         }
 
         [HttpGet("verify/email")]
