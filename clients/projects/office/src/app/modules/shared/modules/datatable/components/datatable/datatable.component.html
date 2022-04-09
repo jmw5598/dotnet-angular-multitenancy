@@ -1,0 +1,36 @@
+<nz-table>
+  <thead>
+    <tr>
+      <th nzWidth="40px" ></th>
+      <th
+        nzWidth="60px"
+      ></th>
+      <th >Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th >Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- <ng-container *ngFor="let data of dynamicTable.data">
+      <tr>
+        <td [nzLeft]="fixedColumn" *ngIf="settingValue.expandable" [(nzExpand)]="data.expand"></td>
+        <td
+          [nzLeft]="fixedColumn"
+          *ngIf="settingValue.checkbox"
+        ></td>
+        <td [nzLeft]="fixedColumn">{{ data.name }}</td>
+        <td>{{ data.age }}</td>
+        <td [nzEllipsis]="settingValue.ellipsis">{{ data.address }}</td>
+        <td [nzRight]="fixedColumn" [nzEllipsis]="settingValue.ellipsis">
+          <a href="#">Delete</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="#">More action</a>
+        </td>
+      </tr>
+      <tr *ngIf="settingValue.expandable" [nzExpand]="data.expand">
+        <span>{{ data.description }}</span>
+      </tr>
+    </ng-container> -->
+  </tbody>
+</nz-table>
