@@ -1,3 +1,4 @@
 export enum ColumnType {
-  TEXT
+  TEXT,
+  EMAIL
 }

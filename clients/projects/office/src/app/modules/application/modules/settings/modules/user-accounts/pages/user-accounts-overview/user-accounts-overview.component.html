@@ -1,5 +1,19 @@
 <div [@fadeAnimation]>
-  <pre>{{ (userAccountsPage$ | async) | json }}</pre>
-
-  <xyz-datatable></xyz-datatable>
+  <xyz-datatable
+      [page]="userAccountsPage$ | async"
+      [definition]="userAccountsTableDefinition"
+      [actionsContent]="userAccountsActions">
+  </xyz-datatable>
+  <ng-template #userAccountsActions let-row="row">
+    <div>
+      <a 
+          [routerLink]="[row.id, 'edit']"
+          nz-button 
+          nzType="primary" 
+          nzSize="small"
+          title="Edit user">
+        <i nz-icon nzType="edit"></i>
+    </a>
+    </div>
+  </ng-template>
 </div>

@@ -1,36 +1,67 @@
-<nz-table>
-  <thead>
+<nz-table 
+    [nzData]="page?.elements || []"
+    [nzFrontPagination]="false"
+    [nzTotal]="page?.totalElements || 0"
+    [nzPageIndex]="page?.current?.index || 0"
+    
+    
+    [nzBordered]="settings.bordered">
+  <thead *ngIf="definition?.columns?.length">
     <tr>
-      <th nzWidth="40px" ></th>
-      <th
-        nzWidth="60px"
-      ></th>
-      <th >Name</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th >Action</th>
+      <ng-container *ngFor="let column of definition?.columns">
+        <th>{{ column.label }}</th>
+      </ng-container>
+      <th *ngIf="actionsContent">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <!-- <ng-container *ngFor="let data of dynamicTable.data">
-      <tr>
-        <td [nzLeft]="fixedColumn" *ngIf="settingValue.expandable" [(nzExpand)]="data.expand"></td>
-        <td
-          [nzLeft]="fixedColumn"
-          *ngIf="settingValue.checkbox"
-        ></td>
-        <td [nzLeft]="fixedColumn">{{ data.name }}</td>
-        <td>{{ data.age }}</td>
-        <td [nzEllipsis]="settingValue.ellipsis">{{ data.address }}</td>
-        <td [nzRight]="fixedColumn" [nzEllipsis]="settingValue.ellipsis">
-          <a href="#">Delete</a>
-          <nz-divider nzType="vertical"></nz-divider>
-          <a href="#">More action</a>
+    <ng-container *ngIf="page?.elements?.length && definition?.columns?.length">
+      <tr *ngFor="let row of page?.elements">
+        <td *ngFor="let column of definition?.columns">
+          <ng-container 
+              [ngTemplateOutlet]="switchOnColumnTypeTemplate"
+              [ngTemplateOutletContext]="{ row, column }">
+          </ng-container>
+        </td>
+        <td *ngIf="actionsContent">
+          <ng-container
+              [ngTemplateOutlet]="actionsContent"
+              [ngTemplateOutletContext]="{ row }">
+          </ng-container>
         </td>
       </tr>
-      <tr *ngIf="settingValue.expandable" [nzExpand]="data.expand">
-        <span>{{ data.description }}</span>
-      </tr>
-    </ng-container> -->
+    </ng-container>
   </tbody>
 </nz-table>
+
+<!-- Determines which cell type to render -->
+<ng-template #switchOnColumnTypeTemplate let-row="row" let-column="column">
+  <ng-container [ngSwitch]="column.type">
+    <ng-container 
+      *ngSwitchCase="ColumnType.TEXT"
+      [ngTemplateOutlet]="textColumnTypeTemplate"
+      [ngTemplateOutletContext]="{ row, column }">
+    </ng-container>
+    <ng-container 
+      *ngSwitchCase="ColumnType.EMAIL"
+      [ngTemplateOutlet]="emailColumnTypeTemplate"
+      [ngTemplateOutletContext]="{ row, column }">
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template 
+    #textColumnTypeTemplate 
+    let-row="row" 
+    let-column="column">
+  {{ row[column.property] }}
+</ng-template>
+
+<ng-template 
+    #emailColumnTypeTemplate 
+    let-row="row" 
+    let-column="column">
+  <a [href]="'mailto:' + row[column.property]" alt="Email address">
+    {{ row[column.property] }}
+  </a>
+</ng-template>
