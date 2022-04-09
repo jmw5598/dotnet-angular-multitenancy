@@ -4,6 +4,6 @@ namespace Xyz.Core.Entities.Multitenancy
 {
     public class ApplicationRole : IdentityRole<Guid>
     {
-       public ICollection<ApplicationUser> Users { get; set; } = default!; 
+        public ICollection<ApplicationUserRole> UserRoles { get; set; } = default!;
     }
 }

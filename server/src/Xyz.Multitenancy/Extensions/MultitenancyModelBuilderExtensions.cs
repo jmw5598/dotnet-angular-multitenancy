@@ -8,6 +8,46 @@ namespace Xyz.Multitenancy.Extensions
 {
     public static class MultitenancyModelBuilderExtensions
     {
+        public static void HandleCustomIdentityTableMapping(this ModelBuilder modelBuilder)
+        {
+            
+            
+            
+            modelBuilder.Entity<ApplicationUserRole>(userRole =>
+            {
+                userRole.ToTable("asp_net_user_roles");
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId);
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId);
+            });
+
+            modelBuilder.Entity<ApplicationUser>(user => 
+            {
+                user.ToTable("asp_net_users");
+            });
+
+            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("asp_net_user_tokens");
+            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("asp_net_user_logins");
+            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("asp_net_user_claims");
+            modelBuilder.Entity<ApplicationRole>().ToTable("asp_net_roles");
+
+            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("asp_net_role_claims");
+
+            modelBuilder.Entity<ApplicationUser>()
+             .HasMany(x => x.Tenants)
+             .WithMany(x => x.Users)
+             .UsingEntity<Dictionary<string, object>>("user_tenants",
+                 x => x.HasOne<Tenant>().WithMany().HasForeignKey("TenantId"),
+                 x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
+                 x => x.ToTable("user_tenants"));
+        }
+
         public static void SeedDevUserAccount(this ModelBuilder modelBuilder)
         {
             var devCompanyConnectionString = "Server=localhost;Port=5432;Database=xyz_dev_company;User Id=xyz;Password=password;";
@@ -103,16 +143,16 @@ namespace Xyz.Multitenancy.Extensions
             modelBuilder.Entity("user_tenants").HasData(new { TenantId = tenant.Id, AspNetUserId = user.Id });
 
             // Set Roles For User
-            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
-                new IdentityUserRole<Guid> { 
+            modelBuilder.Entity<ApplicationUserRole>().HasData(
+                new ApplicationUserRole {
                     RoleId = rootRole.Id, 
                     UserId = user.Id 
                 },
-                new IdentityUserRole<Guid> { 
+                new ApplicationUserRole { 
                     RoleId = adminRole.Id, 
                     UserId = user.Id 
                 },
-                new IdentityUserRole<Guid> { 
+                new ApplicationUserRole { 
                     RoleId = userRole.Id, 
                     UserId = user.Id 
                 }

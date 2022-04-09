@@ -9,7 +9,16 @@ using Xyz.Core.Entities.Multitenancy;
 
 namespace Xyz.Multitenancy.Data
 {
-    public class AuthenticationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class AuthenticationDbContext : IdentityDbContext<
+        ApplicationUser, 
+        ApplicationRole, 
+        Guid, 
+        IdentityUserClaim<Guid>,
+        ApplicationUserRole, 
+        IdentityUserLogin<Guid>,
+        IdentityRoleClaim<Guid>, 
+        IdentityUserToken<Guid>
+    >
     {
         public DbSet<Tenant> Tenants => Set<Tenant>();
         public DbSet<Plan> Plans => Set<Plan>();
@@ -25,23 +34,8 @@ namespace Xyz.Multitenancy.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<ApplicationUser>().ToTable("asp_net_users");
-            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("asp_net_user_tokens");
-            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("asp_net_user_logins");
-            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("asp_net_user_claims");
-            modelBuilder.Entity<ApplicationRole>().ToTable("asp_net_roles");
-            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("asp_net_user_roles");
-            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("asp_net_role_claims");
-
-            modelBuilder.Entity<ApplicationUser>()
-             .HasMany(x => x.Tenants)
-             .WithMany(x => x.Users)
-             .UsingEntity<Dictionary<string, object>>("user_tenants",
-                 x => x.HasOne<Tenant>().WithMany().HasForeignKey("TenantId"),
-                 x => x.HasOne<ApplicationUser>().WithMany().HasForeignKey("AspNetUserId"),
-                 x => x.ToTable("user_tenants"));
-
+            modelBuilder.HandleCustomIdentityTableMapping();
+            
             modelBuilder.SeedDevLocalhostTenant(); // For Dev only
             modelBuilder.SeedDevUserAccount();  // For Dev only
             modelBuilder.SeedPlans();

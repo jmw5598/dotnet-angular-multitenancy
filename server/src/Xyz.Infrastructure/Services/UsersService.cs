@@ -52,16 +52,13 @@ namespace Xyz.Infrastructure.Services
         public async Task<Page<UserDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest)
         {
             var usersSource = this._context.Users
-                .Include(u => u.Roles)
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
                 .Include(u => u.Tenants)
                 .Include(u => u.Profile)
                 .Where(u => 
                     u.Tenants
                         .Where(t => t.Id.ToString() == tenantId)
-                        .Any()
-                    &&
-                     u.Roles
-                        .Where(r => r.Name == Roles.USER)
                         .Any()
                 )
                 .Select(u => new UserDto
@@ -70,7 +67,8 @@ namespace Xyz.Infrastructure.Services
                     UserName = u.UserName,
                     Email = u.Email,
                     FirstName = u.Profile.FirstName,
-                    LastName = u.Profile.LastName
+                    LastName = u.Profile.LastName,
+                    Roles = u.UserRoles.Select(u => u.Role).ToList()
                 });
 
             return await Page<UserDto>.From(usersSource, pageRequest);

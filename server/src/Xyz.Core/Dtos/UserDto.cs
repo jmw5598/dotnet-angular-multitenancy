@@ -1,3 +1,5 @@
+using Xyz.Core.Entities.Multitenancy;
+
 namespace Xyz.Core.Dtos
 {
     public class UserDto
@@ -7,5 +9,6 @@ namespace Xyz.Core.Dtos
         public string Email { get; set; } = default!;
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
+        public ICollection<ApplicationRole> Roles { get; set; } = default!;
     }
 }

@@ -7,6 +7,6 @@ namespace Xyz.Core.Entities.Multitenancy
         public Guid ProfileId { get; set; } = default!;
         public Profile Profile { get; set; } = default!;
         public ICollection<Tenant> Tenants { get; set; } = default!;
-        public ICollection<ApplicationRole> Roles { get; set; } = default!;
+        public ICollection<ApplicationUserRole> UserRoles { get; set; } = default!;
     }
 }
