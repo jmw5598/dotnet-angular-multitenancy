@@ -1,0 +1,19 @@
+.bordered {
+  border: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
+}
+
+.bordered-top {
+  border-top: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
+}
+
+.bordered-bottom {
+  border-bottom: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
+}
+
+.bordered-left {
+  border-left: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
+}
+
+.bordered-right {
+  border-right: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
+}

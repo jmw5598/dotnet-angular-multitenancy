@@ -1,5 +1,5 @@
 <nz-layout [@fadeAnimation] nzTheme="light">
-  <nz-sider nzCollapsible nzWidth="200px" nzTheme="light">
+  <nz-sider nzCollapsible nzWidth="200px" nzTheme="light" class="bordered-right">
     <div class="logo"></div>
     <ul 
         nz-menu 
@@ -31,7 +31,7 @@
     </ul>
   </nz-sider>
   <nz-layout>
-    <nz-header class="flex flex-row justify-content-end align-items-center">
+    <nz-header class="flex flex-row justify-content-end align-items-center bordered-bottom">
       <nz-avatar
           class="mr-4"
           nz-dropdown 
@@ -49,15 +49,9 @@
         </ul>
       </nz-dropdown-menu>
     </nz-header>
-      <nz-content>
-          <nz-breadcrumb>
-            <nz-breadcrumb-item>User</nz-breadcrumb-item>
-            <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-          </nz-breadcrumb>
-          <div class="inner-content">
-            <router-outlet></router-outlet>
-          </div>
-      </nz-content>
-      <nz-footer>©2022</nz-footer>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>©2022</nz-footer>
   </nz-layout>
 </nz-layout>

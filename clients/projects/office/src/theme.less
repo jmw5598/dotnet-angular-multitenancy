@@ -107,7 +107,7 @@
 // @padding-md: 16px; // small containers and buttons
 // @padding-sm: 12px; // Form controls and items
 // @padding-xs: 8px; // small items
-// @padding-xss: 4px; // more small
+// @padding-xss: 4px; // more@border-radius-base: 6px; // 2px; small
 
 // vertical padding for all form controls
 // @control-padding-horizontal: @padding-sm;
@@ -159,11 +159,11 @@
 // @ease-in-out-quint: cubic-bezier(0.86, 0, 0.07, 1);
 
 // Border color
-// @border-color-base: hsv(0, 0, 85%); // base border outline a component
+@border-color-base: #edf2f9; //hsv(0, 0, 85%); // base border outline a component
 // @border-color-split: hsv(0, 0, 94%); // split border inside a component
 // @border-color-inverse: @white;
-// @border-width-base: 1px; // width of the border for a component
-// @border-style-base: solid; // style of a components border
+@border-width-base: 1px; // width of the border for a component
+@border-style-base: solid; // style of a components border
 
 // Outline
 // @outline-blur-size: 0;
@@ -342,7 +342,7 @@
 // @grid-columns: 24;
 
 // Layout
-// @layout-body-background: #f0f2f5;
+@layout-body-background: #f9fbfd;
 // @layout-header-background: #001529;
 // @layout-header-height: 64px;
 // @layout-header-padding: 0 50px;
@@ -1050,3 +1050,19 @@
 // @image-preview-operation-size: 18px;
 // @image-preview-operation-color: @text-color-dark;
 // @image-preview-operation-disabled-color: fade(@image-preview-operation-color, 25%);
+
+
+// CSS Variables
+// ---
+// Assign CSS variables for use in SCSS files.
+:root {
+  --nz-primary-color: @primary-color;
+  --nz-border-radius-base: @border-radius-base; // 2px;
+  --nz-height-base: @height-base;
+  --nz-height-lg: @height-lg;
+  --nz-height-sm: @height-sm;
+  --nz-border-color-base: @border-color-base;
+  --nz-border-width-base: @border-width-base;
+  --nz-border-style-base: @border-style-base;
+  --nz-layout-body-background: @layout-body-background;
+}
