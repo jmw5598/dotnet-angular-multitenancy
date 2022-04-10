@@ -17,3 +17,7 @@
 .bordered-right {
   border-right: var(--nz-border-width-base) var(--nz-border-style-base) var(--nz-border-color-base);
 }
+
+.bordered-none {
+  border: none;
+}
