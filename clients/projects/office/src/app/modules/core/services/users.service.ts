@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UserDto } from '../dtos';
+import { Permission } from '../entities';
 
 import { Page, PageRequest, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
@@ -30,9 +31,14 @@ export class UsersService {
   }
 
   public searchUsers(pageRequest: PageRequest): Observable<Page<UserDto>> {
-    // @TODO replace with HTTP call
     return this.http.get<Page<UserDto>>(
       `${this.environmentService.getBaseApiUrl()}/users/search`
+    );
+  }
+
+  public getAssignablePermission(): Observable<Permission[]> {
+    return this.http.get<Permission[]>(
+      `${this.environmentService.getBaseApiUrl()}/users/permissions`
     );
   }
 }

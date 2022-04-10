@@ -14,5 +14,8 @@ namespace Xyz.Core.Entities.Tenant
 
         public Guid? ParentPermissionId { get; set; }
         public Permission? ParentPermission { get; set; } = default!;
+
+        [NotMapped]
+        public ICollection<Permission> ChildPermissions { get; set; } = default!;
     }
 }

@@ -40,7 +40,7 @@ namespace Xyz.Api.Controllers
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user settings!";
-                this._logger.LogError(errorMessage);
+                this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }
         }
@@ -64,7 +64,7 @@ namespace Xyz.Api.Controllers
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user permissions!";
-                this._logger.LogError(errorMessage);
+                this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }
         }

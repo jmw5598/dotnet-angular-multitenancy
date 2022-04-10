@@ -28,7 +28,7 @@ namespace Xyz.Infrastructure.Services
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user settings!";
-                this._logger.LogError(errorMessage);
+                this._logger.LogError(errorMessage, new { Exception = ex });
                 throw;
             }
         }
@@ -40,12 +40,13 @@ namespace Xyz.Infrastructure.Services
                 return await this._context.UserPermissions
                     .Include(p => p.Permission)
                     .Select(e => e)
+                    .Where(e => e.AspNetUserId.ToString() == userId)
                     .ToListAsync();
             }
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user permissions!";
-                this._logger.LogError(errorMessage);
+                this._logger.LogError(errorMessage, new { Exception = ex });
                 throw;
             }
         }

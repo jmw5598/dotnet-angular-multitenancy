@@ -27,7 +27,7 @@ namespace Xyz.Api.Controllers
             }
             catch (Exception ex)
             {
-                this._logger.LogError("Errer getting plans!");
+                this._logger.LogError("Errer getting plans!", new { Exception = ex });
                 return BadRequest("Error getting plans!");
             }
         }

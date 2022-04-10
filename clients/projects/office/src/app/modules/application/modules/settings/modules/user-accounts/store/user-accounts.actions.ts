@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
+
 import { UserDto } from '@xyz/office/modules/core/dtos';
+import { Permission } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, ResponseMessage } from '@xyz/office/modules/core/models';
 
 export const searchUserAccountsRequest = createAction(
@@ -14,5 +16,19 @@ export const searchUserAccountsRequestSuccess = createAction(
 
 export const searchUserAccountsRequestFailure = createAction(
   '[User Accounts] Search User Accounts Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const getAssignablePermissionsRequest = createAction(
+  '[User Accounts] Get Assignable Permissions Request'
+);
+
+export const getAssignablePermissionsRequestSuccess = createAction(
+  '[User Accounts] Get Assignable Permissions Request Success',
+  props<{ permissions: Permission[] }>()
+);
+
+export const getAssignablePermissionsRequestFailure = createAction(
+  '[User Accounts] Get Assignable Permissions Request Failure',
   props<{ message: ResponseMessage }>()
 );

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { AssignablePermissionsLoadedGuard } from "./guards/assignable-permissions-loaded.guard";
 import { UserAccountsCreateComponent } from "./pages/user-accounts-create/user-accounts-create.component";
 
 import { UserAccountsOverviewComponent } from "./pages/user-accounts-overview/user-accounts-overview.component";
@@ -12,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: 'create',
+    canActivate: [AssignablePermissionsLoadedGuard],
     component: UserAccountsCreateComponent
   },
   {
@@ -19,6 +21,7 @@ const routes: Routes = [
     children: [
       {
         path: 'edit',
+        canActivate: [AssignablePermissionsLoadedGuard],
         component: UserAccountsUpdateComponent
       }
     ]
