@@ -4,8 +4,8 @@
     [nzTotal]="page?.totalElements || 0"
     [nzPageIndex]="page?.current?.index || 0"
     
-    
-    [nzBordered]="settings.bordered">
+    [nzBordered]="settings.bordered"
+    [nzSize]="settings.size">
   <thead *ngIf="definition?.columns?.length">
     <tr>
       <ng-container *ngFor="let column of definition?.columns">
