@@ -1,7 +1,10 @@
 <nz-layout [@fadeAnimation] nzTheme="light">
   <nz-sider nzCollapsible nzWidth="250px" [nzCollapsed]="isCollapsed$ | async" [nzTrigger]="null" nzTheme="light" class="bordered-right">
     <div class="logo bordered-bottom flex flex-row justify-content-center align-items-center">
-      <img style="display: block; max-height: 32px;" src="assets/images/logo.svg">
+      <img *ngIf="!(isCollapsed$ | async); else logoCollapsedTemplate" style="display: block; max-height: 32px;" src="assets/images/logo.svg">
+      <ng-template #logoCollapsedTemplate>
+        <img style="display: block; max-height: 32px;" src="assets/images/logo-collapsed.svg">
+      </ng-template>
     </div>
     <ul 
         class="bordered-none"
