@@ -40,7 +40,7 @@
     <nz-header class="flex flex-row justify-content-between align-items-center bordered-bottom">
       <div class="h-100 px-4">
         <i
-            class="trigger"
+            class="trigger cursor-pointer"
             nz-icon
             [nzType]="(isCollapsed$ | async) ? 'menu-unfold' : 'menu-fold'"
             (click)="onToggleNavigationMenu()">
@@ -63,7 +63,7 @@
         </ul>
       </nz-dropdown-menu>
     </nz-header>
-    <nz-content>
+    <nz-content class="m-0">
       <router-outlet></router-outlet>
     </nz-content>
     <nz-footer>©2022</nz-footer>

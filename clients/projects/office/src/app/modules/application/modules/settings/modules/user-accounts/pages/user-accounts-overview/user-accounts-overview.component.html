@@ -1,29 +1,29 @@
-<div [@fadeAnimation]>
-  <!-- <nz-breadcrumb>
-    <nz-breadcrumb-item>
-      <a>Settings</a>
-    </nz-breadcrumb-item>
-    <nz-breadcrumb-item>User Accounts Overview</nz-breadcrumb-item>
-  </nz-breadcrumb> -->
-
-  <nz-card class="w-100 p-0 mt-4">
-    <nz-page-header class="site-page-header" nzTitle="User Accounts">
-      <nz-page-header-extra>
-        <a  routerLink="./create" 
-            nz-button 
-            nzType="primary">
-          Create New User
-        </a>
-      </nz-page-header-extra>
-    </nz-page-header>
-    <div class="mx-4">
+<div>
+  <nz-page-header style="background: white;" class="bordered-bottom" nzTitle="User Accounts">
+    <nz-breadcrumb nz-page-header-breadcrumb>
+      <nz-breadcrumb-item>
+        <a>Settings</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>User Accounts Overview</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <nz-page-header-extra>
+      <a  routerLink="./create" 
+          nz-button 
+          nzType="primary">
+        Create New User
+      </a>
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+<div class="p-4" [@fadeAnimation]>
+  <nz-card class="w-100 p-0">
+    <div>
       <xyz-datatable      
           [page]="userAccountsPage$ | async"
           [definition]="userAccountsTableDefinition"
           [actionsContent]="userAccountsActions">
       </xyz-datatable>
     </div>
-    
     <ng-template #userAccountsActions let-row="row">
       <div>
         <a 

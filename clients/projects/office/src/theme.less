@@ -360,6 +360,7 @@
 // @layout-trigger-background-light: #fff;
 // @layout-trigger-color-light: @text-color;
 
+
 // z-index list, order by `z-index`
 // @zindex-badge: auto;
 // @zindex-table-fixed: 2;
@@ -1065,4 +1066,11 @@
   --nz-border-width-base: @border-width-base;
   --nz-border-style-base: @border-style-base;
   --nz-layout-body-background: @layout-body-background;
+}
+
+// NG-ZORRO OVERRIDES
+// ---
+// All overrides that can't be changed with variables
+nz-content {
+  margin: 0 0 !important;
 }
