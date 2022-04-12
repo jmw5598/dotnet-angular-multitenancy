@@ -1,20 +1,19 @@
-<div>
-  <nz-page-header style="background: white;" class="bordered-bottom" nzTitle="User Accounts">
-    <nz-breadcrumb nz-page-header-breadcrumb>
-      <nz-breadcrumb-item>
-        <a>Settings</a>
-      </nz-breadcrumb-item>
-      <nz-breadcrumb-item>User Accounts Overview</nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <nz-page-header-extra>
-      <a  routerLink="./create" 
-          nz-button 
-          nzType="primary">
-        Create New User
-      </a>
-    </nz-page-header-extra>
-  </nz-page-header>
-</div>
+<nz-page-header style="background: white;" class="bordered-bottom" nzTitle="User Accounts" nzBackIcon>
+  <nz-breadcrumb nz-page-header-breadcrumb>
+    <nz-breadcrumb-item>
+      <a>Settings</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>User Accounts Overview</nz-breadcrumb-item>
+  </nz-breadcrumb>
+  <nz-page-header-extra>
+    <a  routerLink="./create" 
+        nz-button 
+        nzType="primary">
+      Create New User
+    </a>
+  </nz-page-header-extra>
+</nz-page-header>
+
 <div class="p-4" [@fadeAnimation]>
   <nz-card class="w-100 p-0">
     <div>
@@ -25,16 +24,32 @@
       </xyz-datatable>
     </div>
     <ng-template #userAccountsActions let-row="row">
-      <div>
+      <nz-button-group>
         <a 
+            class="mr-"
             [routerLink]="[row.id, 'edit']"
             nz-button 
-            nzType="primary" 
+            nzType="default" 
             nzSize="small"
             title="Edit user">
           <i nz-icon nzType="edit"></i>
-      </a>
-      </div>
+        </a>
+        <button
+            class="mr-"
+            nz-button 
+            nzType="default" 
+            nzSize="small"
+            title="Disable user">
+          <i nz-icon nzType="disconnect"></i>
+        </button>
+        <button
+            nz-button 
+            nzType="default" 
+            nzSize="small"
+            title="Delete user">
+          <i nz-icon nzType="delete"></i>
+        </button>
+      </nz-button-group>
     </ng-template>
   </nz-card>
 </div>
