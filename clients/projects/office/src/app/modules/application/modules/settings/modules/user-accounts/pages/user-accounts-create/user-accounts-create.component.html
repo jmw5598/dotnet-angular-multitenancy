@@ -15,5 +15,11 @@
 </nz-page-header>
 
 <div [@fadeAnimation] class="p-4">
-  Content
+  <nz-card class="w-100 p-0">
+    <form class="block" [formGroup]="createUserAccountForm">
+      <xyz-user-account-form
+          [assignablePermissions]="assignablePermissions$ | async">
+      </xyz-user-account-form>
+    </form>
+  </nz-card>
 </div>
