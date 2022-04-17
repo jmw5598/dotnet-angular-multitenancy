@@ -15,7 +15,7 @@
           <nz-form-item>
             <nz-form-control [nzErrorTip]="emailErrorTemplate">
               <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="username" placeholder="Email" />
+                <input type="text" nz-input formControlName="userName" placeholder="Email" />
               </nz-input-group>
               <ng-template #emailErrorTemplate let-control>
                 <ng-container *ngIf="control.hasError('required')">Email is required!</ng-container>
@@ -74,32 +74,80 @@
       <div class="block p-4">
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
-        <div formGroupName="permissions">
-          <nz-table 
-              *ngIf="assignablePermissions?.length"
-              [nzData]="assignablePermissions || []"
-              [nzBordered]="tableSettings.bordered"
-              [nzSize]="tableSettings.size">
-            <thead>
-              <tr>
-                <th>Permission</th>
-                <th>Can Create</th>
-                <th>Can Read</th>
-                <th>Can Update</th>
-                <th>Can Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let permission of assignablePermissions">
-                <td>{{ permission?.name }}</td>
-                <td><input type="checkbox" /></td>
-                <td><input type="checkbox" /></td>
-                <td><input type="checkbox" /></td>
-                <td><input type="checkbox" /></td>
-              </tr>
-            </tbody>
-          </nz-table>
-        </div>
+        
+        <nz-collapse class="mb-2" *ngFor="let permission of assignablePermissions">
+          <nz-collapse-panel
+              class="p-0"
+              [nzHeader]="permissionPanelHeader"
+              [nzActive]="false"
+              [nzDisabled]="false"
+              [nzShowArrow]="false">
+            <ng-template #permissionPanelHeader>
+              <div class="flex flex-row justify-content-between">
+                <div class="permissions-header-text">
+                  <label nz-checkbox>{{ permission?.name }}</label>
+                  <div class="ml-5">
+                    <small><a>Show all 24 sub permissions</a></small>
+                  </div>  
+                </div>
+                <div class="permissions-header-actions">
+                  <div class="permissions-header-action">
+                    <div class="permissions-header-action-label">Create</div>
+                    <nz-switch 
+                        nzSize="small" 
+                        (click)="$event.stopPropagation()">
+                    </nz-switch>
+                  </div>
+                  <div class="permissions-header-action">
+                    <div class="permissions-header-action-label">Read</div>
+                    <nz-switch 
+                        nzSize="small" 
+                        (click)="$event.stopPropagation()">
+                    </nz-switch>
+                  </div>
+                  <div class="permissions-header-action">
+                    <div class="permissions-header-action-label">Update</div>
+                    <nz-switch 
+                        nzSize="small" 
+                        (click)="$event.stopPropagation()">
+                    </nz-switch>
+                  </div>
+                  <div class="permissions-header-action">
+                    <div class="permissions-header-action-label">Delete</div>
+                    <nz-switch 
+                        nzSize="small" 
+                        (click)="$event.stopPropagation()">
+                    </nz-switch>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+            <ul class="bordered-none" nz-list nzBordered nzSize="large" *ngFor="let permission of assignablePermissions">
+              <li nz-list-item *ngFor="let permission of assignablePermissions" nzNoFlex>
+                <div class="flex flex-row justify-content-between">
+                  <div class="permissions-header-text">
+                    {{ permission?.name }}
+                  </div>
+                  <div class="permissions-header-actions">
+                    <div class="permissions-header-action">
+                      <label nz-checkbox></label>
+                    </div>
+                    <div class="permissions-header-action">
+                      <label nz-checkbox></label>
+                    </div>
+                    <div class="permissions-header-action">
+                      <label nz-checkbox></label>
+                    </div>
+                    <div class="permissions-header-action">
+                      <label nz-checkbox></label>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </nz-collapse-panel>
+        </nz-collapse>
+
       </div>
     </div>
   </div>

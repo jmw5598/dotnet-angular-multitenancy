@@ -11,7 +11,9 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzListModule } from 'ng-zorro-antd/list';
+import { NzCollapseModule } from 'ng-zorro-antd/collapse';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 
@@ -44,7 +46,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzInputModule,
     NzCheckboxModule,
     NzDividerModule,
-    NzTableModule
+    NzListModule,
+    NzCollapseModule,
+    NzSwitchModule
   ]
 })
 export class UserAccountsModule { }
