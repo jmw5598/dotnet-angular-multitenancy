@@ -38,7 +38,6 @@ export class UserAccountsCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('create user account form ', this.createUserAccountForm);
   }
 
   public onCreateUserAccount(formValue: any): void {

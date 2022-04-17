@@ -88,23 +88,32 @@
                   <ng-template #permissionPanelHeader>
                     <div class="flex flex-row justify-content-between">
                       <div class="permissions-header-text">
-                        <label nz-checkbox formControlName="hasAccess">{{ group?.value.userPermission?.permission?.name }}</label>
+                        <label 
+                            nz-checkbox 
+                            formControlName="hasAccess"
+                            (ngModelChange)="onRootPermissionModuleChange($event, group)">
+                          {{ group?.value.userPermission?.permission?.name }}
+                        </label>
                         <div class="ml-5">
                           <small><a>Show all {{ group?.value?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
                         </div>  
                       </div>
-                      <div class="permissions-header-actions">
+                      <div class="permissions-header-actions" formGroupName="userPermission">
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Create</div>
                           <nz-switch 
-                              nzSize="small" 
+                              (ngModelChange)="onPermissionModuleCanCreateChange($event, group)"
+                              formControlName="canCreate"
+                              nzSize="small"
                               [nzDisabled]="!group.value.hasAccess"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Read</div>
-                          <nz-switch 
+                          <nz-switch
+                              (ngModelChange)="onRootPermissionModuleCanReadChange($event, group)"
+                              formControlName="canRead"
                               nzSize="small" 
                               [nzDisabled]="!group.value.hasAccess"
                               (click)="$event.stopPropagation()">
@@ -113,6 +122,8 @@
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Update</div>
                           <nz-switch 
+                              (ngModelChange)="onRootPermissionModuleCanUpdateChange($event, group)"
+                              formControlName="canUpdate"
                               nzSize="small" 
                               [nzDisabled]="!group.value.hasAccess"
                               (click)="$event.stopPropagation()">
@@ -121,6 +132,8 @@
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Delete</div>
                           <nz-switch 
+                              (ngModelChange)="onRootPermissionModuleCanDeleteChange($event, group)"
+                              formControlName="canDelete"
                               nzSize="small" 
                               [nzDisabled]="!group.value.hasAccess"
                               (click)="$event.stopPropagation()">
@@ -129,32 +142,47 @@
                       </div>
                     </div>
                   </ng-template>
-                  <ul class="bordered-none" nz-list nzBordered nzSize="large">
-                    <li 
-                        nz-list-item 
-                        nzNoFlex
-                        *ngFor="let userPermission of group?.value?.userPermission?.childUserPermissions">
-                      <div class="flex flex-row justify-content-between">
-                        <div class="permissions-header-text">
-                          {{ userPermission?.permission?.name }}
+                  <ng-container formGroupName="userPermission">
+                    <ul class="bordered-none" nz-list nzBordered nzSize="large" formArrayName="childUserPermissions">
+                      <li 
+                          nz-list-item 
+                          nzNoFlex
+                          [formGroupName]="c"
+                          *ngFor="let childGroup of getChildPermissionsFormArray(group)?.controls; let c = index">
+                        <div class="flex flex-row justify-content-between">
+                          <div class="permissions-header-text">
+                            {{ childGroup?.value?.permission?.name }}
+                          </div>
+                          <div class="permissions-header-actions">
+                            <div class="permissions-header-action">
+                              <label 
+                                  formControlName="canCreate"
+                                  nz-checkbox>
+                              </label>
+                            </div>
+                            <div class="permissions-header-action">
+                              <label 
+                                  formControlName="canRead"
+                                  nz-checkbox>
+                              </label>
+                            </div>
+                            <div class="permissions-header-action">
+                              <label 
+                                  formControlName="canUpdate"
+                                  nz-checkbox>
+                              </label>
+                            </div>
+                            <div class="permissions-header-action">
+                              <label 
+                                  formControlName="canDelete"
+                                  nz-checkbox>
+                              </label>
+                            </div>
+                          </div>
                         </div>
-                        <div class="permissions-header-actions">
-                          <div class="permissions-header-action">
-                            <label nz-checkbox></label>
-                          </div>
-                          <div class="permissions-header-action">
-                            <label nz-checkbox></label>
-                          </div>
-                          <div class="permissions-header-action">
-                            <label nz-checkbox></label>
-                          </div>
-                          <div class="permissions-header-action">
-                            <label nz-checkbox></label>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
+                  </ng-container>
                 </nz-collapse-panel>
               </nz-collapse>
 
