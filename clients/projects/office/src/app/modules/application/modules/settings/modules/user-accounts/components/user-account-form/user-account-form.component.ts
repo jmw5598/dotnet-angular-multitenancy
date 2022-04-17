@@ -67,7 +67,7 @@ export class UserAccountFormComponent implements OnInit {
     }
   }
 
-  public onPermissionModuleCanCreateChange(event: any, control: AbstractControl): void {
+  public onRootPermissionModuleCanCreateChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
     const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;

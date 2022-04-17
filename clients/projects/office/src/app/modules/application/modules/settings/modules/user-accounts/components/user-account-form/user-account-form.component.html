@@ -102,7 +102,7 @@
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Create</div>
                           <nz-switch 
-                              (ngModelChange)="onPermissionModuleCanCreateChange($event, group)"
+                              (ngModelChange)="onRootPermissionModuleCanCreateChange($event, group)"
                               formControlName="canCreate"
                               nzSize="small"
                               [nzDisabled]="!group.value.hasAccess"
