@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Permission } from '@xyz/office/modules/core/entities';
 import { UserPermissionGroup } from '@xyz/office/modules/core/models';
+import { UserValidators } from '@xyz/office/modules/core/validators';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable, take } from 'rxjs';
@@ -23,13 +24,14 @@ export class UserAccountsCreateComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _store: Store<fromUserAccounts.UserAccountsState>
+    private _store: Store<fromUserAccounts.UserAccountsState>,
+    private _userValidators: UserValidators
   ) {
     this._store.select(fromUserAccounts.selectAssignablePermissions)
       .pipe(take(1))
       .subscribe(assignablePermissions => {
         const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
-        this.createUserAccountForm = buildUserAccountForm(this._formBuilder, userPermissionGroups);
+        this.createUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
       });
   }
 

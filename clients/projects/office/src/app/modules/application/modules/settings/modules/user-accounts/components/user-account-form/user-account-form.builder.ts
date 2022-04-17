@@ -1,11 +1,14 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { UserPermission } from "@xyz/office/modules/core/entities";
 import { UserPermissionGroup } from "@xyz/office/modules/core/models";
-import { MatchValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
+import { MatchValidators, UserValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
 
-export const buildUserAccountForm = (formBuilder: FormBuilder, userPermissionGroups: UserPermissionGroup[]) => formBuilder.group({
+export const buildUserAccountForm = (formBuilder: FormBuilder, userValidators: UserValidators, userPermissionGroups: UserPermissionGroup[]) => formBuilder.group({
   user: formBuilder.group({
-    userName: ['', [Validators.required, Validators.email]],
+    userName: ['', [
+      Validators.required, 
+      Validators.email
+    ], [userValidators.validateEmail()]],
     password: ['', [
       Validators.required,
       Validators.minLength(6),
