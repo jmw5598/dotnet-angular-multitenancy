@@ -13,15 +13,15 @@ import { XyzDatatableSettings } from '@xyz/office/modules/shared/modules/datatab
 export class UserAccountFormComponent implements OnInit {
   private _assignablePermissions: Permission[] | null = null;
 
-  public userPermissionGroups: UserPermissionGroup[] | null = null;
+  public userPermissionGroupss: UserPermissionGroup[] | null = null;
 
   @Input()
   public set assignablePermissions (permissions: Permission[] | null) {
     this._assignablePermissions = permissions;
     if (permissions?.length) {
-      this.userPermissionGroups = this._mapAssignablePermissionsToUserPermissionGroups(permissions);
+      this.userPermissionGroupss = this._mapAssignablePermissionsToUserPermissionGroups(permissions);
     } else {
-      this.userPermissionGroups = null;
+      this.userPermissionGroupss = null;
     }
   };
 
@@ -42,6 +42,10 @@ export class UserAccountFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.userAccountForm = this._controlContainer.control as FormGroup;
+  }
+
+  public get userPermissionGroups(): FormArray {
+    return this.userAccountForm.get('userPermissionGroups') as FormArray;
   }
 
   private _mapAssignablePermissionsToUserPermissionGroups(permissions: Permission[]): UserPermissionGroup[] | null {

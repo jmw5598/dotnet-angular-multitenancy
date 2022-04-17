@@ -74,81 +74,93 @@
       <div class="block p-4">
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
-        <nz-collapse class="mb-2" *ngFor="let group of userPermissionGroups">
-          <nz-collapse-panel
-              class="p-0"
-              [nzHeader]="permissionPanelHeader"
-              [nzActive]="false"
-              [nzDisabled]="group.hasAccess"
-              [nzShowArrow]="false">
-            <ng-template #permissionPanelHeader>
-              <div class="flex flex-row justify-content-between">
-                <div class="permissions-header-text">
-                  <label nz-checkbox>{{ group?.userPermission?.permission?.name }}</label>
-                  <div class="ml-5">
-                    <small><a>Show all {{ group?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
-                  </div>  
-                </div>
-                <div class="permissions-header-actions">
-                  <div class="permissions-header-action">
-                    <div class="permissions-header-action-label">Create</div>
-                    <nz-switch 
-                        nzSize="small" 
-                        (click)="$event.stopPropagation()">
-                    </nz-switch>
-                  </div>
-                  <div class="permissions-header-action">
-                    <div class="permissions-header-action-label">Read</div>
-                    <nz-switch 
-                        nzSize="small" 
-                        (click)="$event.stopPropagation()">
-                    </nz-switch>
-                  </div>
-                  <div class="permissions-header-action">
-                    <div class="permissions-header-action-label">Update</div>
-                    <nz-switch 
-                        nzSize="small" 
-                        (click)="$event.stopPropagation()">
-                    </nz-switch>
-                  </div>
-                  <div class="permissions-header-action">
-                    <div class="permissions-header-action-label">Delete</div>
-                    <nz-switch 
-                        nzSize="small" 
-                        (click)="$event.stopPropagation()">
-                    </nz-switch>
-                  </div>
-                </div>
-              </div>
-            </ng-template>
-            <ul class="bordered-none" nz-list nzBordered nzSize="large">
-              <li 
-                  nz-list-item 
-                  nzNoFlex
-                  *ngFor="let userPermission of group?.userPermission?.childUserPermissions">
-                <div class="flex flex-row justify-content-between">
-                  <div class="permissions-header-text">
-                    {{ userPermission?.permission?.name }}
-                  </div>
-                  <div class="permissions-header-actions">
-                    <div class="permissions-header-action">
-                      <label nz-checkbox></label>
+        <ng-container [formGroup]="userAccountForm">
+          <ng-container formArrayName="userPermissionGroups">
+            <ng-container [formGroupName]="i" *ngFor="let group of userPermissionGroups.controls; let i = index">
+              
+              <nz-collapse class="mb-2">
+                  <nz-collapse-panel
+                    class="p-0"
+                    [nzHeader]="permissionPanelHeader"
+                    [nzActive]="group.value.hasAccess"
+                    [nzDisabled]="!group.value.hasAccess"
+                    [nzShowArrow]="false">
+                  <ng-template #permissionPanelHeader>
+                    <div class="flex flex-row justify-content-between">
+                      <div class="permissions-header-text">
+                        <label nz-checkbox formControlName="hasAccess">{{ group?.value.userPermission?.permission?.name }}</label>
+                        <div class="ml-5">
+                          <small><a>Show all {{ group?.value?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
+                        </div>  
+                      </div>
+                      <div class="permissions-header-actions">
+                        <div class="permissions-header-action">
+                          <div class="permissions-header-action-label">Create</div>
+                          <nz-switch 
+                              nzSize="small" 
+                              [nzDisabled]="!group.value.hasAccess"
+                              (click)="$event.stopPropagation()">
+                          </nz-switch>
+                        </div>
+                        <div class="permissions-header-action">
+                          <div class="permissions-header-action-label">Read</div>
+                          <nz-switch 
+                              nzSize="small" 
+                              [nzDisabled]="!group.value.hasAccess"
+                              (click)="$event.stopPropagation()">
+                          </nz-switch>
+                        </div>
+                        <div class="permissions-header-action">
+                          <div class="permissions-header-action-label">Update</div>
+                          <nz-switch 
+                              nzSize="small" 
+                              [nzDisabled]="!group.value.hasAccess"
+                              (click)="$event.stopPropagation()">
+                          </nz-switch>
+                        </div>
+                        <div class="permissions-header-action">
+                          <div class="permissions-header-action-label">Delete</div>
+                          <nz-switch 
+                              nzSize="small" 
+                              [nzDisabled]="!group.value.hasAccess"
+                              (click)="$event.stopPropagation()">
+                          </nz-switch>
+                        </div>
+                      </div>
                     </div>
-                    <div class="permissions-header-action">
-                      <label nz-checkbox></label>
-                    </div>
-                    <div class="permissions-header-action">
-                      <label nz-checkbox></label>
-                    </div>
-                    <div class="permissions-header-action">
-                      <label nz-checkbox></label>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </nz-collapse-panel>
-        </nz-collapse>
+                  </ng-template>
+                  <ul class="bordered-none" nz-list nzBordered nzSize="large">
+                    <li 
+                        nz-list-item 
+                        nzNoFlex
+                        *ngFor="let userPermission of group?.value?.userPermission?.childUserPermissions">
+                      <div class="flex flex-row justify-content-between">
+                        <div class="permissions-header-text">
+                          {{ userPermission?.permission?.name }}
+                        </div>
+                        <div class="permissions-header-actions">
+                          <div class="permissions-header-action">
+                            <label nz-checkbox></label>
+                          </div>
+                          <div class="permissions-header-action">
+                            <label nz-checkbox></label>
+                          </div>
+                          <div class="permissions-header-action">
+                            <label nz-checkbox></label>
+                          </div>
+                          <div class="permissions-header-action">
+                            <label nz-checkbox></label>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </nz-collapse-panel>
+              </nz-collapse>
+
+            </ng-container>
+          </ng-container>
+        </ng-container>
 
       </div>
     </div>
