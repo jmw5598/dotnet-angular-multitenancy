@@ -21,8 +21,6 @@ import { mapAssignablePermissionsToUserPermissionGroups } from '../../utils';
 export class UserAccountsCreateComponent implements OnInit {
   public createUserAccountForm!: FormGroup;
 
-  public assignablePermissions$!: Observable<Permission[] | null>;
-
   constructor(
     private _formBuilder: FormBuilder,
     private _store: Store<fromUserAccounts.UserAccountsState>
@@ -33,8 +31,6 @@ export class UserAccountsCreateComponent implements OnInit {
         const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
         this.createUserAccountForm = buildUserAccountForm(this._formBuilder, userPermissionGroups);
       });
-    
-    this.assignablePermissions$ = this._store.select(fromUserAccounts.selectAssignablePermissions);
   }
 
   ngOnInit(): void {
