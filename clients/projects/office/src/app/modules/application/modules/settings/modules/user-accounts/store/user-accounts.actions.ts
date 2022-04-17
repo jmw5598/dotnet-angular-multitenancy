@@ -32,3 +32,17 @@ export const getAssignablePermissionsRequestFailure = createAction(
   '[User Accounts] Get Assignable Permissions Request Failure',
   props<{ message: ResponseMessage }>()
 );
+
+export const createUserAccountRequest = createAction(
+  '[User Accounts] Create User Account Request'
+);
+
+export const createUserAccountRequestSuccess = createAction(
+  '[User Accounts] Create User Account Request Success',
+  props<{ createUserAccountDto: any }>()
+);
+
+export const createUserAccountRequestFailure = createAction(
+  '[User Accounts] Create User Account Request Failure',
+  props<{ userAccount: any }>()
+);
