@@ -24,9 +24,26 @@ namespace Xyz.Infrastructure.Extensions
                 ParentPermissionId = settingsModulePermissions.Id
             };
 
+            var dashboardModulePermission = new Permission
+            {
+                Id = Guid.NewGuid(),
+                Type = ModulePermissionType.Dashboard,
+                Name = "Dashboard Module"
+            };
+
+            var dashboardOverviewModulePermission = new Permission
+            {
+                Id = Guid.NewGuid(),
+                Type = ModulePermissionType.DashboardOverview,
+                Name = "Dashboard Overview Module",
+                ParentPermissionId = dashboardModulePermission.Id
+            };
+
             modelBuilder.Entity<Permission>().HasData(
                 settingsModulePermissions, 
-                userAccountsModulePermission
+                userAccountsModulePermission,
+                dashboardModulePermission,
+                dashboardOverviewModulePermission
             );
         }
     }
