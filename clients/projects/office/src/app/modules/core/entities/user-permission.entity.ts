@@ -7,5 +7,6 @@ export interface UserPermission {
   canUpdate: boolean,
   canDelete: boolean,
   permission: Permission,
-  parentUserPermission?: UserPermission
+  parentUserPermission?: UserPermission,
+  childUserPermissions?: UserPermission[]
 }

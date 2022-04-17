@@ -74,20 +74,19 @@
       <div class="block p-4">
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
-        
-        <nz-collapse class="mb-2" *ngFor="let permission of assignablePermissions">
+        <nz-collapse class="mb-2" *ngFor="let group of userPermissionGroups">
           <nz-collapse-panel
               class="p-0"
               [nzHeader]="permissionPanelHeader"
               [nzActive]="false"
-              [nzDisabled]="false"
+              [nzDisabled]="group.hasAccess"
               [nzShowArrow]="false">
             <ng-template #permissionPanelHeader>
               <div class="flex flex-row justify-content-between">
                 <div class="permissions-header-text">
-                  <label nz-checkbox>{{ permission?.name }}</label>
+                  <label nz-checkbox>{{ group?.userPermission?.permission?.name }}</label>
                   <div class="ml-5">
-                    <small><a>Show all 24 sub permissions</a></small>
+                    <small><a>Show all {{ group?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
                   </div>  
                 </div>
                 <div class="permissions-header-actions">
@@ -122,11 +121,14 @@
                 </div>
               </div>
             </ng-template>
-            <ul class="bordered-none" nz-list nzBordered nzSize="large" *ngFor="let permission of assignablePermissions">
-              <li nz-list-item *ngFor="let permission of assignablePermissions" nzNoFlex>
+            <ul class="bordered-none" nz-list nzBordered nzSize="large">
+              <li 
+                  nz-list-item 
+                  nzNoFlex
+                  *ngFor="let userPermission of group?.userPermission?.childUserPermissions">
                 <div class="flex flex-row justify-content-between">
                   <div class="permissions-header-text">
-                    {{ permission?.name }}
+                    {{ userPermission?.permission?.name }}
                   </div>
                   <div class="permissions-header-actions">
                     <div class="permissions-header-action">

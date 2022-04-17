@@ -13,3 +13,8 @@ export interface UserPermissions {
 }
 
 export type UserPermissionsMap = { [key: string]: UserPermission };
+
+export interface UserPermissionGroup {
+  userPermission: UserPermission;
+  hasAccess: boolean
+}
