@@ -1,7 +1,9 @@
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { UserPermission } from "@xyz/office/modules/core/entities";
+import { UserPermissionGroup } from "@xyz/office/modules/core/models";
 import { MatchValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
 
-export const buildUserAccountForm = (formBuilder: FormBuilder) => formBuilder.group({
+export const buildUserAccountForm = (formBuilder: FormBuilder, userPermissionGroups: UserPermissionGroup[]) => formBuilder.group({
   user: formBuilder.group({
     userName: ['', [Validators.required, Validators.email]],
     password: ['', [
@@ -19,5 +21,33 @@ export const buildUserAccountForm = (formBuilder: FormBuilder) => formBuilder.gr
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]]
   }),
-  permissions: formBuilder.group({})
+  userPermissionGroups: buildUserPermissionGroupsFormArray(formBuilder, userPermissionGroups)
 });
+
+export const buildUserPermissionGroupsFormArray = 
+  (formBuilder: FormBuilder, userPermissionGroups: UserPermissionGroup[]): FormArray => formBuilder.array([
+    ...userPermissionGroups.map(group => formBuilder.group({
+      hasAccess: [group.hasAccess],
+      userPermission: formBuilder.group({
+        ...buildUserPermissionFormGroup(formBuilder, group.userPermission).controls,
+        childUserPermissions: formBuilder.array([
+          ...group?.userPermission
+            ?.childUserPermissions
+            ?.map(childUserPermission => buildUserPermissionFormGroup(formBuilder, childUserPermission)) || []
+        ])
+      })
+    }))
+  ]);
+
+export const buildUserPermissionFormGroup = 
+  (formBuilder: FormBuilder, userPermission: UserPermission): FormGroup => formBuilder.group({
+    canCreate: [userPermission.canCreate],
+    canRead: [userPermission.canRead],
+    canUpdate: [userPermission.canUpdate],
+    canDelete: [userPermission.canDelete],
+    permission: formBuilder.group({
+      id: [userPermission?.permission?.id],
+      name: [userPermission?.permission?.name]
+    }),
+  });
+

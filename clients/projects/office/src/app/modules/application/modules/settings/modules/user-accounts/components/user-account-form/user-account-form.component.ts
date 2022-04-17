@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
-import { ControlContainer, FormGroup } from '@angular/forms';
+import { ControlContainer, FormArray, FormGroup } from '@angular/forms';
 import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
 import { UserPermissionGroup } from '@xyz/office/modules/core/models';
 import { XyzDatatableSettings } from '@xyz/office/modules/shared/modules/datatable';
