@@ -6,11 +6,13 @@ import { environment } from '@xyz/office/env/environment';
 import * as fromAuthentication from '@xyz/office/modules/authentication/store';
 import * as fromPlans from './plans';
 import * as fromUser from './user';
+import * as fromFiles from './files';
 
 export interface RootState {
   [fromAuthentication.authenticationFeatureKey]: fromAuthentication.AuthenticationState,
   [fromPlans.plansFeatureKey]: fromPlans.PlansState,
-  [fromUser.userFeatureKey]: fromUser.UserState
+  [fromUser.userFeatureKey]: fromUser.UserState,
+  [fromFiles.filesFeatureKey]: fromFiles.FilesState
   // router: fromRouter.RouterReducerState<any>;
 }
 
@@ -19,7 +21,8 @@ export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<RootState, Acti
   factory: () => ({
     [fromAuthentication.authenticationFeatureKey]: fromAuthentication.reducer,
     [fromPlans.plansFeatureKey]: fromPlans.reducer,
-    [fromUser.userFeatureKey]: fromUser.reducer
+    [fromUser.userFeatureKey]: fromUser.reducer,
+    [fromFiles.filesFeatureKey]: fromFiles.reducer
     // router: fromRouter.routerReducer,
   }),
 });
@@ -57,5 +60,6 @@ export const metaReducers: MetaReducer<RootState>[] = !environment.production
 export const rootEffects: any[] = [
   fromAuthentication.AuthenticationEffects,
   fromPlans.PlansEffects,
-  fromUser.UserEffects
+  fromUser.UserEffects,
+  fromFiles.FilesEffects
 ];
