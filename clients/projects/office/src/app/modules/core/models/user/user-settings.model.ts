@@ -1,3 +1,5 @@
-export interface UserSettings {
+import { UserDto } from "../../dtos";
 
+export interface UserSettings {
+  userDetails: UserDto
 }
