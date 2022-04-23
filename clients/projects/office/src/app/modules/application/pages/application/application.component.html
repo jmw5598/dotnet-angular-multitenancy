@@ -59,7 +59,7 @@
       </nz-avatar>
       <nz-dropdown-menu #userMenu="nzDropdownMenu" style="width: 400px;">
         <ul nz-menu class="user-dropdown-menu">
-          <li nz-menu-item>
+          <li nz-menu-item class="py-2 px-3">
             <div class="flex flex-row">
               <nz-avatar
                   class="mr-4"
@@ -76,15 +76,15 @@
             </div>
           </li>
           <li nz-menu-divider></li>
-          <li nz-menu-item class="py-1">
+          <li nz-menu-item class="py-1 px-4">
             <i class="mr-2" nz-icon nzType="user" nzTheme="outline"></i>
             <a class="text-dark" routerLink="/account/profile">Profile</a>
           </li>
-          <li nz-menu-item class="py-1">
+          <li nz-menu-item class="py-1 px-4">
             <i class="mr-2" nz-icon nzType="unlock" nzTheme="outline"></i>
             <a routerLink="/account/settings">Account Settings</a>
           </li>
-          <li nz-menu-item class="py-1">
+          <li nz-menu-item class="py-1 px-4">
             <i class="mr-2" nz-icon nzType="poweroff" nzTheme="outline"></i>
             <a routerLink="/auth/logging-out">Log out</a>
           </li>
