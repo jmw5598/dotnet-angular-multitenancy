@@ -57,8 +57,8 @@
           [nzIcon]="'user'"
           nzPlacement="bottomRight">
       </nz-avatar>
-      <nz-dropdown-menu #userMenu="nzDropdownMenu">
-        <ul nz-menu>
+      <nz-dropdown-menu #userMenu="nzDropdownMenu" style="width: 400px;">
+        <ul nz-menu class="user-dropdown-menu">
           <li nz-menu-item>
             <div class="flex flex-row">
               <nz-avatar
@@ -71,12 +71,21 @@
               </nz-avatar>
               <div>
                 <h4 class="m-0 fw-bold">{{ settings?.userDetails?.firstName }} {{ settings?.userDetails?.lastName }}</h4>
-                <small class="m-0">{{ settings?.userDetails?.email }}</small>
+                <h4 class="m-0">{{ settings?.userDetails?.email }}</h4>
               </div>
             </div>
           </li>
           <li nz-menu-divider></li>
-          <li nz-menu-item>
+          <li nz-menu-item class="py-1">
+            <i class="mr-2" nz-icon nzType="user" nzTheme="outline"></i>
+            <a class="text-dark" routerLink="/account/profile">Profile</a>
+          </li>
+          <li nz-menu-item class="py-1">
+            <i class="mr-2" nz-icon nzType="unlock" nzTheme="outline"></i>
+            <a routerLink="/account/settings">Account Settings</a>
+          </li>
+          <li nz-menu-item class="py-1">
+            <i class="mr-2" nz-icon nzType="poweroff" nzTheme="outline"></i>
             <a routerLink="/auth/logging-out">Log out</a>
           </li>
         </ul>
