@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 using System.Data;
 
@@ -15,11 +16,19 @@ namespace Xyz.Infrastructure.Services
     {
         private readonly ILogger<UsersService> _logger;
         private readonly AuthenticationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public UsersService(ILogger<UsersService> logger, AuthenticationDbContext context)
+        public UsersService(
+            ILogger<UsersService> logger, 
+            AuthenticationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationRole> roleManager)
         {
             this._logger = logger;
             this._context = context;
+            this._userManager = userManager;
+            this._roleManager = roleManager;
         }
 
 
@@ -73,5 +82,56 @@ namespace Xyz.Infrastructure.Services
 
             return await Page<UserDto>.From(usersSource, pageRequest);
         }
+
+        public async Task<UserDto> CreateUserAccount(string tenantId, RegistrationUserAccount userAccount)
+        {
+            using var transaction = this._context.Database.BeginTransaction();
+
+            try 
+            {
+                var userRole = await this._roleManager.FindByNameAsync(Roles.USER);
+                var tenant = await this._context.Tenants.Where(tenant => tenant.Id.ToString() == tenantId).FirstOrDefaultAsync();
+
+                if (tenant == null)
+                {
+                    throw new Exception("Error getting tenant for new user account");
+                }
+
+                userAccount.User.Tenants.Add(tenant);
+
+                var userIdentityResult = await this._userManager.CreateAsync(userAccount.User, userAccount.RawPassword);
+                
+                if (!userIdentityResult.Succeeded)
+                {
+                    throw new Exception("Error creating new user!");
+                }
+
+                var addRoleIdentityResult = await this._userManager.AddToRoleAsync(userAccount.User, Roles.ADMIN);
+
+                if (!addRoleIdentityResult.Succeeded)
+                {
+                    throw new Exception("Error adding role to new user");
+                }
+
+                transaction.Commit();
+
+                return new UserDto
+                {
+                    Id = userAccount.User.Id,
+                    Email = userAccount.User.Email,
+                    FirstName = userAccount.User.Profile.FirstName,
+                    LastName = userAccount.User.Profile.LastName,
+                    Roles = userAccount.User.UserRoles.Select(u => u.Role).ToList()
+                };
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                var errorMessage = "Error registering new user account!";
+                this._logger.LogError(errorMessage, e);
+                throw new Exception(errorMessage);
+            }
+        }
+
     }
 }

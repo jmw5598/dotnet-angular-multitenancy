@@ -6,7 +6,21 @@
       <div class="block p-4">
         <!-- User Avatar -->
         <div class="my-5">
-          <img class="block mx-auto my-5" style="border-radius: 50%; width: 128px; height: 128px;" src="https://i.pravatar.cc/300" />
+          <nz-upload
+              class="avatar-uploader text-center"
+              nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              nzName="avatar"
+              nzListType="picture-card"
+              [nzShowUploadList]="false"
+              [nzBeforeUpload]="beforeUpload"
+              (nzChange)="handleChange($event)">
+            <ng-container *ngIf="!avatarUrl">
+              <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+              <div class="ant-upload-text">Upload</div>
+            </ng-container>
+            <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+          </nz-upload>
+          <!-- <img class="block mx-auto my-5" style="border-radius: 50%; width: 128px; height: 128px;" src="https://i.pravatar.cc/300" /> -->
         </div>
 
         <!-- User Details Section -->

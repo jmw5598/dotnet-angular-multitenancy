@@ -16,6 +16,6 @@ namespace Xyz.Core.Entities.Tenant
         public Permission? ParentPermission { get; set; } = default!;
 
         [NotMapped]
-        public ICollection<Permission> ChildPermissions { get; set; } = default!;
+        public ICollection<Permission>? ChildPermissions { get; set; } = default!;
     }
 }

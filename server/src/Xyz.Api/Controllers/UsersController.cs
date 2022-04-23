@@ -9,6 +9,8 @@ using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
 using Xyz.Multitenancy.Multitenancy;
 
+using Xyz.Api.Models;
+
 namespace Xyz.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -16,18 +18,21 @@ namespace Xyz.Api.Controllers
     public class UsersController : ControllerBase
     {
         private ILogger<UsersController> _logger;
-        private IUsersService _usersService;
+        private IUsersService _usersService; // Multitenancy user specific stuff
+        private IUserService _userService; // Users Serviec to tenant speicific stuff
         private IPermissionsService _permissionsService;
         private ITenantAccessor<Tenant> _tenantAccessor;
 
         public UsersController(
             ILogger<UsersController> logger, 
             IUsersService usersService,
+            IUserService userService,
             IPermissionsService permissionsService,
             ITenantAccessor<Tenant> tenantAccessor)
         {
             this._logger = logger;
             this._usersService = usersService;
+            this._userService = userService;
             this._permissionsService = permissionsService;
             this._tenantAccessor = tenantAccessor;
         }
@@ -55,6 +60,32 @@ namespace Xyz.Api.Controllers
             catch (Exception ex)
             {
                 var errorMessage = "Error searching users!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [Authorize(Policy = PolicyNames.RequireTenant)]
+        [HttpPost]
+        public async Task<ActionResult<UserDto>> CreateUserAccount(CreateUserAccountDto createUserAccountDto)
+        {
+            var tenantId = this._tenantAccessor.Tenant.Id;
+            
+            try
+            {
+                var registrationUserAccount = createUserAccountDto.ToRegistrationUserAccount();
+
+                var newUserDto = await this._usersService
+                    .CreateUserAccount(tenantId.ToString(), registrationUserAccount);
+                
+                var newUserPermissions = await this._userService
+                    .SaveUserPermissions(newUserDto.Id.ToString(), registrationUserAccount.UserPermissions);
+                
+                return Ok(newUserDto);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error creating new user account!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }

@@ -27,3 +27,4 @@ export * from './navigation/navigation-link.model';
 // users
 export * from './user/user-permissions.model';
 export * from './user/user-settings.model';
+export * from './user/user-account.model';

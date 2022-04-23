@@ -2,21 +2,24 @@ import { createReducer, on } from '@ngrx/store';
 
 import { UserDto } from '@xyz/office/modules/core/dtos';
 import { Permission } from '@xyz/office/modules/core/entities';
-import { Page } from '@xyz/office/modules/core/models';
+import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 
 import * as fromUserAccounts from './user-accounts.actions';
 
 export const userAccountsFeatureKey = 'userAccounts';
 
 export interface UserAccountsState {
-  userAccountsPage: Page<UserDto> | null;
-  assignablePermissions: Permission[] | null;
+  userAccountsPage: Page<UserDto> | null,
+  assignablePermissions: Permission[] | null,
+  createUserAccountResponseMessage: ResponseMessage | null,
 }
 
 export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
-  assignablePermissions: null
+  assignablePermissions: null,
+  createUserAccountResponseMessage: null
 }
+
 
 const handleSearchUserAccountsRequestSuccess = (state: UserAccountsState, { page }: any) => ({
   ...state,
@@ -28,6 +31,13 @@ const handleGetAssignablePermissionsRequestSuccess = (state: UserAccountsState, 
   assignablePermissions: permissions
 } as UserAccountsState);
 
+const handleCreateUserAccountRequestSuccess = (state: UserAccountsState, { message }: any) => ({
+  ...state,
+  userAccountsPage: null,
+  createUserAccountResponseMessage: message
+} as UserAccountsState);
+
+
 export const reducer = createReducer(
   initialUserAccountsState,
   on(
@@ -37,5 +47,9 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.getAssignablePermissionsRequestSuccess, 
     handleGetAssignablePermissionsRequestSuccess
+  ),
+  on(
+    fromUserAccounts.createUserAccountRequestSuccess,
+    handleCreateUserAccountRequestSuccess
   )
 );

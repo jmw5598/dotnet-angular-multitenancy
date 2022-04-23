@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Permission } from '@xyz/office/modules/core/entities';
-import { UserPermissionGroup } from '@xyz/office/modules/core/models';
+import { UserAccount, UserPermissionGroup } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
@@ -10,7 +10,7 @@ import { Observable, take } from 'rxjs';
 import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
 
 import * as fromUserAccounts from '../../store';
-import { mapAssignablePermissionsToUserPermissionGroups } from '../../utils';
+import { flattenUserPermissionGroups, mapAssignablePermissionsToUserPermissionGroups } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-create',
@@ -39,7 +39,14 @@ export class UserAccountsCreateComponent implements OnInit {
   }
 
   public onCreateUserAccount(formValue: any): void {
-    console.log("form value is ", formValue);
+    if (this.createUserAccountForm.invalid) return;
+    
+    const userAccount: UserAccount = {
+      user: formValue.user,
+      profile: formValue.profile,
+      userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
+    } as UserAccount;
+    
+    this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
   }
-
 }

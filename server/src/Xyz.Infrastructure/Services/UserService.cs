@@ -50,5 +50,37 @@ namespace Xyz.Infrastructure.Services
                 throw;
             }
         }
+
+        public async Task<ICollection<UserPermission>> SaveUserPermissions(string  userId, ICollection<UserPermission> userPermissions)
+        {
+            try
+            {
+                var userPermissionsMapped = userPermissions.Select(p => {
+                    return new UserPermission
+                    {
+                        Id = Guid.NewGuid(),
+                        AspNetUserId = new Guid(userId),
+                        PermissionId = p.Permission.Id,
+                        CanCreate = p.CanCreate,
+                        CanRead = p.CanCreate,
+                        CanUpdate = p.CanDelete,
+                        CanDelete = p.CanDelete,
+                        ParentUserPermissionId = p.ParentUserPermissionId
+                    };
+                }).ToList();
+
+                this._context.UserPermissions.AddRange(userPermissions);
+                this._context.SaveChanges();
+
+                return userPermissionsMapped;
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error saving user permissions!";
+                this._logger.LogError(ex.ToString());
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
     }
 }

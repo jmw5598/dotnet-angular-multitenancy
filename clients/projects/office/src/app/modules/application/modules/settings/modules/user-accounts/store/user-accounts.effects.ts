@@ -51,4 +51,22 @@ export class UserAccountsEffects {
       )
     )
   );
+
+  public createUserAccountRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.createUserAccountRequest),
+      switchMap(({ userAccount }) => 
+        this._usersService.createUserAccount(userAccount)
+          .pipe(
+            mergeMap((userDto: UserDto) => of(fromUserAccounts.createUserAccountRequestSuccess({ userDto: userDto }))),
+            catchError((error: any)=> of(fromUserAccounts.createUserAccountRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error create new user!'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  );
 }

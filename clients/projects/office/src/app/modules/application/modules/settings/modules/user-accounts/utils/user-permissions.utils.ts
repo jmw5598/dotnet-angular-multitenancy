@@ -33,3 +33,27 @@ export const userPermissionToUserPermissionGroup = (userPermission: UserPermissi
     userPermission: userPermission
   } as UserPermissionGroup;
 }
+
+// @NOTE - this only handle singel tier nesting of user permissions, will
+//         have to refactor usign recursion to handle infinite userPermission nesting.
+export const flattenUserPermissionGroups = (userPermissionGroups: UserPermissionGroup[]): UserPermission[] => {
+  const rootUserPermissions: UserPermission[] = userPermissionGroups.map(group => group.userPermission);
+
+  const flattenedUserPermissions: UserPermission[] = [];
+
+  for (let i = 0; i < rootUserPermissions?.length; i++) {
+    const parentUserPermision: UserPermission = { 
+      ...rootUserPermissions[i], 
+      childUserPermissions: undefined 
+    } as UserPermission;
+
+    flattenedUserPermissions.push(parentUserPermision);
+
+    rootUserPermissions[i]?.childUserPermissions?.forEach(up => {
+      up.parentUserPermission = parentUserPermision;
+      flattenedUserPermissions.push(up);
+    });
+  }
+
+  return flattenedUserPermissions;
+}

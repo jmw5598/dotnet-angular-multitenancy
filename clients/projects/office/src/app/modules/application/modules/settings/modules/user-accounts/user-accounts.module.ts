@@ -14,6 +14,7 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 
@@ -48,7 +49,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NzDividerModule,
     NzListModule,
     NzCollapseModule,
-    NzSwitchModule
+    NzSwitchModule,
+    NzUploadModule
   ]
 })
 export class UserAccountsModule { }

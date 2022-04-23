@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { UserDto } from '../dtos';
 import { Permission } from '../entities';
 
-import { Page, PageRequest, ValidationResult } from '../models';
+import { Page, PageRequest, UserAccount, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -39,6 +39,13 @@ export class UsersService {
   public getAssignablePermission(): Observable<Permission[]> {
     return this.http.get<Permission[]>(
       `${this.environmentService.getBaseApiUrl()}/users/permissions`
+    );
+  }
+
+  public createUserAccount(userAccount: UserAccount): Observable<UserDto> {
+    return this.http.post<UserDto>(
+      `${this.environmentService.getBaseApiUrl()}/users`,
+      userAccount
     );
   }
 }

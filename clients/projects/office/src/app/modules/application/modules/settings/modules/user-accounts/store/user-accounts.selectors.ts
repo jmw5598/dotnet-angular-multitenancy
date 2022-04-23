@@ -17,3 +17,8 @@ export const selectAssignablePermissions = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state?.assignablePermissions || null
 );
+
+export const selectCreateUserAccountResponseMessage = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state?.createUserAccountResponseMessage || null
+);
