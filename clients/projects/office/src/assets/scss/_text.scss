@@ -1,11 +1,20 @@
-.text-center {
-  text-align: center;
-}
+// Text alignment
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
 
-.text-left {
-  text-align: left;
-}
+// Font Weight
+.fw-bold { font-weight: bold; }
+.fw-bolder { font-weight: bolder; }
+.fw-normal { font-weight: normal; }
+.fw-lighter { font-weight: lighter; }
 
-.text-right {
-  text-align: right;
-}
+.fw-100 { font-weight: 100; }
+.fw-200 { font-weight: 200; }
+.fw-300 { font-weight: 300; }
+.fw-400 { font-weight: 400; }
+.fw-500 { font-weight: 500; }
+.fw-600 { font-weight: 600; }
+.fw-700 { font-weight: 700; }
+.fw-800 { font-weight: 800; }
+.fw-900 { font-weight: 900; }

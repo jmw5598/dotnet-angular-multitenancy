@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { NavigationLink, UserPermissionsMap } from '@xyz/office/modules/core/models';
+import { NavigationLink, UserPermissionsMap, UserSettings } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { defaultNavigationMenu } from '../../constants/navigation-menu.defaults';
 import { NavigationMenuService } from '../../services/navigation-menu.service';
@@ -21,6 +21,8 @@ export class ApplicationComponent implements OnInit {
   public isCollapsed$: Observable<boolean>;
   public defaultNavigationMenu: NavigationLink[] = defaultNavigationMenu;
 
+  public userSettings$: Observable<UserSettings | null>;
+
   public userPermissionsMap$!: Observable<UserPermissionsMap | null>;
 
   constructor(
@@ -29,6 +31,7 @@ export class ApplicationComponent implements OnInit {
   ) {
     this.isCollapsed$ = this._navigationMenuService.isCollapsed();
     this.userPermissionsMap$ = this._store.select(fromUser.selectUserPermissionsMap);
+    this.userSettings$ = this._store.select(fromUser.selectUserSettings);
   }
 
   ngOnInit(): void {

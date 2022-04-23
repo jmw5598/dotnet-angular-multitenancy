@@ -36,7 +36,7 @@
       </ng-container>
     </ul>
   </nz-sider>
-  <nz-layout>
+  <nz-layout *ngIf="userSettings$ | async as settings">
     <nz-header class="flex flex-row justify-content-between align-items-center bordered-bottom">
       <div class="h-100 px-4">
         <i
@@ -50,14 +50,32 @@
           class="mr-4"
           nzSrc="https://i.pravatar.cc/300"
           nz-dropdown
-          [nzDropdownMenu]="menu" 
+          nzTrigger="click"
+          [nzDropdownMenu]="userMenu" 
           [nzShape]="'circle'" 
           [nzSize]="'large'" 
           [nzIcon]="'user'"
           nzPlacement="bottomRight">
       </nz-avatar>
-      <nz-dropdown-menu #menu="nzDropdownMenu">
+      <nz-dropdown-menu #userMenu="nzDropdownMenu">
         <ul nz-menu>
+          <li nz-menu-item>
+            <div class="flex flex-row">
+              <nz-avatar
+                  class="mr-4"
+                  nzSrc="https://i.pravatar.cc/300"
+                  [nzShape]="'circle'" 
+                  [nzSize]="'large'" 
+                  [nzIcon]="'user'"
+                  nzPlacement="bottomRight">
+              </nz-avatar>
+              <div>
+                <h4 class="m-0 fw-bold">{{ settings?.userDetails?.firstName }} {{ settings?.userDetails?.lastName }}</h4>
+                <small class="m-0">{{ settings?.userDetails?.email }}</small>
+              </div>
+            </div>
+          </li>
+          <li nz-menu-divider></li>
           <li nz-menu-item>
             <a routerLink="/auth/logging-out">Log out</a>
           </li>
