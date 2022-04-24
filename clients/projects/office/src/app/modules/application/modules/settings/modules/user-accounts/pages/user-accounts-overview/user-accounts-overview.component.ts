@@ -31,7 +31,7 @@ export class UserAccountsOverviewComponent implements OnInit {
         label: 'User Name',
         property: 'userName',
         type: ColumnType.TEXT,
-        width: null
+        width: '200px'
 
       } as ColumnDefinition,
       {

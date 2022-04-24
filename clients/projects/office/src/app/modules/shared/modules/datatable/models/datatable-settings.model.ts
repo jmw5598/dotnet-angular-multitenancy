@@ -15,6 +15,6 @@ export const DEFAULT_XYZ_DATATABLE_SETTINGS: XyzDatatableSettings = {
   bordered: true,
   size: 'middle',
   scroll: {
-    y: '240px'
+    y: '500px'
   }
 };
