@@ -1,6 +1,9 @@
+@import './variables';
+
 .block { display: block; }
 .inline { display: inline; }
 .inline-block { display: inline-block; }
+.d-none { display: none; }
 
 // Flexbox
 .flex { display: flex; }
