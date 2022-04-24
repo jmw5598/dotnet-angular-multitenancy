@@ -58,7 +58,7 @@
       </div>
       <nz-avatar
           class="mr-4 cursor-pointer"
-          nzSrc="https://i.pravatar.cc/300"
+          [nzSrc]="settings?.userDetails?.avatarSrc"
           nz-dropdown
           nzTrigger="click"
           [nzDropdownMenu]="userMenu" 
@@ -73,7 +73,7 @@
             <div class="flex flex-row">
               <nz-avatar
                   class="mr-4"
-                  nzSrc="https://i.pravatar.cc/300"
+                  [nzSrc]="settings?.userDetails?.avatarSrc"
                   [nzShape]="'circle'" 
                   [nzSize]="'large'" 
                   [nzIcon]="'user'"

@@ -36,6 +36,9 @@ export class XyzDatatableComponent implements OnInit {
   @Input()
   public actionsContent: TemplateRef<any> | null = null;
 
+  @Input()
+  public actionsWidth: string | null = '150px';
+
   public ColumnType = ColumnType;
 
   constructor() { }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { XyzDatatableComponent } from './components/datatable/datatable.component';
 
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { NzTableModule } from 'ng-zorro-antd/table';
   ],
   imports: [
     CommonModule,
-    NzTableModule
+    NzTableModule,
+    NzAvatarModule
   ],
   exports: [
     XyzDatatableComponent

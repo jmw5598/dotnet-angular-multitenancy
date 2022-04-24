@@ -4,14 +4,15 @@
     [nzTotal]="page?.totalElements || 0"
     [nzPageIndex]="page?.current?.index || 0"
     
+    [nzScroll]="settings.scroll"
     [nzBordered]="settings.bordered"
     [nzSize]="settings.size">
   <thead *ngIf="definition?.columns?.length">
     <tr>
       <ng-container *ngFor="let column of definition?.columns">
-        <th>{{ column.label }}</th>
+        <th [nzWidth]="column?.width || null">{{ column.label }}</th>
       </ng-container>
-      <th *ngIf="actionsContent">Actions</th>
+      <th *ngIf="actionsContent" [nzWidth]="actionsWidth" [nzRight]="true">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +24,7 @@
               [ngTemplateOutletContext]="{ row, column }">
           </ng-container>
         </td>
-        <td *ngIf="actionsContent">
+        <td *ngIf="actionsContent" [nzRight]="true">
           <ng-container
               [ngTemplateOutlet]="actionsContent"
               [ngTemplateOutletContext]="{ row }">
@@ -47,6 +48,11 @@
       [ngTemplateOutlet]="emailColumnTypeTemplate"
       [ngTemplateOutletContext]="{ row, column }">
     </ng-container>
+    <ng-container 
+      *ngSwitchCase="ColumnType.IMAGE"
+      [ngTemplateOutlet]="imageColumnTypeTemplate"
+      [ngTemplateOutletContext]="{ row, column }">
+    </ng-container>
   </ng-container>
 </ng-template>
 
@@ -64,4 +70,18 @@
   <a [href]="'mailto:' + row[column.property]" alt="Email address">
     {{ row[column.property] }}
   </a>
+</ng-template>
+
+<ng-template 
+    #imageColumnTypeTemplate 
+    let-row="row" 
+    let-column="column">
+  <div class="flex flex-row justify-content-center align-items-center">
+    <nz-avatar
+        [nzSrc]="row[column?.property]"
+        [nzShape]="'circle'" 
+        [nzSize]="'large'" 
+        [nzIcon]="'user'">
+    </nz-avatar>
+  </div>
 </ng-template>

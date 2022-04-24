@@ -22,24 +22,35 @@ export class UserAccountsOverviewComponent implements OnInit {
     title: 'User Accounts',
     columns: [
       {
+        label: '',
+        property: 'avatarSrc',
+        type: ColumnType.IMAGE,
+        width: '75px'
+      },
+      {
         label: 'User Name',
         property: 'userName',
-        type: ColumnType.TEXT
+        type: ColumnType.TEXT,
+        width: null
+
       } as ColumnDefinition,
       {
         label: 'Email',
         property: 'email',
-        type: ColumnType.EMAIL
+        type: ColumnType.EMAIL,
+        width: '200px'
       } as ColumnDefinition,
       {
         label: 'First name',
         property: 'firstName',
-        type: ColumnType.TEXT
+        type: ColumnType.TEXT,
+        width: '200px'
       } as ColumnDefinition,
       {
         label: 'Last Name',
         property: 'lastName',
-        type: ColumnType.TEXT
+        type: ColumnType.TEXT,
+        width: '200px'
       } as ColumnDefinition,
     ]
   } as TableDefinition

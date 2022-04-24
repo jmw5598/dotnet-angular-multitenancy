@@ -6,5 +6,6 @@ export interface UserDto {
   email: string,
   firstName: string,
   lastName: string,
+  avatarSrc: string,
   userPermissions?: UserPermission[]
 }

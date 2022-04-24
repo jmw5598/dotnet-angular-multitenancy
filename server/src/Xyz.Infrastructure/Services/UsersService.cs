@@ -77,6 +77,7 @@ namespace Xyz.Infrastructure.Services
                     Email = u.Email,
                     FirstName = u.Profile.FirstName,
                     LastName = u.Profile.LastName,
+                    AvatarSrc = "https://i.pravatar.cc/300",
                     Roles = u.UserRoles.Select(u => u.Role).ToList()
                 });
 
@@ -121,6 +122,7 @@ namespace Xyz.Infrastructure.Services
                     Email = userAccount.User.Email,
                     FirstName = userAccount.User.Profile.FirstName,
                     LastName = userAccount.User.Profile.LastName,
+                    AvatarSrc = "https://i.pravatar.cc/300",
                     Roles = userAccount.User.UserRoles.Select(u => u.Role).ToList()
                 };
             }

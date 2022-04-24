@@ -5,7 +5,7 @@ export interface ColumnDefinition {
   property: string,
   type: ColumnType,
   align?: string,
-  width?: number,
+  width?: string | null,
   isVisible?: boolean,
-  canModify?: boolean
+  canModify?: boolean,
 }

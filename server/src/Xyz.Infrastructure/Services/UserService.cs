@@ -43,7 +43,8 @@ namespace Xyz.Infrastructure.Services
                         UserName = user.UserName,
                         Email = user.Email,
                         FirstName = user.Profile.FirstName,
-                        LastName = user.Profile.LastName
+                        LastName = user.Profile.LastName,
+                        AvatarSrc = "https://i.pravatar.cc/300",
                     }
                 });
             }
