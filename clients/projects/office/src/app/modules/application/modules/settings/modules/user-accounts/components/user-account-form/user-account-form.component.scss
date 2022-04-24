@@ -25,6 +25,7 @@
 .permissions-header-actions {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
 
   .permissions-header-action {
     display: flex;

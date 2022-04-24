@@ -2,7 +2,7 @@
   <!-- <nz-page-header nzTitle="Log In" class="px-0 pb-3 pt-0"></nz-page-header> -->
 
   <div class="w-100" nz-row [nzGutter]="16">
-    <div nz-col class="gutter-row bordered-right" [nzSpan]="8">
+    <div class="bordered-right" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="8" nzXl="8">
       <div class="block p-4">
         <!-- User Avatar -->
         <div class="my-5">
@@ -84,7 +84,7 @@
       
       </div>
     </div>
-    <div nz-col class="gutter-row" [nzSpan]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="16" nzXl="16">
       <div class="block p-4">
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
@@ -100,8 +100,8 @@
                     [nzDisabled]="!group.value.hasAccess"
                     [nzShowArrow]="false">
                   <ng-template #permissionPanelHeader>
-                    <div class="flex flex-row justify-content-between">
-                      <div class="permissions-header-text">
+                    <div nz-row  [nzGutter]="16">
+                      <div nz-col nzXs="24" nzSm="26" nzMd="12" nzLg="12" nzXl="15" class="permissions-header-text">
                         <label 
                             nz-checkbox 
                             formControlName="hasAccess"
@@ -112,7 +112,7 @@
                           <small><a>Show all {{ group?.value?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
                         </div>  
                       </div>
-                      <div class="permissions-header-actions" formGroupName="userPermission">
+                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions" formGroupName="userPermission">
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Create</div>
                           <nz-switch 
@@ -163,11 +163,11 @@
                           nzNoFlex
                           [formGroupName]="c"
                           *ngFor="let childGroup of getChildPermissionsFormArray(group)?.controls; let c = index">
-                        <div class="flex flex-row justify-content-between">
-                          <div class="permissions-header-text">
+                        <div nz-row  [nzGutter]="16">
+                          <div nz-col nzXs="24" nzSm="26" nzMd="12" nzLg="12" nzXl="15"  class="permissions-header-text">
                             {{ childGroup?.value?.permission?.name }}
                           </div>
-                          <div class="permissions-header-actions">
+                          <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions">
                             <div class="permissions-header-action">
                               <label 
                                   formControlName="canCreate"
