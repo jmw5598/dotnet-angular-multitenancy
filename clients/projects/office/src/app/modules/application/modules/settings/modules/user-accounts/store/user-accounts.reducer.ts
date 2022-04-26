@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { UserDto } from '@xyz/office/modules/core/dtos';
-import { Permission } from '@xyz/office/modules/core/entities';
+import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 
 import * as fromUserAccounts from './user-accounts.actions';
@@ -12,12 +12,14 @@ export interface UserAccountsState {
   userAccountsPage: Page<UserDto> | null,
   assignablePermissions: Permission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
+  selectedUsersPermissions: UserPermission[] | null
 }
 
 export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
   assignablePermissions: null,
-  createUserAccountResponseMessage: null
+  createUserAccountResponseMessage: null,
+  selectedUsersPermissions: null
 }
 
 
@@ -37,6 +39,10 @@ const handleCreateUserAccountRequestSuccess = (state: UserAccountsState, { messa
   createUserAccountResponseMessage: message
 } as UserAccountsState);
 
+const handleGetUserPermissionsByUserIdRequestSuccess = (state: UserAccountsState, { permissions }: any) => ({
+  ...state,
+  selectedUsersPermissions: permissions
+} as UserAccountsState);
 
 export const reducer = createReducer(
   initialUserAccountsState,
@@ -51,5 +57,9 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.createUserAccountRequestSuccess,
     handleCreateUserAccountRequestSuccess
+  ),
+  on(
+    fromUserAccounts.getUserPermissionByUserIdRequestSuccess,
+    handleGetUserPermissionsByUserIdRequestSuccess
   )
 );

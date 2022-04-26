@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, ControlContainer, FormArray, FormGroup } from '@angular/forms';
 import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
 import { UserPermissionGroup } from '@xyz/office/modules/core/models';
+import { EnvironmentService } from '@xyz/office/modules/core/services';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
 
@@ -15,11 +16,16 @@ export class UserAccountFormComponent implements OnInit {
   public userAccountForm!: FormGroup;
 
   constructor(
-    private _controlContainer: ControlContainer
+    private _controlContainer: ControlContainer,
+    private _environmentService: EnvironmentService
   ) { }
 
   ngOnInit(): void {
     this.userAccountForm = this._controlContainer.control as FormGroup;
+  }
+
+  public get uploadAvatarUrl(): string {
+    return `${this._environmentService.getBaseApiUrl()}/files/avatar`;
   }
 
   public get userPermissionGroups(): FormArray {

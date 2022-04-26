@@ -22,10 +22,23 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("avatar")]
-        public async Task<ActionResult<object>> UploadAvatar()
+        public async Task<ActionResult<object>> UploadAvatar(IFormFile avatar)
         {
+            long size = avatar.Length;
 
-            return Ok("");
+            
+            var filePath = Path.GetTempFileName();
+
+            using (var stream = System.IO.File.Create(filePath))
+            {
+                await avatar.CopyToAsync(stream);
+            }
+        
+
+            // Process uploaded files
+            // Don't rely on or trust the FileName property without validation.
+
+            return Ok(new { count = 1, size });
         }
     }
 }

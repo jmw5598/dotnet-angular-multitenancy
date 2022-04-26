@@ -22,3 +22,8 @@ export const selectCreateUserAccountResponseMessage = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state?.createUserAccountResponseMessage || null
 );
+
+export const selectSelectedUsersPermissions = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state?.selectedUsersPermissions || null
+);

@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
 import { UserDto } from '@xyz/office/modules/core/dtos';
 import { UsersService } from "@xyz/office/modules/core/services/users.service";
-import { Permission } from "@xyz/office/modules/core/entities";
+import { Permission, UserPermission } from "@xyz/office/modules/core/entities";
 
 import * as fromUserAccounts from './user-accounts.actions';
 
@@ -63,6 +63,25 @@ export class UserAccountsEffects {
               message: {
                 status: ResponseStatus.ERROR,
                 message: error.error || 'Error create new user!'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  );
+
+  public getUserPermissionsByUserIdRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.getUserPermissionByUserIdRequest),
+      switchMap(({ userId }) => 
+        this._usersService.getUserPermissionsByUserId(userId)
+          .pipe(
+            mergeMap((permissions: UserPermission[] | null) => 
+              of(fromUserAccounts.getUserPermissionByUserIdRequestSuccess({ userPermissions: permissions }))),
+            catchError((error: any)=> of(fromUserAccounts.getUserPermissionByUserIdRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error user permissions for user!'
               } as ResponseMessage
             })))
           )

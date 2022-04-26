@@ -1,6 +1,4 @@
 <div class="block" *ngIf="userAccountForm" [formGroup]="userAccountForm">
-  <!-- <nz-page-header nzTitle="Log In" class="px-0 pb-3 pt-0"></nz-page-header> -->
-
   <div class="w-100" nz-row [nzGutter]="16">
     <div class="bordered-right" nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="8" nzXl="8">
       <div class="block p-4">
@@ -8,7 +6,7 @@
         <div class="my-5">
           <nz-upload
               class="avatar-uploader text-center"
-              nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+              [nzAction]="uploadAvatarUrl"
               nzName="avatar"
               nzListType="picture-card"
               [nzShowUploadList]="false"

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UserDto } from '../dtos';
-import { Permission } from '../entities';
+import { Permission, UserPermission } from '../entities';
 
 import { Page, PageRequest, UserAccount, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
@@ -46,6 +46,12 @@ export class UsersService {
     return this.http.post<UserDto>(
       `${this.environmentService.getBaseApiUrl()}/users`,
       userAccount
+    );
+  }
+
+  public getUserPermissionsByUserId(userId: string): Observable<UserPermission[]> {
+    return this.http.get<UserPermission[]>(
+      `${this.environmentService.getBaseApiUrl()}/users/${userId}/permissions`
     );
   }
 }
