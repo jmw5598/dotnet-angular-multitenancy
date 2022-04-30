@@ -39,9 +39,9 @@ const handleCreateUserAccountRequestSuccess = (state: UserAccountsState, { messa
   createUserAccountResponseMessage: message
 } as UserAccountsState);
 
-const handleGetUserPermissionsByUserIdRequestSuccess = (state: UserAccountsState, { permissions }: any) => ({
+const handleGetUserPermissionsByUserIdRequestSuccess = (state: UserAccountsState, { userPermissions }: any) => ({
   ...state,
-  selectedUsersPermissions: permissions
+  selectedUsersPermissions: userPermissions
 } as UserAccountsState);
 
 export const reducer = createReducer(

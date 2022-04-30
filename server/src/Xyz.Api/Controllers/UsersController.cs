@@ -91,6 +91,23 @@ namespace Xyz.Api.Controllers
             }
         }
 
+        // @TODO will have to fix this
+        [HttpGet("{userId}/permissions")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult<IEnumerable<UserPermission>>> GetUserPermissions([FromRoute] string userId)
+        {
+            try
+            {
+                return Ok(await this._userService.GetUserPermissions(userId));
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user permissions!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
         [HttpGet("permissions")]
         public async Task<ActionResult<IEnumerable<Permission>>> GetAssignablePermissions()
         {

@@ -76,7 +76,7 @@ export class UserAccountsEffects {
       switchMap(({ userId }) => 
         this._usersService.getUserPermissionsByUserId(userId)
           .pipe(
-            mergeMap((permissions: UserPermission[] | null) => 
+            mergeMap((permissions: UserPermission[]) => 
               of(fromUserAccounts.getUserPermissionByUserIdRequestSuccess({ userPermissions: permissions }))),
             catchError((error: any)=> of(fromUserAccounts.getUserPermissionByUserIdRequestFailure({
               message: {
