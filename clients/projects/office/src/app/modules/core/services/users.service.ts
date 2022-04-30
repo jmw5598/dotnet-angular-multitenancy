@@ -49,6 +49,12 @@ export class UsersService {
     );
   }
 
+  public getUserByUserId(userId: string): Observable<UserDto> {
+    return this.http.get<UserDto>(
+      `${this.environmentService.getBaseApiUrl()}/users/${userId}`
+    );
+  }
+
   public getUserPermissionsByUserId(userId: string): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
       `${this.environmentService.getBaseApiUrl()}/users/${userId}/permissions`

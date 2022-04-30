@@ -27,3 +27,8 @@ export const selectSelectedUsersPermissions = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state?.selectedUsersPermissions || null
 );
+
+export const selectSelectedUserAccount = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state.selectedUserAccount
+);

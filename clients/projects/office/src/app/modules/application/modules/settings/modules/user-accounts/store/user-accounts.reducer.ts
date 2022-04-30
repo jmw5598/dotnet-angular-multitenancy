@@ -12,6 +12,7 @@ export interface UserAccountsState {
   userAccountsPage: Page<UserDto> | null,
   assignablePermissions: Permission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
+  selectedUserAccount: UserDto | null,
   selectedUsersPermissions: UserPermission[] | null
 }
 
@@ -19,6 +20,7 @@ export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
   assignablePermissions: null,
   createUserAccountResponseMessage: null,
+  selectedUserAccount: null,
   selectedUsersPermissions: null
 }
 
@@ -44,6 +46,11 @@ const handleGetUserPermissionsByUserIdRequestSuccess = (state: UserAccountsState
   selectedUsersPermissions: userPermissions
 } as UserAccountsState);
 
+const handleGetUserAccountByUserIdRequestSuccess = (state: UserAccountsState, { user }: any) => ({
+  ...state,
+  selectedUserAccount: user
+} as UserAccountsState);
+
 export const reducer = createReducer(
   initialUserAccountsState,
   on(
@@ -61,5 +68,9 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.getUserPermissionByUserIdRequestSuccess,
     handleGetUserPermissionsByUserIdRequestSuccess
+  ),
+  on(
+    fromUserAccounts.getUserAccountByUserIdRequestSuccess,
+    handleGetUserAccountByUserIdRequestSuccess
   )
 );

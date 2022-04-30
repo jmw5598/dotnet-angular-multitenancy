@@ -70,6 +70,25 @@ export class UserAccountsEffects {
     )
   );
 
+  public getUserByUserIdRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.getUserAccountByUserIdRequest),
+      switchMap(({ userId }) => 
+        this._usersService.getUserByUserId(userId)
+          .pipe(
+            mergeMap((user: UserDto) => 
+              of(fromUserAccounts.getUserAccountByUserIdRequestSuccess({ user: user }))),
+            catchError((error: any)=> of(fromUserAccounts.getUserAccountByUserIdRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error getting user!'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  );
+
   public getUserPermissionsByUserIdRequest = createEffect(() => this._actions
     .pipe(
       ofType(fromUserAccounts.getUserPermissionByUserIdRequest),

@@ -48,6 +48,21 @@ export const createUserAccountRequestFailure = createAction(
   props<{ message: ResponseMessage }>()
 );
 
+export const getUserAccountByUserIdRequest = createAction(
+  '[User Accounts] Get User Account By User Id Request',
+  props<{ userId: string }>()
+);
+
+export const getUserAccountByUserIdRequestSuccess = createAction(
+  '[User Accounts] Get User Account By User Id Request Success',
+  props<{ user: UserDto | null }>()
+);
+
+export const getUserAccountByUserIdRequestFailure = createAction(
+  '[User Accounts] Get User Account By User Id Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
 export const getUserPermissionByUserIdRequest = createAction(
   '[User Accounts] Get User Permissions By User Id Request',
   props<{ userId: string }>()
