@@ -4,6 +4,6 @@ namespace Xyz.Core.Models
 {
     public class UserSettings
     {
-        public UserDto UserDetails { get; set; } = default!;
+        public UserAccountDto UserDetails { get; set; } = default!;
     }
 }

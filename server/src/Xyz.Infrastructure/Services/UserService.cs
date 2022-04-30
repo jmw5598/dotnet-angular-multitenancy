@@ -37,7 +37,7 @@ namespace Xyz.Infrastructure.Services
                     .FirstOrDefaultAsync();
 
                 return await Task.FromResult(new UserSettings {
-                    UserDetails = new UserDto
+                    UserDetails = new UserAccountDto
                     {
                         Id = user.Id,
                         UserName = user.UserName,

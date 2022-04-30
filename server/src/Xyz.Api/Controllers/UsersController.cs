@@ -39,7 +39,7 @@ namespace Xyz.Api.Controllers
 
         [Authorize(Policy = PolicyNames.RequireTenant)]
         [HttpGet("search")]
-        public async Task<ActionResult<Page<UserDto>>> SearchUsersByTenant(
+        public async Task<ActionResult<Page<UserAccountDto>>> SearchUsersByTenant(
             [FromQuery] int? index = 0,
             [FromQuery] int? size = 20
         )
@@ -67,7 +67,7 @@ namespace Xyz.Api.Controllers
 
         [Authorize(Policy = PolicyNames.RequireTenant)]
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUserAccount(CreateUserAccountDto createUserAccountDto)
+        public async Task<ActionResult<UserAccountDto>> CreateUserAccount(CreateUserAccountDto createUserAccountDto)
         {
             var tenantId = this._tenantAccessor.Tenant.Id;
             
@@ -80,12 +80,34 @@ namespace Xyz.Api.Controllers
                 
                 var newUserPermissions = await this._userService
                     .SaveUserPermissions(newUserDto.Id.ToString(), registrationUserAccount.UserPermissions);
+
+                newUserDto.UserPermissions = newUserPermissions;
                 
                 return Ok(newUserDto);
             }
             catch (Exception ex)
             {
                 var errorMessage = "Error creating new user account!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        // @TODO will have to fix this
+        [HttpGet("{userId}")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult<UserAccountDto>> GetUserAccountById([FromRoute] string userId)
+        {
+            try
+            {
+                var userAccountDto = await this._usersService.GetUserAccountByUserId(userId);
+                var userAccountPermissions = await this._userService.GetUserPermissions(userId);
+                userAccountDto.UserPermissions = userAccountPermissions;
+                return Ok(userAccountDto);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user account!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }

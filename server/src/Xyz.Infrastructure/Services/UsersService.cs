@@ -58,7 +58,7 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<Page<UserDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest)
+        public async Task<Page<UserAccountDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest)
         {
             var usersSource = this._context.Users
                 .Include(u => u.UserRoles)
@@ -70,7 +70,7 @@ namespace Xyz.Infrastructure.Services
                         .Where(t => t.Id.ToString() == tenantId)
                         .Any()
                 )
-                .Select(u => new UserDto
+                .Select(u => new UserAccountDto
                 {
                     Id = u.Id,
                     UserName = u.UserName,
@@ -81,10 +81,10 @@ namespace Xyz.Infrastructure.Services
                     Roles = u.UserRoles.Select(u => u.Role).ToList()
                 });
 
-            return await Page<UserDto>.From(usersSource, pageRequest);
+            return await Page<UserAccountDto>.From(usersSource, pageRequest);
         }
 
-        public async Task<UserDto> CreateUserAccount(string tenantId, UserAccount userAccount)
+        public async Task<UserAccountDto> CreateUserAccount(string tenantId, UserAccount userAccount)
         {
             using var transaction = this._context.Database.BeginTransaction();
 
@@ -116,7 +116,7 @@ namespace Xyz.Infrastructure.Services
 
                 transaction.Commit();
 
-                return new UserDto
+                return new UserAccountDto
                 {
                     Id = userAccount.User.Id,
                     Email = userAccount.User.Email,
@@ -135,5 +135,27 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
+        public async Task<UserAccountDto> GetUserAccountByUserId(string userId)
+        {
+            var user = await this._context.Users
+                .Include(u => u.Profile)
+                .Include(u => u.UserRoles)
+                .Where(u => u.Id.ToString() == userId)
+                .FirstOrDefaultAsync();
+
+            if (user == null)
+            {
+                throw new Exception("User not found!");
+            }
+
+            return new UserAccountDto {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.Profile.FirstName,
+                LastName = user.Profile.LastName,
+                AvatarSrc = "https://i.pravatar.cc/300",
+                Roles = user.UserRoles.Select(u => u.Role).ToList()
+            };
+        }
     }
 }
