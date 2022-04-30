@@ -1,9 +1,6 @@
-import { UserPermission } from "../../entities";
-import { RegistrationProfile } from "../authentication/registration-profile.model";
-import { RegistrationUser } from "../authentication/registration-user.model";
+import { User, UserPermission } from "../../entities";
 
 export interface UserAccount {
-  user: RegistrationUser,
-  profile: RegistrationProfile,
+  user: User,
   userPermissions: UserPermission[]
 }

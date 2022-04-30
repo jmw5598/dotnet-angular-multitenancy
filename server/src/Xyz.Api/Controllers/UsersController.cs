@@ -73,7 +73,7 @@ namespace Xyz.Api.Controllers
             
             try
             {
-                var registrationUserAccount = createUserAccountDto.ToRegistrationUserAccount();
+                var registrationUserAccount = createUserAccountDto.ToUserAccount();
 
                 var newUserDto = await this._usersService
                     .CreateUserAccount(tenantId.ToString(), registrationUserAccount);

@@ -47,8 +47,10 @@ export class UserAccountsUpdateComponent implements OnInit {
     if (this.updateUserAccountForm.invalid) return;
     
     const userAccount: UserAccount = {
-      user: formValue.user,
-      profile: formValue.profile,
+      user: {
+        ...formValue.user,
+        profile: formValue.profile
+      },
       userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
     } as UserAccount;
     

@@ -9,16 +9,13 @@ namespace Xyz.Api.Models
     public class CreateUserAccountDto
     {
         [Required]
-        public RegistrationUserDto User { get; set; } = default!;
-
-        [Required]
-        public RegistrationProfileDto Profile { get; set; } = default!;
+        public RegistrationUserAccountDto User { get; set; } = default!;
 
         public ICollection<UserPermission> UserPermissions { get; set; } = default!;
 
-        public RegistrationUserAccount ToRegistrationUserAccount()
+        public UserAccount ToUserAccount()
         {
-            return new RegistrationUserAccount
+            return new UserAccount
             {
                 User = new ApplicationUser
                 {
@@ -30,8 +27,8 @@ namespace Xyz.Api.Models
                     Tenants = new List<Tenant>(),
                     Profile = new Profile
                     {
-                        FirstName = this.Profile.FirstName,
-                        LastName = this.Profile.LastName
+                        FirstName = this.User.Profile.FirstName,
+                        LastName = this.User.Profile.LastName
                     }
                 },
                 UserPermissions = this.UserPermissions,

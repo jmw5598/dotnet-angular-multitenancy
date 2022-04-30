@@ -74,6 +74,29 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
+        public async Task<UserAccount> GetUserAccountByUserId(string userId)
+        {
+            try
+            {
+                return null;
+                // get user from multitenat db with profile,
+                // get user permisions from tenant db
+                // return new UserAccount
+                
+                // return await this._context.UserPermissions
+                //     .Include(p => p.Permission)
+                //     .Select(e => e)
+                //     .Where(e => e.AspNetUserId.ToString() == userId)
+                //     .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user permissions!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
         public async Task<ICollection<UserPermission>> SaveUserPermissions(string  userId, ICollection<UserPermission> userPermissions)
         {
             try

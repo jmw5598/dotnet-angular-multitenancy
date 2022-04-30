@@ -84,7 +84,7 @@ namespace Xyz.Infrastructure.Services
             return await Page<UserDto>.From(usersSource, pageRequest);
         }
 
-        public async Task<UserDto> CreateUserAccount(string tenantId, RegistrationUserAccount userAccount)
+        public async Task<UserDto> CreateUserAccount(string tenantId, UserAccount userAccount)
         {
             using var transaction = this._context.Database.BeginTransaction();
 

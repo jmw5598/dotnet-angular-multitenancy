@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Permission } from '@xyz/office/modules/core/entities';
+import { Permission, User } from '@xyz/office/modules/core/entities';
 import { UserAccount, UserPermissionGroup } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
@@ -42,8 +42,10 @@ export class UserAccountsCreateComponent implements OnInit {
     if (this.createUserAccountForm.invalid) return;
     
     const userAccount: UserAccount = {
-      user: formValue.user,
-      profile: formValue.profile,
+      user: {
+        ...formValue.user,
+        profile: formValue.profile
+      } as User,
       userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
     } as UserAccount;
     

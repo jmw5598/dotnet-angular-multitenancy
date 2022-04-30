@@ -8,6 +8,6 @@ namespace Xyz.Core.Interfaces
         Task<ValidationResult> VerifyEmail(string email);
         Task<ValidationResult> VerifyUserName(string userName);
         Task<Page<UserDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest);
-        Task<UserDto> CreateUserAccount(string tenantId, RegistrationUserAccount userAccount);
+        Task<UserDto> CreateUserAccount(string tenantId, UserAccount userAccount);
     }
 }
