@@ -6,7 +6,7 @@ namespace Xyz.Core.Entities.Tenant
 {
     public class Permission
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         
         [Column(TypeName = "varchar(24)")]
         public ModulePermissionType Type { get; set; }

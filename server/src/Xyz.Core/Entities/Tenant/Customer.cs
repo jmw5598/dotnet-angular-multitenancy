@@ -1,8 +1,7 @@
 namespace Xyz.Core.Entities.Tenant
 {
-    public class Customer
+    public class Customer : BaseEntity
     {
-        public Guid Id { get; set; } = default!;
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public string Phone { get; set; } = default!;

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace Xyz.Core.Entities.Tenant
@@ -5,7 +7,7 @@ namespace Xyz.Core.Entities.Tenant
     [Index(nameof(AspNetUserId))]
     public class UserPermission
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public bool CanCreate { get; set; }
         public bool CanRead { get; set; }
         public bool CanUpdate { get; set; }
@@ -16,5 +18,8 @@ namespace Xyz.Core.Entities.Tenant
 
         public Guid? ParentUserPermissionId { get; set; }
         public UserPermission? ParentUserPermission { get; set; } = default!;
+
+        [NotMapped]
+        public ICollection<UserPermission>? ChildUserPermissions { get; set; } = default!;
     }
 }

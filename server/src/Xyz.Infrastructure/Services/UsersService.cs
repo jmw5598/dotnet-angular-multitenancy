@@ -137,25 +137,38 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<UserAccountDto> GetUserAccountByUserId(string userId)
         {
-            var user = await this._context.Users
-                .Include(u => u.Profile)
-                .Include(u => u.UserRoles)
-                .Where(u => u.Id.ToString() == userId)
-                .FirstOrDefaultAsync();
-
-            if (user == null)
+            try
             {
-                throw new Exception("User not found!");
-            }
+                var user = await this._context.Users
+                    .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                    .Include(u => u.Profile)
+                    .Where(u => u.Id.ToString() == userId)
+                    .Select(u => new UserAccountDto
+                    {
+                        Id = u.Id,
+                        UserName = u.UserName,
+                        Email = u.Email,
+                        FirstName = u.Profile.FirstName,
+                        LastName = u.Profile.LastName,
+                        AvatarSrc = "https://i.pravatar.cc/300",
+                        Roles = u.UserRoles.Select(ur => ur.Role).ToList()
+                    })
+                    .FirstOrDefaultAsync();
 
-            return new UserAccountDto {
-                Id = user.Id,
-                Email = user.Email,
-                FirstName = user.Profile.FirstName,
-                LastName = user.Profile.LastName,
-                AvatarSrc = "https://i.pravatar.cc/300",
-                Roles = user.UserRoles.Select(u => u.Role).ToList()
-            };
+                if (user == null)
+                {
+                    throw new Exception("User not found!");
+                }
+
+                return user;
+            }
+            catch (Exception e)
+            {
+                var errorMessage = "Error getting user account!";
+                this._logger.LogError(errorMessage, e);
+                throw new Exception(errorMessage);
+            }
         }
     }
 }
