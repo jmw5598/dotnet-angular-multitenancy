@@ -3,7 +3,7 @@ import { catchError, mergeMap, of, switchMap } from "rxjs";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
-import { UserDto } from '@xyz/office/modules/core/dtos';
+import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { UsersService } from "@xyz/office/modules/core/services/users.service";
 import { Permission, UserPermission } from "@xyz/office/modules/core/entities";
 
@@ -22,7 +22,7 @@ export class UserAccountsEffects {
       switchMap(({ pageRequest }) => 
         this._usersService.searchUsers(pageRequest)
           .pipe(
-            mergeMap((page: Page<UserDto>) => of(fromUserAccounts.searchUserAccountsRequestSuccess({ page: page }))),
+            mergeMap((page: Page<UserAccountDto>) => of(fromUserAccounts.searchUserAccountsRequestSuccess({ page: page }))),
             catchError((error: any)=> of(fromUserAccounts.searchUserAccountsRequestFailure({
               message: {
                 status: ResponseStatus.ERROR,
@@ -58,7 +58,7 @@ export class UserAccountsEffects {
       switchMap(({ userAccount }) => 
         this._usersService.createUserAccount(userAccount)
           .pipe(
-            mergeMap((userDto: UserDto) => of(fromUserAccounts.createUserAccountRequestSuccess({ userDto: userDto }))),
+            mergeMap((userDto: UserAccountDto) => of(fromUserAccounts.createUserAccountRequestSuccess({ userDto: userDto }))),
             catchError((error: any)=> of(fromUserAccounts.createUserAccountRequestFailure({
               message: {
                 status: ResponseStatus.ERROR,
@@ -76,7 +76,7 @@ export class UserAccountsEffects {
       switchMap(({ userId }) => 
         this._usersService.getUserByUserId(userId)
           .pipe(
-            mergeMap((user: UserDto) => 
+            mergeMap((user: UserAccountDto) => 
               of(fromUserAccounts.getUserAccountByUserIdRequestSuccess({ user: user }))),
             catchError((error: any)=> of(fromUserAccounts.getUserAccountByUserIdRequestFailure({
               message: {

@@ -1,12 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { UserDto } from '@xyz/office/modules/core/dtos';
+import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { UserAccount, UserPermissionGroup } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { Observable, of, take } from 'rxjs';
+import { Observable, of, Subject, take, takeUntil } from 'rxjs';
 import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
 
 import * as fromUserAccounts from '../../store';
@@ -19,26 +19,23 @@ import { flattenUserPermissionGroups, mapAssignablePermissionsToUserPermissionGr
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class UserAccountsUpdateComponent implements OnInit {
+export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
+  private _destroy$: Subject<void> = new Subject<void>();
   public updateUserAccountForm!: FormGroup;
-  public selectedUserAccount$!: Observable<UserDto>;
+
+  public selectedUserAccount$!: Observable<UserAccountDto | null>;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _store: Store<fromUserAccounts.UserAccountsState>,
     private _userValidators: UserValidators
   ) {
-    this.selectedUserAccount$ = of({ email: 'jmw5598@gmail.com', firstName: 'Jason', lastName: 'White' } as UserDto);
-
-    this._store.select(fromUserAccounts.selectAssignablePermissions)
-      .pipe(take(1))
-      .subscribe(assignablePermissions => {
-        const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
-        this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
-      });
+    this._initializeForm();
+    this._selectState();
   }
 
   ngOnInit(): void {
+    this._listenForSelectedUserAccountChanges();
   }
   
 
@@ -56,5 +53,48 @@ export class UserAccountsUpdateComponent implements OnInit {
     
     // this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
   }
+  
+  private _initializeForm(): void {
+    this._store.select(fromUserAccounts.selectAssignablePermissions)
+      .pipe(take(1))
+      .subscribe(assignablePermissions => {
+        const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
+        this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
+      });
+  }
 
+  private _selectState(): void {
+    this.selectedUserAccount$ = this._store.select(fromUserAccounts.selectSelectedUserAccount);
+  }
+
+  private _listenForSelectedUserAccountChanges(): void {
+    this._store.select(fromUserAccounts.selectSelectedUserAccount)
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(selectedUserAccount => {
+        this.updateUserAccountForm.patchValue({
+          // Patch avatarUrl??
+        });
+        
+        console.log("form: ", this.updateUserAccountForm);
+        // Patch User Details
+        this.updateUserAccountForm?.get('user')?.patchValue({
+          userName: selectedUserAccount?.userName
+        });
+        
+        // Patch Profile Details
+        this.updateUserAccountForm?.get('profile')?.patchValue({
+          firstName: selectedUserAccount?.firstName,
+          lastName: selectedUserAccount?.lastName
+        });
+
+        // Patch User Permissions
+
+      });
+  }
+
+  ngOnDestroy(): void {
+    this._store.dispatch(fromUserAccounts.setSelectedUserAccount({ user: null}))
+    this._destroy$.next();
+    this._destroy$.complete();
+  }
 }

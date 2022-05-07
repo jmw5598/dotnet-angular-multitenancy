@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { UserDto } from '@xyz/office/modules/core/dtos';
+import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 
@@ -9,10 +9,10 @@ import * as fromUserAccounts from './user-accounts.actions';
 export const userAccountsFeatureKey = 'userAccounts';
 
 export interface UserAccountsState {
-  userAccountsPage: Page<UserDto> | null,
+  userAccountsPage: Page<UserAccountDto> | null,
   assignablePermissions: Permission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
-  selectedUserAccount: UserDto | null,
+  selectedUserAccount: UserAccountDto | null,
   selectedUsersPermissions: UserPermission[] | null
 }
 
@@ -71,6 +71,7 @@ export const reducer = createReducer(
   ),
   on(
     fromUserAccounts.getUserAccountByUserIdRequestSuccess,
+    fromUserAccounts.setSelectedUserAccount,
     handleGetUserAccountByUserIdRequestSuccess
   )
 );

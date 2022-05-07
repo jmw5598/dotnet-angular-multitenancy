@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { UserDto } from '@xyz/office/modules/core/dtos';
+import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
 
@@ -11,7 +11,7 @@ export const searchUserAccountsRequest = createAction(
 
 export const searchUserAccountsRequestSuccess = createAction(
   '[User Accounts] Search User Accounts Request Success',
-  props<{ page: Page<UserDto> }>()
+  props<{ page: Page<UserAccountDto> }>()
 );
 
 export const searchUserAccountsRequestFailure = createAction(
@@ -40,7 +40,7 @@ export const createUserAccountRequest = createAction(
 
 export const createUserAccountRequestSuccess = createAction(
   '[User Accounts] Create User Account Request Success',
-  props<{ userDto: UserDto }>()
+  props<{ userDto: UserAccountDto }>()
 );
 
 export const createUserAccountRequestFailure = createAction(
@@ -55,12 +55,17 @@ export const getUserAccountByUserIdRequest = createAction(
 
 export const getUserAccountByUserIdRequestSuccess = createAction(
   '[User Accounts] Get User Account By User Id Request Success',
-  props<{ user: UserDto | null }>()
+  props<{ user: UserAccountDto | null }>()
 );
 
 export const getUserAccountByUserIdRequestFailure = createAction(
   '[User Accounts] Get User Account By User Id Request Failure',
   props<{ message: ResponseMessage }>()
+);
+
+export const setSelectedUserAccount = createAction(
+  '[User Accounts] Set Selected User Account',
+  props<{ user: UserAccountDto | null }>()
 );
 
 export const getUserPermissionByUserIdRequest = createAction(

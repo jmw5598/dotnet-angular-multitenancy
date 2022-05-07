@@ -1,5 +1,5 @@
-import { UserDto } from "../../dtos";
+import { UserAccountDto } from "../../dtos";
 
 export interface UserSettings {
-  userDetails: UserDto
+  userDetails: UserAccountDto
 }

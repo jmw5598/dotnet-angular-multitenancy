@@ -40,14 +40,18 @@ export class UserAccountsCreateComponent implements OnInit {
 
   public onCreateUserAccount(formValue: any): void {
     if (this.createUserAccountForm.invalid) return;
-    
+    console.log("formValue is ", formValue);
     const userAccount: UserAccount = {
       user: {
         ...formValue.user,
         profile: formValue.profile
       } as User,
-      userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
+      // userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
+      // could filter out non checkted gorups by adding fitler before flatmap with (group => group.hasAccess)
+      userPermissions: formValue.userPermissionGroups?.flatMap((upg: any) => upg.userPermission)
     } as UserAccount;
+
+    console.log("update form value is ", userAccount);
     
     this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
   }

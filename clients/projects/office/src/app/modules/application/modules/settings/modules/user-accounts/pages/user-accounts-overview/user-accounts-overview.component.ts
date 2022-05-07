@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Page, PageRequest } from '@xyz/office//modules/core/models';
-import { UserDto } from '@xyz/office/modules/core/dtos';
+import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import * as fromUserAccounts from '../../store';
 import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 
@@ -16,7 +16,7 @@ import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modul
   animations: [fadeAnimation]
 })
 export class UserAccountsOverviewComponent implements OnInit {
-  public userAccountsPage$!: Observable<Page<UserDto> | null>;
+  public userAccountsPage$!: Observable<Page<UserAccountDto> | null>;
 
   public userAccountsTableDefinition: TableDefinition = {
     title: 'User Accounts',
@@ -69,7 +69,7 @@ export class UserAccountsOverviewComponent implements OnInit {
     this.userAccountsPage$ = this._store.select(fromUserAccounts.selectUserAccountsPage);
   }
 
-  public edit(user: UserDto): void {
+  public edit(user: UserAccountDto): void {
     console.log("Editing: ", user)
   }
 }

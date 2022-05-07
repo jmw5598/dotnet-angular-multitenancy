@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { UserDto } from '../dtos';
+import { UserAccountDto } from '../dtos';
 import { Permission, UserPermission } from '../entities';
 
 import { Page, PageRequest, UserAccount, ValidationResult } from '../models';
@@ -30,8 +30,8 @@ export class UsersService {
     );
   }
 
-  public searchUsers(pageRequest: PageRequest): Observable<Page<UserDto>> {
-    return this.http.get<Page<UserDto>>(
+  public searchUsers(pageRequest: PageRequest): Observable<Page<UserAccountDto>> {
+    return this.http.get<Page<UserAccountDto>>(
       `${this.environmentService.getBaseApiUrl()}/users/search`
     );
   }
@@ -42,15 +42,15 @@ export class UsersService {
     );
   }
 
-  public createUserAccount(userAccount: UserAccount): Observable<UserDto> {
-    return this.http.post<UserDto>(
+  public createUserAccount(userAccount: UserAccount): Observable<UserAccountDto> {
+    return this.http.post<UserAccountDto>(
       `${this.environmentService.getBaseApiUrl()}/users`,
       userAccount
     );
   }
 
-  public getUserByUserId(userId: string): Observable<UserDto> {
-    return this.http.get<UserDto>(
+  public getUserByUserId(userId: string): Observable<UserAccountDto> {
+    return this.http.get<UserAccountDto>(
       `${this.environmentService.getBaseApiUrl()}/users/${userId}`
     );
   }

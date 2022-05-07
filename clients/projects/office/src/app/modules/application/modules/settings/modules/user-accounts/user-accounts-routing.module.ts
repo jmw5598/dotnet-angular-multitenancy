@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AssignablePermissionsLoadedGuard } from "./guards/assignable-permissions-loaded.guard";
+import { SelectedUsersAccountLoadedGuard } from "./guards/selected-users-account-loaded.guard";
 import { UserPermissionsByUserIdLoadedGuard } from "./guards/user-permissions-by-user-id-loaded.guard";
 import { UserAccountsCreateComponent } from "./pages/user-accounts-create/user-accounts-create.component";
 
@@ -24,7 +25,7 @@ const routes: Routes = [
         path: 'edit',
         canActivate: [
           AssignablePermissionsLoadedGuard,
-          UserPermissionsByUserIdLoadedGuard
+          SelectedUsersAccountLoadedGuard
         ],
         component: UserAccountsUpdateComponent
       }
