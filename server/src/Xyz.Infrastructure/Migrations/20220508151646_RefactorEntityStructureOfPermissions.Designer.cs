@@ -12,7 +12,7 @@ using Xyz.Infrastructure.Data;
 namespace Xyz.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220508110922_RefactorEntityStructureOfPermissions")]
+    [Migration("20220508151646_RefactorEntityStructureOfPermissions")]
     partial class RefactorEntityStructureOfPermissions
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,19 +37,19 @@ namespace Xyz.Infrastructure.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_module_permission");
+                        .HasName("pk_module_permissions");
 
-                    b.ToTable("module_permission", (string)null);
+                    b.ToTable("module_permissions", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("27646707-0d62-4bd5-b347-6e03c87f6dee"),
+                            Id = new Guid("9c153e12-f706-4f1d-a0c8-478323008b69"),
                             Name = "Settings Module"
                         },
                         new
                         {
-                            Id = new Guid("4f78b694-f87e-40ab-97df-165fd5560732"),
+                            Id = new Guid("8fc1acef-5ad0-45d5-aede-67a82633cc35"),
                             Name = "Dashboard Module"
                         });
                 });
@@ -81,14 +81,14 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("23fc53f7-715e-4ac8-ab6f-3ebb24878111"),
-                            ModulePermissionId = new Guid("27646707-0d62-4bd5-b347-6e03c87f6dee"),
+                            Id = new Guid("903bcea3-cebc-41d4-92cf-ab75e653981a"),
+                            ModulePermissionId = new Guid("9c153e12-f706-4f1d-a0c8-478323008b69"),
                             Name = "User Accounts Module"
                         },
                         new
                         {
-                            Id = new Guid("f4ab5cef-5727-4fa6-a3f0-eaa417c2ac9c"),
-                            ModulePermissionId = new Guid("4f78b694-f87e-40ab-97df-165fd5560732"),
+                            Id = new Guid("9d1ae49c-67a2-48f2-b1cb-e58ab255a339"),
+                            ModulePermissionId = new Guid("8fc1acef-5ad0-45d5-aede-67a82633cc35"),
                             Name = "Dashboard Overview Module"
                         });
                 });
@@ -109,12 +109,12 @@ namespace Xyz.Infrastructure.Migrations
                         .HasColumnName("module_permission_id");
 
                     b.HasKey("Id")
-                        .HasName("pk_user_module_permission");
+                        .HasName("pk_user_module_permissions");
 
                     b.HasIndex("ModulePermissionId")
-                        .HasDatabaseName("ix_user_module_permission_module_permission_id");
+                        .HasDatabaseName("ix_user_module_permissions_module_permission_id");
 
-                    b.ToTable("user_module_permission", (string)null);
+                    b.ToTable("user_module_permissions", (string)null);
                 });
 
             modelBuilder.Entity("Xyz.Core.Entities.Tenant.UserPermission", b =>
@@ -300,7 +300,7 @@ namespace Xyz.Infrastructure.Migrations
                         .HasForeignKey("ModulePermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_permissions_module_permission_module_permission_id");
+                        .HasConstraintName("fk_permissions_module_permissions_module_permission_id");
 
                     b.Navigation("ModulePermission");
                 });
@@ -312,7 +312,7 @@ namespace Xyz.Infrastructure.Migrations
                         .HasForeignKey("ModulePermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_user_module_permission_module_permission_module_permission_");
+                        .HasConstraintName("fk_user_module_permissions_module_permissions_module_permissio");
 
                     b.Navigation("ModulePermission");
                 });
@@ -331,7 +331,7 @@ namespace Xyz.Infrastructure.Migrations
                         .HasForeignKey("UserModulePermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_user_permissions_user_module_permission_user_module_permiss");
+                        .HasConstraintName("fk_user_permissions_user_module_permissions_user_module_permis");
 
                     b.Navigation("Permission");
 

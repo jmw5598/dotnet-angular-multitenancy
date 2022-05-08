@@ -23,8 +23,13 @@ namespace Xyz.Infrastructure.Data
         public DbSet<VehicleMake> VehicleMakes => Set<VehicleMake>();
         public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
         public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
+        
+        public DbSet<ModulePermission> ModulePermissions => Set<ModulePermission>();
         public DbSet<Permission> Permissions => Set<Permission>();
+        public DbSet<UserModulePermission> UserModulePermissions => Set<UserModulePermission>();
         public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
+
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

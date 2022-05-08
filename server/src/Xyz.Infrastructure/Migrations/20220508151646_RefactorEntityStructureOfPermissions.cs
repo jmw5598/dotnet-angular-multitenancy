@@ -72,7 +72,7 @@ namespace Xyz.Infrastructure.Migrations
                 defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
 
             migrationBuilder.CreateTable(
-                name: "module_permission",
+                name: "module_permissions",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -80,11 +80,11 @@ namespace Xyz.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_module_permission", x => x.id);
+                    table.PrimaryKey("pk_module_permissions", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "user_module_permission",
+                name: "user_module_permissions",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -93,22 +93,22 @@ namespace Xyz.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_user_module_permission", x => x.id);
+                    table.PrimaryKey("pk_user_module_permissions", x => x.id);
                     table.ForeignKey(
-                        name: "fk_user_module_permission_module_permission_module_permission_",
+                        name: "fk_user_module_permissions_module_permissions_module_permissio",
                         column: x => x.module_permission_id,
-                        principalTable: "module_permission",
+                        principalTable: "module_permissions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
-                table: "module_permission",
+                table: "module_permissions",
                 columns: new[] { "id", "name" },
                 values: new object[,]
                 {
-                    { new Guid("27646707-0d62-4bd5-b347-6e03c87f6dee"), "Settings Module" },
-                    { new Guid("4f78b694-f87e-40ab-97df-165fd5560732"), "Dashboard Module" }
+                    { new Guid("8fc1acef-5ad0-45d5-aede-67a82633cc35"), "Dashboard Module" },
+                    { new Guid("9c153e12-f706-4f1d-a0c8-478323008b69"), "Settings Module" }
                 });
 
             migrationBuilder.InsertData(
@@ -116,8 +116,8 @@ namespace Xyz.Infrastructure.Migrations
                 columns: new[] { "id", "module_permission_id", "name" },
                 values: new object[,]
                 {
-                    { new Guid("23fc53f7-715e-4ac8-ab6f-3ebb24878111"), new Guid("27646707-0d62-4bd5-b347-6e03c87f6dee"), "User Accounts Module" },
-                    { new Guid("f4ab5cef-5727-4fa6-a3f0-eaa417c2ac9c"), new Guid("4f78b694-f87e-40ab-97df-165fd5560732"), "Dashboard Overview Module" }
+                    { new Guid("903bcea3-cebc-41d4-92cf-ab75e653981a"), new Guid("9c153e12-f706-4f1d-a0c8-478323008b69"), "User Accounts Module" },
+                    { new Guid("9d1ae49c-67a2-48f2-b1cb-e58ab255a339"), new Guid("8fc1acef-5ad0-45d5-aede-67a82633cc35"), "Dashboard Overview Module" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -131,23 +131,23 @@ namespace Xyz.Infrastructure.Migrations
                 column: "module_permission_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_user_module_permission_module_permission_id",
-                table: "user_module_permission",
+                name: "ix_user_module_permissions_module_permission_id",
+                table: "user_module_permissions",
                 column: "module_permission_id");
 
             migrationBuilder.AddForeignKey(
-                name: "fk_permissions_module_permission_module_permission_id",
+                name: "fk_permissions_module_permissions_module_permission_id",
                 table: "permissions",
                 column: "module_permission_id",
-                principalTable: "module_permission",
+                principalTable: "module_permissions",
                 principalColumn: "id",
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "fk_user_permissions_user_module_permission_user_module_permiss",
+                name: "fk_user_permissions_user_module_permissions_user_module_permis",
                 table: "user_permissions",
                 column: "user_module_permission_id",
-                principalTable: "user_module_permission",
+                principalTable: "user_module_permissions",
                 principalColumn: "id",
                 onDelete: ReferentialAction.Cascade);
         }
@@ -155,18 +155,18 @@ namespace Xyz.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "fk_permissions_module_permission_module_permission_id",
+                name: "fk_permissions_module_permissions_module_permission_id",
                 table: "permissions");
 
             migrationBuilder.DropForeignKey(
-                name: "fk_user_permissions_user_module_permission_user_module_permiss",
+                name: "fk_user_permissions_user_module_permissions_user_module_permis",
                 table: "user_permissions");
 
             migrationBuilder.DropTable(
-                name: "user_module_permission");
+                name: "user_module_permissions");
 
             migrationBuilder.DropTable(
-                name: "module_permission");
+                name: "module_permissions");
 
             migrationBuilder.DropIndex(
                 name: "ix_user_permissions_user_module_permission_id",
@@ -179,12 +179,12 @@ namespace Xyz.Infrastructure.Migrations
             migrationBuilder.DeleteData(
                 table: "permissions",
                 keyColumn: "id",
-                keyValue: new Guid("23fc53f7-715e-4ac8-ab6f-3ebb24878111"));
+                keyValue: new Guid("903bcea3-cebc-41d4-92cf-ab75e653981a"));
 
             migrationBuilder.DeleteData(
                 table: "permissions",
                 keyColumn: "id",
-                keyValue: new Guid("f4ab5cef-5727-4fa6-a3f0-eaa417c2ac9c"));
+                keyValue: new Guid("9d1ae49c-67a2-48f2-b1cb-e58ab255a339"));
 
             migrationBuilder.DropColumn(
                 name: "user_module_permission_id",
