@@ -5,12 +5,12 @@ import { catchError, Observable, of, switchMap } from 'rxjs';
 
 import * as fromRoot from '@xyz/office/store';
 import * as fromUser from '@xyz/office/store/user';
-import { ModulePermissionType, UserPermissionsMap } from '../models';
+import { ModulePermissionType, UserPermissionsMap } from '../../models';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HasModulePermissionGuard implements CanActivate {
+export class CanUpdatePermissionGuard implements CanActivate {
   constructor(
     private _router: Router,
     private _store: Store<fromRoot.RootState>
@@ -22,13 +22,13 @@ export class HasModulePermissionGuard implements CanActivate {
     return this._store.select(fromUser.selectUserPermissionsMap)
       .pipe(
         switchMap((permissions: UserPermissionsMap | null) => {
-          const hasModulePermission: boolean = permissions ? !!permissions[type] || false : false;
+          const hasUpdatePermission: boolean = permissions ? (permissions[type]?.canUpdate || false) : false;
 
-          if (!hasModulePermission) {
+          if (!hasUpdatePermission) {
             this._router.navigateByUrl('/error/403');
           }
 
-          return of(hasModulePermission);
+          return of(hasUpdatePermission);
         }),
         catchError(() => {
           this._router.navigateByUrl('/error/403');

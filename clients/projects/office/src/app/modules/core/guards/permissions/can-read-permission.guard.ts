@@ -5,7 +5,7 @@ import { catchError, Observable, of, switchMap } from 'rxjs';
 
 import * as fromRoot from '@xyz/office/store';
 import * as fromUser from '@xyz/office/store/user';
-import { ModulePermissionType, UserPermissionsMap } from '../models';
+import { ModulePermissionType, UserPermissionsMap } from '../../models';
 
 
 @Injectable({
