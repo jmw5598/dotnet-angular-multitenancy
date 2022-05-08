@@ -82,38 +82,7 @@ namespace Xyz.Infrastructure.Services
 
                 foreach (var userPermission in userPermissions)
                 {
-                    var parentPermission = new UserPermission
-                    {
-                        Id = Guid.NewGuid(),
-                        AspNetUserId = new Guid(userId),
-                        PermissionId = userPermission.Permission.Id,
-                        CanCreate = userPermission.CanCreate,
-                        CanRead = userPermission.CanCreate,
-                        CanUpdate = userPermission.CanDelete,
-                        CanDelete = userPermission.CanDelete,
-                        ParentUserPermissionId = userPermission.ParentUserPermissionId
-                    };
-
-                    this._context.UserPermissions.Add(parentPermission);
-
-                    if (userPermission?.ChildUserPermissions?.Count() > 0)
-                    {
-                       foreach (var childUserPermission in userPermission.ChildUserPermissions )
-                        {
-                            var childPermission = new UserPermission
-                            {
-                                Id = Guid.NewGuid(),
-                                AspNetUserId = new Guid(userId),
-                                PermissionId = childUserPermission.Permission.Id,
-                                CanCreate = childUserPermission.CanCreate,
-                                CanRead = childUserPermission.CanCreate,
-                                CanUpdate = childUserPermission.CanDelete,
-                                CanDelete = childUserPermission.CanDelete,
-                                ParentUserPermissionId = parentPermission.ParentUserPermissionId
-                            };
-                            this._context.UserPermissions.Add(childPermission);
-                        }
-                    }
+                    
                 }
                 
                 this._context.SaveChanges();

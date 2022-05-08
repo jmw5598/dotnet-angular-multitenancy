@@ -15,11 +15,7 @@ namespace Xyz.Core.Entities.Tenant
         public Guid AspNetUserId { get; set; }
         public Guid PermissionId { get; set; }
         public Permission Permission { get; set; } = default!;
-
-        public Guid? ParentUserPermissionId { get; set; }
-        public UserPermission? ParentUserPermission { get; set; } = default!;
-
-        [NotMapped]
-        public ICollection<UserPermission>? ChildUserPermissions { get; set; } = default!;
+        public Guid UserModulePermissionId { get; set; }
+        public UserModulePermission UserModulePermission { get; set; } = default!;
     }
 }

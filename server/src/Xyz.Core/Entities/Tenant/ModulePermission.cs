@@ -1,10 +1,9 @@
 namespace Xyz.Core.Entities.Tenant
 {
-    public class Permission
+    public class ModulePermission
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; } = default!;
-        public Guid ModulePermissionId { get; set; }
-        public ModulePermission ModulePermission { get; set; } = default!;
+        public virtual ICollection<Permission> Permissions { get; set; } = default!;
     }
 }
