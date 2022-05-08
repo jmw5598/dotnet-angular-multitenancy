@@ -1,4 +1,5 @@
 import { Permission } from './permission.entity';
+import { UserModulePermission } from './user-module-permission.entity';
 
 export interface UserPermission {
   id: string,
@@ -6,7 +7,8 @@ export interface UserPermission {
   canRead: boolean,
   canUpdate: boolean,
   canDelete: boolean,
-  permission: Permission,
-  parentUserPermission?: UserPermission,
-  childUserPermissions?: UserPermission[]
+  permissionId: string,
+  permission?: Permission,
+  userModulePermissionId: string,
+  userModulePermission?: UserModulePermission
 }

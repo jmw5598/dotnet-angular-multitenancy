@@ -1,8 +1,8 @@
-import { ModulePermissionType } from "../models";
+import { ModulePermission } from "./module-permission.entity";
 
 export interface Permission {
   id: string,
-  type: ModulePermissionType,
   name: string,
-  parentPermission: Permission
+  modulePermissionId: string,
+  modulePermissin?: ModulePermission
 }
