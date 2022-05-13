@@ -46,7 +46,7 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpGet("permissions")]
-        public async Task<ActionResult<UserPermissions>> GetUserPermissions()
+        public async Task<ActionResult<UserModulePermissions>> GetUserPermissions()
         {
             try
             {
@@ -57,8 +57,8 @@ namespace Xyz.Api.Controllers
                     return Unauthorized("Unauthorized!");
                 }
 
-                return Ok(new UserPermissions {
-                    Permissions = await this._userService.GetUserPermissions(userId)
+                return Ok(new UserModulePermissions {
+                    Modules = await this._userService.GetUserModulePermissions(userId)
                 });
             }
             catch (Exception ex)

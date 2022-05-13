@@ -56,14 +56,14 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserPermission>> GetUserPermissions(string userId)
+        public async Task<ICollection<UserModulePermission>> GetUserModulePermissions(string userId)
         {
             try
             {
-                return await this._context.UserPermissions
-                    .Include(p => p.Permission)
+                return await this._context.UserModulePermissions
+                    .Include(mp => mp.UserPermissions)
+                    .ThenInclude(up => up.Permission)
                     .Select(e => e)
-                    .Where(e => e.AspNetUserId.ToString() == userId)
                     .ToListAsync();
             }
             catch (Exception ex)

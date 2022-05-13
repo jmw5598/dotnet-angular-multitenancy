@@ -101,8 +101,8 @@ namespace Xyz.Api.Controllers
             try
             {
                 var userAccountDto = await this._usersService.GetUserAccountByUserId(userId);
-                var userAccountPermissions = await this._userService.GetUserPermissions(userId);
-                userAccountDto.UserPermissions = userAccountPermissions;
+                var userAccountPermissions = await this._userService.GetUserModulePermissions(userId);
+                // userAccountDto.UserPermissions = userAccountPermissions;s
                 return Ok(userAccountDto);
             }
             catch (Exception ex)
@@ -116,11 +116,11 @@ namespace Xyz.Api.Controllers
         // @TODO will have to fix this
         [HttpGet("{userId}/permissions")]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ActionResult<IEnumerable<UserPermission>>> GetUserPermissions([FromRoute] string userId)
+        public async Task<ActionResult<IEnumerable<UserModulePermission>>> GetUserPermissions([FromRoute] string userId)
         {
             try
             {
-                return Ok(await this._userService.GetUserPermissions(userId));
+                return Ok(await this._userService.GetUserModulePermissions(userId));
             }
             catch (Exception ex)
             {
