@@ -61,6 +61,7 @@ namespace Xyz.Infrastructure.Services
             try
             {
                 return await this._context.UserModulePermissions
+                    .Include(mp => mp.ModulePermission)
                     .Include(mp => mp.UserPermissions)
                     .ThenInclude(up => up.Permission)
                     .Select(e => e)
