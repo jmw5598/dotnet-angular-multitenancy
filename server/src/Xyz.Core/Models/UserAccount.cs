@@ -7,7 +7,7 @@ namespace Xyz.Core.Models
     {
         public ApplicationUser User { get; set; } = default!;
         public ICollection<ApplicationRole> Roles { get; set; } = default!;
-        public ICollection<UserPermission> UserPermissions { get; set; } = default!;
+        public ICollection<UserModulePermission> UserModulePermissions { get; set; } = default!;
         public string RawPassword { get; set; } = default!;
     }
 }

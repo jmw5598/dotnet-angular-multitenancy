@@ -27,8 +27,7 @@ export const buildUserAccountForm = (
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     }),
-    userModulePermissions: builderUserModulePermissionsFormArray(formBuilder, userModulePermissions),
-    userPermissionGroups: [[]]
+    userModulePermissions: builderUserModulePermissionsFormArray(formBuilder, userModulePermissions)
   });
 
 /*
@@ -41,6 +40,10 @@ export const builderUserModulePermissionsFormArray =
     ...userModulePermissions?.map(m => formBuilder.group({
       id: [m.id],
       hasAccess: [m.hasAccess],
+      canCreateAll: [false],
+      canReadAll: [false],
+      canUpdateAll: [false],
+      canDeleteAll: [false],
       modulePermissionId: [m.modulePermissionId],
       modulePermission: formBuilder.group({
         id: [m?.modulePermission?.id],

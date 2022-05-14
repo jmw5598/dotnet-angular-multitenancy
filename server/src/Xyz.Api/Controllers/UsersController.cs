@@ -78,10 +78,10 @@ namespace Xyz.Api.Controllers
                 var newUserDto = await this._usersService
                     .CreateUserAccount(tenantId.ToString(), registrationUserAccount);
                 
-                var newUserPermissions = await this._userService
-                    .SaveUserPermissions(newUserDto.Id.ToString(), registrationUserAccount.UserPermissions);
+                var newUserModulePermissions = await this._userService
+                    .SaveUserModulePermissions(newUserDto.Id.ToString(), registrationUserAccount.UserModulePermissions);
 
-                newUserDto.UserPermissions = newUserPermissions;
+                newUserDto.UserModulePermissions = newUserModulePermissions;
                 
                 return Ok(newUserDto);
             }

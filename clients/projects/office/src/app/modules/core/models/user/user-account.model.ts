@@ -1,6 +1,6 @@
-import { User, UserPermission } from "../../entities";
+import { User, UserModulePermission } from "../../entities";
 
 export interface UserAccount {
   user: User,
-  userPermissions: UserPermission[]
+  userModulePermissions: UserModulePermission[]
 }

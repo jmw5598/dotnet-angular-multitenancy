@@ -76,13 +76,13 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserPermission>> SaveUserPermissions(string  userId, ICollection<UserPermission> userPermissions)
+        public async Task<ICollection<UserModulePermission>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
         {
             try
             {
-                var listOfUserPermissions = new List<UserPermission>();
+                var listOfUserPermissions = new List<UserModulePermission>();
 
-                foreach (var userPermission in userPermissions)
+                foreach (var module in userModulePermissions)
                 {
                     
                 }

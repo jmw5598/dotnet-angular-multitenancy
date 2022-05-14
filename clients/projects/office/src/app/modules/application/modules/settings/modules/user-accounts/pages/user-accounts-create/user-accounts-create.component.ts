@@ -48,11 +48,12 @@ export class UserAccountsCreateComponent implements OnInit {
       } as User,
       // userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
       // could filter out non checkted gorups by adding fitler before flatmap with (group => group.hasAccess)
-      userPermissions: formValue.userPermissionGroups?.flatMap((upg: any) => upg.userPermission)
+      // userPermissions: formValue.userPermissionMod?.flatMap((upg: any) => upg.userPermission)
+      // userModulePermissions: formValue.userModulePermissions
     } as UserAccount;
 
-    console.log("update form value is ", userAccount);
+    console.log("update form value is ", userAccount, formValue);
     
-    this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
+    // this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
   }
 }

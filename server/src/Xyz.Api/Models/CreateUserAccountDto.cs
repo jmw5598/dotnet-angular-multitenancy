@@ -11,7 +11,7 @@ namespace Xyz.Api.Models
         [Required]
         public RegistrationUserAccountDto User { get; set; } = default!;
 
-        public ICollection<UserPermission> UserPermissions { get; set; } = default!;
+        public ICollection<UserModulePermission> UserModulePermissions { get; set; } = default!;
 
         public UserAccount ToUserAccount()
         {
@@ -31,7 +31,7 @@ namespace Xyz.Api.Models
                         LastName = this.User.Profile.LastName
                     }
                 },
-                UserPermissions = this.UserPermissions,
+                UserModulePermissions = this.UserModulePermissions,
                 RawPassword = this.User.Password
             };
         }

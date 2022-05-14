@@ -102,7 +102,7 @@
                         <label 
                             nz-checkbox 
                             formControlName="hasAccess"
-                            >
+                            (ngModelChange)="onUserModulePermissionAccessChange($event, module)">
                           {{ module?.value.modulePermission?.name }}
                         </label>
                         <div class="ml-5">
@@ -115,6 +115,7 @@
                           <nz-switch 
                               nzSize="small"
                               [nzDisabled]="!module.value.hasAccess"
+                              (ngModelChange)="onUserModulePermissionCanCreateAllChange($event, module)"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>

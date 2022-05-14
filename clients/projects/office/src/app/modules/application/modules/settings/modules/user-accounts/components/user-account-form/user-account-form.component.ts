@@ -35,20 +35,16 @@ export class UserAccountFormComponent implements OnInit {
     return formGroup.get('userPermissions') as FormArray;
   }
 
-  public onRootPermissionModuleChange(event: any, control: AbstractControl): void {
-    const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
-    if (userPermissionFormGroup) {
-      userPermissionFormGroup?.patchValue({
-        canCreate: event,
-        canRead: event,
-        canUpdate: event,
-        canDelete: event
-      });
-    }
+  public onUserModulePermissionAccessChange(event: any, control: AbstractControl): void {
+    control?.patchValue({
+      canCreateAll: event,
+      canReadAll: event,
+      canUpdateAll: event,
+      canDeleteAll: event
+    });
   }
 
-  public onRootPermissionModuleCanCreateChange(event: any, control: AbstractControl): void {
+  public onUserModulePermissionCanCreateAllChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
     const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
