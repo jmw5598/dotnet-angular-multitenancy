@@ -5,7 +5,7 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 import * as fromRoot from '@xyz/office/store';
 import * as fromUser from '@xyz/office/store/user';
-import { combineLatest, delay, filter, take } from 'rxjs';
+import { combineLatest, filter, take } from 'rxjs';
 
 @Component({
   selector: 'xyz-logging-in',
@@ -34,7 +34,7 @@ export class LoggingInComponent implements OnInit {
   private _listenForUserSettingsAndPermissionsResolution(): void {
     combineLatest([
       this._store.select(fromUser.selectUserSettings),
-      this._store.select(fromUser.selectUserPermissionsMap)
+      this._store.select(fromUser.selectUserModulePermissionsMap)
     ])
     .pipe(
       filter(([settings, permissions]) => !!settings && !!permissions),

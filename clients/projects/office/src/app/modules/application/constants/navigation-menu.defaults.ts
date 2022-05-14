@@ -1,34 +1,34 @@
-import { NavigationLink, ModulePermissionType } from '@xyz/office/modules/core/models';
+import { NavigationLink, ModulePermissionNames, PermissionNames } from '@xyz/office/modules/core/models';
 
 export const defaultNavigationMenu: NavigationLink[] = [
   {
     label: 'Dashboard',
     routerLink: '/dashboard',
     icon: 'dashboard',
-    requireModulePermissionType: ModulePermissionType.Dashboard
+    requiredModulePermissionName: ModulePermissionNames.DASHBOARD_MODULE
   },
   {
     label: 'Service',
     routerLink: '/service',
     icon: 'calendar',
-    requireModulePermissionType: ModulePermissionType.Service
+    requiredModulePermissionName: ModulePermissionNames.SERVICE_MODULE
   },
   {
     label: 'Inventory',
     routerLink: '/inventory',
     icon: 'tags',
-    requireModulePermissionType: ModulePermissionType.Inventory
+    requiredModulePermissionName: ModulePermissionNames.INVENTORY_MODULE
   },
   {
     label: 'Settings',
     icon: 'setting',
-    requireModulePermissionType: ModulePermissionType.Settings,
+    requiredModulePermissionName: ModulePermissionNames.SETTINGS_MODULE,
     children: [
       {
         label: 'User Accounts',
         routerLink: '/settings/user-accounts',
         icon: 'user',
-        requireModulePermissionType: ModulePermissionType.UserAccounts
+        requiredPermissionName: PermissionNames.USER_ACCOUNTS_MODULE
       }
     ]
   }

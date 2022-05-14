@@ -4,5 +4,5 @@ export interface Permission {
   id: string,
   name: string,
   modulePermissionId: string,
-  modulePermissin?: ModulePermission
+  modulePermission?: ModulePermission
 }

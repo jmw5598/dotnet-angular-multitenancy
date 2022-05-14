@@ -1,21 +1,30 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserPermission } from '@xyz/office/modules/core/entities';
+import { UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 
-import { ModulePermissionType, UserPermissions, UserPermissionsMap, UserSettings } from '@xyz/office/modules/core/models';
+import { 
+  UserModulePermissionsMap, 
+  UserModulesAndPermissionsMap, 
+  UserModulePermissions, 
+  UserSettings, 
+  ModulePermissionNames, 
+  UserPermissionsMap, 
+  PermissionNames} from '@xyz/office/modules/core/models';
+import { map } from 'rxjs';
+
 import * as fromUser from './user.actions';
 
 export const userFeatureKey = 'user';
 
 export interface UserState {
   userSettings: UserSettings | null,
-  userPermissions: UserPermissions | null,
-  userPermissionsMap: UserPermissionsMap | null
+  userModulesPermissions: UserModulePermissions | null,
+  userModulePermissionsMap: UserModulesAndPermissionsMap | null
 }
 
 export const initialUserState: UserState = {
   userSettings: null,
-  userPermissions: null,
-  userPermissionsMap: null
+  userModulesPermissions: null,
+  userModulePermissionsMap: null
 }
 
 const handleGetUserSettingsSuccess = (state: UserState, { settings }: any) => ({
@@ -23,13 +32,10 @@ const handleGetUserSettingsSuccess = (state: UserState, { settings }: any) => ({
   userSettings: settings
 } as UserState);
 
-const handleGetUserPermissionsSuccess = (state: UserState, { permissions }: any) => ({
+const handleGetUserPermissionsSuccess = (state: UserState, { userModulePermissions }: any) => ({
   ...state,
-  userPermissions: permissions,
-  userPermissionsMap: permissions?.permissions?.reduce((obj: {[key: string]: UserPermission}, permission: UserPermission) => {
-    obj[permission?.permission?.type] = permission
-    return obj
-  }, {} as UserPermissionsMap)
+  userModulesPermissions: userModulePermissions,
+  userModulePermissionsMap: mapUserModulesAndPermissionsMap(userModulePermissions?.modules)
 } as UserState);
 
 export const reducer = createReducer(
@@ -37,3 +43,35 @@ export const reducer = createReducer(
   on(fromUser.getUserSettingsRequestSuccess, handleGetUserSettingsSuccess),
   on(fromUser.getUserPermissionsRequestSuccess, handleGetUserPermissionsSuccess)
 );
+
+// -----------------
+// Utility Functions
+// -----------------
+const mapUserModulesAndPermissionsMap = (userModulePermissions: UserModulePermission[]): UserModulesAndPermissionsMap => ({
+    modules: createUserModulePermissionsMap(userModulePermissions),
+    permissions: createUserPermissionsMap(userModulePermissions)
+  } as UserModulesAndPermissionsMap);
+
+const createUserModulePermissionsMap = 
+  (userModulePermissions: UserModulePermission[]): UserModulePermissionsMap => userModulePermissions.reduce((map: UserModulePermissionsMap, module: UserModulePermission) => {
+    const moduleName: ModulePermissionNames = module?.modulePermission?.name as ModulePermissionNames;
+    const userModulePermission: UserModulePermission = { ...module, userPermissions: undefined } as UserModulePermission;
+    
+    if (moduleName && userModulePermission) {
+      map[moduleName] = userModulePermission
+    }
+    
+    return map;
+  }, {} as UserModulePermissionsMap);
+
+const createUserPermissionsMap = 
+  (userModulePermissions: UserModulePermission[]): UserPermissionsMap => userModulePermissions.flatMap(modules => modules.userPermissions || [])
+    .reduce((permissionsMap: UserPermissionsMap, permission: UserPermission) => {
+      const permissionName: PermissionNames = permission?.permission?.name as PermissionNames;
+
+      if (permissionName) {
+        permissionsMap[permissionName] = permission
+      }
+
+      return permissionsMap
+    }, {} as UserPermissionsMap);

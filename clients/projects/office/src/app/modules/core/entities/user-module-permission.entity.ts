@@ -5,6 +5,7 @@ export interface UserModulePermission {
   id: string,
   hasAccess: boolean,
   modulePermissionId: string,
+  aspNetUserId: string,
   modulePermission?: ModulePermission,
   userPermissions?: UserPermission[],
 }

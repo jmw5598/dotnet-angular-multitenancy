@@ -34,7 +34,7 @@ export class UserEffects {
       ofType(fromUser.getUserPermissionsRequest),
       switchMap(() => this._userService.getUserPermissions()
         .pipe(
-          mergeMap(permissions => of(fromUser.getUserPermissionsRequestSuccess({ permissions: permissions }))),
+          mergeMap(userModulePermissions => of(fromUser.getUserPermissionsRequestSuccess({ userModulePermissions: userModulePermissions }))),
           catchError(error => {
             return of(fromUser.getUserPermissionsRequestFailure({ message: {
               status: ResponseStatus.ERROR,

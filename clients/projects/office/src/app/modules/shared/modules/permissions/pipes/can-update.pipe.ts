@@ -1,14 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { ModulePermissionType, UserPermissionsMap } from '@xyz/office/modules/core/models';
+import { PermissionNames, UserModulesAndPermissionsMap } from '@xyz/office/modules/core/models';
 
 @Pipe({
   name: 'xyzCanUpdate'
 })
 export class XyzCanUpdatePipe implements PipeTransform {
-  public transform(userPermissionsMap: UserPermissionsMap | null, type: ModulePermissionType): boolean {
-    return userPermissionsMap 
-      ? userPermissionsMap[type]?.canUpdate || false
+  public transform(
+    userModulePermissionsMap: UserModulesAndPermissionsMap | null,
+    permissionName: PermissionNames | null | undefined
+  ): boolean {
+    return userModulePermissionsMap && permissionName && userModulePermissionsMap?.permissions.hasOwnProperty(permissionName)
+      ? userModulePermissionsMap?.permissions[permissionName]?.canUpdate || false
       : false;
   }
 }

@@ -61,10 +61,11 @@ namespace Xyz.Infrastructure.Services
             try
             {
                 return await this._context.UserModulePermissions
-                    .Include(mp => mp.ModulePermission)
                     .Include(mp => mp.UserPermissions)
                     .ThenInclude(up => up.Permission)
+                    .Include(mp => mp.ModulePermission)
                     .Select(e => e)
+                    .Where(ump => ump.AspNetUserId.ToString() == userId)
                     .ToListAsync();
             }
             catch (Exception ex)

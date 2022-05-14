@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { UserAccount, UserPermissionGroup } from '@xyz/office/modules/core/models';
+import { UserAccount } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
@@ -48,7 +48,7 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         ...formValue.user,
         profile: formValue.profile
       },
-      userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
+      // userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
     } as UserAccount;
     
     // this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
@@ -58,8 +58,8 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
     this._store.select(fromUserAccounts.selectAssignablePermissions)
       .pipe(take(1))
       .subscribe(assignablePermissions => {
-        const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
-        this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
+        // const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
+        // this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
       });
   }
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserPermissions, UserSettings } from '../models';
+import { UserModulePermissions, UserSettings } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class UserService {
     );
   }
 
-  public getUserPermissions(): Observable<UserPermissions> {
-    return this._http.get<UserPermissions>(
+  public getUserPermissions(): Observable<UserModulePermissions> {
+    return this._http.get<UserModulePermissions>(
       `${this._environmentService.getBaseApiUrl()}/user/permissions`
     );
   }

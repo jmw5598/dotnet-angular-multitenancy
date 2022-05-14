@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { HasModulePermissionGuard } from "@xyz/office/modules/core/guards/has-module-permission.guard";
+import { HasModulePermissionGuard } from "@xyz/office/modules/core/guards";
 import { ModulePermissionType } from "@xyz/office/modules/core/models";
 import { SettingsComponent } from "./pages/settings/settings.component";
 
@@ -11,7 +11,7 @@ const routes: Routes = [
   },
   {
     path: 'user-accounts',
-    canActivate: [HasModulePermissionGuard],
+    // canActivate: [HasModulePermissionGuard],
     data: {
       modulePermissionType: ModulePermissionType.UserAccounts
     },

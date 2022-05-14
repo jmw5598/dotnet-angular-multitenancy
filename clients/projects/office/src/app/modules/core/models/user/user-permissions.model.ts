@@ -1,3 +1,4 @@
+import { UserModulePermission } from "../../entities";
 import { UserPermission } from "../../entities/user-permission.entity";
 
 export enum ModulePermissionType {
@@ -9,13 +10,31 @@ export enum ModulePermissionType {
   UserAccounts = 'userAccounts'
 }
 
-export interface UserPermissions {
-  permission: UserPermission
+export enum ModulePermissionNames {
+  DASHBOARD_MODULE = 'Dashboard Module',
+  SETTINGS_MODULE = 'Settings Module',
+  SERVICE_MODULE = 'Service Module',
+  INVENTORY_MODULE = 'Inventroy Module',
 }
 
-export type UserPermissionsMap = { [key: string]: UserPermission };
+export enum PermissionNames {
+  DASHBOARD_OVERVIEW_MODULE = 'Dashboard Overview Module',
+  USER_ACCOUNTS_MODULE = 'User Accounts Module'
+}
 
-export interface UserPermissionGroup {
-  userPermission: UserPermission;
-  hasAccess: boolean
+export type UserModulePermissionsMap = {
+  [key in ModulePermissionNames]: UserModulePermission
+}
+
+export type UserPermissionsMap = {
+  [key in PermissionNames]: UserPermission
+}
+
+export interface UserModulesAndPermissionsMap {
+  modules: UserModulePermissionsMap,
+  permissions: UserPermissionsMap
+}
+
+export interface UserModulePermissions {
+  modules: UserModulePermission[]
 }
