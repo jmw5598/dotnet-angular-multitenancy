@@ -13,9 +13,9 @@ export const selectUserAccountsPage = createSelector(
   (state: fromUserAccounts.UserAccountsState) => state?.userAccountsPage || null
 );
 
-export const selectAssignablePermissions = createSelector(
+export const selectAssignableModulePermissions = createSelector(
   selectUserAccountsState,
-  (state: fromUserAccounts.UserAccountsState) => state?.assignablePermissions || null
+  (state: fromUserAccounts.UserAccountsState) => state?.assignableModulePermissions || null
 );
 
 export const selectCreateUserAccountResponseMessage = createSelector(

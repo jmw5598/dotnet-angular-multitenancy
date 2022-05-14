@@ -130,16 +130,16 @@ namespace Xyz.Api.Controllers
             }
         }
 
-        [HttpGet("permissions")]
+        [HttpGet("module-permissions")]
         public async Task<ActionResult<IEnumerable<Permission>>> GetAssignablePermissions()
         {
             try
             {
-                return Ok(await this._permissionsService.FindAll());
+                return Ok(await this._permissionsService.FindAllModulePermissions());
             }
             catch (Exception ex)
             {
-                var errorMessage = "Error getting assignable permissions!";
+                var errorMessage = "Error getting assignable module permissions!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }

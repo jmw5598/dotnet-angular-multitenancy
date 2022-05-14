@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { User } from '@xyz/office/modules/core/entities';
+import { User, UserModulePermission } from '@xyz/office/modules/core/entities';
 import { UserAccount } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
@@ -10,7 +10,7 @@ import { Observable, take } from 'rxjs';
 import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
 
 import * as fromUserAccounts from '../../store';
-import { flattenUserPermissionGroups, mapAssignablePermissionsToUserPermissionGroups } from '../../utils';
+import { mapAssignableModulePermissionsToUserModulePermissions } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-create',
@@ -27,11 +27,11 @@ export class UserAccountsCreateComponent implements OnInit {
     private _store: Store<fromUserAccounts.UserAccountsState>,
     private _userValidators: UserValidators
   ) {
-    this._store.select(fromUserAccounts.selectAssignablePermissions)
+    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
       .pipe(take(1))
-      .subscribe(assignablePermissions => {
-        // const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
-        // this.createUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
+      .subscribe(assignableModulePermissions => {
+        const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
+        this.createUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
       });
   }
 

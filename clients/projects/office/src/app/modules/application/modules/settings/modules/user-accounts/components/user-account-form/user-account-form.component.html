@@ -87,83 +87,74 @@
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
         <ng-container [formGroup]="userAccountForm">
-          <ng-container formArrayName="userPermissionGroups">
-            <ng-container [formGroupName]="i" *ngFor="let group of userPermissionGroups.controls; let i = index">
-              
+          <ng-container formArrayName="userModulePermissions">
+            <ng-container [formGroupName]="i" *ngFor="let module of userModulePermissions?.controls; let i = index">
               <nz-collapse class="mb-2">
                   <nz-collapse-panel
                     class="p-0"
-                    [nzHeader]="permissionPanelHeader"
-                    [nzActive]="group.value.hasAccess"
-                    [nzDisabled]="!group.value.hasAccess"
+                    [nzHeader]="modulePanelHeader"
+                    [nzActive]="module.value.hasAccess"
+                    [nzDisabled]="!module.value.hasAccess"
                     [nzShowArrow]="false">
-                  <ng-template #permissionPanelHeader>
+                  <ng-template #modulePanelHeader>
                     <div nz-row  [nzGutter]="16">
                       <div nz-col nzXs="24" nzSm="26" nzMd="12" nzLg="12" nzXl="15" class="permissions-header-text">
                         <label 
                             nz-checkbox 
                             formControlName="hasAccess"
-                            (ngModelChange)="onRootPermissionModuleChange($event, group)">
-                          {{ group?.value.userPermission?.permission?.name }}
+                            >
+                          {{ module?.value.modulePermission?.name }}
                         </label>
                         <div class="ml-5">
-                          <small><a>Show all {{ group?.value?.userPermission?.childUserPermissions?.length || 0 }} sub permissions</a></small>
-                        </div>  
+                          <small><a>Show all {{ module?.value?.userPermissions?.length || 0 }} sub permissions</a></small>
+                        </div>
                       </div>
-                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions" formGroupName="userPermission">
+                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions" formGroupName="userPermissions">
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Create</div>
                           <nz-switch 
-                              (ngModelChange)="onRootPermissionModuleCanCreateChange($event, group)"
-                              formControlName="canCreate"
                               nzSize="small"
-                              [nzDisabled]="!group.value.hasAccess"
+                              [nzDisabled]="!module.value.hasAccess"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Read</div>
                           <nz-switch
-                              (ngModelChange)="onRootPermissionModuleCanReadChange($event, group)"
-                              formControlName="canRead"
                               nzSize="small" 
-                              [nzDisabled]="!group.value.hasAccess"
+                              [nzDisabled]="!module.value.hasAccess"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Update</div>
                           <nz-switch 
-                              (ngModelChange)="onRootPermissionModuleCanUpdateChange($event, group)"
-                              formControlName="canUpdate"
                               nzSize="small" 
-                              [nzDisabled]="!group.value.hasAccess"
+                              [nzDisabled]="!module.value.hasAccess"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Delete</div>
                           <nz-switch 
-                              (ngModelChange)="onRootPermissionModuleCanDeleteChange($event, group)"
-                              formControlName="canDelete"
                               nzSize="small" 
-                              [nzDisabled]="!group.value.hasAccess"
+                              [nzDisabled]="!module.value.hasAccess"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
                       </div>
                     </div>
                   </ng-template>
-                  <ng-container formGroupName="userPermission">
-                    <ul class="bordered-none" nz-list nzBordered nzSize="large" formArrayName="childUserPermissions">
+                  <ng-container>
+                    <ul class="bordered-none" nz-list nzBordered nzSize="large" formArrayName="userPermissions">
                       <li 
                           nz-list-item 
                           nzNoFlex
                           [formGroupName]="c"
-                          *ngFor="let childGroup of getChildPermissionsFormArray(group)?.controls; let c = index">
+                          *ngFor="let permission of getUserPermissionsFormArray(module)?.controls; let c = index">
                         <div nz-row  [nzGutter]="16">
                           <div nz-col nzXs="24" nzSm="26" nzMd="12" nzLg="12" nzXl="15"  class="permissions-header-text">
-                            {{ childGroup?.value?.permission?.name }}
+                            {{ permission?.value?.permission?.name }}
                           </div>
                           <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions">
                             <div class="permissions-header-action">

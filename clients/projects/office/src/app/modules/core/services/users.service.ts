@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UserAccountDto } from '../dtos';
-import { Permission, UserPermission } from '../entities';
+import { ModulePermission, UserPermission } from '../entities';
 
 import { Page, PageRequest, UserAccount, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
@@ -36,9 +36,9 @@ export class UsersService {
     );
   }
 
-  public getAssignablePermission(): Observable<Permission[]> {
-    return this.http.get<Permission[]>(
-      `${this.environmentService.getBaseApiUrl()}/users/permissions`
+  public getAssignableModulePermission(): Observable<ModulePermission[]> {
+    return this.http.get<ModulePermission[]>(
+      `${this.environmentService.getBaseApiUrl()}/users/module-permissions`
     );
   }
 

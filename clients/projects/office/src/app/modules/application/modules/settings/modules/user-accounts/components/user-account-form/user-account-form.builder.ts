@@ -1,12 +1,11 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserPermission } from "@xyz/office/modules/core/entities";
-import { UserModulePermissionsMap } from "@xyz/office/modules/core/models";
+import { UserModulePermission } from "@xyz/office/modules/core/entities";
 import { MatchValidators, UserValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
 
 export const buildUserAccountForm = (
     formBuilder: FormBuilder, 
     userValidators: UserValidators, 
-    userModulePermissionsMap: UserModulePermissionsMap[]
+    userModulePermissions: UserModulePermission[]
   ) => formBuilder.group({
     user: formBuilder.group({
       userName: ['', [
@@ -28,34 +27,38 @@ export const buildUserAccountForm = (
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     }),
+    userModulePermissions: builderUserModulePermissionsFormArray(formBuilder, userModulePermissions),
     userPermissionGroups: [[]]
-    // userPermissionGroups: buildUserPermissionGroupsFormArray(formBuilder, userPermissionGroups)
   });
 
-// export const buildUserPermissionGroupsFormArray = 
-//   (formBuilder: FormBuilder, userPermissionGroups: UserPermissionGroup[]): FormArray => formBuilder.array([
-//     ...userPermissionGroups.map(group => formBuilder.group({
-//       hasAccess: [group.hasAccess],
-//       userPermission: formBuilder.group({
-//         ...buildUserPermissionFormGroup(formBuilder, group.userPermission).controls,
-//         childUserPermissions: formBuilder.array([
-//           ...group?.userPermission
-//             ?.childUserPermissions
-//             ?.map(childUserPermission => buildUserPermissionFormGroup(formBuilder, childUserPermission)) || []
-//         ])
-//       })
-//     }))
-//   ]);
+/*
+  @TODO
+  Will also need function to patch through users current permissions to this form array.
+*/
 
-// export const buildUserPermissionFormGroup = 
-//   (formBuilder: FormBuilder, userPermission: UserPermission): FormGroup => formBuilder.group({
-//     canCreate: [userPermission.canCreate],
-//     canRead: [userPermission.canRead],
-//     canUpdate: [userPermission.canUpdate],
-//     canDelete: [userPermission.canDelete],
-//     permission: formBuilder.group({
-//       id: [userPermission?.permission?.id],
-//       name: [userPermission?.permission?.name]
-//     }),
-//   });
-
+export const builderUserModulePermissionsFormArray = 
+  (formBuilder: FormBuilder, userModulePermissions: UserModulePermission[]) : FormArray => formBuilder.array([
+    ...userModulePermissions?.map(m => formBuilder.group({
+      id: [m.id],
+      hasAccess: [m.hasAccess],
+      modulePermissionId: [m.modulePermissionId],
+      modulePermission: formBuilder.group({
+        id: [m?.modulePermission?.id],
+        name: [m?.modulePermission?.name]
+      }),
+      userPermissions: formBuilder.array([
+        ...m?.userPermissions?.map(permission => {
+          return formBuilder.group({
+            canCreate: [permission.canCreate],
+            canRead: [permission.canRead],
+            canUpdate: [permission.canUpdate],
+            canDelete: [permission.canDelete],
+            permission: formBuilder.group({
+              id: [permission?.permission?.id],
+              name: [permission?.permission?.name]
+            })
+          })
+        }) || []
+      ])
+    })) || []
+  ]);

@@ -10,7 +10,7 @@ import { Observable, of, Subject, take, takeUntil } from 'rxjs';
 import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
 
 import * as fromUserAccounts from '../../store';
-import { flattenUserPermissionGroups, mapAssignablePermissionsToUserPermissionGroups } from '../../utils';
+import { mapAssignableModulePermissionsToUserModulePermissions } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-update',
@@ -55,9 +55,9 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
   }
   
   private _initializeForm(): void {
-    this._store.select(fromUserAccounts.selectAssignablePermissions)
+    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
       .pipe(take(1))
-      .subscribe(assignablePermissions => {
+      .subscribe(assignableModulePermissions => {
         // const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
         // this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
       });

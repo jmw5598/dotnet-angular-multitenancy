@@ -26,19 +26,18 @@ export class UserAccountFormComponent implements OnInit {
     return `${this._environmentService.getBaseApiUrl()}/files/avatar`;
   }
 
-  public get userPermissionGroups(): FormArray {
-    return this.userAccountForm.get('userPermissionGroups') as FormArray;
+  public get userModulePermissions(): FormArray {
+    return this.userAccountForm.get('userModulePermissions') as FormArray;
   }
 
-  public getChildPermissionsFormArray(control: AbstractControl): FormArray {
+  public getUserPermissionsFormArray(control: AbstractControl): FormArray {
     const formGroup: FormGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup.get('userPermission') as FormGroup;
-    return userPermissionFormGroup.get('childUserPermissions') as FormArray;
+    return formGroup.get('userPermissions') as FormArray;
   }
 
   public onRootPermissionModuleChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
+    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     if (userPermissionFormGroup) {
       userPermissionFormGroup?.patchValue({
         canCreate: event,
@@ -51,7 +50,7 @@ export class UserAccountFormComponent implements OnInit {
 
   public onRootPermissionModuleCanCreateChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
+    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
 
     if (childUserPermissionsFormArray) {
@@ -66,7 +65,7 @@ export class UserAccountFormComponent implements OnInit {
 
   public onRootPermissionModuleCanReadChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
+    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
 
     if (childUserPermissionsFormArray) {
@@ -81,7 +80,7 @@ export class UserAccountFormComponent implements OnInit {
 
   public onRootPermissionModuleCanUpdateChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
+    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
 
     if (childUserPermissionsFormArray) {
@@ -96,7 +95,7 @@ export class UserAccountFormComponent implements OnInit {
 
   public onRootPermissionModuleCanDeleteChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermission') as FormGroup;
+    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
     const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
 
     if (childUserPermissionsFormArray) {

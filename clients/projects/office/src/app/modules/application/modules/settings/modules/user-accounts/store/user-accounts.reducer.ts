@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
+import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 
 import * as fromUserAccounts from './user-accounts.actions';
@@ -10,7 +10,7 @@ export const userAccountsFeatureKey = 'userAccounts';
 
 export interface UserAccountsState {
   userAccountsPage: Page<UserAccountDto> | null,
-  assignablePermissions: Permission[] | null,
+  assignableModulePermissions: ModulePermission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
   selectedUserAccount: UserAccountDto | null,
   selectedUsersPermissions: UserPermission[] | null
@@ -18,7 +18,7 @@ export interface UserAccountsState {
 
 export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
-  assignablePermissions: null,
+  assignableModulePermissions: null,
   createUserAccountResponseMessage: null,
   selectedUserAccount: null,
   selectedUsersPermissions: null
@@ -30,9 +30,9 @@ const handleSearchUserAccountsRequestSuccess = (state: UserAccountsState, { page
   userAccountsPage: page
 } as UserAccountsState);
 
-const handleGetAssignablePermissionsRequestSuccess = (state: UserAccountsState, { permissions }: any) => ({
+const handleGetAssignableModulePermissionsRequestSuccess = (state: UserAccountsState, { permissions }: any) => ({
   ...state,
-  assignablePermissions: permissions
+  assignableModulePermissions: permissions
 } as UserAccountsState);
 
 const handleCreateUserAccountRequestSuccess = (state: UserAccountsState, { message }: any) => ({
@@ -58,8 +58,8 @@ export const reducer = createReducer(
     handleSearchUserAccountsRequestSuccess
   ),
   on(
-    fromUserAccounts.getAssignablePermissionsRequestSuccess, 
-    handleGetAssignablePermissionsRequestSuccess
+    fromUserAccounts.getAssignableModulePermissionsRequestSuccess, 
+    handleGetAssignableModulePermissionsRequestSuccess
   ),
   on(
     fromUserAccounts.createUserAccountRequestSuccess,

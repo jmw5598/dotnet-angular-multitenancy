@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { Permission, UserPermission } from '@xyz/office/modules/core/entities';
+import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
 
 export const searchUserAccountsRequest = createAction(
@@ -19,17 +19,17 @@ export const searchUserAccountsRequestFailure = createAction(
   props<{ message: ResponseMessage }>()
 );
 
-export const getAssignablePermissionsRequest = createAction(
-  '[User Accounts] Get Assignable Permissions Request'
+export const getAssignableModulePermissionsRequest = createAction(
+  '[User Accounts] Get Assignable Module Permissions Request'
 );
 
-export const getAssignablePermissionsRequestSuccess = createAction(
-  '[User Accounts] Get Assignable Permissions Request Success',
-  props<{ permissions: Permission[] }>()
+export const getAssignableModulePermissionsRequestSuccess = createAction(
+  '[User Accounts] Get Assignable Module Permissions Request Success',
+  props<{ permissions: ModulePermission[] }>()
 );
 
-export const getAssignablePermissionsRequestFailure = createAction(
-  '[User Accounts] Get Assignable Permissions Request Failure',
+export const getAssignableModulePermissionsRequestFailure = createAction(
+  '[User Accounts] Get Assignable Module Permissions Request Failure',
   props<{ message: ResponseMessage }>()
 );
 

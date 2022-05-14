@@ -4,7 +4,7 @@ import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromUserAccounts from '../store';
-import { Permission } from '@xyz/office/modules/core/entities';
+import { ModulePermission } from '@xyz/office/modules/core/entities';
 
 @Injectable({
   providedIn: 'root'
@@ -22,12 +22,12 @@ export class AssignablePermissionsLoadedGuard implements CanActivate {
       );
   }
   
-  private _getAssignablePermissionsFromStoreOrApi(): Observable<Permission[] | null> {
-    return this._store.select(fromUserAccounts.selectAssignablePermissions)
+  private _getAssignablePermissionsFromStoreOrApi(): Observable<ModulePermission[] | null> {
+    return this._store.select(fromUserAccounts.selectAssignableModulePermissions)
       .pipe(
         tap(permissions => {
           if (!permissions) {
-            this._store.dispatch(fromUserAccounts.getAssignablePermissionsRequest());
+            this._store.dispatch(fromUserAccounts.getAssignableModulePermissionsRequest());
           }
         }),
         filter(permissions => !!permissions),
