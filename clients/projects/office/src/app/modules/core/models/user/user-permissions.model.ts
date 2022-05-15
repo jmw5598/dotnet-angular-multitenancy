@@ -1,25 +1,20 @@
 import { UserModulePermission } from "../../entities";
 import { UserPermission } from "../../entities/user-permission.entity";
 
-export enum ModulePermissionType {
-  Dashboard = 'dashboard',
-  DashboardOverview = 'dashboardOverview',
-  Service = 'service',
-  Inventory = 'inventroy',
-  Settings = 'settings',
-  UserAccounts = 'userAccounts'
-}
-
 export enum ModulePermissionNames {
+  ADMINISTRATION_MODULE = 'Administration Module',
   DASHBOARD_MODULE = 'Dashboard Module',
-  SETTINGS_MODULE = 'Settings Module',
-  SERVICE_MODULE = 'Service Module',
   INVENTORY_MODULE = 'Inventroy Module',
+  SECURITY_MODULE = 'Security Module',
+  SERVICE_MODULE = 'Service Module',
 }
 
 export enum PermissionNames {
-  DASHBOARD_OVERVIEW_MODULE = 'Dashboard Overview Module',
-  USER_ACCOUNTS_MODULE = 'User Accounts Module'
+  DASHBOARD_OVERVIEW = 'Dashboard Overview',
+  USER_ACCOUNTS = 'User Accounts',
+  SECURITY_GENERAL = 'Security General',
+  SECURITY_PERMISSIONS = 'Security Permissions',
+  SETTINGS = 'Settings',
 }
 
 export type UserModulePermissionsMap = {

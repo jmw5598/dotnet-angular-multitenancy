@@ -9,8 +9,16 @@ const routes: Routes = [
     component: ApplicationComponent,
     children: [
       {
+        path: 'admin',
+        loadChildren: () => import('./modules/administration/administration.module').then(m => m.AdministrationModule)
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./modules/dashboard/dashboard.module').then(m => m.DashboardModule)
+      },
+      {
+        path: 'security',
+        loadChildren: () => import('./modules/security/security.module').then(m => m.SecurityModule)
       },
       {
         path: 'service',
@@ -19,10 +27,6 @@ const routes: Routes = [
       {
         path: 'inventory',
         loadChildren: () => import('./modules/inventory/inventory.module').then(m => m.InventoryModule)
-      },
-      {
-        path: 'settings',
-        loadChildren: () => import('./modules/settings/settings.module').then(m => m.SettingsModule)
       },
       {
         path: '**',

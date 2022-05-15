@@ -20,15 +20,40 @@ export const defaultNavigationMenu: NavigationLink[] = [
     requiredModulePermissionName: ModulePermissionNames.INVENTORY_MODULE
   },
   {
-    label: 'Settings',
+    label: 'Administration',
     icon: 'setting',
-    requiredModulePermissionName: ModulePermissionNames.SETTINGS_MODULE,
+    requiredModulePermissionName: ModulePermissionNames.ADMINISTRATION_MODULE,
     children: [
       {
-        label: 'User Accounts',
-        routerLink: '/settings/user-accounts',
+        label: 'Settings',
+        routerLink: '/admin/settings',
         icon: 'user',
-        requiredPermissionName: PermissionNames.USER_ACCOUNTS_MODULE
+        requiredPermissionName: PermissionNames.SETTINGS
+      },
+      {
+        label: 'User Accounts',
+        routerLink: '/admin/user-accounts',
+        icon: 'user',
+        requiredPermissionName: PermissionNames.USER_ACCOUNTS
+      }
+    ]
+  },
+  {
+    label: 'Security',
+    icon: 'lock',
+    requiredModulePermissionName: ModulePermissionNames.SECURITY_MODULE,
+    children: [
+      {
+        label: 'General',
+        routerLink: '/security/general',
+        icon: 'user',
+        requiredPermissionName: PermissionNames.SECURITY_GENERAL
+      },
+      {
+        label: 'Permissions',
+        routerLink: '/security/Permissions',
+        icon: 'user',
+        requiredPermissionName: PermissionNames.SECURITY_PERMISSIONS
       }
     ]
   }
