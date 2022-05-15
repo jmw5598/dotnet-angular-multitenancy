@@ -31,8 +31,9 @@ namespace Xyz.Infrastructure.Services
         public async Task<IEnumerable<ModulePermission>> FindAllModulePermissions()
         {
             return await this._context.ModulePermissions
-                .Include(m => m.Permissions)
+                .Include(m => m.Permissions.OrderBy(p => p.Name))
                 .Select(mp => mp)
+                .OrderBy(mp => mp.Name)
                 .ToListAsync();
         }
     }

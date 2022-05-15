@@ -60,13 +60,22 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                return await this._context.UserModulePermissions
+                // @TODO will have to rework the ordering here...
+                var modulePermissions = this._context.UserModulePermissions
                     .Include(mp => mp.UserPermissions)
                     .ThenInclude(up => up.Permission)
                     .Include(mp => mp.ModulePermission)
                     .Select(e => e)
                     .Where(ump => ump.AspNetUserId.ToString() == userId)
+                    .OrderBy(um => um.ModulePermission.Name)
                     .ToListAsync();
+
+                modulePermissions.Result.Select(mp => {
+                    mp.UserPermissions = mp.UserPermissions.OrderBy(up => up.Permission.Name).ToList();
+                    return mp;
+                });
+
+                return await modulePermissions;
             }
             catch (Exception ex)
             {
