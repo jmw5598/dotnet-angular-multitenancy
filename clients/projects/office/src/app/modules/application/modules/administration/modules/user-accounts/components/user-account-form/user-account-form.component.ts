@@ -46,11 +46,10 @@ export class UserAccountFormComponent implements OnInit {
 
   public onUserModulePermissionCanCreateAllChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
-    const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
+    const userPermissionFormArray: FormArray = formGroup?.get('userPermissions') as FormArray;
 
-    if (childUserPermissionsFormArray) {
-      childUserPermissionsFormArray?.controls?.forEach(control => {
+    if (userPermissionFormArray) {
+      userPermissionFormArray?.controls?.forEach(control => {
         const childUserPermissionFormGroup: FormGroup = control as FormGroup;
         childUserPermissionFormGroup?.patchValue({
           canCreate: event
@@ -59,45 +58,42 @@ export class UserAccountFormComponent implements OnInit {
     }
   }
 
-  public onRootPermissionModuleCanReadChange(event: any, control: AbstractControl): void {
+  public onUserModulePermissionCanReadAllChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
-    const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
+    const userPermissionFormArray: FormArray = formGroup?.get('userPermissions') as FormArray;
 
-    if (childUserPermissionsFormArray) {
-      childUserPermissionsFormArray?.controls?.forEach(control => {
-        const childUserPermissionFormGroup: FormGroup = control as FormGroup;
-        childUserPermissionFormGroup?.patchValue({
+    if (userPermissionFormArray) {
+      userPermissionFormArray?.controls?.forEach(control => {
+        const userPermissionFormGroup: FormGroup = control as FormGroup;
+        userPermissionFormGroup?.patchValue({
           canRead: event
         })
       });
     }
   }
 
-  public onRootPermissionModuleCanUpdateChange(event: any, control: AbstractControl): void {
+  public onUserModulePermissionCanUpdateAllChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
-    const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
+    const userPermissionFormArray: FormArray = formGroup?.get('userPermissions') as FormArray;
 
-    if (childUserPermissionsFormArray) {
-      childUserPermissionsFormArray?.controls?.forEach(control => {
-        const childUserPermissionFormGroup: FormGroup = control as FormGroup;
-        childUserPermissionFormGroup?.patchValue({
+    if (userPermissionFormArray) {
+      userPermissionFormArray?.controls?.forEach(control => {
+        const userPermissionFormGroup: FormGroup = control as FormGroup;
+        userPermissionFormGroup?.patchValue({
           canUpdate: event
         })
       });
     }
   }
 
-  public onRootPermissionModuleCanDeleteChange(event: any, control: AbstractControl): void {
+  public onUserModulePermissionCanDeleteAllChange(event: any, control: AbstractControl): void {
     const formGroup = control as FormGroup;
-    const userPermissionFormGroup: FormGroup = formGroup?.get('userPermissions') as FormGroup;
-    const childUserPermissionsFormArray: FormArray = userPermissionFormGroup?.get('childUserPermissions') as FormArray;
+    const userPermissionFormArray: FormArray = formGroup?.get('userPermissions') as FormArray;
 
-    if (childUserPermissionsFormArray) {
-      childUserPermissionsFormArray?.controls?.forEach(control => {
-        const childUserPermissionFormGroup: FormGroup = control as FormGroup;
-        childUserPermissionFormGroup?.patchValue({
+    if (userPermissionFormArray) {
+      userPermissionFormArray?.controls?.forEach(control => {
+        const userPermissionFormGroup: FormGroup = control as FormGroup;
+        userPermissionFormGroup?.patchValue({
           canDelete: event
         })
       });

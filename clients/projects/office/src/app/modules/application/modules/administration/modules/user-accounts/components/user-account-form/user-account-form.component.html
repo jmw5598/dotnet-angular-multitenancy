@@ -109,12 +109,13 @@
                           <small><a>Show all {{ module?.value?.userPermissions?.length || 0 }} sub permissions</a></small>
                         </div>
                       </div>
-                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions" formGroupName="userPermissions">
+                      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions">
                         <div class="permissions-header-action">
                           <div class="permissions-header-action-label">Create</div>
                           <nz-switch 
                               nzSize="small"
                               [nzDisabled]="!module.value.hasAccess"
+                              formControlName="canCreateAll"
                               (ngModelChange)="onUserModulePermissionCanCreateAllChange($event, module)"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
@@ -124,6 +125,8 @@
                           <nz-switch
                               nzSize="small" 
                               [nzDisabled]="!module.value.hasAccess"
+                              formControlName="canReadAll"
+                              (ngModelChange)="onUserModulePermissionCanReadAllChange($event, module)"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
@@ -132,6 +135,8 @@
                           <nz-switch 
                               nzSize="small" 
                               [nzDisabled]="!module.value.hasAccess"
+                              formControlName="canUpdateAll"
+                              (ngModelChange)="onUserModulePermissionCanUpdateAllChange($event, module)"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
@@ -140,6 +145,8 @@
                           <nz-switch 
                               nzSize="small" 
                               [nzDisabled]="!module.value.hasAccess"
+                              formControlName="canDeleteAll"
+                              (ngModelChange)="onUserModulePermissionCanDeleteAllChange($event, module)"
                               (click)="$event.stopPropagation()">
                           </nz-switch>
                         </div>
@@ -159,7 +166,7 @@
                           </div>
                           <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions">
                             <div class="permissions-header-action">
-                              <label 
+                              <label
                                   formControlName="canCreate"
                                   nz-checkbox>
                               </label>
