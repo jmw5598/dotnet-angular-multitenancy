@@ -106,7 +106,8 @@
                           {{ module?.value.modulePermission?.name }}
                         </label>
                         <div class="ml-5">
-                          <small><a>Show all {{ module?.value?.userPermissions?.length || 0 }} sub permissions</a></small>
+                          <small><a>
+                            {{ module?.value?.hasAccess ? 'Hide' : 'Show' }} all {{ module?.value?.userPermissions?.length || 0 }} sub permissions</a></small>
                         </div>
                       </div>
                       <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12" nzXl="9" class="permissions-header-actions">
