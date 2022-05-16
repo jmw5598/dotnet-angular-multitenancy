@@ -4,8 +4,15 @@ export const defaultNavigationMenu: NavigationLink[] = [
   {
     label: 'Dashboard',
     routerLink: '/dashboard',
-    icon: 'dashboard',
-    requiredModulePermissionName: ModulePermissionNames.DASHBOARD_MODULE
+    icon: '/dashboard',
+    requiredModulePermissionName: ModulePermissionNames.DASHBOARD_MODULE,
+    children: [
+      {
+        label: 'Settings',
+        routerLink: '/dashboard/overview',
+        requiredPermissionName: PermissionNames.DASHBOARD_OVERVIEW
+      },
+    ]
   },
   {
     label: 'Service',
@@ -27,13 +34,11 @@ export const defaultNavigationMenu: NavigationLink[] = [
       {
         label: 'Settings',
         routerLink: '/admin/settings',
-        icon: 'user',
         requiredPermissionName: PermissionNames.SETTINGS
       },
       {
         label: 'User Accounts',
         routerLink: '/admin/user-accounts',
-        icon: 'user',
         requiredPermissionName: PermissionNames.USER_ACCOUNTS
       }
     ]
@@ -46,13 +51,11 @@ export const defaultNavigationMenu: NavigationLink[] = [
       {
         label: 'General',
         routerLink: '/security/general',
-        icon: 'user',
         requiredPermissionName: PermissionNames.SECURITY_GENERAL
       },
       {
         label: 'Permissions',
-        routerLink: '/security/Permissions',
-        icon: 'user',
+        routerLink: '/security/permissions',
         requiredPermissionName: PermissionNames.SECURITY_PERMISSIONS
       }
     ]

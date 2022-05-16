@@ -1,15 +1,16 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DashboardComponent } from "./pages/dashboard/dashboard.component";
+
+import { SecurityPermissionsComponent } from "./pages/security-permissions/security-permissions.component";
 
 const routes: Routes = [
   {
-    path: 'overview',
-    component: DashboardComponent
+    path: '',
+    component: SecurityPermissionsComponent
   },
   {
     path: '**',
-    redirectTo: 'overview',
+    redirectTo: '',
     pathMatch: 'full'
   }
 ];
@@ -18,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule { }
+export class SecurityPermissionsRoutingModule { }

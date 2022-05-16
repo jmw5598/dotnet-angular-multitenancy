@@ -23,7 +23,7 @@ export class HasModulePermissionGuard implements CanActivate {
       .pipe(
         switchMap((permissions: UserModulesAndPermissionsMap | null) => {
           const hasModulePermission: boolean = permissions ? (permissions?.modules[moduleName]?.hasAccess) || false : false;
-
+          
           if (!hasModulePermission) {
             this._router.navigateByUrl('/error/403');
           }

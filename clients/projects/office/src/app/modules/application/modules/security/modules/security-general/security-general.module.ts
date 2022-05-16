@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SecurityGeneralComponent } from './pages/security-general/security-general.component';
 
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -8,16 +9,15 @@ import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { SecurityGeneralRoutingModule } from './secuirty-general-routing.module';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    SecurityGeneralComponent
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule,
+    SecurityGeneralRoutingModule,
     NzIconModule,
     NzButtonModule,
     NzPageHeaderModule,
@@ -26,4 +26,4 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
     NzGridModule
   ]
 })
-export class DashboardModule { }
+export class SecurityGeneralModule { }

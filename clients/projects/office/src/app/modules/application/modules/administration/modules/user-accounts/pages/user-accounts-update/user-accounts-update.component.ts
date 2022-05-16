@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
+import { UserModulePermission } from '@xyz/office/modules/core/entities';
 import { UserAccount } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
@@ -48,6 +49,7 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         ...formValue.user,
         profile: formValue.profile
       },
+      userModulePermissions: formValue.userModulePermissions
       // userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
     } as UserAccount;
     
@@ -58,8 +60,8 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
     this._store.select(fromUserAccounts.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
-        // const userPermissionGroups: UserPermissionGroup[] = mapAssignablePermissionsToUserPermissionGroups(assignablePermissions || []) || [];
-        // this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userPermissionGroups);
+        const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
+        this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
       });
   }
 
