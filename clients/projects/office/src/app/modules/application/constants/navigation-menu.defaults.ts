@@ -8,7 +8,7 @@ export const defaultNavigationMenu: NavigationLink[] = [
     requiredModulePermissionName: ModulePermissionNames.DASHBOARD_MODULE,
     children: [
       {
-        label: 'Settings',
+        label: 'Overview',
         routerLink: '/dashboard/overview',
         requiredPermissionName: PermissionNames.DASHBOARD_OVERVIEW
       },
