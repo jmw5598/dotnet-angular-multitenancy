@@ -78,6 +78,15 @@ namespace Xyz.Api.Controllers
                 var newUserDto = await this._usersService
                     .CreateUserAccount(tenantId.ToString(), registrationUserAccount);
                 
+                // Assigns new AspNetUserId to the UserModulePermissions
+                registrationUserAccount.UserModulePermissions = registrationUserAccount.UserModulePermissions
+                    .Select(ump => 
+                    {
+                        ump.AspNetUserId = newUserDto.Id;
+                        return ump;
+                    })
+                    .ToList();
+
                 var newUserModulePermissions = await this._userService
                     .SaveUserModulePermissions(newUserDto.Id.ToString(), registrationUserAccount.UserModulePermissions);
 
@@ -101,8 +110,8 @@ namespace Xyz.Api.Controllers
             try
             {
                 var userAccountDto = await this._usersService.GetUserAccountByUserId(userId);
-                var userAccountPermissions = await this._userService.GetUserModulePermissions(userId);
-                // userAccountDto.UserPermissions = userAccountPermissions;s
+                var userModulePermissions = await this._userService.GetUserModulePermissions(userId);
+                userAccountDto.UserModulePermissions = userModulePermissions;
                 return Ok(userAccountDto);
             }
             catch (Exception ex)
@@ -113,10 +122,9 @@ namespace Xyz.Api.Controllers
             }
         }
 
-        // @TODO will have to fix this
         [HttpGet("{userId}/permissions")]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ActionResult<IEnumerable<UserModulePermission>>> GetUserPermissions([FromRoute] string userId)
+        public async Task<ActionResult<IEnumerable<UserModulePermission>>> GetUserModulePermissions([FromRoute] string userId)
         {
             try
             {

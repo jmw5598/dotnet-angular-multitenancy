@@ -8,8 +8,8 @@ namespace Xyz.Core.Entities.Tenant
         public bool CanUpdate { get; set; }
         public bool CanDelete { get; set; }
         public Guid PermissionId { get; set; }
-        public Permission Permission { get; set; } = default!;
+        public virtual Permission Permission { get; set; } = default!;
         public Guid UserModulePermissionId { get; set; }
-        public UserModulePermission UserModulePermission { get; set; } = default!;
+        public virtual UserModulePermission UserModulePermission { get; set; } = default!;
     }
 }

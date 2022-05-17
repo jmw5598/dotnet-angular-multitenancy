@@ -89,15 +89,9 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                var listOfUserPermissions = new List<UserModulePermission>();
-
-                foreach (var module in userModulePermissions)
-                {
-                    
-                }
-                
+                await this._context.UserModulePermissions.AddRangeAsync(userModulePermissions);                
                 this._context.SaveChanges();
-                return listOfUserPermissions;
+                return userModulePermissions;
             }
             catch (Exception ex)
             {

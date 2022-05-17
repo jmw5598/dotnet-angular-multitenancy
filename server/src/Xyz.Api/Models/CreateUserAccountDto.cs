@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
+using Xyz.Core.Dtos;
 using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
@@ -11,7 +12,7 @@ namespace Xyz.Api.Models
         [Required]
         public RegistrationUserAccountDto User { get; set; } = default!;
 
-        public ICollection<UserModulePermission> UserModulePermissions { get; set; } = default!;
+        public ICollection<UserModulePermissionDto> UserModulePermissions { get; set; } = default!;
 
         public UserAccount ToUserAccount()
         {
@@ -31,7 +32,25 @@ namespace Xyz.Api.Models
                         LastName = this.User.Profile.LastName
                     }
                 },
-                UserModulePermissions = this.UserModulePermissions,
+                UserModulePermissions = this.UserModulePermissions
+                    .Select(ump => new UserModulePermission
+                    {
+                        Id = ump.Id,
+                        HasAccess = ump.HasAccess,
+                        ModulePermissionId = ump.ModulePermissionId,
+                        UserPermissions = ump.UserPermissions
+                            .Select(up => new UserPermission
+                            {
+                                Id = up.Id,
+                                CanCreate = up.CanCreate,
+                                CanRead = up.CanRead,
+                                CanUpdate = up.CanUpdate,
+                                CanDelete = up.CanDelete,
+                                PermissionId = up.PermissionId
+                            })
+                            .ToList()
+                    })
+                    .ToList(),
                 RawPassword = this.User.Password
             };
         }
