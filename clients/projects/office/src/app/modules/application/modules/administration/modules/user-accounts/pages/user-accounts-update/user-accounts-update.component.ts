@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { UserModulePermission } from '@xyz/office/modules/core/entities';
@@ -77,7 +77,6 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
           // Patch avatarUrl??
         });
         
-        console.log("form: ", this.updateUserAccountForm);
         // Patch User Details
         this.updateUserAccountForm?.get('user')?.patchValue({
           userName: selectedUserAccount?.userName
@@ -90,7 +89,20 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         });
 
         // Patch User Permissions
+        (this.updateUserAccountForm?.get('userModulePermissions') as FormArray)?.controls.forEach(control => {
+          const userModulePermissionFormGroup: FormGroup = control as FormGroup;
 
+          const userModulePermission: UserModulePermission | undefined = selectedUserAccount?.userModulePermissions
+            ?.find(ump => ump?.modulePermission?.id === userModulePermissionFormGroup?.value?.modulePermission?.id);
+
+          userModulePermissionFormGroup?.patchValue({
+            ...userModulePermission,
+            canCreateAll: userModulePermission?.userPermissions?.some(up => up.canCreate) || false,
+            canReadAll: userModulePermission?.userPermissions?.some(up => up.canRead) || false,
+            canUpdateAll: userModulePermission?.userPermissions?.some(up => up.canUpdate) || false,
+            canDeleteAll: userModulePermission?.userPermissions?.some(up => up.canDelete) || false
+          }, {emitEvent: false});
+        });
       });
   }
 

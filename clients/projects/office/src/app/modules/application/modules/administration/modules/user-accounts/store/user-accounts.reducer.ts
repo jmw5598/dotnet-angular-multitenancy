@@ -63,6 +63,7 @@ export const reducer = createReducer(
   ),
   on(
     fromUserAccounts.createUserAccountRequestSuccess,
+    fromUserAccounts.setCreateUserAccountRequestResponseMessage,
     handleCreateUserAccountRequestSuccess
   ),
   on(

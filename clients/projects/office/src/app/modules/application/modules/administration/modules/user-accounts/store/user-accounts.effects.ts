@@ -58,7 +58,12 @@ export class UserAccountsEffects {
       switchMap(({ userAccount }) => 
         this._usersService.createUserAccount(userAccount)
           .pipe(
-            mergeMap((userDto: UserAccountDto) => of(fromUserAccounts.createUserAccountRequestSuccess({ userDto: userDto }))),
+            mergeMap((userDto: UserAccountDto) => of(fromUserAccounts.createUserAccountRequestSuccess({ 
+              message: {
+                status: ResponseStatus.SUCCESS,
+                message: 'Successfully create new user account!'
+              } as ResponseMessage
+            }))),
             catchError((error: any)=> of(fromUserAccounts.createUserAccountRequestFailure({
               message: {
                 status: ResponseStatus.ERROR,

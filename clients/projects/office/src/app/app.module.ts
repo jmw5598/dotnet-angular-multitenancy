@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { en_US } from 'ng-zorro-antd/i18n';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,6 +45,7 @@ const storeModuleRuntimeChecks = {
     StoreModule.forRoot(ROOT_REDUCERS, { metaReducers, runtimeChecks: storeModuleRuntimeChecks }),
     EffectsModule.forRoot([...rootEffects]),
     StoreDevtoolsModule.instrument({ name: 'Xyz Project Store', logOnly: environment.production, }),
+    NzMessageModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

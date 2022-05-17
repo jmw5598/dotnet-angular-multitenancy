@@ -7,10 +7,16 @@
   </nz-breadcrumb>
   <nz-page-header-extra>
     <button
-        (click)="onCreateUserAccount(createUserAccountForm.value)"
+        (click)="onCreateUserAccount(createUserAccountForm.value, true)"
         nz-button 
         nzType="primary">
-      Create New User Account
+      Save
+    </button>
+    <button
+        (click)="onCreateUserAccount(createUserAccountForm.value, false)"
+        nz-button 
+        nzType="default">
+      Save & Create Another
     </button>
   </nz-page-header-extra>
 </nz-page-header>

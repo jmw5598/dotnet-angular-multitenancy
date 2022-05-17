@@ -1,4 +1,4 @@
-import { Role, UserPermission } from "../entities";
+import { Role, UserModulePermission } from "../entities";
 
 export interface UserAccountDto {
   id: string,
@@ -8,5 +8,5 @@ export interface UserAccountDto {
   lastName: string,
   avatarSrc: string,
   roles?: Role[]
-  userPermissions?: UserPermission[]
+  userModulePermissions?: UserModulePermission[]
 }

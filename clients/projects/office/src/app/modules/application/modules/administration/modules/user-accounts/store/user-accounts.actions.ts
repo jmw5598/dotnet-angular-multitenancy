@@ -40,12 +40,17 @@ export const createUserAccountRequest = createAction(
 
 export const createUserAccountRequestSuccess = createAction(
   '[User Accounts] Create User Account Request Success',
-  props<{ userDto: UserAccountDto }>()
+  props<{ message: ResponseMessage }>()
 );
 
 export const createUserAccountRequestFailure = createAction(
   '[User Accounts] Create User Account Request Failure',
   props<{ message: ResponseMessage }>()
+);
+
+export const setCreateUserAccountRequestResponseMessage = createAction(
+  '[User Accounts] Create User Account Request Response Message',
+  props<{ message: ResponseMessage | null }>()
 );
 
 export const getUserAccountByUserIdRequest = createAction(
