@@ -4,10 +4,12 @@ import { XyzDatatableComponent } from './components/datatable/datatable.componen
 
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { DeepPropertyAccessPipe } from './pipes/deep-property-access.pipe';
 
 @NgModule({
   declarations: [
-    XyzDatatableComponent
+    XyzDatatableComponent,
+    DeepPropertyAccessPipe
   ],
   imports: [
     CommonModule,

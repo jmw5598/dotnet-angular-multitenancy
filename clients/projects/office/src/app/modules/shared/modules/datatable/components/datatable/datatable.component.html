@@ -60,15 +60,15 @@
     #textColumnTypeTemplate 
     let-row="row" 
     let-column="column">
-  {{ row[column.property] }}
+  {{ row | deepPropertyAccess: column?.property }}
 </ng-template>
 
 <ng-template 
     #emailColumnTypeTemplate 
     let-row="row" 
     let-column="column">
-  <a [href]="'mailto:' + row[column.property]" alt="Email address">
-    {{ row[column.property] }}
+  <a [href]="'mailto:' + (row | deepPropertyAccess: column?.property)" alt="Email address">
+    {{ row | deepPropertyAccess: column?.property }}
   </a>
 </ng-template>
 
@@ -78,7 +78,7 @@
     let-column="column">
   <div class="flex flex-row justify-content-center align-items-center">
     <nz-avatar
-        [nzSrc]="row[column?.property]"
+        [nzSrc]="row | deepPropertyAccess: column?.property"
         [nzShape]="'circle'" 
         [nzSize]="'large'" 
         [nzIcon]="'user'">
