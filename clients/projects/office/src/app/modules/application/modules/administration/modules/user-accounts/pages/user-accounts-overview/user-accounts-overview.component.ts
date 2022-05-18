@@ -23,7 +23,7 @@ export class UserAccountsOverviewComponent implements OnInit {
     columns: [
       {
         label: '',
-        property: 'avatarSrc',
+        property: 'avatarUrl',
         type: ColumnType.IMAGE,
         width: '75px'
       },
@@ -42,13 +42,13 @@ export class UserAccountsOverviewComponent implements OnInit {
       } as ColumnDefinition,
       {
         label: 'First name',
-        property: 'firstName',
+        property: 'profile.firstName',
         type: ColumnType.TEXT,
         width: '200px'
       } as ColumnDefinition,
       {
         label: 'Last Name',
-        property: 'lastName',
+        property: 'profile.lastName',
         type: ColumnType.TEXT,
         width: '200px'
       } as ColumnDefinition,

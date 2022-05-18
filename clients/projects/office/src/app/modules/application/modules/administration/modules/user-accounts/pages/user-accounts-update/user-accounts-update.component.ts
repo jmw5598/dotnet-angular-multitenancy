@@ -84,8 +84,8 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         
         // Patch Profile Details
         this.updateUserAccountForm?.get('profile')?.patchValue({
-          firstName: selectedUserAccount?.firstName,
-          lastName: selectedUserAccount?.lastName
+          firstName: selectedUserAccount?.profile?.firstName,
+          lastName: selectedUserAccount?.profile?.lastName
         });
 
         // Patch User Permissions

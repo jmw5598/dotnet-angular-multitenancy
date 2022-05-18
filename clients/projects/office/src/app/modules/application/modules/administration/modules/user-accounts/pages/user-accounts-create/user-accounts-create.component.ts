@@ -1,15 +1,15 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { User, UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
-import { ResponseStatus, UserAccount } from '@xyz/office/modules/core/models';
+import { User, UserModulePermission } from '@xyz/office/modules/core/entities';
+import { ResponseStatus } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { filter, Observable, Subject, take, takeUntil } from 'rxjs';
+import { filter, Subject, take } from 'rxjs';
 import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
 
 import * as fromUserAccounts from '../../store';
@@ -57,7 +57,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
       )
       .subscribe(message => {
         if (message?.status === ResponseStatus.SUCCESS) {
-          this.createUserAccountForm.reset();
+          this._resetCreateUserAccountForm();
           this._messageService.success(message?.message || 'Success!')
           if (shouldReturn) {
             this._location.back();
@@ -67,6 +67,11 @@ export class UserAccountsCreateComponent implements OnDestroy {
         }
         this._store.dispatch(fromUserAccounts.setCreateUserAccountRequestResponseMessage({ message: null } ))
       });
+  }
+
+  private _resetCreateUserAccountForm(): void {
+    // @TODO - need to reset the form.  currently if you use the formgroups
+    // reset method, it clears the permission moulde names and permission names
   }
 
   ngOnDestroy(): void {

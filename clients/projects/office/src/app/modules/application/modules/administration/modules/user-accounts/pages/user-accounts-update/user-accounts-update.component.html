@@ -4,7 +4,7 @@
       <a>Settings</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item *ngIf="selectedUserAccount$ | async as account">
-      <a>{{ account?.firstName }} {{ account?.lastName }}</a>
+      <a>{{ account?.profile?.firstName }} {{ account?.profile?.lastName }}</a>
     </nz-breadcrumb-item>
     <nz-breadcrumb-item>Update User Account</nz-breadcrumb-item>
   </nz-breadcrumb>

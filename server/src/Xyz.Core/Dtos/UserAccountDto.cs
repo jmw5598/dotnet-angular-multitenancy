@@ -8,9 +8,7 @@ namespace Xyz.Core.Dtos
         public Guid Id { get; set; } = default!;
         public string UserName { get; set; } = default!;
         public string Email { get; set; } = default!;
-        public string FirstName { get; set; } = default!;
-        public string LastName { get; set; } = default!;
-        public string AvatarSrc { get; set; } = default!;
+        public Profile Profile { get; set; } = default!;
         public ICollection<ApplicationRole> Roles { get; set; } = default!;
         public ICollection<UserModulePermission> UserModulePermissions { get; set; } = default!;
     }

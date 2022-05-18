@@ -75,9 +75,12 @@ namespace Xyz.Infrastructure.Services
                     Id = u.Id,
                     UserName = u.UserName,
                     Email = u.Email,
-                    FirstName = u.Profile.FirstName,
-                    LastName = u.Profile.LastName,
-                    AvatarSrc = "https://i.pravatar.cc/300",
+                    Profile = new Profile
+                    {
+                        FirstName = u.Profile.FirstName,
+                        LastName = u.Profile.LastName,
+                        AvatarUrl = "https://i.pravatar.cc/300",
+                    },
                     Roles = u.UserRoles.Select(u => u.Role).ToList()
                 });
 
@@ -120,9 +123,12 @@ namespace Xyz.Infrastructure.Services
                 {
                     Id = userAccount.User.Id,
                     Email = userAccount.User.Email,
-                    FirstName = userAccount.User.Profile.FirstName,
-                    LastName = userAccount.User.Profile.LastName,
-                    AvatarSrc = "https://i.pravatar.cc/300",
+                    Profile = new Profile
+                    {
+                        FirstName = userAccount.User.Profile.FirstName,
+                        LastName = userAccount.User.Profile.LastName,
+                        AvatarUrl = "https://i.pravatar.cc/300",
+                    },
                     Roles = userAccount.User.UserRoles.Select(u => u.Role).ToList()
                 };
             }
@@ -149,9 +155,12 @@ namespace Xyz.Infrastructure.Services
                         Id = u.Id,
                         UserName = u.UserName,
                         Email = u.Email,
-                        FirstName = u.Profile.FirstName,
-                        LastName = u.Profile.LastName,
-                        AvatarSrc = "https://i.pravatar.cc/300",
+                        Profile = new Profile
+                        {
+                            FirstName = u.Profile.FirstName,
+                            LastName = u.Profile.LastName,
+                            AvatarUrl = "https://i.pravatar.cc/300",
+                        },
                         Roles = u.UserRoles.Select(ur => ur.Role).ToList()
                     })
                     .FirstOrDefaultAsync();

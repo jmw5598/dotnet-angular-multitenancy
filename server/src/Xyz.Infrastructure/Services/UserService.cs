@@ -5,6 +5,7 @@ using Xyz.Infrastructure.Data;
 using Xyz.Multitenancy.Data;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
 
@@ -42,9 +43,12 @@ namespace Xyz.Infrastructure.Services
                         Id = user.Id,
                         UserName = user.UserName,
                         Email = user.Email,
-                        FirstName = user.Profile.FirstName,
-                        LastName = user.Profile.LastName,
-                        AvatarSrc = "https://i.pravatar.cc/300",
+                        Profile = new Profile
+                        {
+                            FirstName = user.Profile.FirstName,
+                            LastName = user.Profile.LastName,
+                            AvatarUrl = "https://i.pravatar.cc/300",
+                        }
                     }
                 });
             }
