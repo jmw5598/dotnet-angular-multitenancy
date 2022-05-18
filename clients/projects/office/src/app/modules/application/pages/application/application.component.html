@@ -18,7 +18,7 @@
     </div>
     <ul 
         class="bordered-none"
-        nz-menu 
+        nz-menu
         nzTheme="light" 
         nzMode="inline" 
         *ngIf="userModulePermissionsMap$ | async as permissions">
@@ -31,14 +31,20 @@
               *ngIf="permissions | xyzHasModulePermission: link?.requiredModulePermissionName">
             <ul>
               <ng-container *ngFor="let sublink of link?.children">
-                <li nz-menu-item *ngIf="permissions | xyzHasPermission: sublink?.requiredPermissionName">
+                <li 
+                    nz-menu-item 
+                    [nzMatchRouter]="true"
+                    *ngIf="permissions | xyzHasPermission: sublink?.requiredPermissionName">
                   <a [routerLink]="sublink?.routerLink || ''">{{ sublink?.label }}</a></li>
               </ng-container>
             </ul>
           </li>
         </ng-container>
         <ng-template #singleNavigationLinkTemplate>
-          <li nz-menu-item *ngIf="permissions | xyzHasModulePermission: link?.requiredModulePermissionName">
+          <li 
+              nz-menu-item 
+              [nzMatchRouter]="true"
+              *ngIf="permissions | xyzHasModulePermission: link?.requiredModulePermissionName">
             <i nz-icon [nzType]="link?.icon || ''"></i>
             <span><a [routerLink]="[link?.routerLink || '']">{{ link?.label || '' }}</a></span>
           </li>
@@ -58,7 +64,7 @@
       </div>
       <nz-avatar
           class="mr-4 cursor-pointer"
-          [nzSrc]="settings?.userDetails?.avatarSrc"
+          [nzSrc]="settings?.userDetails?.profile?.avatarUrl"
           nz-dropdown
           nzTrigger="click"
           [nzDropdownMenu]="userMenu" 
@@ -73,14 +79,14 @@
             <div class="flex flex-row">
               <nz-avatar
                   class="mr-4"
-                  [nzSrc]="settings?.userDetails?.avatarSrc"
+                  [nzSrc]="settings?.userDetails?.profile?.avatarUrl"
                   [nzShape]="'circle'" 
                   [nzSize]="'large'" 
                   [nzIcon]="'user'"
                   nzPlacement="bottomRight">
               </nz-avatar>
               <div>
-                <h4 class="m-0 fw-bold">{{ settings?.userDetails?.firstName }} {{ settings?.userDetails?.lastName }}</h4>
+                <h4 class="m-0 fw-bold">{{ settings?.userDetails?.profile?.firstName }} {{ settings?.userDetails?.profile?.lastName }}</h4>
                 <h4 class="m-0">{{ settings?.userDetails?.email }}</h4>
               </div>
             </div>
