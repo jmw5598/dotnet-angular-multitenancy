@@ -70,8 +70,14 @@ export class UserAccountsCreateComponent implements OnDestroy {
   }
 
   private _resetCreateUserAccountForm(): void {
-    // @TODO - need to reset the form.  currently if you use the formgroups
-    // reset method, it clears the permission moulde names and permission names
+    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
+      .pipe(take(1))
+      .subscribe(assignableModulePermissions => {
+        const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
+        const blankFormGroup = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
+        this.createUserAccountForm.reset();
+        this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
+      });
   }
 
   ngOnDestroy(): void {
