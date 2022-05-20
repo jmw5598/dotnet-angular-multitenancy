@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Xyz.Api.Models
 {
-    public class RegistrationUserAccountDto
+    public class CreateUserDto
     {
         [Required]
         public string UserName { get; set; } = default!;

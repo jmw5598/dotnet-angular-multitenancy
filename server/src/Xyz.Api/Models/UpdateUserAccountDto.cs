@@ -10,7 +10,7 @@ namespace Xyz.Api.Models
     public class UpdateUserAccountDto
     {
         [Required]
-        public UserAccountDto User { get; set; } = default!;
+        public UpdateUserDto User { get; set; } = default!;
 
         public ICollection<UserModulePermissionDto> UserModulePermissions { get; set; } = default!;
 
@@ -20,11 +20,6 @@ namespace Xyz.Api.Models
             {
                 User = new ApplicationUser
                 {
-                    UserName = this.User.UserName,
-                    NormalizedUserName = this.User.UserName.ToUpper(),
-                    Email = this.User.UserName,
-                    NormalizedEmail = this.User.UserName.ToUpper(),
-                    EmailConfirmed = true,
                     Tenants = new List<Tenant>(),
                     Profile = new Profile
                     {

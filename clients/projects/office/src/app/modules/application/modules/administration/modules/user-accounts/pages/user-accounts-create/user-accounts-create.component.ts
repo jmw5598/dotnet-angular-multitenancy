@@ -10,7 +10,7 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { filter, Subject, take } from 'rxjs';
-import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
+import { buildUserAccountCreateForm } from '../../components/user-account-create-form/user-account-create-form.builder';
 
 import * as fromUserAccounts from '../../store';
 import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
@@ -38,7 +38,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
-        this.createUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
+        this.createUserAccountForm = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
       });
   }
 
@@ -74,7 +74,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
-        const blankFormGroup = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
+        const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
         this.createUserAccountForm.reset();
         this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
       });

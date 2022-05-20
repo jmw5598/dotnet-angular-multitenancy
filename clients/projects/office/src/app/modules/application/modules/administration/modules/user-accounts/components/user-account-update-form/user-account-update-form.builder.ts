@@ -1,39 +1,20 @@
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, Validators } from "@angular/forms";
 import { UserModulePermission } from "@xyz/office/modules/core/entities";
-import { MatchValidators, UserValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
 
-export const buildUserAccountForm = (
-    formBuilder: FormBuilder, 
-    userValidators: UserValidators, 
+export const buildUserAccountUpdateForm = (
+    formBuilder: FormBuilder,
     userModulePermissions: UserModulePermission[]
   ) => formBuilder.group({
     user: formBuilder.group({
-      userName: ['', [
-        Validators.required, 
-        Validators.email
-      ], [userValidators.validateEmail()]],
-      password: ['', [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.pattern(ValidationPatterns.password)
-      ]],
-      confirmPassword: ['', [
-        Validators.required,
-        Validators.minLength(6),
-        Validators.pattern(ValidationPatterns.password)
-      ]]
-    }, { validators: [MatchValidators.mustMatch('password', 'confirmPassword')]}),
+      id: [null, [Validators.required]],
+      userName: [{ value: null, disabled: true }]
+    }),
     profile: formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]]
     }),
     userModulePermissions: builderUserModulePermissionsFormArray(formBuilder, userModulePermissions)
   });
-
-/*
-  @TODO
-  Will also need function to patch through users current permissions to this form array.
-*/
 
 export const builderUserModulePermissionsFormArray = 
   (formBuilder: FormBuilder, userModulePermissions: UserModulePermission[]) : FormArray => formBuilder.array([

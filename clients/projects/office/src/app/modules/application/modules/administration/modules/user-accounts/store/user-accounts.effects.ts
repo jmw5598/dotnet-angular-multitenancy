@@ -67,7 +67,30 @@ export class UserAccountsEffects {
             catchError((error: any)=> of(fromUserAccounts.createUserAccountRequestFailure({
               message: {
                 status: ResponseStatus.ERROR,
-                message: error.error || 'Error create new user!'
+                message: error.error || 'Error create new user account!'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  );
+
+  public updateUserAccountRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.updateUserAccountRequest),
+      switchMap(({ userId, userAccount }) => 
+        this._usersService.updateUserAccount(userId, userAccount)
+          .pipe(
+            mergeMap((userDto: UserAccountDto) => of(fromUserAccounts.updateUserAccountRequestSuccess({ 
+              message: {
+                status: ResponseStatus.SUCCESS,
+                message: 'Successfully updated user account!'
+              } as ResponseMessage
+            }))),
+            catchError((error: any)=> of(fromUserAccounts.updateUserAccountRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error updating user account!'
               } as ResponseMessage
             })))
           )

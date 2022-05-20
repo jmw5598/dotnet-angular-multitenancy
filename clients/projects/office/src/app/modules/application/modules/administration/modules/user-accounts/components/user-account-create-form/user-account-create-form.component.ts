@@ -5,12 +5,12 @@ import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
 
 @Component({
-  selector: 'xyz-user-account-form',
-  templateUrl: './user-account-form.component.html',
-  styleUrls: ['./user-account-form.component.scss'],
+  selector: 'xyz-user-account-create-form',
+  templateUrl: './user-account-create-form.component.html',
+  styleUrls: ['./user-account-create-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserAccountFormComponent implements OnInit {
+export class UserAccountCreateFormComponent implements OnInit {
   public userAccountForm!: FormGroup;
 
   constructor(

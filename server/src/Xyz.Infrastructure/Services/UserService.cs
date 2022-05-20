@@ -105,5 +105,30 @@ namespace Xyz.Infrastructure.Services
                 throw;
             }
         }
+
+        public async Task<ICollection<UserModulePermission>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        {
+            try
+            {
+                var modulePermissions = this._context.UserModulePermissions
+                    .Include(mp => mp.UserPermissions)
+                    .Select(e => e)
+                    .Where(ump => ump.AspNetUserId.ToString() == userId);
+
+                this._context.UserModulePermissions.RemoveRange(modulePermissions);
+                await this._context.UserModulePermissions.AddRangeAsync(userModulePermissions);
+
+                this._context.SaveChanges();
+
+                return userModulePermissions;
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error saving user permissions!";
+                this._logger.LogError(ex.ToString());
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
     }
 }

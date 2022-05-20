@@ -141,6 +141,51 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
+        public async Task<UserAccountDto> UpdateUserAccount(string tenantId, string userId, UserAccount userAccount)
+        {
+            try 
+            {
+                var user = await this._context.Users
+                    .Include(u => u.Profile)
+                    .Include(u => u.UserRoles)
+                    .ThenInclude(ur => ur.Role)
+                    .Where(u => u.Id.ToString() == userId)
+                    .Where(u => u.Tenants.Where(t => t.Id.ToString() == tenantId).Count() > 0)
+                    .FirstOrDefaultAsync();
+
+                if (user == null)
+                {
+                    throw new Exception("User with the supplied ID was not found!");
+                }
+
+                user.Profile.FirstName = userAccount.User.Profile.FirstName;
+                user.Profile.LastName = userAccount.User.Profile.LastName;
+                user.Profile.AvatarUrl = userAccount.User.Profile.AvatarUrl;
+
+                this._context.Users.Update(user);
+                this._context.SaveChanges();
+
+                return new UserAccountDto
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Profile = new Profile
+                    {
+                        FirstName = user.Profile.FirstName,
+                        LastName = user.Profile.LastName,
+                        AvatarUrl = "https://i.pravatar.cc/300",
+                    },
+                    Roles = user.UserRoles.Select(u => u.Role).ToList()
+                };
+            }
+            catch (Exception e)
+            {
+                var errorMessage = "Error updating user account!";
+                this._logger.LogError(errorMessage, e);
+                throw new Exception(errorMessage);
+            }
+        }
+
         public async Task<UserAccountDto> GetUserAccountByUserId(string userId)
         {
             try

@@ -10,7 +10,7 @@ namespace Xyz.Api.Models
     public class CreateUserAccountDto
     {
         [Required]
-        public RegistrationUserAccountDto User { get; set; } = default!;
+        public CreateUserDto User { get; set; } = default!;
 
         public ICollection<UserModulePermissionDto> UserModulePermissions { get; set; } = default!;
 

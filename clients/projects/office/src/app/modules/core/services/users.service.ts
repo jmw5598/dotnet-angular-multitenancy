@@ -49,6 +49,13 @@ export class UsersService {
     );
   }
 
+  public updateUserAccount(userId: string, userAccount: UserAccount): Observable<UserAccountDto> {
+    return this.http.put<UserAccountDto>(
+      `${this.environmentService.getBaseApiUrl()}/users/${userId}`,
+      userAccount
+    );
+  }
+
   public getUserByUserId(userId: string): Observable<UserAccountDto> {
     return this.http.get<UserAccountDto>(
       `${this.environmentService.getBaseApiUrl()}/users/${userId}`

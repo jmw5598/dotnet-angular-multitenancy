@@ -1,17 +1,19 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { UserModulePermission } from '@xyz/office/modules/core/entities';
-import { UserAccount } from '@xyz/office/modules/core/models';
-import { UserValidators } from '@xyz/office/modules/core/validators';
+import { ResponseStatus, UserAccount } from '@xyz/office/modules/core/models';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { Observable, of, Subject, take, takeUntil } from 'rxjs';
-import { buildUserAccountForm } from '../../components/user-account-form/user-account-form.builder';
+import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { filter, Observable, of, Subject, take, takeUntil } from 'rxjs';
+import { buildUserAccountUpdateForm } from '../../components/user-account-update-form/user-account-update-form.builder';
 
 import * as fromUserAccounts from '../../store';
-import { mapAssignableModulePermissionsToUserModulePermissions } from '../../utils';
+import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-update',
@@ -27,9 +29,10 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
   public selectedUserAccount$!: Observable<UserAccountDto | null>;
 
   constructor(
+    private _location: Location,
     private _formBuilder: FormBuilder,
     private _store: Store<fromUserAccounts.UserAccountsState>,
-    private _userValidators: UserValidators
+    private _messageService: NzMessageService
   ) {
     this._initializeForm();
     this._selectState();
@@ -38,22 +41,38 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._listenForSelectedUserAccountChanges();
   }
-  
-
 
   public onUpdateUserAccount(formValue: any): void {
     if (this.updateUserAccountForm.invalid) return;
-    
-    const userAccount: UserAccount = {
-      user: {
-        ...formValue.user,
-        profile: formValue.profile
-      },
-      userModulePermissions: formValue.userModulePermissions
-      // userPermissions: flattenUserPermissionGroups(formValue.userPermissionGroups)
-    } as UserAccount;
-    
-    // this._store.dispatch(fromUserAccounts.createUserAccountRequest({ userAccount: userAccount }));
+
+    const userAccount = userAccountFormToUserAccount(formValue);
+    removeEmptyKeys(userAccount);
+
+    this._store.dispatch(fromUserAccounts.updateUserAccountRequest({ 
+      userId: userAccount?.user?.id, 
+      userAccount: userAccount 
+    }));
+
+    this._store.select(fromUserAccounts.selectUpdateUserAccountResponseMessage)
+      .pipe(
+        filter(message => !!message),
+        take(1)
+      )
+      .subscribe(message => {
+        if (message?.status === ResponseStatus.SUCCESS) {
+          this._messageService.success(message?.message || 'Success!')
+        } else {
+          this._messageService.error(message?.message || 'Error!')
+        }
+        this._store.dispatch(fromUserAccounts.setUpdateUserAccountRequestResponseMessage({ message: null } ));
+        this._location.back();
+      });
+  }
+
+  public onIssuePasswordResetRequest(shouldIssue: boolean): void {
+    if (shouldIssue) {
+      alert('Issue reset');
+    }
   }
   
   private _initializeForm(): void {
@@ -61,7 +80,7 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
-        this.updateUserAccountForm = buildUserAccountForm(this._formBuilder, this._userValidators, userModulerPermissions);
+        this.updateUserAccountForm = buildUserAccountUpdateForm(this._formBuilder, userModulerPermissions);
       });
   }
 
@@ -79,13 +98,15 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         
         // Patch User Details
         this.updateUserAccountForm?.get('user')?.patchValue({
-          userName: selectedUserAccount?.userName
+          id: selectedUserAccount?.id || null,
+          userName: selectedUserAccount?.userName || null
         });
         
         // Patch Profile Details
         this.updateUserAccountForm?.get('profile')?.patchValue({
-          firstName: selectedUserAccount?.profile?.firstName,
-          lastName: selectedUserAccount?.profile?.lastName
+          id: selectedUserAccount?.profile?.id || null,
+          firstName: selectedUserAccount?.profile?.firstName || null,
+          lastName: selectedUserAccount?.profile?.lastName || null
         });
 
         // Patch User Permissions

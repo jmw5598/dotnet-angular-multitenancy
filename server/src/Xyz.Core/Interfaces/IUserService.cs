@@ -8,5 +8,6 @@ namespace Xyz.Core.Interfaces
         Task<UserSettings> GetUserSettings(string userId);
         Task<ICollection<UserModulePermission>> GetUserModulePermissions(string userId);
         Task<ICollection<UserModulePermission>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions);
+        Task<ICollection<UserModulePermission>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions);
     }
 }

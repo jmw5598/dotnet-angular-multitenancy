@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -23,15 +24,16 @@ import { UserAccountsRoutingModule } from './user-accounts-routing.module';
 import { UserAccountsOverviewComponent } from './pages/user-accounts-overview/user-accounts-overview.component';
 import { UserAccountsCreateComponent } from './pages/user-accounts-create/user-accounts-create.component';
 import { UserAccountsUpdateComponent } from './pages/user-accounts-update/user-accounts-update.component';
-import { UserAccountFormComponent } from './components/user-account-form/user-account-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { UserAccountUpdateFormComponent } from './components/user-account-update-form/user-account-update-form.component';
+import { UserAccountCreateFormComponent } from './components/user-account-create-form/user-account-create-form.component';
 
 @NgModule({
   declarations: [
     UserAccountsOverviewComponent,
     UserAccountsCreateComponent,
     UserAccountsUpdateComponent,
-    UserAccountFormComponent
+    UserAccountUpdateFormComponent,
+    UserAccountCreateFormComponent,
   ],
   imports: [
     CommonModule,

@@ -22,12 +22,13 @@
         </div>
 
         <!-- User Details Section -->
-        <nz-divider nzOrientation="left" nzText="Your User Crendentials"></nz-divider>
+        <nz-divider nzOrientation="center" nzText="User Crendentials"></nz-divider>
         <div formGroupName="user">
           <nz-form-item>
-            <nz-form-control [nzErrorTip]="emailErrorTemplate">
+            <nz-form-label class="text-left"  [nzXs]="24" nzRequired nzFor="userName">Email / User Name</nz-form-label>
+            <nz-form-control [nzXs]="24" [nzErrorTip]="emailErrorTemplate">
               <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="userName" placeholder="Email" />
+                <input type="text" nz-input formControlName="userName" />
               </nz-input-group>
               <ng-template #emailErrorTemplate let-control>
                 <ng-container *ngIf="control.hasError('required')">Email is required!</ng-container>
@@ -37,9 +38,10 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control [nzErrorTip]="passwordErrorTemplate">
+            <nz-form-label class="text-left" [nzXs]="24" nzRequired nzFor="password">Password</nz-form-label>
+            <nz-form-control [nzXs]="24" [nzErrorTip]="passwordErrorTemplate">
               <nz-input-group nzPrefixIcon="lock">
-                <input type="password" nz-input formControlName="password" placeholder="Password" />
+                <input type="password" nz-input formControlName="password" />
               </nz-input-group>
               <ng-template #passwordErrorTemplate let-control>
                 <ng-container *ngIf="control.hasError('required')">Password is required!</ng-container>
@@ -48,9 +50,10 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control [nzErrorTip]="confirmPasswordErrorTemplate">
+            <nz-form-label class="text-left" [nzXs]="24" nzRequired nzFor="confirmPassword">Confirm Password</nz-form-label>
+            <nz-form-control [nzXs]="24" [nzErrorTip]="confirmPasswordErrorTemplate">
               <nz-input-group nzPrefixIcon="lock">
-                <input type="password" nz-input formControlName="confirmPassword" placeholder="Confirm Password" />
+                <input type="password" nz-input formControlName="confirmPassword" />
               </nz-input-group>
               <ng-template #confirmPasswordErrorTemplate let-control>
                 <ng-container *ngIf="control.hasError('required')">Confirm Password is required!</ng-container>
@@ -62,19 +65,21 @@
         </div>
 
         <!-- Profile Details Section -->
-        <nz-divider nzOrientation="left" nzText="Your Profile Details"></nz-divider>
+        <nz-divider nzOrientation="center" nzText="Profile Details"></nz-divider>
         <div formGroupName="profile">
           <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your First Name!">
+            <nz-form-label class="text-left" [nzXs]="24" nzRequired nzFor="firstName">First Name</nz-form-label>
+            <nz-form-control [nzXs]="24" nzErrorTip="Please input your First Name!">
               <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="firstName" placeholder="First Name" />
+                <input type="text" nz-input formControlName="firstName" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-control nzErrorTip="Please input your Last Name!">
+            <nz-form-label class="text-left" [nzXs]="24" nzRequired nzFor="lastName">Last Name</nz-form-label>
+            <nz-form-control [nzXs]="24" nzErrorTip="Please input your Last Name!">
               <nz-input-group nzPrefixIcon="user">
-                <input type="text" nz-input formControlName="lastName" placeholder="Last Name" />
+                <input type="text" nz-input formControlName="lastName" />
               </nz-input-group>
             </nz-form-control>
           </nz-form-item>
@@ -85,7 +90,7 @@
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="16" nzXl="16">
       <div class="block p-4">
         <!-- User Details Section -->
-        <nz-divider nzOrientation="left" nzText="Your User Permissions"></nz-divider>
+        <nz-divider nzOrientation="left" nzText="User Permissions"></nz-divider>
         <ng-container [formGroup]="userAccountForm">
           <ng-container formArrayName="userModulePermissions">
             <ng-container [formGroupName]="i" *ngFor="let module of userModulePermissions?.controls; let i = index">

@@ -87,3 +87,23 @@ export const getUserPermissionByUserIdRequestFailure = createAction(
   '[User Accounts] Get User Permissions By User Id Request Failure',
   props<{ message: ResponseMessage }>()
 );
+
+export const updateUserAccountRequest = createAction(
+  '[User Accounts] Update User Account Request',
+  props<{ userId: string, userAccount: UserAccount }>()
+);
+
+export const updateUserAccountRequestSuccess = createAction(
+  '[User Accounts] Update User Account Request Success',
+  props<{ message: ResponseMessage }>()
+);
+
+export const updateUserAccountRequestFailure = createAction(
+  '[User Accounts] Update User Account Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setUpdateUserAccountRequestResponseMessage = createAction(
+  '[User Accounts] Update User Account Request Response Message',
+  props<{ message: ResponseMessage | null }>()
+);

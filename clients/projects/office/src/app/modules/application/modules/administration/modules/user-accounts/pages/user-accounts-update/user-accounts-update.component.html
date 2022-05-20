@@ -14,7 +14,8 @@
   <nz-page-header-extra>
     <button
         nz-button 
-        nzType="primary">
+        nzType="primary"
+        (click)="onUpdateUserAccount(updateUserAccountForm.value)">
       Update User Account
     </button>
   </nz-page-header-extra>
@@ -23,7 +24,9 @@
 <div [@fadeAnimation] class="p-4">
   <nz-card class="w-100 p-0">
     <form class="block" [formGroup]="updateUserAccountForm">
-      <xyz-user-account-form></xyz-user-account-form>
+      <xyz-user-account-update-form
+          (onIssuePasswordResetRequest)="onIssuePasswordResetRequest($event)">
+      </xyz-user-account-update-form>
     </form>
   </nz-card>
 </div>

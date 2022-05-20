@@ -102,7 +102,6 @@ namespace Xyz.Api.Controllers
             }
         }
 
-        // @TODO will have to fix this
         [HttpGet("{userId}")]
         [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult<UserAccountDto>> GetUserAccountById([FromRoute] string userId)
@@ -117,6 +116,45 @@ namespace Xyz.Api.Controllers
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user account!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [Authorize(Policy = PolicyNames.RequireTenant)]
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<UserAccountDto>> UpdateUserAccount(
+            [FromRoute] string userId, 
+            [FromBody] UpdateUserAccountDto updateUserAccountDto)
+        {
+            var tenantId = this._tenantAccessor.Tenant.Id;
+            
+            try
+            {
+                var updatedUserAccount = updateUserAccountDto.ToUserAccount();
+
+                var updatedUserDto = await this._usersService
+                    .UpdateUserAccount(tenantId.ToString(), userId, updatedUserAccount);
+                
+                // Assigns new AspNetUserId to the UserModulePermissions
+                updatedUserAccount.UserModulePermissions = updatedUserAccount.UserModulePermissions
+                    .Select(ump => 
+                    {
+                        ump.AspNetUserId = updatedUserDto.Id;
+                        return ump;
+                    })
+                    .ToList();
+
+                var newUserModulePermissions = await this._userService
+                    .UpdateUserModulePermissions(updatedUserDto.Id.ToString(), updatedUserAccount.UserModulePermissions);
+
+                updatedUserAccount.UserModulePermissions = newUserModulePermissions;
+                
+                return Ok(updatedUserAccount);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error updating user account!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }

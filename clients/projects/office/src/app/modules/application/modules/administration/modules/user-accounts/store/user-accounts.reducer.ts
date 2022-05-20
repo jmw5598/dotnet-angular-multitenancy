@@ -12,6 +12,7 @@ export interface UserAccountsState {
   userAccountsPage: Page<UserAccountDto> | null,
   assignableModulePermissions: ModulePermission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
+  updateUserAccountResponseMessage: ResponseMessage | null,
   selectedUserAccount: UserAccountDto | null,
   selectedUsersPermissions: UserPermission[] | null
 }
@@ -20,10 +21,10 @@ export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
   assignableModulePermissions: null,
   createUserAccountResponseMessage: null,
+  updateUserAccountResponseMessage: null,
   selectedUserAccount: null,
   selectedUsersPermissions: null
 }
-
 
 const handleSearchUserAccountsRequestSuccess = (state: UserAccountsState, { page }: any) => ({
   ...state,
@@ -39,6 +40,12 @@ const handleCreateUserAccountRequestSuccess = (state: UserAccountsState, { messa
   ...state,
   userAccountsPage: null,
   createUserAccountResponseMessage: message
+} as UserAccountsState);
+
+const handleUpdateUserAccountRequestSuccess = (state: UserAccountsState, { message }: any) => ({
+  ...state,
+  userAccountsPage: null,
+  updateUserAccountResponseMessage: message
 } as UserAccountsState);
 
 const handleGetUserPermissionsByUserIdRequestSuccess = (state: UserAccountsState, { userPermissions }: any) => ({
@@ -65,6 +72,11 @@ export const reducer = createReducer(
     fromUserAccounts.createUserAccountRequestSuccess,
     fromUserAccounts.setCreateUserAccountRequestResponseMessage,
     handleCreateUserAccountRequestSuccess
+  ),
+  on(
+    fromUserAccounts.updateUserAccountRequestSuccess,
+    fromUserAccounts.setUpdateUserAccountRequestResponseMessage,
+    handleUpdateUserAccountRequestSuccess
   ),
   on(
     fromUserAccounts.getUserPermissionByUserIdRequestSuccess,
