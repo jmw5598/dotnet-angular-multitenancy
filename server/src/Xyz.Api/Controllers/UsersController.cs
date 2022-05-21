@@ -148,9 +148,9 @@ namespace Xyz.Api.Controllers
                 var newUserModulePermissions = await this._userService
                     .UpdateUserModulePermissions(updatedUserDto.Id.ToString(), updatedUserAccount.UserModulePermissions);
 
-                updatedUserAccount.UserModulePermissions = newUserModulePermissions;
+                updatedUserDto.UserModulePermissions = newUserModulePermissions;
                 
-                return Ok(updatedUserAccount);
+                return Ok(updatedUserDto);
             }
             catch (Exception ex)
             {
@@ -162,7 +162,7 @@ namespace Xyz.Api.Controllers
 
         [HttpGet("{userId}/permissions")]
         [Authorize(Roles = "ADMIN")]
-        public async Task<ActionResult<IEnumerable<UserModulePermission>>> GetUserModulePermissions([FromRoute] string userId)
+        public async Task<ActionResult<IEnumerable<UserModulePermissionDto>>> GetUserModulePermissions([FromRoute] string userId)
         {
             try
             {

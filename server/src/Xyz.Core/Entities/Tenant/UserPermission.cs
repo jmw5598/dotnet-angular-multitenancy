@@ -1,3 +1,5 @@
+using Xyz.Core.Dtos;
+
 namespace Xyz.Core.Entities.Tenant
 {
     public class UserPermission
@@ -10,6 +12,19 @@ namespace Xyz.Core.Entities.Tenant
         public Guid PermissionId { get; set; }
         public virtual Permission Permission { get; set; } = default!;
         public Guid UserModulePermissionId { get; set; }
-        public virtual UserModulePermission UserModulePermission { get; set; } = default!;
+
+        public UserPermissionDto ToDto()
+        {
+            return new UserPermissionDto
+            {
+                Id = this.Id,
+                CanCreate = this.CanCreate,
+                CanRead = this.CanRead,
+                CanUpdate = this.CanUpdate,
+                CanDelete = this.CanDelete,
+                PermissionId = this.PermissionId,
+                Permission = this.Permission?.ToDto() ?? null
+            };
+        }
     }
 }

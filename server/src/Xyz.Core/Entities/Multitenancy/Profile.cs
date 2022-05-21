@@ -6,6 +6,5 @@ namespace Xyz.Core.Entities.Multitenancy
         public string FirstName { get; set; } = default!;
         public string LastName { get; set; } = default!;
         public string? AvatarUrl { get; set; } = default!;
-        public ApplicationUser User { get; set; } = default!;
     }
 }

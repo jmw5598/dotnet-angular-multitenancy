@@ -1,6 +1,3 @@
-using Xyz.Core.Entities.Multitenancy;
-using Xyz.Core.Entities.Tenant;
-
 namespace Xyz.Core.Dtos
 {
     public class UserPermissionDto
@@ -11,5 +8,6 @@ namespace Xyz.Core.Dtos
         public bool CanUpdate { get; set; } = default!;
         public bool CanDelete { get; set; } = default!;
         public Guid PermissionId { get; set; } = default!;
+        public PermissionDto? Permission { get; set; } = default!;
     }
 }

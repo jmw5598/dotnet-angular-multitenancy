@@ -10,6 +10,6 @@ namespace Xyz.Core.Dtos
         public string Email { get; set; } = default!;
         public Profile Profile { get; set; } = default!;
         public ICollection<ApplicationRole> Roles { get; set; } = default!;
-        public ICollection<UserModulePermission> UserModulePermissions { get; set; } = default!;
+        public ICollection<UserModulePermissionDto> UserModulePermissions { get; set; } = default!;
     }
 }

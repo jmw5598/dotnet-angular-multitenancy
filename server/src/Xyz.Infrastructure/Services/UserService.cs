@@ -45,6 +45,7 @@ namespace Xyz.Infrastructure.Services
                         Email = user.Email,
                         Profile = new Profile
                         {
+                            Id = user.Profile.Id,
                             FirstName = user.Profile.FirstName,
                             LastName = user.Profile.LastName,
                             AvatarUrl = "https://i.pravatar.cc/300",
@@ -60,22 +61,22 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermission>> GetUserModulePermissions(string userId)
+        public async Task<ICollection<UserModulePermissionDto>> GetUserModulePermissions(string userId)
         {
             try
             {
                 // @TODO will have to rework the ordering here...
                 var modulePermissions = this._context.UserModulePermissions
                     .Include(mp => mp.UserPermissions)
-                    .ThenInclude(up => up.Permission)
+                    .ThenInclude(up =>  up.Permission)
                     .Include(mp => mp.ModulePermission)
-                    .Select(e => e)
                     .Where(ump => ump.AspNetUserId.ToString() == userId)
                     .OrderBy(um => um.ModulePermission.Name)
+                    .Select(e => e.ToDto())
                     .ToListAsync();
 
                 modulePermissions.Result.Select(mp => {
-                    mp.UserPermissions = mp.UserPermissions.OrderBy(up => up.Permission.Name).ToList();
+                    mp.UserPermissions = mp.UserPermissions.OrderBy(up => up?.Permission?.Name).ToList();
                     return mp;
                 });
 
@@ -89,13 +90,13 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermission>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        public async Task<ICollection<UserModulePermissionDto>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
         {
             try
             {
                 await this._context.UserModulePermissions.AddRangeAsync(userModulePermissions);                
                 this._context.SaveChanges();
-                return userModulePermissions;
+                return userModulePermissions.Select(ump => ump.ToDto()).ToList();
             }
             catch (Exception ex)
             {
@@ -106,7 +107,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermission>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        public async Task<ICollection<UserModulePermissionDto>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
         {
             try
             {
@@ -120,7 +121,7 @@ namespace Xyz.Infrastructure.Services
 
                 this._context.SaveChanges();
 
-                return userModulePermissions;
+                return userModulePermissions.Select(ump => ump.ToDto()).ToList();
             }
             catch (Exception ex)
             {

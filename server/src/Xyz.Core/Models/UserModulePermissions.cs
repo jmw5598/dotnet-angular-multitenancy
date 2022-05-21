@@ -1,9 +1,9 @@
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Models
 {
     public class UserModulePermissions
     {
-        public ICollection<UserModulePermission> Modules { get; set; } = default!;
+        public ICollection<UserModulePermissionDto> Modules { get; set; } = default!;
     }
 }
