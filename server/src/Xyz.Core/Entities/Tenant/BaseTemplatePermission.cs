@@ -1,6 +1,6 @@
 namespace Xyz.Core.Entities.Tenant
 {
-    public abstract class BaseUserPermission
+    public abstract class BaseTemplatePermission
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public bool CanCreate { get; set; }

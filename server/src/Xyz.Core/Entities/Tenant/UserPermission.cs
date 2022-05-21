@@ -2,7 +2,7 @@ using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Entities.Tenant
 {
-    public class UserPermission : BaseUserPermission
+    public class UserPermission : BaseTemplatePermission
     {
         public Guid UserModulePermissionId { get; set; }
         public UserPermissionDto ToDto()

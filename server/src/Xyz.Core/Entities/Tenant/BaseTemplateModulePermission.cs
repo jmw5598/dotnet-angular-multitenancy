@@ -1,6 +1,6 @@
 namespace Xyz.Core.Entities.Tenant
 {
-    public abstract class BaseUserModulePermission
+    public abstract class BaseTemplateModulePermission
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public bool HasAccess { get; set; } = default!;

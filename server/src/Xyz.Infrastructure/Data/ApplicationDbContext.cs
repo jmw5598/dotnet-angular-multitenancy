@@ -28,8 +28,10 @@ namespace Xyz.Infrastructure.Data
         public DbSet<Permission> Permissions => Set<Permission>();
         public DbSet<UserModulePermission> UserModulePermissions => Set<UserModulePermission>();
         public DbSet<UserPermission> UserPermissions => Set<UserPermission>();
-
-
+        
+        public DbSet<TemplateModulePermission> TemplateModulePermissions => Set<TemplateModulePermission>();
+        public DbSet<TemplateModulePermissionName> TemplateModulePermissionNames => Set<TemplateModulePermissionName>();
+        public DbSet<TemplatePermission> TemplatePermissions => Set<TemplatePermission>();
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

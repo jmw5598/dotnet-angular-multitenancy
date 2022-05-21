@@ -4,7 +4,7 @@ using Xyz.Core.Dtos;
 namespace Xyz.Core.Entities.Tenant
 {
     [Index(nameof(AspNetUserId))]
-    public class UserModulePermission : BaseUserModulePermission
+    public class UserModulePermission : BaseTemplateModulePermission
     {
         public Guid AspNetUserId { get; set; }
         public virtual ICollection<UserPermission> UserPermissions { get; set; } = default!;
