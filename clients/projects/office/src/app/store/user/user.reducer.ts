@@ -53,9 +53,7 @@ const mapUserModulesAndPermissionsMap = (userModulePermissions: UserModulePermis
   } as UserModulesAndPermissionsMap);
 
 const createUserModulePermissionsMap = 
-  (userModulePermissions: UserModulePermission[]): UserModulePermissionsMap => {
-    console.log("module permissions are ", userModulePermissions);
-   const mapped = userModulePermissions.reduce((map: UserModulePermissionsMap, module: UserModulePermission) => {
+  (userModulePermissions: UserModulePermission[]): UserModulePermissionsMap => userModulePermissions.reduce((map: UserModulePermissionsMap, module: UserModulePermission) => {
     const moduleName: ModulePermissionNames = module?.modulePermission?.name as ModulePermissionNames;
     const userModulePermission: UserModulePermission = { ...module, userPermissions: undefined } as UserModulePermission;
     
@@ -64,11 +62,7 @@ const createUserModulePermissionsMap =
     }
     
     return map;
-  }, {} as UserModulePermissionsMap)
-
-  console.log("mapepd are ", mapped);
-  return mapped;
-};
+  }, {} as UserModulePermissionsMap);
 
 const createUserPermissionsMap = 
   (userModulePermissions: UserModulePermission[]): UserPermissionsMap => userModulePermissions.flatMap(modules => modules.userPermissions || [])
