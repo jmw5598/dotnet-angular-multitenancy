@@ -10,10 +10,14 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 
 import { SecurityPermissionsRoutingModule } from './security-permissions-routing.module';
+import { SecurityPermissionsCreateComponent } from './pages/security-permissions-create/security-permissions-create.component';
+import { SecurityPermissionsUpdateComponent } from './pages/security-permissions-update/security-permissions-update.component';
 
 @NgModule({
   declarations: [
-    SecurityPermissionsComponent
+    SecurityPermissionsComponent,
+    SecurityPermissionsCreateComponent,
+    SecurityPermissionsUpdateComponent
   ],
   imports: [
     CommonModule,
