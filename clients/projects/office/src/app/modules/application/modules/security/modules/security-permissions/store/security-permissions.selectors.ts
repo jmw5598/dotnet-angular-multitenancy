@@ -12,3 +12,8 @@ export const selectTemplateModulePermissionNamesPage = createSelector(
   selectSecurityPermissionsState,
   (state: fromSecurityPermissions.SecurityPermissionsState) => state.templateModulePermissionNamesPage
 );
+
+export const selectTemplateModulePermissionSearchFilter = createSelector(
+  selectSecurityPermissionsState,
+  (state: fromSecurityPermissions.SecurityPermissionsState) => state.templateModulePermissionsSearchFilter
+);

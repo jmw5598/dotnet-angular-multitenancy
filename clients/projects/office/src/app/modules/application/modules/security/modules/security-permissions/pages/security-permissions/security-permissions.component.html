@@ -19,6 +19,7 @@
     <div>
       <div class="mb-3 flex flex-row">
         <xyz-basic-query-search-filter
+            [filter]="templateModulePermissionsSearchFilter$ | async"
             (onSearchChanges)="onSearchFilterChanges($event)"></xyz-basic-query-search-filter>
       </div>
       <xyz-datatable      

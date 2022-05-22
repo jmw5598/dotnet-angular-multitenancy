@@ -14,7 +14,7 @@ export class BasicQuerySearchFilterComponent implements OnInit, OnDestroy {
   private _subscriptionSubject: Subject<any> = new Subject<any>();
 
   @Input()
-  public set filter(filter: BasicQuerySearchFilter) {
+  public set filter(filter: BasicQuerySearchFilter | null) {
     if (filter) {
       this.form.patchValue({ ...filter }, { emitEvent: false });
     }

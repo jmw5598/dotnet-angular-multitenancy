@@ -31,3 +31,8 @@ export const getTemplateModulePermissionNamesByIdRequestSuccess = createAction(
 export const getTemplateModulePermissionNamesByIdRequestFailure = createAction(
   '[Security Permissions] Get Template Module Permission Names By Id Request Failure'
 );
+
+export const setTemplateModulePermissionsSearchFilter = createAction(
+  '[Security Permissions] Set Template Module Permissions Search Filter',
+  props<{ filter: BasicQuerySearchFilter }>()
+);

@@ -52,25 +52,35 @@ export class SecurityPermissionsComponent implements OnInit {
     ]
   } as TableDefinition
 
-  private _defaultSearchFilter: BasicQuerySearchFilter = defaultBasicQuerySearchFilter;
   private _defaultPageRequest: PageRequest = defaultPageRequest;
+
+  public templateModulePermissionsSearchFilter$: Observable<BasicQuerySearchFilter | null>;
+  public templateModulePermissionsSearchFilter!: BasicQuerySearchFilter | null;
 
   constructor(
     private _store: Store<fromSecurityPermissions.SecurityPermissionsState>
-  ) { }
+  ) {
+    this.templateModulePermissionsSearchFilter$ = this._store
+      .select(fromSecurityPermissions.selectTemplateModulePermissionSearchFilter)
+      .pipe(tap(filter => this.templateModulePermissionsSearchFilter = filter));
 
-  ngOnInit(): void {
-    this._searchTemplateModulePermissions(this._defaultSearchFilter, this._defaultPageRequest);
     this.securityPermissionsTemplatePage$ = this._store.select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
   }
 
+  ngOnInit(): void {
+    setTimeout(() => {
+      this._searchTemplateModulePermissions(this.templateModulePermissionsSearchFilter, this._defaultPageRequest);
+    });
+  }
+
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
+    this._store.dispatch(fromSecurityPermissions.setTemplateModulePermissionsSearchFilter({ filter : filter }));
     this._searchTemplateModulePermissions(filter, this._defaultPageRequest);
   }
 
-  private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter, pageRequest: PageRequest): void {
+  private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {
     this._store.dispatch(fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
-      filter: filter,
+      filter: filter || defaultBasicQuerySearchFilter,
       pageRequest: pageRequest
     }));
   }
