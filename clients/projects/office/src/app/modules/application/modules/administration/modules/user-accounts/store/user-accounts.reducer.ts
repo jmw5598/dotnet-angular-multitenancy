@@ -1,8 +1,10 @@
 import { createReducer, on } from '@ngrx/store';
+import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
+import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 import * as fromUserAccounts from './user-accounts.actions';
 
@@ -10,6 +12,7 @@ export const userAccountsFeatureKey = 'userAccounts';
 
 export interface UserAccountsState {
   userAccountsPage: Page<UserAccountDto> | null,
+  userAccountsSearchFilter: BasicQuerySearchFilter | null,
   assignableModulePermissions: ModulePermission[] | null,
   createUserAccountResponseMessage: ResponseMessage | null,
   updateUserAccountResponseMessage: ResponseMessage | null,
@@ -19,6 +22,7 @@ export interface UserAccountsState {
 
 export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
+  userAccountsSearchFilter: defaultBasicQuerySearchFilter,
   assignableModulePermissions: null,
   createUserAccountResponseMessage: null,
   updateUserAccountResponseMessage: null,
@@ -58,6 +62,11 @@ const handleGetUserAccountByUserIdRequestSuccess = (state: UserAccountsState, { 
   selectedUserAccount: user
 } as UserAccountsState);
 
+const handleSetUserAccountsSearchFilter = (state: UserAccountsState, { filter }: any) => ({
+  ...state,
+  userAccountsSearchFilter: filter
+} as UserAccountsState);
+
 export const reducer = createReducer(
   initialUserAccountsState,
   on(
@@ -86,5 +95,9 @@ export const reducer = createReducer(
     fromUserAccounts.getUserAccountByUserIdRequestSuccess,
     fromUserAccounts.setSelectedUserAccount,
     handleGetUserAccountByUserIdRequestSuccess
+  ),
+  on(
+    fromUserAccounts.setUserAccountsSearchFilter,
+    handleSetUserAccountsSearchFilter
   )
 );

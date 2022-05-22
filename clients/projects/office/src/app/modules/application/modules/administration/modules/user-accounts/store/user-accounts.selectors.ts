@@ -37,3 +37,8 @@ export const selectSelectedUserAccount = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state.selectedUserAccount
 );
+
+export const selectUserAccountSearchFilter = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state.userAccountsSearchFilter
+);

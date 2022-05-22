@@ -108,3 +108,8 @@ export const setUpdateUserAccountRequestResponseMessage = createAction(
   '[User Accounts] Update User Account Request Response Message',
   props<{ message: ResponseMessage | null }>()
 );
+
+export const setUserAccountsSearchFilter = createAction(
+  '[User Accounts] Set User Accounts Search Filter',
+  props<{ filter: BasicQuerySearchFilter }>()
+);

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Page, PageRequest } from '@xyz/office//modules/core/models';
@@ -58,25 +58,35 @@ export class UserAccountsOverviewComponent implements OnInit {
     ]
   } as TableDefinition
 
-  private _defaultSearchFilter: BasicQuerySearchFilter = defaultBasicQuerySearchFilter;
   private _defaultPageRequest: PageRequest = defaultPageRequest;
+
+  public userAccountsSearchFilter$: Observable<BasicQuerySearchFilter | null>;
+  public userAccountsSearchFilter!: BasicQuerySearchFilter | null;
 
   constructor(
     private _store: Store<fromUserAccounts.UserAccountsState>
-  ) { }
+  ) {
+    this.userAccountsSearchFilter$ = this._store
+      .select(fromUserAccounts.selectUserAccountSearchFilter)
+      .pipe(tap(filter => this.userAccountsSearchFilter = filter));
 
-  ngOnInit(): void {
-    this._searchUserAccounts(this._defaultSearchFilter, this._defaultPageRequest);
     this.userAccountsPage$ = this._store.select(fromUserAccounts.selectUserAccountsPage);
   }
 
+  ngOnInit(): void {
+    setTimeout(() => {
+      this._searchUserAccounts(this.userAccountsSearchFilter, this._defaultPageRequest);
+    });
+  }
+
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
+    this._store.dispatch(fromUserAccounts.setUserAccountsSearchFilter({ filter: filter }));
     this._searchUserAccounts(filter, this._defaultPageRequest);
   }
 
-  private _searchUserAccounts(filter: BasicQuerySearchFilter, pageRequest: PageRequest): void {
+  private _searchUserAccounts(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {
     this._store.dispatch(fromUserAccounts.searchUserAccountsRequest({
-      filter: filter,
+      filter: filter || defaultBasicQuerySearchFilter,
       pageRequest: pageRequest
     }));
   }
