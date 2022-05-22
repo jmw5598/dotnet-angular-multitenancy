@@ -6,7 +6,7 @@ import { Page, PageRequest } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
-
+import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 import * as fromSecurityPermissions from '../../store';
@@ -52,14 +52,8 @@ export class SecurityPermissionsComponent implements OnInit {
     ]
   } as TableDefinition
 
-  private _defaultSearchFilter: BasicQuerySearchFilter = {
-    query: ''
-  } as BasicQuerySearchFilter;
-
-  private _defaultPageRequest: PageRequest = {
-    index: 0,
-    size: 10
-  } as PageRequest;
+  private _defaultSearchFilter: BasicQuerySearchFilter = defaultBasicQuerySearchFilter;
+  private _defaultPageRequest: PageRequest = defaultPageRequest;
 
   constructor(
     private _store: Store<fromSecurityPermissions.SecurityPermissionsState>

@@ -26,6 +26,7 @@ import { UserAccountsCreateComponent } from './pages/user-accounts-create/user-a
 import { UserAccountsUpdateComponent } from './pages/user-accounts-update/user-accounts-update.component';
 import { UserAccountUpdateFormComponent } from './components/user-account-update-form/user-account-update-form.component';
 import { UserAccountCreateFormComponent } from './components/user-account-create-form/user-account-create-form.component';
+import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { UserAccountCreateFormComponent } from './components/user-account-create
     UserAccountsRoutingModule,
     ReactiveFormsModule,
     XyzDatatableModule,
+    XyzQuerySearchFilterModule,
     NzIconModule,
     NzButtonModule,
     NzPageHeaderModule,

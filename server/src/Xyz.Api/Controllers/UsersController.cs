@@ -40,6 +40,7 @@ namespace Xyz.Api.Controllers
         [Authorize(Policy = PolicyNames.RequireTenant)]
         [HttpGet("search")]
         public async Task<ActionResult<Page<UserAccountDto>>> SearchUsersByTenant(
+            [FromQuery] string? query = null,
             [FromQuery] int? index = 0,
             [FromQuery] int? size = 20
         )
@@ -47,15 +48,12 @@ namespace Xyz.Api.Controllers
             //@TODO figure out sort
 
             var tenantId = this._tenantAccessor.Tenant.Id;
-            var pageRequest = new PageRequest
-            {
-                Index = index ?? 0,
-                Size = size ?? 20
-            };
+            var pageRequest = new PageRequest { Index = index ?? 0, Size = size ?? 20 };
+            var querySearchFilter = new BasicQuerySearchFilter { Query = query };
 
             try
             {
-                return Ok(await this._usersService.SearchUsersByTenant(tenantId.ToString(), pageRequest));
+                return Ok(await this._usersService.SearchUsersByTenant(tenantId.ToString(), querySearchFilter, pageRequest));
             }
             catch (Exception ex)
             {

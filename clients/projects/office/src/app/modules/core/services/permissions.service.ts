@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 import { TemplateModulePermissionName } from '../entities';
 
-import { BasicQuerySearchFilter, Page, PageRequest } from '../models';
+import { Page, PageRequest } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({

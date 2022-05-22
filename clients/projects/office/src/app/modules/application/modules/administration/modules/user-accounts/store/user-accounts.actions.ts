@@ -3,10 +3,11 @@ import { createAction, props } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
+import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 export const searchUserAccountsRequest = createAction(
   '[User Accounts] Search User Accounts Request',
-  props<{ pageRequest: PageRequest }>()
+  props<{ filter: BasicQuerySearchFilter, pageRequest: PageRequest }>()
 );
 
 export const searchUserAccountsRequestSuccess = createAction(

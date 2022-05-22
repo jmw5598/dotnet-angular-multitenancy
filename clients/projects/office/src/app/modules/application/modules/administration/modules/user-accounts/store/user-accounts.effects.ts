@@ -19,8 +19,8 @@ export class UserAccountsEffects {
   public searchUserAccountsRequest = createEffect(() => this._actions
     .pipe(
       ofType(fromUserAccounts.searchUserAccountsRequest),
-      switchMap(({ pageRequest }) => 
-        this._usersService.searchUsers(pageRequest)
+      switchMap(({ filter, pageRequest }) => 
+        this._usersService.searchUsers(filter, pageRequest)
           .pipe(
             mergeMap((page: Page<UserAccountDto>) => of(fromUserAccounts.searchUserAccountsRequestSuccess({ page: page }))),
             catchError((error: any)=> of(fromUserAccounts.searchUserAccountsRequestFailure({

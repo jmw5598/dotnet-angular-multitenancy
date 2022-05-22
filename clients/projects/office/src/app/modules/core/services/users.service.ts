@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
 import { UserAccountDto } from '../dtos';
 import { ModulePermission, UserPermission } from '../entities';
 
@@ -30,9 +31,11 @@ export class UsersService {
     );
   }
 
-  public searchUsers(pageRequest: PageRequest): Observable<Page<UserAccountDto>> {
+  public searchUsers(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<UserAccountDto>> {
+    const queryParams: {[key: string]: string } = { query: filter?.query || '' };
     return this.http.get<Page<UserAccountDto>>(
-      `${this.environmentService.getBaseApiUrl()}/users/search`
+      `${this.environmentService.getBaseApiUrl()}/users/search`,
+      { params: queryParams }
     );
   }
 

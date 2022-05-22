@@ -58,9 +58,9 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<Page<UserAccountDto>> SearchUsersByTenant(string tenantId, PageRequest pageRequest)
+        public async Task<Page<UserAccountDto>> SearchUsersByTenant(string tenantId, BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
-            var usersSource = this._context.Users
+            IQueryable<ApplicationUser> query = this._context.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .Include(u => u.Tenants)
@@ -69,8 +69,19 @@ namespace Xyz.Infrastructure.Services
                     u.Tenants
                         .Where(t => t.Id.ToString() == tenantId)
                         .Any()
-                )
-                .Select(u => new UserAccountDto
+                );
+
+            if (filter?.Query != null)
+            {
+                var queryTerm = filter.Query.Trim().ToLower();
+                query = query.Where(user => 
+                    user.UserName.ToLower().Contains(queryTerm)
+                        || user.Email.ToLower().Contains(queryTerm)
+                        || user.Profile.FirstName.ToLower().Contains(queryTerm)
+                        || user.Profile.LastName.ToLower().Contains(queryTerm));
+            }
+                
+            var usersSource = query.Select(u => new UserAccountDto
                 {
                     Id = u.Id,
                     UserName = u.UserName,

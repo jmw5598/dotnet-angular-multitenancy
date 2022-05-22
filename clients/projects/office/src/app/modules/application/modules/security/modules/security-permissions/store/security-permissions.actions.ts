@@ -1,6 +1,9 @@
 import { createAction, props } from "@ngrx/store";
+
 import { TemplateModulePermissionName } from "@xyz/office/modules/core/entities";
-import { BasicQuerySearchFilter, Page, PageRequest, ResponseMessage } from "@xyz/office/modules/core/models";
+import { Page, PageRequest, ResponseMessage } from "@xyz/office/modules/core/models";
+
+import { BasicQuerySearchFilter } from "@xyz/office/modules/shared/modules/query-search-filter";
 
 export const searchTemplateModulePerrmissionNamesRequest = createAction(
   '[Security Permissions] Search Template Module Permissions Names Request',

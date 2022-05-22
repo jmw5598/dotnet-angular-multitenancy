@@ -5,8 +5,11 @@ import { Observable } from 'rxjs';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Page, PageRequest } from '@xyz/office//modules/core/models';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import * as fromUserAccounts from '../../store';
+import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
+import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
+
+import * as fromUserAccounts from '../../store';
 
 @Component({
   selector: 'xyz-user-accounts-overview',
@@ -55,18 +58,27 @@ export class UserAccountsOverviewComponent implements OnInit {
     ]
   } as TableDefinition
 
+  private _defaultSearchFilter: BasicQuerySearchFilter = defaultBasicQuerySearchFilter;
+  private _defaultPageRequest: PageRequest = defaultPageRequest;
+
   constructor(
     private _store: Store<fromUserAccounts.UserAccountsState>
   ) { }
 
   ngOnInit(): void {
-    this._store.dispatch(fromUserAccounts.searchUserAccountsRequest({
-      pageRequest: {
-        index: 0,
-        size: 10
-      } as PageRequest
-    }));
+    this._searchUserAccounts(this._defaultSearchFilter, this._defaultPageRequest);
     this.userAccountsPage$ = this._store.select(fromUserAccounts.selectUserAccountsPage);
+  }
+
+  public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
+    this._searchUserAccounts(filter, this._defaultPageRequest);
+  }
+
+  private _searchUserAccounts(filter: BasicQuerySearchFilter, pageRequest: PageRequest): void {
+    this._store.dispatch(fromUserAccounts.searchUserAccountsRequest({
+      filter: filter,
+      pageRequest: pageRequest
+    }));
   }
 
   public edit(user: UserAccountDto): void {
