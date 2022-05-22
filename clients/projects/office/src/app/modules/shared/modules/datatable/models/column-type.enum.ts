@@ -1,5 +1,7 @@
 export enum ColumnType {
   TEXT,
   EMAIL,
-  IMAGE
+  IMAGE,
+  DATE,
+  DATE_TIME
 }

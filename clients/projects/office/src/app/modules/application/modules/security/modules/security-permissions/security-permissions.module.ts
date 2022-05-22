@@ -8,10 +8,13 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 
 import { SecurityPermissionsRoutingModule } from './security-permissions-routing.module';
 import { SecurityPermissionsCreateComponent } from './pages/security-permissions-create/security-permissions-create.component';
 import { SecurityPermissionsUpdateComponent } from './pages/security-permissions-update/security-permissions-update.component';
+
+import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,14 @@ import { SecurityPermissionsUpdateComponent } from './pages/security-permissions
   imports: [
     CommonModule,
     SecurityPermissionsRoutingModule,
+    XyzDatatableModule,
     NzIconModule,
     NzButtonModule,
     NzPageHeaderModule,
     NzBreadCrumbModule,
     NzCardModule,
-    NzGridModule
+    NzGridModule,
+    NzPopoverModule
   ]
 })
 export class SecurityPermissionsModule { }
