@@ -66,17 +66,18 @@ export class SecurityPermissionsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._store.dispatch(fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
-      filter: this._defaultSearchFilter,
-      pageRequest: this._defaultPageRequest 
-    }));
+    this._searchTemplateModulePermissions(this._defaultSearchFilter, this._defaultPageRequest);
     this.securityPermissionsTemplatePage$ = this._store.select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
+    this._searchTemplateModulePermissions(filter, this._defaultPageRequest);
+  }
+
+  private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter, pageRequest: PageRequest): void {
     this._store.dispatch(fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
       filter: filter,
-      pageRequest: this._defaultPageRequest
+      pageRequest: pageRequest
     }));
   }
 }
