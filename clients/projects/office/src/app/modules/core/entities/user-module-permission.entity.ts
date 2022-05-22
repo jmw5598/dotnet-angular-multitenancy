@@ -1,11 +1,7 @@
-import { ModulePermission } from "./module-permission.entity";
+import { BaseTemplateModulePermission } from "./base-template-module-permission.entity";
 import { UserPermission } from "./user-permission.entity";
 
-export interface UserModulePermission {
-  id: string,
-  hasAccess: boolean,
-  modulePermissionId: string,
+export interface UserModulePermission extends BaseTemplateModulePermission {
   aspNetUserId: string,
-  modulePermission?: ModulePermission,
   userPermissions?: UserPermission[],
 }
