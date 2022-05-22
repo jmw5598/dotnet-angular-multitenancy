@@ -32,11 +32,12 @@ export class SecurityPermissionsComponent implements OnInit {
       {
         label: 'Description',
         property: 'description',
-        type: ColumnType.TEXT
+        type: ColumnType.TEXT,
+        width: '400px'
       } as ColumnDefinition,
       {
-        label: 'Create On',
-        property: 'createOn',
+        label: 'Created On',
+        property: 'createdOn',
         type: ColumnType.DATE,
         width: '200px'
       } as ColumnDefinition,
