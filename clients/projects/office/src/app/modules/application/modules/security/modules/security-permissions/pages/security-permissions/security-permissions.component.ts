@@ -1,9 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Page, PageRequest } from '@xyz/office/modules/core/models';
+import { Store } from '@ngrx/store';
+import { Observable, of, tap } from 'rxjs';
 
+import { BasicQuerySearchFilter, Page, PageRequest } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
-import { Observable, of } from 'rxjs';
+
+import * as fromSecurityPermissions from '../../store';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 
 @Component({
   selector: 'xyz-security-permissions',
@@ -14,14 +18,7 @@ import { Observable, of } from 'rxjs';
 })
 export class SecurityPermissionsComponent implements OnInit {
 
-  public securityPermissionsTemplatePage$: Observable<Page<any>> = of({
-    elements: [],
-    totalElements: 0,
-    totalPages: 0,
-    current: PageRequest.from(0, 15, '', 'desc'),
-    next: PageRequest.from(0, 15, '', 'desc'),
-    previous: PageRequest.from(0, 15, '', 'desc')
-  } as Page<any>);
+  public securityPermissionsTemplatePage$!: Observable<Page<TemplateModulePermissionName> | null>;
 
   public securityPermissionsTemplateTableDefinition: TableDefinition = {
     title: 'Named Template Permisssions',
@@ -52,9 +49,20 @@ export class SecurityPermissionsComponent implements OnInit {
     ]
   } as TableDefinition
 
-  constructor() { }
+  constructor(
+    private _store: Store<fromSecurityPermissions.SecurityPermissionsState>
+  ) { }
 
   ngOnInit(): void {
+    this._store.dispatch(fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
+      filter: {
+        query: ''
+      } as BasicQuerySearchFilter,
+      pageRequest: {
+        index: 0,
+        size: 10
+      } as PageRequest
+    }));
+    this.securityPermissionsTemplatePage$ = this._store.select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
   }
-
 }

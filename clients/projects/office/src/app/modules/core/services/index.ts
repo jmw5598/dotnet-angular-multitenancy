@@ -5,3 +5,4 @@ export * from './cache-service.interface';
 export * from './session-cache.service';
 export * from './plans.service';
 export * from './files.service';
+export * from './permissions.service';

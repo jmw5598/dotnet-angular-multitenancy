@@ -28,3 +28,6 @@ export * from './navigation/navigation-link.model';
 export * from './user/user-permissions.model';
 export * from './user/user-settings.model';
 export * from './user/user-account.model';
+
+// filters
+export * from './filters/basic-query-search-filter.model';
