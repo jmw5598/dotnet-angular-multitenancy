@@ -53,6 +53,16 @@
       [ngTemplateOutlet]="imageColumnTypeTemplate"
       [ngTemplateOutletContext]="{ row, column }">
     </ng-container>
+    <ng-container 
+      *ngSwitchCase="ColumnType.DATE"
+      [ngTemplateOutlet]="dateColumnTypeTemplate"
+      [ngTemplateOutletContext]="{ row, column }">
+    </ng-container>
+    <ng-container 
+      *ngSwitchCase="ColumnType.DATE_TIME"
+      [ngTemplateOutlet]="dateTimeColumnTypeTemplate"
+      [ngTemplateOutletContext]="{ row, column }">
+    </ng-container>
   </ng-container>
 </ng-template>
 
@@ -84,4 +94,18 @@
         [nzIcon]="'user'">
     </nz-avatar>
   </div>
+</ng-template>
+
+<ng-template 
+    #dateColumnTypeTemplate 
+    let-row="row" 
+    let-column="column">
+  {{ (row | deepPropertyAccess: column?.property) | date: 'MM/dd/yyyy' }}
+</ng-template>
+
+<ng-template 
+    #dateTimeColumnTypeTemplate 
+    let-row="row" 
+    let-column="column">
+  {{ (row | deepPropertyAccess: column?.property) | date: 'MM/dd/yyyy hh:mm:ss a' }}
 </ng-template>
