@@ -17,6 +17,10 @@
 <div [@fadeAnimation] class="p-4">
   <nz-card class="w-100 p-0">
     <div>
+      <div class="mb-3 flex flex-row">
+        <xyz-basic-query-search-filter
+            (onSearchChanges)="onSearchFilterChanges($event)"></xyz-basic-query-search-filter>
+      </div>
       <xyz-datatable      
           [page]="securityPermissionsTemplatePage$ | async"
           [definition]="securityPermissionsTemplateTableDefinition"

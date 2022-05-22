@@ -15,6 +15,7 @@ import { SecurityPermissionsCreateComponent } from './pages/security-permissions
 import { SecurityPermissionsUpdateComponent } from './pages/security-permissions-update/security-permissions-update.component';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
+import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable
     CommonModule,
     SecurityPermissionsRoutingModule,
     XyzDatatableModule,
+    XyzQuerySearchFilterModule,
     NzIconModule,
     NzButtonModule,
     NzPageHeaderModule,
