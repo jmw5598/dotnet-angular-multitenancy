@@ -13,7 +13,7 @@ import * as fromSecurity from './store';
   imports: [
     CommonModule,
     SecurityRoutingModule,
-    StoreModule.forFeature(fromSecurity.administrationFeatureKey, fromSecurity.reducers),
+    StoreModule.forFeature(fromSecurity.securityFeatureKey, fromSecurity.reducers),
     EffectsModule.forFeature([...fromSecurity.securityEffects])
   ]
 })

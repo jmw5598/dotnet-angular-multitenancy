@@ -3,7 +3,7 @@ import { Action, combineReducers, createFeatureSelector } from '@ngrx/store';
 import * as fromSecurityPermissions from '../modules/security-permissions/store/security-permissions.reducer';
 import { SecurityPermissionsEffects } from '../modules/security-permissions/store/security-permissions.effects';
 
-export const administrationFeatureKey = 'administration';
+export const securityFeatureKey = 'security';
 
 export interface SecurityState {
   [fromSecurityPermissions.securityPermissionsFeatureKey]: fromSecurityPermissions.SecurityPermissionsState;
@@ -20,5 +20,5 @@ export const securityEffects = [
 ];
 
 export const selectSecurityState = createFeatureSelector<SecurityState>(
-  administrationFeatureKey
+  securityFeatureKey
 );
