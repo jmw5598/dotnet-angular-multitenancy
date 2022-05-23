@@ -18,7 +18,7 @@ import * as fromUserAccounts from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class UserAccountsOverviewComponent implements OnInit {
+export class UserAccountsOverviewComponent {
   public userAccountsPage$!: Observable<Page<UserAccountDto> | null>;
 
   public userAccountsTableDefinition: TableDefinition = {
@@ -71,12 +71,6 @@ export class UserAccountsOverviewComponent implements OnInit {
       .pipe(tap(filter => this.userAccountsSearchFilter = filter));
 
     this.userAccountsPage$ = this._store.select(fromUserAccounts.selectUserAccountsPage);
-  }
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this._searchUserAccounts(this.userAccountsSearchFilter, this._defaultPageRequest);
-    });
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {

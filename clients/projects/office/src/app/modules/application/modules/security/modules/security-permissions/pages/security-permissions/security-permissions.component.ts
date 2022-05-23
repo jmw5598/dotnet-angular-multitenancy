@@ -18,7 +18,7 @@ import * as fromSecurityPermissions from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class SecurityPermissionsComponent implements OnInit {
+export class SecurityPermissionsComponent {
 
   public securityPermissionsTemplatePage$!: Observable<Page<TemplateModulePermissionName> | null>;
 
@@ -65,12 +65,6 @@ export class SecurityPermissionsComponent implements OnInit {
       .pipe(tap(filter => this.templateModulePermissionsSearchFilter = filter));
 
     this.securityPermissionsTemplatePage$ = this._store.select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
-  }
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      this._searchTemplateModulePermissions(this.templateModulePermissionsSearchFilter, this._defaultPageRequest);
-    });
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
