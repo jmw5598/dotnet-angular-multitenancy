@@ -13,11 +13,6 @@ export const selectUserAccountsPage = createSelector(
   (state: fromUserAccounts.UserAccountsState) => state?.userAccountsPage || null
 );
 
-export const selectAssignableModulePermissions = createSelector(
-  selectUserAccountsState,
-  (state: fromUserAccounts.UserAccountsState) => state?.assignableModulePermissions || null
-);
-
 export const selectCreateUserAccountResponseMessage = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state?.createUserAccountResponseMessage || null

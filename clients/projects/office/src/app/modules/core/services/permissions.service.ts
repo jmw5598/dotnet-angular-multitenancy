@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 import { TemplateModulePermissionName } from '../entities';
 
+import { ModulePermission } from '../entities';
 import { Page, PageRequest } from '../models';
 import { EnvironmentService } from './environment.service';
 
@@ -24,6 +25,12 @@ export class PermissionsService {
     return this._http.get<Page<TemplateModulePermissionName>>(
       `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/search`,
       { params: queryParams }
+    );
+  }
+
+  public getAssignableModulePermission(): Observable<ModulePermission[]> {
+    return this._http.get<ModulePermission[]>(
+      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/available`
     );
   }
 }

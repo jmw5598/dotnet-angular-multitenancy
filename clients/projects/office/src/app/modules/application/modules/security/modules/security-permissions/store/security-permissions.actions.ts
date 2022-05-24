@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 
-import { TemplateModulePermissionName } from "@xyz/office/modules/core/entities";
+import { ModulePermission, TemplateModulePermissionName } from "@xyz/office/modules/core/entities";
 import { Page, PageRequest, ResponseMessage } from "@xyz/office/modules/core/models";
 
 import { BasicQuerySearchFilter } from "@xyz/office/modules/shared/modules/query-search-filter";

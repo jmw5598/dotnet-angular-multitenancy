@@ -20,20 +20,6 @@ export const searchUserAccountsRequestFailure = createAction(
   props<{ message: ResponseMessage }>()
 );
 
-export const getAssignableModulePermissionsRequest = createAction(
-  '[User Accounts] Get Assignable Module Permissions Request'
-);
-
-export const getAssignableModulePermissionsRequestSuccess = createAction(
-  '[User Accounts] Get Assignable Module Permissions Request Success',
-  props<{ permissions: ModulePermission[] }>()
-);
-
-export const getAssignableModulePermissionsRequestFailure = createAction(
-  '[User Accounts] Get Assignable Module Permissions Request Failure',
-  props<{ message: ResponseMessage }>()
-);
-
 export const createUserAccountRequest = createAction(
   '[User Accounts] Create User Account Request',
   props<{ userAccount: UserAccount }>()

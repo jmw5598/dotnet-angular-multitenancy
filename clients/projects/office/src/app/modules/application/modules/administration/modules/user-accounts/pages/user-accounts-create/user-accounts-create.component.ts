@@ -13,6 +13,8 @@ import { filter, Subject, take } from 'rxjs';
 import { buildUserAccountCreateForm } from '../../components/user-account-create-form/user-account-create-form.builder';
 
 import * as fromUserAccounts from '../../store';
+import * as fromPermissions from '@xyz/office/store/permissions';
+
 import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
 
 @Component({
@@ -34,7 +36,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
     private _userValidators: UserValidators,
     private _messageService: NzMessageService
   ) {
-    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
+    this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
@@ -70,7 +72,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
   }
 
   private _resetCreateUserAccountForm(): void {
-    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
+    this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];

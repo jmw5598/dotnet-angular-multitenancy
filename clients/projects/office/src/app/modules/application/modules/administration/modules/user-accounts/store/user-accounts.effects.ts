@@ -34,24 +34,6 @@ export class UserAccountsEffects {
     )
   );
 
-  public getAssignablePermissionRequest = createEffect(() => this._actions
-    .pipe(
-      ofType(fromUserAccounts.getAssignableModulePermissionsRequest),
-      switchMap(() => 
-        this._usersService.getAssignableModulePermission()
-          .pipe(
-            mergeMap((permissions: ModulePermission[]) => of(fromUserAccounts.getAssignableModulePermissionsRequestSuccess({ permissions: permissions }))),
-            catchError((error: any)=> of(fromUserAccounts.getAssignableModulePermissionsRequestFailure({
-              message: {
-                status: ResponseStatus.ERROR,
-                message: error.error || 'Error searching users!'
-              } as ResponseMessage
-            })))
-          )
-      )
-    )
-  );
-
   public createUserAccountRequest = createEffect(() => this._actions
     .pipe(
       ofType(fromUserAccounts.createUserAccountRequest),

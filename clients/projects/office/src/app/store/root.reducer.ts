@@ -7,12 +7,14 @@ import * as fromAuthentication from '@xyz/office/modules/authentication/store';
 import * as fromPlans from './plans';
 import * as fromUser from './user';
 import * as fromFiles from './files';
+import * as fromPermissions from './permissions';
 
 export interface RootState {
   [fromAuthentication.authenticationFeatureKey]: fromAuthentication.AuthenticationState,
   [fromPlans.plansFeatureKey]: fromPlans.PlansState,
   [fromUser.userFeatureKey]: fromUser.UserState,
-  [fromFiles.filesFeatureKey]: fromFiles.FilesState
+  [fromFiles.filesFeatureKey]: fromFiles.FilesState,
+  [fromPermissions.permissionsFeatureKey]: fromPermissions.PermissionsState
   // router: fromRouter.RouterReducerState<any>;
 }
 
@@ -22,7 +24,8 @@ export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<RootState, Acti
     [fromAuthentication.authenticationFeatureKey]: fromAuthentication.reducer,
     [fromPlans.plansFeatureKey]: fromPlans.reducer,
     [fromUser.userFeatureKey]: fromUser.reducer,
-    [fromFiles.filesFeatureKey]: fromFiles.reducer
+    [fromFiles.filesFeatureKey]: fromFiles.reducer,
+    [fromPermissions.permissionsFeatureKey]: fromPermissions.reducer
     // router: fromRouter.routerReducer,
   }),
 });
@@ -61,5 +64,6 @@ export const rootEffects: any[] = [
   fromAuthentication.AuthenticationEffects,
   fromPlans.PlansEffects,
   fromUser.UserEffects,
-  fromFiles.FilesEffects
+  fromFiles.FilesEffects,
+  fromPermissions.PermissionsEffects
 ];

@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angul
 import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as fromUserAccounts from '../store';
+import * as fromPermissions from '../../../store/permissions';
 import { ModulePermission } from '@xyz/office/modules/core/entities';
 
 @Injectable({
@@ -11,7 +11,7 @@ import { ModulePermission } from '@xyz/office/modules/core/entities';
 })
 export class AssignablePermissionsLoadedGuard implements CanActivate {
   constructor(
-    private _store: Store<fromUserAccounts.UserAccountsState>
+    private _store: Store<fromPermissions.PermissionsState>
   ) { }
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
@@ -23,11 +23,11 @@ export class AssignablePermissionsLoadedGuard implements CanActivate {
   }
   
   private _getAssignablePermissionsFromStoreOrApi(): Observable<ModulePermission[] | null> {
-    return this._store.select(fromUserAccounts.selectAssignableModulePermissions)
+    return this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(
         tap(permissions => {
           if (!permissions) {
-            this._store.dispatch(fromUserAccounts.getAssignableModulePermissionsRequest());
+            this._store.dispatch(fromPermissions.getAssignableModulePermissionsRequest());
           }
         }),
         filter(permissions => !!permissions),

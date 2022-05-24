@@ -13,6 +13,8 @@ import { filter, Observable, of, Subject, take, takeUntil } from 'rxjs';
 import { buildUserAccountUpdateForm } from '../../components/user-account-update-form/user-account-update-form.builder';
 
 import * as fromUserAccounts from '../../store';
+import * as fromPermissions from '@xyz/office/store/permissions';
+
 import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
 
 @Component({
@@ -76,7 +78,7 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
   }
   
   private _initializeForm(): void {
-    this._store.select(fromUserAccounts.selectAssignableModulePermissions)
+    this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
