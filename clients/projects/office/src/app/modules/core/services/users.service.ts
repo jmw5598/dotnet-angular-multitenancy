@@ -39,12 +39,6 @@ export class UsersService {
     );
   }
 
-  public getAssignableModulePermission(): Observable<ModulePermission[]> {
-    return this.http.get<ModulePermission[]>(
-      `${this.environmentService.getBaseApiUrl()}/users/module-permissions`
-    );
-  }
-
   public createUserAccount(userAccount: UserAccount): Observable<UserAccountDto> {
     return this.http.post<UserAccountDto>(
       `${this.environmentService.getBaseApiUrl()}/users`,

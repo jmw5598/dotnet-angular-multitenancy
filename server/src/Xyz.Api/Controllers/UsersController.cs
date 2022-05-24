@@ -20,20 +20,17 @@ namespace Xyz.Api.Controllers
         private ILogger<UsersController> _logger;
         private IUsersService _usersService; // Multitenancy user specific stuff
         private IUserService _userService; // Users Serviec to tenant speicific stuff
-        private IPermissionsService _permissionsService;
         private ITenantAccessor<Tenant> _tenantAccessor;
 
         public UsersController(
             ILogger<UsersController> logger, 
             IUsersService usersService,
             IUserService userService,
-            IPermissionsService permissionsService,
             ITenantAccessor<Tenant> tenantAccessor)
         {
             this._logger = logger;
             this._usersService = usersService;
             this._userService = userService;
-            this._permissionsService = permissionsService;
             this._tenantAccessor = tenantAccessor;
         }
 
@@ -169,21 +166,6 @@ namespace Xyz.Api.Controllers
             catch (Exception ex)
             {
                 var errorMessage = "Error getting user permissions!";
-                this._logger.LogError(errorMessage, new { Exception = ex });
-                return BadRequest(errorMessage);
-            }
-        }
-
-        [HttpGet("module-permissions")]
-        public async Task<ActionResult<IEnumerable<Permission>>> GetAssignablePermissions()
-        {
-            try
-            {
-                return Ok(await this._permissionsService.FindAllModulePermissions());
-            }
-            catch (Exception ex)
-            {
-                var errorMessage = "Error getting assignable module permissions!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }
