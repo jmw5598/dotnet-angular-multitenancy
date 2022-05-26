@@ -64,5 +64,21 @@ namespace Xyz.Infrastructure.Services
                 throw;
             }
         }
+
+        public async Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionName(TemplateModulePermissionName template)
+        {
+            try
+            {
+                this._context.TemplateModulePermissionNames.Add(template);
+                await this._context.SaveChangesAsync();
+                return template.ToDto();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error creating permissions template!";
+                this._logger.LogError(errorMessage, new { Exception = ex, TemplateModulePermissionName = template });
+                throw;
+            }
+        }
     }
 }

@@ -32,6 +32,7 @@ const handleSetTemplateModulePermissionsSearchFilter = (state: SecurityPermissio
 
 const handleCreateTemplateModulePermissionNameResponseMessage = (state: SecurityPermissionsState, { message }: any) => ({
   ...state,
+  templateModulePermissionNamesPage: null,
   createTemplateModulePermissionNameResponseMessage: message
 } as SecurityPermissionsState);
 

@@ -9,5 +9,6 @@ namespace Xyz.Core.Interfaces
         Task<IEnumerable<Permission>> FindAll();
         Task<IEnumerable<ModulePermission>> FindAllModulePermissions();
         Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNames(PageRequest pageRequest, BasicQuerySearchFilter filter);
+        Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionName(TemplateModulePermissionName template);
     }
 }

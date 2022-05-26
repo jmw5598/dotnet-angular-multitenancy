@@ -63,17 +63,21 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("permissions/templates")]
-        public async Task<ActionResult<TemplateModulePermissionName>> CreateTemplateModulePermissions(
+        public async Task<ActionResult<TemplateModulePermissionNameDto>> CreateTemplateModulePermissions(
             [FromBody] CreateTemplateModulePermissionNameDto createModulePermissionNameDto)
         {
             try
             {
                 var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
-                return Ok("");
+                return Ok(
+                    await this._permissionsService
+                        .SaveTemplateModulePermissionName(templateModulePermissionName)
+                );
             }
             catch (Exception ex)
             {
                 var errorMessage = "Error creating ecurity permissions template!";
+                this._logger.LogError(ex?.InnerException?.Message, ex);
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }
@@ -90,7 +94,10 @@ namespace Xyz.Api.Controllers
 
             try
             {
-                return Ok(await this._permissionsService.SearchTemplateModulePermissionNames(pageRequest, querySearchFilter));
+                return Ok(
+                    await this._permissionsService
+                        .SearchTemplateModulePermissionNames(pageRequest, querySearchFilter)
+                );
             }
             catch (Exception ex)
             {
