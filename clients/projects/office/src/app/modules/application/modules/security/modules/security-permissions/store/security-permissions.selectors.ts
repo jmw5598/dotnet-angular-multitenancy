@@ -17,3 +17,8 @@ export const selectTemplateModulePermissionSearchFilter = createSelector(
   selectSecurityPermissionsState,
   (state: fromSecurityPermissions.SecurityPermissionsState) => state.templateModulePermissionsSearchFilter
 );
+
+export const selectCreateTemplateModulePermissionNameResponseMessage = createSelector(
+  selectSecurityPermissionsState,
+  (state: fromSecurityPermissions.SecurityPermissionsState) => state.createTemplateModulePermissionNameResponseMessage
+);

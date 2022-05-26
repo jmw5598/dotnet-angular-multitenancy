@@ -36,3 +36,23 @@ export const setTemplateModulePermissionsSearchFilter = createAction(
   '[Security Permissions] Set Template Module Permissions Search Filter',
   props<{ filter: BasicQuerySearchFilter }>()
 );
+
+export const createTemplateModulePermissionNameRequest = createAction(
+  '[Security Permissions] Create Template Module Permission Name Request',
+  props<{ templateModulePermissionName: TemplateModulePermissionName }>()
+);
+
+export const createTemplateModulePermissionNameRequestSuccess = createAction(
+  '[Security Permissions] Create Template Module Permission Name Request Success',
+  props<{ message: ResponseMessage }>()
+);
+
+export const createTemplateModulePermissionNameRequestFailure = createAction(
+  '[Security Permissions] Create Template Module Permission Name Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setCreateTemplateModulePermissionNameResponseMessage = createAction(
+  '[Security Permissions] Set Create Template Module Permission Name Response Message',
+  props<{ message: ResponseMessage | null }>()
+);

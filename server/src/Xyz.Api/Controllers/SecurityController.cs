@@ -63,12 +63,13 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("permissions/templates")]
-        public async Task<ActionResult<TemplateModulePermissionName>> CreateTemplateModulePermissions()
+        public async Task<ActionResult<TemplateModulePermissionName>> CreateTemplateModulePermissions(
+            [FromBody] CreateTemplateModulePermissionNameDto createModulePermissionNameDto)
         {
             try
             {
-                // @TODO Create new name module permissions template
-                return Ok(new TemplateModulePermissionName{});
+                var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
+                return Ok("");
             }
             catch (Exception ex)
             {

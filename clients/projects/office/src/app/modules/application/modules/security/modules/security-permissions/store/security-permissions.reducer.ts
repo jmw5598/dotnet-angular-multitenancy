@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
 
-import { Page } from '@xyz/office/modules/core/models';
+import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 import * as fromSecurityPermissions from './security-permissions.actions';
@@ -9,11 +9,13 @@ import * as fromSecurityPermissions from './security-permissions.actions';
 export const securityPermissionsFeatureKey = 'securityPermissions';
 
 export interface SecurityPermissionsState {
+  createTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
   templateModulePermissionNamesPage: Page<any> | null,
   templateModulePermissionsSearchFilter: BasicQuerySearchFilter | null,
 }
 
 export const initialSecurityPermissionsState: SecurityPermissionsState = {
+  createTemplateModulePermissionNameResponseMessage: null,
   templateModulePermissionNamesPage: null,
   templateModulePermissionsSearchFilter: defaultBasicQuerySearchFilter
 }
@@ -28,6 +30,11 @@ const handleSetTemplateModulePermissionsSearchFilter = (state: SecurityPermissio
   templateModulePermissionsSearchFilter: filter
 } as SecurityPermissionsState);
 
+const handleCreateTemplateModulePermissionNameResponseMessage = (state: SecurityPermissionsState, { message }: any) => ({
+  ...state,
+  createTemplateModulePermissionNameResponseMessage: message
+} as SecurityPermissionsState);
+
 export const reducer = createReducer(
   initialSecurityPermissionsState,
   on(
@@ -37,5 +44,10 @@ export const reducer = createReducer(
   on(
     fromSecurityPermissions.setTemplateModulePermissionsSearchFilter,
     handleSetTemplateModulePermissionsSearchFilter
+  ),
+  on(
+    fromSecurityPermissions.createTemplateModulePermissionNameRequestSuccess,
+    fromSecurityPermissions.setCreateTemplateModulePermissionNameResponseMessage,
+    handleCreateTemplateModulePermissionNameResponseMessage
   )
 );

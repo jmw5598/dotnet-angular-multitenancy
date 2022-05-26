@@ -11,12 +11,14 @@
   <nz-page-header-extra>
     <button
         nz-button 
-        nzType="primary">
+        nzType="primary"
+        (click)="onCreateTempalteModulePermissionName(createTemplateModulePermissionNameForm.value, true)">
       Save
     </button>
     <button
         nz-button 
-        nzType="default">
+        nzType="default"
+        (click)="onCreateTempalteModulePermissionName(createTemplateModulePermissionNameForm.value, false)">
       Save & Create Another
     </button>
   </nz-page-header-extra>

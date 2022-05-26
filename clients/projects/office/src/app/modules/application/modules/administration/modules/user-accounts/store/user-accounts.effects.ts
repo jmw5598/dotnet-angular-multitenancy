@@ -46,10 +46,10 @@ export class UserAccountsEffects {
                 message: 'Successfully create new user account!'
               } as ResponseMessage
             }))),
-            catchError((error: any)=> of(fromUserAccounts.createUserAccountRequestFailure({
+            catchError((error: any) => of(fromUserAccounts.createUserAccountRequestFailure({
               message: {
                 status: ResponseStatus.ERROR,
-                message: error.error || 'Error create new user account!'
+                message: error.error || 'Error creating new user account!'
               } as ResponseMessage
             })))
           )

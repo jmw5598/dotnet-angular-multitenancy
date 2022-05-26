@@ -20,6 +20,13 @@ export class PermissionsService {
     private _http: HttpClient
   ) { }
 
+  public createTemplateModulePermissionName(templateModulePermissionName: TemplateModulePermissionName): Observable<TemplateModulePermissionName> {
+    return this._http.post<TemplateModulePermissionName>(
+      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates`,
+      templateModulePermissionName
+    );
+  }
+
   public searchTemplateModulePermissionNames(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<TemplateModulePermissionName>> {
     const queryParams: {[key: string]: string } = { query: filter?.query || '' };
     return this._http.get<Page<TemplateModulePermissionName>>(

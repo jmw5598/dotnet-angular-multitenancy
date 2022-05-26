@@ -1,0 +1,13 @@
+namespace Xyz.Core.Dtos
+{
+    public class TemplatePermissionDto
+    {
+        public Guid Id { get; set; } = Guid.NewGuid()!;
+        public bool CanCreate { get; set; } = default!;
+        public bool CanRead { get; set; } = default!;
+        public bool CanUpdate { get; set; } = default!;
+        public bool CanDelete { get; set; } = default!;
+        public Guid PermissionId { get; set; } = default!;
+        public PermissionDto? Permission { get; set; } = default!;
+    }
+}
