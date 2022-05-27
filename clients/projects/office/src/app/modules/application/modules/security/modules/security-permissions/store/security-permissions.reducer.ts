@@ -61,7 +61,9 @@ const handleDeleteTemplatePermissionModuleNameRequestSuccess = (state: SecurityP
     
     // Removes the elment from the page
     elements: state.templateModulePermissionNamesPage
-      ?.elements?.filter(template => template.Id === templateModulePermissionName.id ) 
+      ?.elements?.filter((template: TemplateModulePermissionName) => {
+        return template.id !== templateModulePermissionName.id 
+      }) 
       || [],
     
     // Update total elements
@@ -69,6 +71,8 @@ const handleDeleteTemplatePermissionModuleNameRequestSuccess = (state: SecurityP
       ? state.templateModulePermissionNamesPage.totalElements - 1 
       : 0
   } as Page<TemplateModulePermissionName>;
+
+  console.log(templateModulePermissionNamesPage);
   
   return {
     ...state,

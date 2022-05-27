@@ -133,14 +133,30 @@ namespace Xyz.Api.Controllers
             try
             {
                 var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
-                return Ok(
-                    await this._permissionsService
-                        .SaveTemplateModulePermissionName(templateModulePermissionName)
-                );
+                return Ok(await this._permissionsService
+                    .SaveTemplateModulePermissionName(templateModulePermissionName));
             }
             catch (Exception ex)
             {
                 var errorMessage = "Error update security permissions template!";
+                this._logger.LogError(ex?.InnerException?.Message, ex);
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [HttpDelete("permissions/templates/{templateModulePermissionNameId}")]
+        public async Task<ActionResult<TemplateModulePermissionNameDto>> DeleteTemplateModulePermissions(
+            [FromRoute] string templateModulePermissionNameId)
+        {
+            try
+            {
+                return Ok(await this._permissionsService
+                    .DeleteTemplateModulerPermissionNameById(templateModulePermissionNameId));
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error deleting security permissions template!";
                 this._logger.LogError(ex?.InnerException?.Message, ex);
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);

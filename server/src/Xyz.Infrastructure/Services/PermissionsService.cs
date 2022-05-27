@@ -110,5 +110,34 @@ namespace Xyz.Infrastructure.Services
                 throw;
             }
         }
+
+        public async Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameById(string templateModulePermissionNameId)
+        {
+            try
+            {
+                var template = await this._context.TemplateModulePermissionNames
+                    .Where(tmpn => tmpn.Id.ToString() == templateModulePermissionNameId)
+                    .FirstOrDefaultAsync();
+
+                if (template == null)
+                {
+                    throw new Exception("Permission template with the giveng ID was not found!");
+                }
+
+                this._context.Remove(template);
+                this._context.SaveChanges();
+
+                return template.ToDto();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error deleting permissions template by ID!";
+                this._logger.LogError(errorMessage, new { 
+                    Exception = ex, 
+                    TemplateModulePermissionNameId = templateModulePermissionNameId
+                });
+                throw;
+            }
+        }
     }
 }
