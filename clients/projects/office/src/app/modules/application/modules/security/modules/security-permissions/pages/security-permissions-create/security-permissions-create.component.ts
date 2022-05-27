@@ -6,7 +6,7 @@ import { filter, take } from 'rxjs';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 
-import { buildTemplateModulePermissionNameForm } from '../../components/shared/template-module-permission-name-form.builder';
+import { buildTemplateModulePermissionNameForm } from '../../components/template-module-permission-name-form/template-module-permission-name-form.builder';
 import { mapAssignableModulePermissionsToTemplateModulePermissions } from '../../utils';
 
 import * as fromPermissions from '@xyz/office/store/permissions';

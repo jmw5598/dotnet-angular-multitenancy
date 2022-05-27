@@ -23,17 +23,15 @@ import { SecurityPermissionsUpdateComponent } from './pages/security-permissions
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
-import { TemplateModulePermissionNameCreateFormComponent } from './components/template-module-permission-name-create-form/template-module-permission-name-create-form.component';
-import { TemplateModulePermissionNameUpdateFormComponent } from './components/template-module-permission-name-update-form/template-module-permission-name-update-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TemplateModulePermissionNameFormComponent } from './components/template-module-permission-name-form/template-module-permission-name-form.component';
 
 @NgModule({
   declarations: [
     SecurityPermissionsComponent,
     SecurityPermissionsCreateComponent,
     SecurityPermissionsUpdateComponent,
-    TemplateModulePermissionNameCreateFormComponent,
-    TemplateModulePermissionNameUpdateFormComponent
+    TemplateModulePermissionNameFormComponent
   ],
   imports: [
     CommonModule,

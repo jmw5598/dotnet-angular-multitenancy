@@ -84,3 +84,5 @@ export const setSelectedTemplateModulePermissionName = createAction(
   '[Security Permissions] Set Selected Template Moduler Permission Name',
   props<{ templateModulePermissionName: TemplateModulePermissionName | null }>()
 );
+
+// @TODO delete template
