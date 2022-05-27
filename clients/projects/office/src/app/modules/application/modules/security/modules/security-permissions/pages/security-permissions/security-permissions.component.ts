@@ -64,18 +64,33 @@ export class SecurityPermissionsComponent {
       .select(fromSecurityPermissions.selectTemplateModulePermissionSearchFilter)
       .pipe(tap(filter => this.templateModulePermissionsSearchFilter = filter));
 
-    this.securityPermissionsTemplatePage$ = this._store.select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
+    this.securityPermissionsTemplatePage$ = this._store
+      .select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
-    this._store.dispatch(fromSecurityPermissions.setTemplateModulePermissionsSearchFilter({ filter : filter }));
+    this._store.dispatch(
+      fromSecurityPermissions.setTemplateModulePermissionsSearchFilter({ 
+        filter : filter
+      })
+    );
     this._searchTemplateModulePermissions(filter, this._defaultPageRequest);
   }
 
+  public onDeleteTemplateModulePermissionName(templateModulePermissionName: TemplateModulePermissionName): void {
+    this._store.dispatch(
+      fromSecurityPermissions.deleteTemplateModulePermissionNameRequest({
+        templateModulePermissionNameId: templateModulePermissionName.id
+      })
+    )
+  }
+
   private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {
-    this._store.dispatch(fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
-      filter: filter || defaultBasicQuerySearchFilter,
-      pageRequest: pageRequest
-    }));
+    this._store.dispatch(
+      fromSecurityPermissions.searchTemplateModulePerrmissionNamesRequest({
+        filter: filter || defaultBasicQuerySearchFilter,
+        pageRequest: pageRequest
+      })
+    );
   }
 }

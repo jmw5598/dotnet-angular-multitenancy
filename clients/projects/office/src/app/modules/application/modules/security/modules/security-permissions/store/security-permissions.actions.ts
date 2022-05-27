@@ -85,4 +85,22 @@ export const setSelectedTemplateModulePermissionName = createAction(
   props<{ templateModulePermissionName: TemplateModulePermissionName | null }>()
 );
 
-// @TODO delete template
+export const deleteTemplateModulePermissionNameRequest = createAction(
+  '[Security Permissions] Delete Template Module Permission Name Request',
+  props<{ templateModulePermissionNameId: string }>()
+);
+
+export const deleteTemplateModulePermissionNameRequestSuccess = createAction(
+  '[Security Permissions] Delete Template Module Permission Name Request Success',
+  props<{ templateModulePermissionName: TemplateModulePermissionName }>()
+);
+
+export const deleteTemplateModulePermissionNameRequestFailure = createAction(
+  '[Security Permissions] Delete Template Module Permission Name Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setDeleteTemplateModulePermissionNameResponseMessage = createAction(
+  '[Security Permissions] Set Delete Template Module Permission Name Response Message',
+  props<{ message: ResponseMessage }>()
+);

@@ -32,3 +32,8 @@ export const selectSelectedTemplateModulerPermissionName = createSelector(
   selectSecurityPermissionsState,
   (state: fromSecurityPermissions.SecurityPermissionsState) => state.selectedTemplateModulePermissionName
 );
+
+export const selectDeleteTemplateModulePermissionNameResponseMessage = createSelector(
+  selectSecurityPermissionsState,
+  (state: fromSecurityPermissions.SecurityPermissionsState) => state.deleteTemplateModulePermissionNameResponseMessage
+);

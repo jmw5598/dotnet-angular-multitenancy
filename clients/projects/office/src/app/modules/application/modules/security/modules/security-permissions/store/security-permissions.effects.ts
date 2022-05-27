@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { ModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 import { PermissionsService } from '@xyz/office/modules/core/services';
 import { catchError, exhaustMap, mergeMap, of, switchMap } from 'rxjs';
@@ -97,6 +97,51 @@ export class SecurityPermissionsEffects {
             })))
           )
       )
+    )
+  )
+
+  // @TODO effect to issue rquest to delete Return success (caught by another effect and reducer)
+  public deleteTemplateModulePermissionNameRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromSecurityPermissions.deleteTemplateModulePermissionNameRequest),
+      switchMap(({ templateModulePermissionNameId }) =>
+        this._permissionsService.deleteTemplateModulePermissionNameById(templateModulePermissionNameId)
+          .pipe(
+            mergeMap((template: TemplateModulePermissionName) => of(
+              fromSecurityPermissions.deleteTemplateModulePermissionNameRequestSuccess({ 
+                templateModulePermissionName: template 
+              })
+            )),
+            catchError((error: any) => of(fromSecurityPermissions.getTemplateModulerPermissionNameByIdRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error?.error || 'Error deleting permissions template'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  )
+
+  public deleteTemplateModulePermissionNameRequestSuccess = createEffect(() => this._actions
+    .pipe(
+      ofType(fromSecurityPermissions.deleteTemplateModulePermissionNameRequestSuccess),
+      mergeMap(({ templateModulePermissionName }) => of(
+        fromSecurityPermissions.setDeleteTemplateModulePermissionNameResponseMessage({ 
+          message: {
+            status: ResponseStatus.SUCCESS,
+            message: 'Successfully deleted permissions template!'
+          } as ResponseMessage
+        })
+      )),
+      catchError((error: any) => of(
+        fromSecurityPermissions.getTemplateModulerPermissionNameByIdRequestFailure({
+          message: {
+            status: ResponseStatus.ERROR,
+            message: error?.error || 'Error deleting permissions template!'
+          } as ResponseMessage
+        })
+      ))
     )
   )
 }

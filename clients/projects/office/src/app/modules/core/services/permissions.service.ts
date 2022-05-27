@@ -61,4 +61,10 @@ export class PermissionsService {
       `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/${templateModulePermissionNameId}`
     );
   }
+
+  public deleteTemplateModulePermissionNameById(templateModulePermissionNameId: string): Observable<TemplateModulePermissionName> {
+    return this._http.delete<TemplateModulePermissionName>(
+      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/${templateModulePermissionNameId}`
+    );
+  }
 }

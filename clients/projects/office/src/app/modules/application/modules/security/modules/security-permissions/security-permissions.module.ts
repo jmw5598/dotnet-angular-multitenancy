@@ -8,7 +8,6 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -16,6 +15,7 @@ import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzListModule } from 'ng-zorro-antd/list';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 
 import { SecurityPermissionsRoutingModule } from './security-permissions-routing.module';
 import { SecurityPermissionsCreateComponent } from './pages/security-permissions-create/security-permissions-create.component';
@@ -45,14 +45,14 @@ import { TemplateModulePermissionNameFormComponent } from './components/template
     NzBreadCrumbModule,
     NzCardModule,
     NzGridModule,
-    NzPopoverModule,
     NzDividerModule,
     NzFormModule,
     NzInputModule,
     NzCheckboxModule,
     NzListModule,
     NzCollapseModule,
-    NzSwitchModule
+    NzSwitchModule,
+    NzPopconfirmModule
   ]
 })
 export class SecurityPermissionsModule { }

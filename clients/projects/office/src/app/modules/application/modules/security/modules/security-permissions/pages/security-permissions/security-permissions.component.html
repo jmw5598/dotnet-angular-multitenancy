@@ -43,18 +43,13 @@
             nz-button 
             nzType="default" 
             nzSize="small"
-            nz-popover
+            nz-popconfirm
             nzPopoverTrigger="click"
-            [nzPopoverContent]="confirmationDeleteTemplate"
-            nzPopoverPlacement="left"
-            title="Delete user">
+            nzPopconfirmTitle="Deleting template, are you sure?"
+            nzPopconfirmPlacement="left"
+            (nzOnConfirm)="onDeleteTemplateModulePermissionName(row)">
           <i nz-icon nzType="delete"></i>
-          <ng-template #confirmationDeleteTemplate>
-            <p class="mb-0">Deleting permissions template...</p>
-            <p>Are you sure?</p>
-            <button role="button" nz-button nzType="primary" nzSize="small" class="mr-1">Confirm</button>
-            <button role="button" nz-button nzType="default" nzSize="small">Cancel</button>
-          </ng-template>
+          
         </button>
       </nz-button-group>
     </ng-template>

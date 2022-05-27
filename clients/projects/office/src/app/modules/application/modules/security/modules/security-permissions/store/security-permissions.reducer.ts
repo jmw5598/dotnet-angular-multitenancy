@@ -4,6 +4,7 @@ import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities'
 
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
+import { elementAt } from 'rxjs';
 
 import * as fromSecurityPermissions from './security-permissions.actions';
 
@@ -12,6 +13,7 @@ export const securityPermissionsFeatureKey = 'securityPermissions';
 export interface SecurityPermissionsState {
   createTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
   updateTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
+  deleteTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
   templateModulePermissionNamesPage: Page<any> | null,
   templateModulePermissionsSearchFilter: BasicQuerySearchFilter | null,
   selectedTemplateModulePermissionName: TemplateModulePermissionName | null,
@@ -20,6 +22,7 @@ export interface SecurityPermissionsState {
 export const initialSecurityPermissionsState: SecurityPermissionsState = {
   createTemplateModulePermissionNameResponseMessage: null,
   updateTemplateModulePermissionNameResponseMessage: null,
+  deleteTemplateModulePermissionNameResponseMessage: null,
   templateModulePermissionNamesPage: null,
   templateModulePermissionsSearchFilter: defaultBasicQuerySearchFilter,
   selectedTemplateModulePermissionName: null,
@@ -52,6 +55,32 @@ const handleGetTemplateModulePermissionNameByIdRequestSuccess = (state: Security
   selectedTemplateModulePermissionName: templateModulePermissionName
 } as SecurityPermissionsState);
 
+const handleDeleteTemplatePermissionModuleNameRequestSuccess = (state: SecurityPermissionsState, { templateModulePermissionName }: any) => {
+  const templateModulePermissionNamesPage: Page<TemplateModulePermissionName> | null = !state?.templateModulePermissionNamesPage ? null : {
+    ...state.templateModulePermissionNamesPage,
+    
+    // Removes the elment from the page
+    elements: state.templateModulePermissionNamesPage
+      ?.elements?.filter(template => template.Id === templateModulePermissionName.id ) 
+      || [],
+    
+    // Update total elements
+    totalElements: state.templateModulePermissionNamesPage.totalElements > 0 
+      ? state.templateModulePermissionNamesPage.totalElements - 1 
+      : 0
+  } as Page<TemplateModulePermissionName>;
+  
+  return {
+    ...state,
+    templateModulePermissionNamesPage: templateModulePermissionNamesPage
+  } as SecurityPermissionsState
+};
+
+const handleSetDeleteTemplatePermissionModuleNameResponseMessage = (state: SecurityPermissionsState, { message }: any) => ({
+  ...state,
+  deleteTemplateModulePermissionNameResponseMessage: message
+} as SecurityPermissionsState);
+
 export const reducer = createReducer(
   initialSecurityPermissionsState,
   on(
@@ -76,5 +105,13 @@ export const reducer = createReducer(
     fromSecurityPermissions.getTemplateModulerPermissionNameByIdRequestSuccess,
     fromSecurityPermissions.setSelectedTemplateModulePermissionName,
     handleGetTemplateModulePermissionNameByIdRequestSuccess
+  ),
+  on(
+    fromSecurityPermissions.deleteTemplateModulePermissionNameRequestSuccess,
+    handleDeleteTemplatePermissionModuleNameRequestSuccess
+  ),
+  on(
+    fromSecurityPermissions.setDeleteTemplateModulePermissionNameResponseMessage,
+    handleSetDeleteTemplatePermissionModuleNameResponseMessage
   )
 );
