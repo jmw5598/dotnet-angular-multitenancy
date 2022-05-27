@@ -20,18 +20,6 @@ export const searchTemplateModulePerrmissionNamesRequestFailure = createAction(
   props<{ message: ResponseMessage }>()
 );
 
-export const getTemplateModulePermissionNamesByIdRequest = createAction(
-  '[Security Permissions] Get Template Module Permission Names By Id Request'
-);
-
-export const getTemplateModulePermissionNamesByIdRequestSuccess = createAction(
-  '[Security Permissions] Get Template Module Permission Names By Id Request Success'
-);
-
-export const getTemplateModulePermissionNamesByIdRequestFailure = createAction(
-  '[Security Permissions] Get Template Module Permission Names By Id Request Failure'
-);
-
 export const setTemplateModulePermissionsSearchFilter = createAction(
   '[Security Permissions] Set Template Module Permissions Search Filter',
   props<{ filter: BasicQuerySearchFilter }>()
@@ -55,4 +43,44 @@ export const createTemplateModulePermissionNameRequestFailure = createAction(
 export const setCreateTemplateModulePermissionNameResponseMessage = createAction(
   '[Security Permissions] Set Create Template Module Permission Name Response Message',
   props<{ message: ResponseMessage | null }>()
+);
+
+export const updateTemplateModulePermissionNameRequest = createAction(
+  '[Security Permissions] Update Template Module Permission Name Request',
+  props<{ templateModulePermissionNameId: string, templateModulePermissionName: TemplateModulePermissionName }>()
+);
+
+export const updateTemplateModulePermissionNameRequestSuccess = createAction(
+  '[Security Permissions] Update Template Module Permission Name Request Success',
+  props<{ message: ResponseMessage }>()
+);
+
+export const updateTemplateModulePermissionNameRequestFailure = createAction(
+  '[Security Permissions] Update Template Module Permission Name Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setUpdateTemplateModulePermissionNameResponseMessage = createAction(
+  '[Security Permissions] Set Update Template Module Permission Name Response Message',
+  props<{ message: ResponseMessage | null }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequest = createAction(
+  '[Security Permissions] Get Template Moduler Permission Name By Id Request',
+  props<{ templateModulePermissionNameId: string }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequestSuccess = createAction(
+  '[Security Permissions] Get Template Moduler Permission Name By Id Request Success',
+  props<{ templateModulePermissionName: TemplateModulePermissionName }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequestFailure = createAction(
+  '[Security Permissions] Get Template Moduler Permission Name By Id Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setSelectedTemplateModulePermissionName = createAction(
+  '[Security Permissions] Set Selected Template Moduler Permission Name',
+  props<{ templateModulePermissionName: TemplateModulePermissionName | null }>()
 );

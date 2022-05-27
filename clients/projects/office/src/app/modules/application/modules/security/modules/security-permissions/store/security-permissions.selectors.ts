@@ -22,3 +22,13 @@ export const selectCreateTemplateModulePermissionNameResponseMessage = createSel
   selectSecurityPermissionsState,
   (state: fromSecurityPermissions.SecurityPermissionsState) => state.createTemplateModulePermissionNameResponseMessage
 );
+
+export const selectUpdateTemplateModulePermissionNameResponseMessage = createSelector(
+  selectSecurityPermissionsState,
+  (state: fromSecurityPermissions.SecurityPermissionsState) => state.updateTemplateModulePermissionNameResponseMessage
+);
+
+export const selectSelectedTemplateModulerPermissionName = createSelector(
+  selectSecurityPermissionsState,
+  (state: fromSecurityPermissions.SecurityPermissionsState) => state.selectedTemplateModulePermissionName
+);

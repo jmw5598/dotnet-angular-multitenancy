@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 
 using System.Data;
 
-
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Models;
@@ -77,6 +76,37 @@ namespace Xyz.Infrastructure.Services
             {
                 var errorMessage = "Error creating permissions template!";
                 this._logger.LogError(errorMessage, new { Exception = ex, TemplateModulePermissionName = template });
+                throw;
+            }
+        }
+
+        public async Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameById(string templateModulePermissionNameId)
+        {
+            try
+            {
+                var template = await this._context.TemplateModulePermissionNames
+                    .Include(tmpn => tmpn.TemplateModulePermissions)
+                    .ThenInclude(tmp => tmp.TemplatePermissions)
+                    .ThenInclude(tp => tp.Permission)
+                    .Include(tmpn => tmpn.TemplateModulePermissions)
+                    .ThenInclude(tmp => tmp.ModulePermission)
+                    .Where(tmpn => tmpn.Id.ToString() == templateModulePermissionNameId)
+                    .FirstOrDefaultAsync();
+
+                if (template == null)
+                {
+                    throw new Exception("Permission template with the giveng ID was not found!");
+                }
+
+                return template.ToDto();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting permissions template by ID!";
+                this._logger.LogError(errorMessage, new { 
+                    Exception = ex, 
+                    TemplateModulePermissionNameId = templateModulePermissionNameId
+                });
                 throw;
             }
         }

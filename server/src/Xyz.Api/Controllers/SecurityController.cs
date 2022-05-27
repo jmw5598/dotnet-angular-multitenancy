@@ -76,7 +76,7 @@ namespace Xyz.Api.Controllers
             }
             catch (Exception ex)
             {
-                var errorMessage = "Error creating ecurity permissions template!";
+                var errorMessage = "Error creating security permissions template!";
                 this._logger.LogError(ex?.InnerException?.Message, ex);
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
@@ -107,17 +107,41 @@ namespace Xyz.Api.Controllers
             }
         }
 
-        [HttpGet("permissions/templates/:templateId")]
-        public async Task<ActionResult<TemplateModulePermissionName>> GetTemplateModulePermissionById()
+        [HttpGet("permissions/templates/{templateModulePermissionNameId}")]
+        public async Task<ActionResult<TemplateModulePermissionNameDto>> GetTemplateModulePermissionById(
+            [FromRoute()] string templateModulePermissionNameId)
         {
             try
             {
-                // @TODO get tempalte permission name with all module permissions
-                return Ok(new TemplateModulePermissionName{});
+                return Ok(await this._permissionsService
+                    .FindTemplateModulePermissionNameById(templateModulePermissionNameId)
+                );
             }
             catch (Exception ex)
             {
                 var errorMessage = "Error getting available security permissions!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [HttpPut("permissions/templates/{templateModulePermissionNameId}")]
+        public async Task<ActionResult<TemplateModulePermissionNameDto>> UpdateTemplateModulePermissions(
+            [FromRoute] string templateModulePermissionNameId,
+            [FromBody] CreateTemplateModulePermissionNameDto createModulePermissionNameDto)
+        {
+            try
+            {
+                var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
+                return Ok(
+                    await this._permissionsService
+                        .SaveTemplateModulePermissionName(templateModulePermissionName)
+                );
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error update security permissions template!";
+                this._logger.LogError(ex?.InnerException?.Message, ex);
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 return BadRequest(errorMessage);
             }

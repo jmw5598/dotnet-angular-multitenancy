@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
@@ -10,14 +11,18 @@ export const securityPermissionsFeatureKey = 'securityPermissions';
 
 export interface SecurityPermissionsState {
   createTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
+  updateTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
   templateModulePermissionNamesPage: Page<any> | null,
   templateModulePermissionsSearchFilter: BasicQuerySearchFilter | null,
+  selectedTemplateModulePermissionName: TemplateModulePermissionName | null,
 }
 
 export const initialSecurityPermissionsState: SecurityPermissionsState = {
   createTemplateModulePermissionNameResponseMessage: null,
+  updateTemplateModulePermissionNameResponseMessage: null,
   templateModulePermissionNamesPage: null,
-  templateModulePermissionsSearchFilter: defaultBasicQuerySearchFilter
+  templateModulePermissionsSearchFilter: defaultBasicQuerySearchFilter,
+  selectedTemplateModulePermissionName: null,
 }
 
 const handleSeachTemplateModulePermissionNamesRequestSuccess = (state: SecurityPermissionsState, { page }: any) => ({
@@ -36,6 +41,17 @@ const handleCreateTemplateModulePermissionNameResponseMessage = (state: Security
   createTemplateModulePermissionNameResponseMessage: message
 } as SecurityPermissionsState);
 
+const handleUpdateTemplateModulePermissionNameResponseMessage = (state: SecurityPermissionsState, { message }: any) => ({
+  ...state,
+  templateModulePermissionNamesPage: null,
+  updateTemplateModulePermissionNameResponseMessage: message
+} as SecurityPermissionsState);
+
+const handleGetTemplateModulePermissionNameByIdRequestSuccess = (state: SecurityPermissionsState, { templateModulePermissionName }: any) => ({
+  ...state,
+  selectedTemplateModulePermissionName: templateModulePermissionName
+} as SecurityPermissionsState);
+
 export const reducer = createReducer(
   initialSecurityPermissionsState,
   on(
@@ -50,5 +66,15 @@ export const reducer = createReducer(
     fromSecurityPermissions.createTemplateModulePermissionNameRequestSuccess,
     fromSecurityPermissions.setCreateTemplateModulePermissionNameResponseMessage,
     handleCreateTemplateModulePermissionNameResponseMessage
+  ),
+  on(
+    fromSecurityPermissions.updateTemplateModulePermissionNameRequestSuccess,
+    fromSecurityPermissions.setUpdateTemplateModulePermissionNameResponseMessage,
+    handleUpdateTemplateModulePermissionNameResponseMessage
+  ),
+  on(
+    fromSecurityPermissions.getTemplateModulerPermissionNameByIdRequestSuccess,
+    fromSecurityPermissions.setSelectedTemplateModulePermissionName,
+    handleGetTemplateModulePermissionNameByIdRequestSuccess
   )
 );

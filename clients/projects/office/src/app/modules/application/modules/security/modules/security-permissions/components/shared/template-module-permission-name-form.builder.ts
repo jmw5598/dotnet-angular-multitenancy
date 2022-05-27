@@ -1,12 +1,12 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { TemplateModulePermission, UserModulePermission } from "@xyz/office/modules/core/entities";
-import { ValidationPatterns } from "@xyz/office/modules/core/validators";
 
 export const buildTemplateModulePermissionNameForm = (
   formBuilder: FormBuilder,
   templateModulePermissions: TemplateModulePermission[]
 ) => formBuilder.group({
   templateModulePermissionName: formBuilder.group({
+    id: [null],
     name: ['', [
       Validators.required
     ]],

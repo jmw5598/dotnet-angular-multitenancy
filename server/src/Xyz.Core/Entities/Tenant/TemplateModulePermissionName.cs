@@ -17,7 +17,9 @@ namespace Xyz.Core.Entities.Tenant
                 Description = this.Description,
                 CreatedOn = this.CreatedOn,
                 UpdatedOn = this.UpdatedOn,
-                // @TODO map permissions
+                TemplateModulePermissions = this.TemplateModulePermissions
+                    ?.Select(tmp => tmp.ToDto())
+                    ?.ToList() ?? new List<TemplateModulePermissionDto> {}
             };
         }
     }

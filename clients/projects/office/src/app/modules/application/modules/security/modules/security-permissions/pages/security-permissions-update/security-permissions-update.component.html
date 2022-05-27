@@ -25,6 +25,8 @@
 
 <div [@fadeAnimation] class="p-4">
   <nz-card class="w-100 p-0">
-    <xyz-template-module-permission-name-update-form></xyz-template-module-permission-name-update-form>
+    <form class="block" [formGroup]="updateTemplateModulePermissionNameForm">
+      <xyz-template-module-permission-name-update-form></xyz-template-module-permission-name-update-form>
+    </form>
   </nz-card>
 </div>

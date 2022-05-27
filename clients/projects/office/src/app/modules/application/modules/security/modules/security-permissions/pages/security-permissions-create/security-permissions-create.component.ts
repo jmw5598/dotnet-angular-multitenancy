@@ -6,7 +6,7 @@ import { filter, take } from 'rxjs';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 
-import { buildTemplateModulePermissionNameForm } from '../../components/template-module-permission-name-create-form/template-module-permission-name-create-form.builder';
+import { buildTemplateModulePermissionNameForm } from '../../components/shared/template-module-permission-name-form.builder';
 import { mapAssignableModulePermissionsToTemplateModulePermissions } from '../../utils';
 
 import * as fromPermissions from '@xyz/office/store/permissions';
@@ -48,10 +48,7 @@ export class SecurityPermissionsCreateComponent implements OnInit {
 
   public onCreateTempalteModulePermissionName(template: TemplateModulePermissionName, shouldReturn: boolean): void {
     if (this.createTemplateModulePermissionNameForm.invalid) return;
-
-    // const userAccount = userAccountFormToUserAccount(formValue);
     removeEmptyKeys(template);
-    console.log("templat is", template);
 
     this._store.dispatch(fromSecurityPermissions.createTemplateModulePermissionNameRequest({
       templateModulePermissionName: template 

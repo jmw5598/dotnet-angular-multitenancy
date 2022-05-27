@@ -7,5 +7,6 @@ namespace Xyz.Core.Dtos
         public string Description { get; set; } = default!;
         public DateTime CreatedOn { get; set; } = DateTime.UtcNow!;
         public DateTime UpdatedOn { get; set; } = DateTime.UtcNow!;
+        public ICollection<TemplateModulePermissionDto> TemplateModulePermissions { get; set; } = default!;
     }
 }

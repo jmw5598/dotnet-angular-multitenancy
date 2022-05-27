@@ -20,24 +20,45 @@ export class PermissionsService {
     private _http: HttpClient
   ) { }
 
-  public createTemplateModulePermissionName(templateModulePermissionName: TemplateModulePermissionName): Observable<TemplateModulePermissionName> {
-    return this._http.post<TemplateModulePermissionName>(
-      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates`,
-      templateModulePermissionName
-    );
+  public createTemplateModulePermissionName(
+    templateModulePermissionName: TemplateModulePermissionName): Observable<TemplateModulePermissionName> {
+
+      return this._http.post<TemplateModulePermissionName>(
+        `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates`,
+        templateModulePermissionName
+      );
   }
 
-  public searchTemplateModulePermissionNames(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<TemplateModulePermissionName>> {
-    const queryParams: {[key: string]: string } = { query: filter?.query || '' };
-    return this._http.get<Page<TemplateModulePermissionName>>(
-      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/search`,
-      { params: queryParams }
-    );
+  public updateTemplateModulePermissionName(
+    templateModulePermissionNameId: string, 
+    templateModulePermissionName: TemplateModulePermissionName): Observable<TemplateModulePermissionName> {
+
+      return this._http.put<TemplateModulePermissionName>(
+        `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/${templateModulePermissionNameId}`,
+        templateModulePermissionName
+      );
+  }
+
+  public searchTemplateModulePermissionNames(
+    filter: BasicQuerySearchFilter, 
+    pageRequest: PageRequest): Observable<Page<TemplateModulePermissionName>> {
+
+      const queryParams: {[key: string]: string } = { query: filter?.query || '' };
+      return this._http.get<Page<TemplateModulePermissionName>>(
+        `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/search`,
+        { params: queryParams }
+      );
   }
 
   public getAssignableModulePermission(): Observable<ModulePermission[]> {
     return this._http.get<ModulePermission[]>(
       `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/available`
+    );
+  }
+
+  public getTemplateModulePermissionNameById(templateModulePermissionNameId: string): Observable<TemplateModulePermissionName> {
+    return this._http.get<TemplateModulePermissionName>(
+      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/${templateModulePermissionNameId}`
     );
   }
 }
