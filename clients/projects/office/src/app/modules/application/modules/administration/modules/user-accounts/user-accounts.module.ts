@@ -17,8 +17,10 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
+import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 import { UserAccountsRoutingModule } from './user-accounts-routing.module';
 import { UserAccountsOverviewComponent } from './pages/user-accounts-overview/user-accounts-overview.component';
@@ -26,7 +28,6 @@ import { UserAccountsCreateComponent } from './pages/user-accounts-create/user-a
 import { UserAccountsUpdateComponent } from './pages/user-accounts-update/user-accounts-update.component';
 import { UserAccountUpdateFormComponent } from './components/user-account-update-form/user-account-update-form.component';
 import { UserAccountCreateFormComponent } from './components/user-account-create-form/user-account-create-form.component';
-import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/q
     NzCollapseModule,
     NzSwitchModule,
     NzUploadModule,
-    NzPopoverModule
+    NzPopoverModule,
+    NzSelectModule
   ]
 })
 export class UserAccountsModule { }

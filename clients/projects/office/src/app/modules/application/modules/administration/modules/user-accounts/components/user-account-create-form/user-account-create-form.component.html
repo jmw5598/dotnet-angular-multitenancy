@@ -89,8 +89,25 @@
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="16" nzXl="16">
       <div class="block p-4">
+
+        <!-- @TODO Template Permissions Selector -->
+        <!-- <nz-form-item class="flex flex-row justify-content-center">
+          <nz-form-label class="text-left" nzFor="templateModulePermissionName">
+            Permission Template
+          </nz-form-label>
+          <nz-form-control nzErrorTip="Please input your Last Name!">
+            <nz-select nzLoading>
+              <nz-option [nzValue]="null" nzLabel="Default"></nz-option>
+              <nz-option [nzValue]="'192klf1'" nzLabel="Admin Role"></nz-option>
+              <nz-option [nzValue]="'192klf1'" nzLabel="User Role"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item> -->
+        
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="User Permissions"></nz-divider>
+
+        <!-- User Permissions Selector -->
         <ng-container [formGroup]="userAccountForm">
           <ng-container formArrayName="userModulePermissions">
             <ng-container [formGroupName]="i" *ngFor="let module of userModulePermissions?.controls; let i = index">
