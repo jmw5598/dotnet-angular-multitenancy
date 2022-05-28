@@ -139,5 +139,39 @@ namespace Xyz.Infrastructure.Services
                 throw;
             }
         }
+
+        public async Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionName(string templateModulePermissionNameId, TemplateModulePermissionName template)
+        {
+            try
+            {
+                var existingTemplateModulerPermissionName = await this._context.TemplateModulePermissionNames
+                    .Where(tmpn => tmpn.Id.ToString() == templateModulePermissionNameId)
+                    .FirstOrDefaultAsync();
+
+                if (existingTemplateModulerPermissionName == null)
+                {
+                    throw new Exception("Permission template with the giveng ID was not found!");
+                }
+
+                // @TODO(jason) This should update the template instead of delete and insert
+                // Will keep this for now but this should reassessed.
+                this._context.TemplateModulePermissionNames.Remove(existingTemplateModulerPermissionName);
+                this._context.SaveChanges();
+
+                this._context.TemplateModulePermissionNames.Add(template);
+                this._context.SaveChanges();
+
+                return template.ToDto();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error updating permissions template by ID!";
+                this._logger.LogError(errorMessage, new { 
+                    Exception = ex, 
+                    TemplateModulePermissionNameId = templateModulePermissionNameId
+                });
+                throw;
+            }
+        }
     }
 }

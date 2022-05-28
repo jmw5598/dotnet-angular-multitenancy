@@ -134,7 +134,7 @@ namespace Xyz.Api.Controllers
             {
                 var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
                 return Ok(await this._permissionsService
-                    .SaveTemplateModulePermissionName(templateModulePermissionName));
+                    .UpdateTemplateModulePermissionName(templateModulePermissionNameId, templateModulePermissionName));
             }
             catch (Exception ex)
             {

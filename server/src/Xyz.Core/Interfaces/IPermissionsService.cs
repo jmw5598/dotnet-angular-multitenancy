@@ -12,5 +12,6 @@ namespace Xyz.Core.Interfaces
         Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionName(TemplateModulePermissionName template);
         Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameById(string templateModulePermissionNameId);
         Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameById(string templateModulePermissionNameId);
+        Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionName(string templateModulePermissionNameId, TemplateModulePermissionName template);
     }
 }

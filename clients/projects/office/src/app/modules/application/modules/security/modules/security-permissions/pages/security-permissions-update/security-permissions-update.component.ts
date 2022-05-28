@@ -44,12 +44,17 @@ export class SecurityPermissionsUpdateComponent implements OnInit, OnDestroy {
     this._listenForSelectedUserAccountChanges();
   }
 
-  public onUpdateTempalteModulePermissionName(template: TemplateModulePermissionName): void {
+  // @TODO(jason) create type for this form
+  public onUpdateTempalteModulePermissionName(template: any): void {
     if (this.updateTemplateModulePermissionNameForm.invalid) return;
+
+    console.log("before stripping undefined/nulls", template);
     removeEmptyKeys(template);
 
+    console.log("template is ", template);
+
     this._store.dispatch(fromSecurityPermissions.updateTemplateModulePermissionNameRequest({
-      templateModulePermissionNameId: template.id,
+      templateModulePermissionNameId: template.templateModulePermissionName.id,
       templateModulePermissionName: template 
     }));
 
