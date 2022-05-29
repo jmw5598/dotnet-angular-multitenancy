@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, ControlContainer, FormArray, FormGroup } from '@angular/forms';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 import { EnvironmentService } from '@xyz/office/modules/core/services';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
@@ -11,16 +12,25 @@ import { Observable, Observer } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserAccountUpdateFormComponent implements OnInit {
-  public userAccountForm!: FormGroup;
+  @Input()
+  public templateModulePermissionNames: TemplateModulePermissionName[] | null = [];
+
+  @Output()
+  public onTemplateModulePermissionNameSelected: EventEmitter<TemplateModulePermissionName | null> = 
+    new EventEmitter<TemplateModulePermissionName | null>();
 
   @Output()
   public onIssuePasswordResetRequest: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  public userAccountForm!: FormGroup;
+
   public hasIssuedPasswordResetRequest: boolean = false;
+  public isLoadingTemplate: boolean = false;
 
   constructor(
     private _controlContainer: ControlContainer,
-    private _environmentService: EnvironmentService
+    private _environmentService: EnvironmentService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +53,16 @@ export class UserAccountUpdateFormComponent implements OnInit {
   public issuePasswordResetRequest(shouldIssue: boolean): void {
     this.hasIssuedPasswordResetRequest = true;
     this.onIssuePasswordResetRequest.emit(shouldIssue);
+  }
+
+  public onApplyTemplateModulerPermissionName(templateModulePermissionName: TemplateModulePermissionName | null): void {
+    // @TODO load template module permissions and patch to form
+    this.isLoadingTemplate = true;
+    this.onTemplateModulePermissionNameSelected.emit(templateModulePermissionName);
+    setTimeout(() => {
+      this.isLoadingTemplate = false;
+      this._changeDetectorRef.markForCheck();
+    }, 500);
   }
 
   public onUserModulePermissionAccessChange(event: any, control: AbstractControl): void {

@@ -80,14 +80,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
 
   public onTemplateModulePermissionNameSelected(templateModulePermissionName: TemplateModulePermissionName | null): void {
     if (!templateModulePermissionName) {
-      this._store.select(fromPermissions.selectAssignableModulePermissions)
-        .pipe(take(1))
-        .subscribe(assignableModulePermissions => {
-          const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
-          const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
-          this.createUserAccountForm.reset();
-          this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
-        });
+      this._resetUserModulerPerrmisionsFormArray();
       return;
     }
 
@@ -102,25 +95,34 @@ export class UserAccountsCreateComponent implements OnDestroy {
       .subscribe(templateModulePermissionName => {
         const userModulePermissions = templateModulerPermissionsToUserModulerPermissions(
             templateModulePermissionName?.templateModulePermissions || []);
+            
+        this._patchUserModulePermissionsToForm(userModulePermissions);
+      });
+  }
 
-        const userModulePemissionsFormArray: FormArray = this.createUserAccountForm.get('userModulePermissions') as FormArray;
+  private _patchUserModulePermissionsToForm(userModulePermissions: UserModulePermission[]): void {
+    (this.createUserAccountForm.get('userModulePermissions') as FormArray)
+      .controls.forEach((group) => {
+        const userModulePermission = userModulePermissions
+          .find(ump => ump.modulePermission?.id === group.value.modulePermission.id);
 
-        userModulePemissionsFormArray.controls.forEach((group) => {
-          const userModulePermission = userModulePermissions.find(ump => ump.modulePermission?.id === group.value.modulePermission.id);
-          group.patchValue({
-            ...userModulePermission
-          });
+        group.patchValue({
+          ...userModulePermission
         });
       });
   }
 
   private _resetCreateUserAccountForm(): void {
+    this.createUserAccountForm.reset();
+    this._resetUserModulerPerrmisionsFormArray();
+  }
+
+  private _resetUserModulerPerrmisionsFormArray(): void {
     this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
         const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
-        this.createUserAccountForm.reset();
         this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
       });
   }

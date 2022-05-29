@@ -76,6 +76,42 @@
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="16" nzXl="16">
       <div class="block p-4">
+
+        <!-- Apply Permissions Template Control -->
+        <div class="text-right mb-3">
+          <button
+              nz-button 
+              nzType="default"
+              nzSize="small"
+              title="Apply as saved permission template."
+              [nzLoading]="isLoadingTemplate"
+              [disabled]="isLoadingTemplate"
+              nz-dropdown
+              [nzDropdownMenu]="templateModulerPermissionNameDropdown"
+              nzTrigger="click">
+            <i nz-icon nzType="security-scan" nzTheme="outline"></i>
+            Apply Permissions Template
+            <i nz-icon nzType="down"></i>
+          </button>
+          <nz-dropdown-menu #templateModulerPermissionNameDropdown="nzDropdownMenu">
+            <ul nz-menu>
+              <li 
+                  nz-menu-item 
+                  (click)="onApplyTemplateModulerPermissionName(null)">
+                Default (Blank)
+              </li>
+              <ng-container *ngIf="templateModulePermissionNames">
+                <li 
+                    *ngFor="let templateModulePermissionName of templateModulePermissionNames"
+                    nz-menu-item 
+                    (click)="onApplyTemplateModulerPermissionName(templateModulePermissionName)">
+                  {{ templateModulePermissionName?.name }}
+                </li>
+              </ng-container>
+            </ul>
+          </nz-dropdown-menu>
+        </div>
+
         <!-- User Details Section -->
         <nz-divider nzOrientation="left" nzText="User Permissions"></nz-divider>
         <ng-container [formGroup]="userAccountForm">

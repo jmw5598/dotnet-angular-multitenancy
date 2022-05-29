@@ -3,19 +3,19 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { UserModulePermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserModulePermission } from '@xyz/office/modules/core/entities';
 import { ResponseStatus, UserAccount } from '@xyz/office/modules/core/models';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { filter, Observable, of, Subject, take, takeUntil } from 'rxjs';
+import { filter, Observable, of, skip, Subject, take, takeUntil } from 'rxjs';
 import { buildUserAccountUpdateForm } from '../../components/user-account-update-form/user-account-update-form.builder';
 
 import * as fromUserAccounts from '../../store';
 import * as fromPermissions from '@xyz/office/store/permissions';
 
-import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
+import { mapAssignableModulePermissionsToUserModulePermissions, templateModulerPermissionsToUserModulerPermissions, userAccountFormToUserAccount } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-update',
@@ -29,6 +29,7 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
   public updateUserAccountForm!: FormGroup;
 
   public selectedUserAccount$!: Observable<UserAccountDto | null>;
+  public templateModulePermissionNames$!: Observable<TemplateModulePermissionName[] | null>;
 
   constructor(
     private _location: Location,
@@ -40,9 +41,11 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
     this._selectState();
   }
 
+
   ngOnInit(): void {
     this._listenForSelectedUserAccountChanges();
   }
+
 
   public onUpdateUserAccount(formValue: any): void {
     if (this.updateUserAccountForm.invalid) return;
@@ -71,12 +74,65 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
       });
   }
 
+
   public onIssuePasswordResetRequest(shouldIssue: boolean): void {
     if (shouldIssue) {
       alert('Issue reset');
     }
   }
+
+
+  public onTemplateModulePermissionNameSelected(templateModulePermissionName: TemplateModulePermissionName | null): void {
+    if (!templateModulePermissionName) {
+      this._resetUserModulerPerrmisionsFormArray();
+      return;
+    }
+
+    this._store.dispatch(
+      fromUserAccounts.getTemplateModulerPermissionNameByIdRequest({
+        templateModulePermissionNameId: templateModulePermissionName.id
+      })
+    );
+
+    this._store.select(fromUserAccounts.selectSelectedTemplateModulePermissionName)
+      .pipe(skip(1), take(1))
+      .subscribe(templateModulePermissionName => {
+        const userModulePermissions = templateModulerPermissionsToUserModulerPermissions(
+            templateModulePermissionName?.templateModulePermissions || []);
+            
+        this._patchUserModulePermissionsToForm(userModulePermissions);
+      });
+  }
+
+
+  private _patchUserModulePermissionsToForm(userModulePermissions: UserModulePermission[]): void {
+    (this.updateUserAccountForm.get('userModulePermissions') as FormArray)
+      .controls.forEach((group) => {
+        const userModulePermission = userModulePermissions
+          .find(ump => ump.modulePermission?.id === group.value.modulePermission.id);
+
+        group.patchValue({
+          ...userModulePermission,
+          canCreateAll: userModulePermission?.userPermissions?.some(up => up.canCreate) || false,
+          canReadAll: userModulePermission?.userPermissions?.some(up => up.canRead) || false,
+          canUpdateAll: userModulePermission?.userPermissions?.some(up => up.canUpdate) || false,
+          canDeleteAll: userModulePermission?.userPermissions?.some(up => up.canDelete) || false
+        }, { emitEvent: false });
+      });
+  }
+
+
+  private _resetUserModulerPerrmisionsFormArray(): void {
+    this._store.select(fromPermissions.selectAssignableModulePermissions)
+      .pipe(take(1))
+      .subscribe(assignableModulePermissions => {
+        const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
+        const blankFormGroup = buildUserAccountUpdateForm(this._formBuilder, userModulerPermissions);
+        this.updateUserAccountForm.patchValue({ ...blankFormGroup?.value });
+      });
+  }
   
+
   private _initializeForm(): void {
     this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
@@ -86,9 +142,12 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
       });
   }
 
+
   private _selectState(): void {
+    this.templateModulePermissionNames$ = this._store.select(fromUserAccounts.selectTemplateModulePermissionNames);
     this.selectedUserAccount$ = this._store.select(fromUserAccounts.selectSelectedUserAccount);
   }
+
 
   private _listenForSelectedUserAccountChanges(): void {
     this._store.select(fromUserAccounts.selectSelectedUserAccount)
@@ -112,22 +171,10 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
         });
 
         // Patch User Permissions
-        (this.updateUserAccountForm?.get('userModulePermissions') as FormArray)?.controls.forEach(control => {
-          const userModulePermissionFormGroup: FormGroup = control as FormGroup;
-
-          const userModulePermission: UserModulePermission | undefined = selectedUserAccount?.userModulePermissions
-            ?.find(ump => ump?.modulePermission?.id === userModulePermissionFormGroup?.value?.modulePermission?.id);
-
-          userModulePermissionFormGroup?.patchValue({
-            ...userModulePermission,
-            canCreateAll: userModulePermission?.userPermissions?.some(up => up.canCreate) || false,
-            canReadAll: userModulePermission?.userPermissions?.some(up => up.canRead) || false,
-            canUpdateAll: userModulePermission?.userPermissions?.some(up => up.canUpdate) || false,
-            canDeleteAll: userModulePermission?.userPermissions?.some(up => up.canDelete) || false
-          }, {emitEvent: false});
-        });
+        this._patchUserModulePermissionsToForm(selectedUserAccount?.userModulePermissions || []);
       });
   }
+
 
   ngOnDestroy(): void {
     this._store.dispatch(fromUserAccounts.setSelectedUserAccount({ user: null}))
