@@ -138,3 +138,7 @@ export const setSelectedTemplateModulePermissionName = createAction(
   '[User Accounts] Set Selected Template Moduler Permission Name',
   props<{ templateModulePermissionName: TemplateModulePermissionName | null }>()
 );
+
+export const resetSelectedUserAccountStateSlice = createAction(
+  '[User Accounts] Reset Selected User Account State Slice'
+);

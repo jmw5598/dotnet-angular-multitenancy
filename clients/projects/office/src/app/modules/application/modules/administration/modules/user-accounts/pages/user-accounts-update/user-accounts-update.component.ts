@@ -177,8 +177,8 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    this._store.dispatch(fromUserAccounts.setSelectedUserAccount({ user: null}))
     this._destroy$.next();
     this._destroy$.complete();
+    this._store.dispatch(fromUserAccounts.resetSelectedUserAccountStateSlice());
   }
 }

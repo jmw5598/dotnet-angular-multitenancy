@@ -95,10 +95,11 @@ export class UserAccountsCreateComponent implements OnDestroy {
       .subscribe(templateModulePermissionName => {
         const userModulePermissions = templateModulerPermissionsToUserModulerPermissions(
             templateModulePermissionName?.templateModulePermissions || []);
-            
+
         this._patchUserModulePermissionsToForm(userModulePermissions);
       });
   }
+
 
   private _patchUserModulePermissionsToForm(userModulePermissions: UserModulePermission[]): void {
     (this.createUserAccountForm.get('userModulePermissions') as FormArray)
@@ -112,10 +113,12 @@ export class UserAccountsCreateComponent implements OnDestroy {
       });
   }
 
+
   private _resetCreateUserAccountForm(): void {
     this.createUserAccountForm.reset();
     this._resetUserModulerPerrmisionsFormArray();
   }
+
 
   private _resetUserModulerPerrmisionsFormArray(): void {
     this._store.select(fromPermissions.selectAssignableModulePermissions)
@@ -127,8 +130,10 @@ export class UserAccountsCreateComponent implements OnDestroy {
       });
   }
 
+
   ngOnDestroy(): void {
     this._destroy$.next(null);
     this._destroy$.complete();
+    this._store.dispatch(fromUserAccounts.resetSelectedUserAccountStateSlice());
   }
 }

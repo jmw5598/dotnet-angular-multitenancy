@@ -74,6 +74,13 @@ const handleGetTemplateModulePermissionNameByIdRequestSuccess = (state: UserAcco
   selectedTemplateModulePermissionName: templateModulePermissionName
 } as UserAccountsState);
 
+const handleResetSelectedUserAccountStateSlice = (state: UserAccountsState) => ({
+  ...state,
+  selectedUserAccount: null,
+  selectedTemplateModulePermissionName: null,
+  templateModulePermissionNames: null
+} as UserAccountsState)
+
 export const reducer = createReducer(
   initialUserAccountsState,
   on(
@@ -112,5 +119,9 @@ export const reducer = createReducer(
     fromUserAccounts.getTemplateModulerPermissionNameByIdRequestSuccess,
     fromUserAccounts.setSelectedTemplateModulePermissionName,
     handleGetTemplateModulePermissionNameByIdRequestSuccess
+  ),
+  on(
+    fromUserAccounts.resetSelectedUserAccountStateSlice,
+    handleResetSelectedUserAccountStateSlice
   )
 );
