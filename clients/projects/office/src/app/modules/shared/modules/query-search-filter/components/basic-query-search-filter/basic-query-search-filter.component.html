@@ -1,9 +1,23 @@
 <div [formGroup]="form">
-  <nz-input-group nzPrefixIcon="search">
+  <nz-input-group 
+      nzSearch
+      nzPrefixIcon="search" 
+      [nzAddOnAfter]="suffixRefreshButtonTemplate">
     <input 
         type="text" 
         nz-input 
         formControlName="query" 
         placeholder="Search query..." />
   </nz-input-group>
+  <ng-template #suffixRefreshButtonTemplate>
+    <button 
+        nzSearch
+        nz-button 
+        nzType="default"
+        title="Refresh search"
+        (click)="onSearch(form.value)">
+      <i nz-icon nzType="redo"></i>
+    </button>
+  </ng-template>
 </div>
+    
