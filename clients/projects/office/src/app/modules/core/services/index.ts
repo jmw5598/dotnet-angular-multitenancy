@@ -6,3 +6,5 @@ export * from './session-cache.service';
 export * from './plans.service';
 export * from './files.service';
 export * from './permissions.service';
+export * from './user.service';
+export * from './users.service';

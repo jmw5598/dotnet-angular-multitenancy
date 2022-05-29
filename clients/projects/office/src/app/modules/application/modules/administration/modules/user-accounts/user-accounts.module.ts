@@ -17,7 +17,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
@@ -58,7 +58,7 @@ import { UserAccountCreateFormComponent } from './components/user-account-create
     NzSwitchModule,
     NzUploadModule,
     NzPopoverModule,
-    NzSelectModule
+    NzDropDownModule,
   ]
 })
 export class UserAccountsModule { }

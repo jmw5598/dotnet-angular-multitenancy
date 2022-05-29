@@ -37,3 +37,13 @@ export const selectUserAccountSearchFilter = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state.userAccountsSearchFilter
 );
+
+export const selectTemplateModulePermissionNames = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state.templateModulePermissionNames
+);
+
+export const selectSelectedTemplateModulePermissionName = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state.selectedTemplateModulePermissionName
+);

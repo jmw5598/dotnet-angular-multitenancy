@@ -5,6 +5,7 @@ import { AssignablePermissionsLoadedGuard } from "@xyz/office/modules/core/guard
 
 import { InitialUserAccountsSearchLoadedGuard } from "./guards/initial-user-accounts-search-loaded.guard";
 import { SelectedUsersAccountLoadedGuard } from "./guards/selected-users-account-loaded.guard";
+import { TemplateModulePermissionNamesLoadedGuard } from "./guards/template-module-permission-names-loaded.guard";
 import { UserAccountsCreateComponent } from "./pages/user-accounts-create/user-accounts-create.component";
 
 import { UserAccountsOverviewComponent } from "./pages/user-accounts-overview/user-accounts-overview.component";
@@ -18,7 +19,10 @@ const routes: Routes = [
   },
   {
     path: 'create',
-    canActivate: [AssignablePermissionsLoadedGuard],
+    canActivate: [
+      AssignablePermissionsLoadedGuard,
+      TemplateModulePermissionNamesLoadedGuard
+    ],
     component: UserAccountsCreateComponent
   },
   {
@@ -28,6 +32,7 @@ const routes: Routes = [
         path: 'edit',
         canActivate: [
           AssignablePermissionsLoadedGuard,
+          TemplateModulePermissionNamesLoadedGuard,
           SelectedUsersAccountLoadedGuard
         ],
         component: UserAccountsUpdateComponent

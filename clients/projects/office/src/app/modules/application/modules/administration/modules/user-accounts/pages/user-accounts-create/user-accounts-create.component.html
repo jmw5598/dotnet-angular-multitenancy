@@ -27,7 +27,10 @@
 <div [@fadeAnimation] class="p-4">
   <nz-card class="w-100 p-0">
     <form class="block" [formGroup]="createUserAccountForm">
-      <xyz-user-account-create-form></xyz-user-account-create-form>
+      <xyz-user-account-create-form
+          [templateModulePermissionNames]="templateModulePermissionNames$ | async"
+          (onTemplateModulePermissionNameSelected)="onTemplateModulePermissionNameSelected($event)">
+      </xyz-user-account-create-form>
     </form>
   </nz-card>
 </div>

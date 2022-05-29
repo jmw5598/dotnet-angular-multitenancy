@@ -1,4 +1,4 @@
-import { ModulePermission, Permission, User, UserModulePermission, UserPermission } from "@xyz/office/modules/core/entities";
+import { ModulePermission, Permission, TemplateModulePermission, User, UserModulePermission, UserPermission } from "@xyz/office/modules/core/entities";
 import { UserAccount } from "@xyz/office/modules/core/models";
 
 export const mapAssignableModulePermissionsToUserModulePermissions = (modulePermissions: ModulePermission[]): UserModulePermission[] => {
@@ -49,3 +49,20 @@ export const userAccountFormToUserAccount = (formValue: any): UserAccount => ({
     } as UserModulePermission
   })
 } as UserAccount);
+
+export const templateModulerPermissionsToUserModulerPermissions = 
+  (templateModulePermissions: TemplateModulePermission[]): UserModulePermission[] => {
+    return templateModulePermissions.map(templateModulePermission => ({
+      hasAccess: templateModulePermission.hasAccess,
+      modulePermissionId: templateModulePermission.modulePermissionId,
+      modulePermission: {...templateModulePermission.modulePermission },
+      userPermissions: templateModulePermission.templatePermissions?.map(templatePermission => ({
+        canCreate: templatePermission.canCreate,
+        canRead: templatePermission.canRead,
+        canUpdate: templatePermission.canUpdate,
+        canDelete: templatePermission.canDelete,
+        permissionId: templatePermission.permissionId,
+        permission: { ...templatePermission.permission },
+      } as UserPermission)) || []
+    } as UserModulePermission));
+  }

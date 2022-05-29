@@ -38,6 +38,22 @@ namespace Xyz.Infrastructure.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<TemplateModulePermissionNameDto>> FindAllTemplateModulePermissionNames()
+        {
+            try
+            {
+                return await this._context.TemplateModulePermissionNames
+                    .Select(t => t.ToDto())
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting all permission templates!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
         public async Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNames(PageRequest pageRequest, BasicQuerySearchFilter filter)
         {
             try

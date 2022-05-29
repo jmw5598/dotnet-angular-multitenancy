@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
+import { ModulePermission, TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
@@ -16,7 +16,9 @@ export interface UserAccountsState {
   createUserAccountResponseMessage: ResponseMessage | null,
   updateUserAccountResponseMessage: ResponseMessage | null,
   selectedUserAccount: UserAccountDto | null,
-  selectedUsersPermissions: UserPermission[] | null
+  selectedUsersPermissions: UserPermission[] | null,
+  templateModulePermissionNames: TemplateModulePermissionName[] | null,
+  selectedTemplateModulePermissionName: TemplateModulePermissionName | null,
 }
 
 export const initialUserAccountsState: UserAccountsState = {
@@ -25,7 +27,9 @@ export const initialUserAccountsState: UserAccountsState = {
   createUserAccountResponseMessage: null,
   updateUserAccountResponseMessage: null,
   selectedUserAccount: null,
-  selectedUsersPermissions: null
+  selectedUsersPermissions: null,
+  templateModulePermissionNames: null,
+  selectedTemplateModulePermissionName: null,
 }
 
 const handleSearchUserAccountsRequestSuccess = (state: UserAccountsState, { page }: any) => ({
@@ -60,6 +64,16 @@ const handleSetUserAccountsSearchFilter = (state: UserAccountsState, { filter }:
   userAccountsSearchFilter: filter
 } as UserAccountsState);
 
+const handleGetTemplateModulePermissionNamesRequestSuccess = (state: UserAccountsState, { templateModulePermissionNames }: any) => ({
+  ...state,
+  templateModulePermissionNames: templateModulePermissionNames
+} as UserAccountsState);
+
+const handleGetTemplateModulePermissionNameByIdRequestSuccess = (state: UserAccountsState, { templateModulePermissionName }: any) => ({
+  ...state,
+  selectedTemplateModulePermissionName: templateModulePermissionName
+} as UserAccountsState);
+
 export const reducer = createReducer(
   initialUserAccountsState,
   on(
@@ -88,5 +102,15 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.setUserAccountsSearchFilter,
     handleSetUserAccountsSearchFilter
+  ),
+  on(
+    fromUserAccounts.getAllTemplateModulePermissionNamesRequestSuccess,
+    fromUserAccounts.setTemplateModulePermissionNames,
+    handleGetTemplateModulePermissionNamesRequestSuccess
+  ),
+  on(
+    fromUserAccounts.getTemplateModulerPermissionNameByIdRequestSuccess,
+    fromUserAccounts.setSelectedTemplateModulePermissionName,
+    handleGetTemplateModulePermissionNameByIdRequestSuccess
   )
 );

@@ -4,8 +4,8 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { UsersService } from "@xyz/office/modules/core/services/users.service";
-import { ModulePermission, UserPermission } from "@xyz/office/modules/core/entities";
+import { TemplateModulePermissionName, UserPermission } from "@xyz/office/modules/core/entities";
+import { PermissionsService, UsersService } from "@xyz/office/modules/core/services";
 
 import * as fromUserAccounts from './user-accounts.actions';
 
@@ -13,7 +13,8 @@ import * as fromUserAccounts from './user-accounts.actions';
 export class UserAccountsEffects {
   constructor(
     private _actions: Actions,
-    private _usersService: UsersService
+    private _usersService: UsersService,
+    private _permissionsService: PermissionsService
   ) { }
 
   public searchUserAccountsRequest = createEffect(() => this._actions
@@ -117,4 +118,50 @@ export class UserAccountsEffects {
       )
     )
   );
+
+  public getAllTemplateModulePermissionNamesRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.getAllTemplateModulePermissionNamesRequest),
+      switchMap(() => 
+        this._permissionsService.getTemplateModulePermissionNames()
+          .pipe(
+            mergeMap((templateModulePermissionNames: TemplateModulePermissionName[]) => 
+              of(fromUserAccounts
+                .getAllTemplateModulePermissionNamesRequestSuccess({
+                  templateModulePermissionNames: templateModulePermissionNames
+                })
+              )
+            ),
+            catchError((error: any)=> of(fromUserAccounts.getAllTemplateModulePermissionNamesRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error getting permission templates!'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  );
+
+  public getTemplateModulePermissionNameByIdRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromUserAccounts.getTemplateModulerPermissionNameByIdRequest),
+      switchMap(({ templateModulePermissionNameId }) =>
+        this._permissionsService.getTemplateModulePermissionNameById(templateModulePermissionNameId)
+          .pipe(
+            mergeMap((template: TemplateModulePermissionName) => of(
+              fromUserAccounts.getTemplateModulerPermissionNameByIdRequestSuccess({ 
+                templateModulePermissionName: template 
+              })
+            )),
+            catchError((error: any) => of(fromUserAccounts.getTemplateModulerPermissionNameByIdRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error?.error || 'Error getting permissions template'
+              } as ResponseMessage
+            })))
+          )
+      )
+    )
+  )
 }

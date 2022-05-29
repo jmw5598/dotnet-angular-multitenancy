@@ -1,21 +1,23 @@
 import { Location } from '@angular/common';
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { filter, Observable, skip, Subject, take } from 'rxjs';
+
 import { Store } from '@ngrx/store';
-import { User, UserModulePermission } from '@xyz/office/modules/core/entities';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
+import { TemplateModulePermission, TemplateModulePermissionName, User, UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
 import { ResponseStatus } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
-
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { filter, Subject, take } from 'rxjs';
+
 import { buildUserAccountCreateForm } from '../../components/user-account-create-form/user-account-create-form.builder';
 
 import * as fromUserAccounts from '../../store';
 import * as fromPermissions from '@xyz/office/store/permissions';
 
-import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormToUserAccount } from '../../utils';
+import { mapAssignableModulePermissionsToUserModulePermissions, templateModulerPermissionsToUserModulerPermissions, userAccountFormToUserAccount } from '../../utils';
 
 @Component({
   selector: 'xyz-user-accounts-create',
@@ -25,9 +27,11 @@ import { mapAssignableModulePermissionsToUserModulePermissions, userAccountFormT
   animations: [fadeAnimation]
 })
 export class UserAccountsCreateComponent implements OnDestroy {
-  private _subscriptionSubject: Subject<any> = new Subject<any>();
+  private _destroy$: Subject<any> = new Subject<any>();
 
   public createUserAccountForm!: FormGroup;
+
+  public templateModulePermissionNames$: Observable<TemplateModulePermissionName[] | null>;
 
   constructor(
     private _location: Location,
@@ -36,6 +40,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
     private _userValidators: UserValidators,
     private _messageService: NzMessageService
   ) {
+    this.templateModulePermissionNames$ = this._store.select(fromUserAccounts.selectTemplateModulePermissionNames);
     this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
       .subscribe(assignableModulePermissions => {
@@ -43,6 +48,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
         this.createUserAccountForm = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
       });
   }
+
 
   public onCreateUserAccount(formValue: any, shouldReturn: boolean): void {
     if (this.createUserAccountForm.invalid) return;
@@ -71,6 +77,43 @@ export class UserAccountsCreateComponent implements OnDestroy {
       });
   }
 
+
+  public onTemplateModulePermissionNameSelected(templateModulePermissionName: TemplateModulePermissionName | null): void {
+    if (!templateModulePermissionName) {
+      this._store.select(fromPermissions.selectAssignableModulePermissions)
+        .pipe(take(1))
+        .subscribe(assignableModulePermissions => {
+          const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
+          const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
+          this.createUserAccountForm.reset();
+          this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
+        });
+      return;
+    }
+
+    this._store.dispatch(
+      fromUserAccounts.getTemplateModulerPermissionNameByIdRequest({
+        templateModulePermissionNameId: templateModulePermissionName.id
+      })
+    );
+
+    this._store.select(fromUserAccounts.selectSelectedTemplateModulePermissionName)
+      .pipe(skip(1), take(1))
+      .subscribe(templateModulePermissionName => {
+        const userModulePermissions = templateModulerPermissionsToUserModulerPermissions(
+            templateModulePermissionName?.templateModulePermissions || []);
+
+        const userModulePemissionsFormArray: FormArray = this.createUserAccountForm.get('userModulePermissions') as FormArray;
+
+        userModulePemissionsFormArray.controls.forEach((group) => {
+          const userModulePermission = userModulePermissions.find(ump => ump.modulePermission?.id === group.value.modulePermission.id);
+          group.patchValue({
+            ...userModulePermission
+          });
+        });
+      });
+  }
+
   private _resetCreateUserAccountForm(): void {
     this._store.select(fromPermissions.selectAssignableModulePermissions)
       .pipe(take(1))
@@ -83,7 +126,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._subscriptionSubject.next(null);
-    this._subscriptionSubject.complete();
+    this._destroy$.next(null);
+    this._destroy$.complete();
   }
 }

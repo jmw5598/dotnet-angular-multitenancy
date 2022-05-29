@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { ModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
@@ -98,4 +98,43 @@ export const setUpdateUserAccountRequestResponseMessage = createAction(
 export const setUserAccountsSearchFilter = createAction(
   '[User Accounts] Set User Accounts Search Filter',
   props<{ filter: BasicQuerySearchFilter }>()
+);
+
+export const getAllTemplateModulePermissionNamesRequest = createAction(
+  '[User Accounts] Get All Template Moduler Permission Names Request'
+);
+
+export const getAllTemplateModulePermissionNamesRequestSuccess = createAction(
+  '[User Accounts] Get All Template Moduler Permission Names Request Success',
+  props<{ templateModulePermissionNames: TemplateModulePermissionName[] }>()
+);
+
+export const getAllTemplateModulePermissionNamesRequestFailure = createAction(
+  '[User Accounts] Get All Template Moduler Permission Names Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setTemplateModulePermissionNames = createAction(
+  '[User Accounts] Set Template Moduler Permission Names',
+  props<{ templateModulePermissionNames: TemplateModulePermissionName[] | null }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequest = createAction(
+  '[User Accounts] Get Template Moduler Permission Name By Id Request',
+  props<{ templateModulePermissionNameId: string }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequestSuccess = createAction(
+  '[User Accounts] Get Template Moduler Permission Name By Id Request Success',
+  props<{ templateModulePermissionName: TemplateModulePermissionName }>()
+);
+
+export const getTemplateModulerPermissionNameByIdRequestFailure = createAction(
+  '[User Accounts] Get Template Moduler Permission Name By Id Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setSelectedTemplateModulePermissionName = createAction(
+  '[User Accounts] Set Selected Template Moduler Permission Name',
+  props<{ templateModulePermissionName: TemplateModulePermissionName | null }>()
 );

@@ -1,5 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, Input, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, ControlContainer, FormArray, FormGroup } from '@angular/forms';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
 import { EnvironmentService } from '@xyz/office/modules/core/services';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';
@@ -11,11 +12,21 @@ import { Observable, Observer } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UserAccountCreateFormComponent implements OnInit {
+  @Input()
+  public templateModulePermissionNames: TemplateModulePermissionName[] | null = [];
+
+  @Output()
+  public onTemplateModulePermissionNameSelected: EventEmitter<TemplateModulePermissionName | null> = 
+    new EventEmitter<TemplateModulePermissionName | null>();
+
   public userAccountForm!: FormGroup;
+
+  public isLoadingTemplate: boolean = false;
 
   constructor(
     private _controlContainer: ControlContainer,
-    private _environmentService: EnvironmentService
+    private _environmentService: EnvironmentService,
+    private _changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +44,16 @@ export class UserAccountCreateFormComponent implements OnInit {
   public getUserPermissionsFormArray(control: AbstractControl): FormArray {
     const formGroup: FormGroup = control as FormGroup;
     return formGroup.get('userPermissions') as FormArray;
+  }
+
+  public onApplyTemplateModulerPermissionName(templateModulePermissionName: TemplateModulePermissionName | null): void {
+    // @TODO load template module permissions and patch to form
+    this.isLoadingTemplate = true;
+    this.onTemplateModulePermissionNameSelected.emit(templateModulePermissionName);
+    setTimeout(() => {
+      this.isLoadingTemplate = false;
+      this._changeDetectorRef.markForCheck();
+    }, 500);
   }
 
   public onUserModulePermissionAccessChange(event: any, control: AbstractControl): void {

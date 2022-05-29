@@ -48,11 +48,11 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpGet("permissions/templates")]
-        public async Task<ActionResult<IEnumerable<TemplateModulePermissionName>>> GetTemplateModulePermissions()
+        public async Task<ActionResult<IEnumerable<TemplateModulePermissionNameDto>>> GetTemplateModulePermissions()
         {
             try
             {
-                return Ok(new List<TemplateModulePermissionName>{});
+                return Ok(await this._permissionsService.FindAllTemplateModulePermissionNames());
             }
             catch (Exception ex)
             {
