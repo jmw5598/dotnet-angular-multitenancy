@@ -81,7 +81,9 @@ namespace Xyz.Infrastructure.Services
                         || user.Profile.LastName.ToLower().Contains(queryTerm));
             }
                 
-            var usersSource = query.Select(u => new UserAccountDto
+            var usersSource = query
+                .OrderBy(u => u.UserName)
+                .Select(u => new UserAccountDto
                 {
                     Id = u.Id,
                     UserName = u.UserName,

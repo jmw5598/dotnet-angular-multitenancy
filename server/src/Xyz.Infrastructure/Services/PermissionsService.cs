@@ -43,7 +43,8 @@ namespace Xyz.Infrastructure.Services
             try
             {
                 return await this._context.TemplateModulePermissionNames
-                    .Select(t => t.ToDto())
+                    .OrderBy(template => template.Name)
+                    .Select(template => template.ToDto())
                     .ToListAsync();
             }
             catch (Exception ex)
@@ -68,7 +69,9 @@ namespace Xyz.Infrastructure.Services
                             || template.Description.ToLower().Contains(queryTerm));
                 }
                     
-                var templatesSource = query.Select(template => template.ToDto());
+                var templatesSource = query
+                    .OrderBy(template => template.Name)
+                    .Select(template => template.ToDto());
 
                 return await Page<TemplateModulePermissionNameDto>.From(templatesSource, pageRequest);
             }
