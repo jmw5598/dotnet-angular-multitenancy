@@ -1,4 +1,4 @@
-namespace Xyz.Core.Entities.Multitenancy
+namespace Xyz.Core.Entities.Identity
 {
     public class Profile
     {

@@ -1,21 +1,36 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using Xyz.Multitenancy.Models;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Identity;
 using Xyz.Infrastructure.Extensions;
 
 namespace Xyz.Infrastructure.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<
+        ApplicationUser, 
+        ApplicationRole, 
+        Guid, 
+        IdentityUserClaim<Guid>,
+        ApplicationUserRole, 
+        IdentityUserLogin<Guid>,
+        IdentityRoleClaim<Guid>, 
+        IdentityUserToken<Guid>
+    >
     { 
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
         private readonly IOptions<TenantsConfiguration> _configuration;
+
+        // Identity Datasets
+        public DbSet<Profile> Profiles => Set<Profile>();
 
 
         // Entity Datasets
@@ -51,6 +66,11 @@ namespace Xyz.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.HandleCustomIdentityTableMapping();
+
+            // modelBuilder.SeedRoles();
+            modelBuilder.SeedDevUser(); // Roles are created with this
             modelBuilder.SeedPermissions();
         }
         

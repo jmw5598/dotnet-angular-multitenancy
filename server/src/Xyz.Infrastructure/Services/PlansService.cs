@@ -12,9 +12,9 @@ namespace Xyz.Infrastructure.Services
     public class PlansService : IPlansService
     {
         private readonly ILogger<PlansService> _logger;
-        private readonly AuthenticationDbContext _context;
+        private readonly MultitenancyDbContext _context;
 
-        public PlansService(ILogger<PlansService> logger, AuthenticationDbContext context)
+        public PlansService(ILogger<PlansService> logger, MultitenancyDbContext context)
         {
             this._logger = logger;
             this._context = context;

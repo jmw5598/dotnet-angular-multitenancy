@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Interfaces;
 using Xyz.Infrastructure.Data;
 using Xyz.Infrastructure.Services;
@@ -68,7 +69,7 @@ builder.Services.AddScoped<IPermissionsService, PermissionsService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 
 // Context for authenticating and tenant resolution
-builder.Services.AddDbContext<AuthenticationDbContext>(options =>
+builder.Services.AddDbContext<MultitenancyDbContext>(options =>
     options.UseNpgsql(multitenancyConfiguration.GetConnectionString("XyzMultitenancy"))
         .UseSnakeCaseNamingConvention());
 
@@ -79,7 +80,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // For Identity
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
-    .AddEntityFrameworkStores<AuthenticationDbContext>()
+    .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
 // Adding Authentication

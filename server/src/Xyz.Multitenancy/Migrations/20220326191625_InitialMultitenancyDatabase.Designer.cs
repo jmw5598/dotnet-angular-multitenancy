@@ -11,7 +11,7 @@ using Xyz.Multitenancy.Data;
 
 namespace Xyz.Multitenancy.Migrations
 {
-    [DbContext(typeof(AuthenticationDbContext))]
+    [DbContext(typeof(MultitenancyDbContext))]
     [Migration("20220326191625_InitialMultitenancyDatabase")]
     partial class InitialMultitenancyDatabase
     {

@@ -8,11 +8,11 @@ namespace Xyz.Multitenancy.Multitenancy
 {
     public class TenantsDbStore : ITenantStore<Tenant>
     {
-        private readonly AuthenticationDbContext _authenticationDbContext;
+        private readonly MultitenancyDbContext _authenticationDbContext;
         private readonly IConfiguration _configuration;
         private readonly ILogger<TenantsDbStore> _logger;
 
-        public TenantsDbStore(AuthenticationDbContext authenticationDbContext, IConfiguration configuration, ILogger<TenantsDbStore> logger)
+        public TenantsDbStore(MultitenancyDbContext authenticationDbContext, IConfiguration configuration, ILogger<TenantsDbStore> logger)
         {
             _authenticationDbContext = authenticationDbContext;
             _configuration = configuration;

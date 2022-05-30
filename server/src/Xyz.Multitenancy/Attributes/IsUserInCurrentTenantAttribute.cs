@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-using Xyz.Core.Entities.Multitenancy;
 using Xyz.Multitenancy.Multitenancy;
 
 namespace Xyz.Multitenancy.Attributes
@@ -16,10 +14,9 @@ namespace Xyz.Multitenancy.Attributes
 
             if (httpContext != null)
             {
-                var signInManager = httpContext.RequestServices.GetService(typeof(Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser>)) as SignInManager<ApplicationUser>;
                 var userClaimsPrinciple = httpContext.User;
 
-                if (userClaimsPrinciple != null && signInManager != null && signInManager.IsSignedIn(userClaimsPrinciple))
+                if (userClaimsPrinciple != null)
                 {
                     string? tenantId = httpContext?.GetTenant()?.Guid;
                     string? tenantName = httpContext?.GetTenant()?.Name;

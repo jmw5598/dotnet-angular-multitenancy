@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
 
 namespace Xyz.Api.Models

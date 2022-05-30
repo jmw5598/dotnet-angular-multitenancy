@@ -48,7 +48,5 @@ namespace Xyz.Core.Entities.Multitenancy
         
         public Guid TenantPlanId { get; set; } = default!;
         public TenantPlan TenantPlan { get; set; } = default!;
-
-        public ICollection<ApplicationUser> Users { get; set; } = default!;
     }
 }

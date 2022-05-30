@@ -1,4 +1,4 @@
-using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Entities.Tenant;
 
 namespace Xyz.Core.Models

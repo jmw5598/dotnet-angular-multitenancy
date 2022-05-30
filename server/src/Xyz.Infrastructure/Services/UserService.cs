@@ -2,10 +2,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 
 using Xyz.Infrastructure.Data;
-using Xyz.Multitenancy.Data;
+
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Tenant;
-using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
 
@@ -14,25 +14,22 @@ namespace Xyz.Infrastructure.Services
     public class UserService : IUserService
     {
         private readonly ILogger<UsersService> _logger;
-        private readonly ApplicationDbContext _context;
-        private readonly AuthenticationDbContext _authContext;
+        private readonly ApplicationDbContext _applicationDbContext;
 
         public UserService(
             ILogger<UsersService> logger, 
-            ApplicationDbContext context,
-            AuthenticationDbContext authContext
+            ApplicationDbContext applicationDbContext
         )
         {
             this._logger = logger;
-            this._context = context;
-            this._authContext = authContext;
+            this._applicationDbContext = applicationDbContext;
         }
 
         public async Task<UserSettings> GetUserSettings(string userId)
         {
             try
             {
-                var user = await this._authContext.Users
+                var user = await this._applicationDbContext.Users
                     .Include(user => user.Profile)
                     .Where(u => u.Id.ToString() == userId)
                     .FirstOrDefaultAsync();
@@ -66,7 +63,7 @@ namespace Xyz.Infrastructure.Services
             try
             {
                 // @TODO will have to rework the ordering here...
-                var modulePermissions = this._context.UserModulePermissions
+                var modulePermissions = this._applicationDbContext.UserModulePermissions
                     .Include(mp => mp.UserPermissions)
                     .ThenInclude(up =>  up.Permission)
                     .Include(mp => mp.ModulePermission)
@@ -94,8 +91,8 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                await this._context.UserModulePermissions.AddRangeAsync(userModulePermissions);                
-                this._context.SaveChanges();
+                await this._applicationDbContext.UserModulePermissions.AddRangeAsync(userModulePermissions);                
+                this._applicationDbContext.SaveChanges();
                 return userModulePermissions.Select(ump => ump.ToDto()).ToList();
             }
             catch (Exception ex)
@@ -111,15 +108,15 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                var modulePermissions = this._context.UserModulePermissions
+                var modulePermissions = this._applicationDbContext.UserModulePermissions
                     .Include(mp => mp.UserPermissions)
                     .Select(e => e)
                     .Where(ump => ump.AspNetUserId.ToString() == userId);
 
-                this._context.UserModulePermissions.RemoveRange(modulePermissions);
-                await this._context.UserModulePermissions.AddRangeAsync(userModulePermissions);
+                this._applicationDbContext.UserModulePermissions.RemoveRange(modulePermissions);
+                await this._applicationDbContext.UserModulePermissions.AddRangeAsync(userModulePermissions);
 
-                this._context.SaveChanges();
+                this._applicationDbContext.SaveChanges();
 
                 return userModulePermissions.Select(ump => ump.ToDto()).ToList();
             }

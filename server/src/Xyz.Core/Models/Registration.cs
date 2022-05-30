@@ -1,4 +1,5 @@
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 
 namespace Xyz.Core.Models
 {

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Xyz.Core.Dtos;
 using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
 
 namespace Xyz.Api.Models
@@ -20,7 +21,6 @@ namespace Xyz.Api.Models
             {
                 User = new ApplicationUser
                 {
-                    Tenants = new List<Tenant>(),
                     Profile = new Profile
                     {
                         FirstName = this.User.Profile.FirstName,

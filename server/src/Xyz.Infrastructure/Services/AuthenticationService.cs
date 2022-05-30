@@ -1,13 +1,12 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Linq;
 
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 using Xyz.Multitenancy.Data;
@@ -21,7 +20,7 @@ namespace Xyz.Infrastructure.Services
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly AuthenticationDbContext _context;
+        private readonly MultitenancyDbContext _context;
         private readonly ITokenService _tokenService;
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
 
@@ -31,7 +30,7 @@ namespace Xyz.Infrastructure.Services
             IConfiguration configuration,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            AuthenticationDbContext context,
+            MultitenancyDbContext context,
             ITokenService tokenService,
             ITenantAccessor<Tenant> tenanatAccessor)
         {
@@ -121,7 +120,6 @@ namespace Xyz.Infrastructure.Services
                     IpAddresses = ""
                 };
 
-                registration.User.Tenants = new List<Tenant>{ tenant };
                 registration.User.Profile = registration.Profile;
 
                 var userIdentityResult = await this._userManager.CreateAsync(registration.User, registration.RawPassword);

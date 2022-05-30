@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Multitenancy;
-using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
@@ -20,7 +19,6 @@ namespace Xyz.Api.Controllers
         private ILogger<UsersController> _logger;
         private IUsersService _usersService; // Multitenancy user specific stuff
         private IUserService _userService; // Users Serviec to tenant speicific stuff
-        private ITenantAccessor<Tenant> _tenantAccessor;
 
         public UsersController(
             ILogger<UsersController> logger, 
@@ -31,7 +29,6 @@ namespace Xyz.Api.Controllers
             this._logger = logger;
             this._usersService = usersService;
             this._userService = userService;
-            this._tenantAccessor = tenantAccessor;
         }
 
         [Authorize(Policy = PolicyNames.RequireTenant)]
@@ -39,18 +36,14 @@ namespace Xyz.Api.Controllers
         public async Task<ActionResult<Page<UserAccountDto>>> SearchUsersByTenant(
             [FromQuery] string? query = null,
             [FromQuery] int? index = 0,
-            [FromQuery] int? size = 20
-        )
+            [FromQuery] int? size = 20)
         {
-            //@TODO figure out sort
-
-            var tenantId = this._tenantAccessor.Tenant.Id;
             var pageRequest = new PageRequest { Index = index ?? 0, Size = size ?? 20 };
             var querySearchFilter = new BasicQuerySearchFilter { Query = query };
 
             try
             {
-                return Ok(await this._usersService.SearchUsersByTenant(tenantId.ToString(), querySearchFilter, pageRequest));
+                return Ok(await this._usersService.SearchUsers(querySearchFilter, pageRequest));
             }
             catch (Exception ex)
             {
@@ -63,15 +56,13 @@ namespace Xyz.Api.Controllers
         [Authorize(Policy = PolicyNames.RequireTenant)]
         [HttpPost]
         public async Task<ActionResult<UserAccountDto>> CreateUserAccount(CreateUserAccountDto createUserAccountDto)
-        {
-            var tenantId = this._tenantAccessor.Tenant.Id;
-            
+        {   
             try
             {
                 var registrationUserAccount = createUserAccountDto.ToUserAccount();
 
                 var newUserDto = await this._usersService
-                    .CreateUserAccount(tenantId.ToString(), registrationUserAccount);
+                    .CreateUserAccount(registrationUserAccount);
                 
                 // Assigns new AspNetUserId to the UserModulePermissions
                 registrationUserAccount.UserModulePermissions = registrationUserAccount.UserModulePermissions
@@ -121,15 +112,13 @@ namespace Xyz.Api.Controllers
         public async Task<ActionResult<UserAccountDto>> UpdateUserAccount(
             [FromRoute] string userId, 
             [FromBody] UpdateUserAccountDto updateUserAccountDto)
-        {
-            var tenantId = this._tenantAccessor.Tenant.Id;
-            
+        {    
             try
             {
                 var updatedUserAccount = updateUserAccountDto.ToUserAccount();
 
                 var updatedUserDto = await this._usersService
-                    .UpdateUserAccount(tenantId.ToString(), userId, updatedUserAccount);
+                    .UpdateUserAccount(userId, updatedUserAccount);
                 
                 // Assigns new AspNetUserId to the UserModulePermissions
                 updatedUserAccount.UserModulePermissions = updatedUserAccount.UserModulePermissions

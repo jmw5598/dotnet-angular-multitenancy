@@ -1,5 +1,4 @@
-using Xyz.Core.Entities.Multitenancy;
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Identity;
 
 namespace Xyz.Core.Dtos
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace Xyz.Core.Entities.Multitenancy
+namespace Xyz.Core.Entities.Identity
 {
     public class ApplicationUserRole : IdentityUserRole<Guid>
     {

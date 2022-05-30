@@ -4,24 +4,24 @@ using Microsoft.AspNetCore.Identity;
 
 using System.Data;
 
-using Xyz.Multitenancy.Data;
+using Xyz.Infrastructure.Data;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
-using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Identity;
 
 namespace Xyz.Infrastructure.Services
 {
     public class UsersService : IUsersService
     {
         private readonly ILogger<UsersService> _logger;
-        private readonly AuthenticationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
         public UsersService(
             ILogger<UsersService> logger, 
-            AuthenticationDbContext context,
+            ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager)
         {
@@ -58,18 +58,13 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<Page<UserAccountDto>> SearchUsersByTenant(string tenantId, BasicQuerySearchFilter filter, PageRequest pageRequest)
+        // @TODO Rename this in the interface to SearchUsers
+        public async Task<Page<UserAccountDto>> SearchUsers(BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
             IQueryable<ApplicationUser> query = this._context.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .Include(u => u.Tenants)
-                .Include(u => u.Profile)
-                .Where(u => 
-                    u.Tenants
-                        .Where(t => t.Id.ToString() == tenantId)
-                        .Any()
-                );
+                .Include(u => u.Profile);
 
             if (filter?.Query != null)
             {
@@ -100,22 +95,13 @@ namespace Xyz.Infrastructure.Services
             return await Page<UserAccountDto>.From(usersSource, pageRequest);
         }
 
-        public async Task<UserAccountDto> CreateUserAccount(string tenantId, UserAccount userAccount)
+        public async Task<UserAccountDto> CreateUserAccount(UserAccount userAccount)
         {
             using var transaction = this._context.Database.BeginTransaction();
 
             try 
             {
                 var userRole = await this._roleManager.FindByNameAsync(Roles.USER);
-                var tenant = await this._context.Tenants.Where(tenant => tenant.Id.ToString() == tenantId).FirstOrDefaultAsync();
-
-                if (tenant == null)
-                {
-                    throw new Exception("Error getting tenant for new user account");
-                }
-
-                userAccount.User.Tenants.Add(tenant);
-
                 var userIdentityResult = await this._userManager.CreateAsync(userAccount.User, userAccount.RawPassword);
                 
                 if (!userIdentityResult.Succeeded)
@@ -154,7 +140,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<UserAccountDto> UpdateUserAccount(string tenantId, string userId, UserAccount userAccount)
+        public async Task<UserAccountDto> UpdateUserAccount(string userId, UserAccount userAccount)
         {
             try 
             {
@@ -163,7 +149,6 @@ namespace Xyz.Infrastructure.Services
                     .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
                     .Where(u => u.Id.ToString() == userId)
-                    .Where(u => u.Tenants.Where(t => t.Id.ToString() == tenantId).Count() > 0)
                     .FirstOrDefaultAsync();
 
                 if (user == null)
