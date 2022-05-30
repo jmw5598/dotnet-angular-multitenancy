@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 using Xyz.Core.Entities.Identity;
-using Xyz.Core.Models;
+using Xyz.Core.Entities.Tenant;
+using Xyz.Infrastructure.Seeds;
 
 namespace Xyz.Infrastructure.Extensions
 {
@@ -39,13 +40,13 @@ namespace Xyz.Infrastructure.Extensions
 
         public static void SeedRoles(this ModelBuilder modelBuilder)
         {
-            var seedRoles = _GetSeedRoles();
+            var seedRoles = ApplicationRolesSeed.Get();
             modelBuilder.Entity<ApplicationRole>().HasData(seedRoles);
         }
 
         public static void SeedDevUser(this ModelBuilder modelBuilder)
         {
-            var seedRoles = _GetSeedRoles();
+            var seedRoles = ApplicationRolesSeed.Get();
 
             var profile = new Profile
             {
@@ -71,6 +72,16 @@ namespace Xyz.Infrastructure.Extensions
             modelBuilder.Entity<Profile>().HasData(profile);
             modelBuilder.Entity<ApplicationUser>().HasData(user);
 
+            // Create User Module Permissions And User Permissions
+            var userModulePermissionsAndUserPermisions = UserModulePermissionsAndUserPermissionsSeed.Get(user.Id.ToString());
+            
+            modelBuilder.Entity<UserModulePermission>().HasData(
+                userModulePermissionsAndUserPermisions.UserModulePermissions
+            );
+            modelBuilder.Entity<UserPermission>().HasData(
+                userModulePermissionsAndUserPermisions.UserPermissions
+            );
+
             // Set Roles For User
             modelBuilder.Entity<ApplicationUserRole>().HasData(
                 seedRoles.Select(role => 
@@ -81,31 +92,6 @@ namespace Xyz.Infrastructure.Extensions
                     }
                 ).ToList()
             );
-        }
-
-        private static ICollection<ApplicationRole> _GetSeedRoles()
-        {
-            return new List<ApplicationRole>
-            {
-                new ApplicationRole 
-                { 
-                    Id = Guid.NewGuid(),
-                    Name = Roles.ROOT, 
-                    NormalizedName = Roles.ROOT 
-                },
-                new ApplicationRole 
-                {
-                    Id = Guid.NewGuid(), 
-                    Name = Roles.ADMIN, 
-                    NormalizedName = Roles.ADMIN
-                },
-                new ApplicationRole
-                { 
-                    Id = Guid.NewGuid(),
-                    Name = Roles.USER, 
-                    NormalizedName = Roles.USER
-                }
-            };
         }
     }
 }
