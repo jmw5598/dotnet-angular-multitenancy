@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Xyz.Infrastructure.Data;
@@ -11,9 +12,10 @@ using Xyz.Infrastructure.Data;
 namespace Xyz.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530133851_UpdatedRelationshipsForUserToUserModulePermissionAndBaseEntity")]
+    partial class UpdatedRelationshipsForUserToUserModulePermissionAndBaseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -167,22 +169,22 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("93fdb1c0-d000-42ae-8cee-287c5c7031fa"),
-                            ConcurrencyStamp = "9e7781de-629e-4904-a088-b09250a75e96",
+                            Id = new Guid("c502c688-3ce1-4d22-bbc3-c01ae8a5b31e"),
+                            ConcurrencyStamp = "7e580def-6e69-4e1f-aa38-5e51dc65bea4",
                             Name = "ROOT",
                             NormalizedName = "ROOT"
                         },
                         new
                         {
-                            Id = new Guid("44d34c23-263a-4541-a6ba-ddcdc6e6bc9d"),
-                            ConcurrencyStamp = "64453c07-a1a5-40c6-9fc7-8f6fad3d2a6a",
+                            Id = new Guid("77f3871c-a8ad-47d4-8634-45d1aa843c99"),
+                            ConcurrencyStamp = "51a63b35-efad-44c7-b2a5-80d35a2bb7b4",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("3c21b629-a968-4fe2-9fee-22be79d0a223"),
-                            ConcurrencyStamp = "bad94c1a-cf63-40a4-993b-203791f7e6c1",
+                            Id = new Guid("94653a75-4a52-4af3-b194-1c856db5999f"),
+                            ConcurrencyStamp = "b3ce7c60-cd9c-4bd6-95d3-1cf9fd277967",
                             Name = "USER",
                             NormalizedName = "USER"
                         });
@@ -278,17 +280,17 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d9f178d0-a1bf-4d93-b13f-dd9328c80b3a"),
+                            Id = new Guid("2cba2e3a-ff88-4539-b688-e62f6bfd9651"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "8320340d-7380-4f4f-be11-52744cca1187",
+                            ConcurrencyStamp = "1bd4426d-803e-48d5-b660-e5b0ab1e9f1e",
                             Email = "jmw5598@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "JMW5598@gmail.com",
                             NormalizedUserName = "JMW5598@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBGpxH1Uz9p1POltxkyiEMQsJU+K5wJDDysFc8qlGe9A0aZwOKC1TUgT1GDwzPehnA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEwkwwpArR8MGNXeKg5ehw0Kyq0F6RREPUirika+Piu7C36JhST8M28xPqo7MpnAbQ==",
                             PhoneNumberConfirmed = false,
-                            ProfileId = new Guid("1fd5e9d9-11da-4163-8f18-08f1e4299776"),
+                            ProfileId = new Guid("215890fe-c504-4859-bb18-d1aef06df1f8"),
                             TwoFactorEnabled = false,
                             UserName = "jmw5598@gmail.com"
                         });
@@ -315,18 +317,18 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("d9f178d0-a1bf-4d93-b13f-dd9328c80b3a"),
-                            RoleId = new Guid("93fdb1c0-d000-42ae-8cee-287c5c7031fa")
+                            UserId = new Guid("2cba2e3a-ff88-4539-b688-e62f6bfd9651"),
+                            RoleId = new Guid("c502c688-3ce1-4d22-bbc3-c01ae8a5b31e")
                         },
                         new
                         {
-                            UserId = new Guid("d9f178d0-a1bf-4d93-b13f-dd9328c80b3a"),
-                            RoleId = new Guid("44d34c23-263a-4541-a6ba-ddcdc6e6bc9d")
+                            UserId = new Guid("2cba2e3a-ff88-4539-b688-e62f6bfd9651"),
+                            RoleId = new Guid("77f3871c-a8ad-47d4-8634-45d1aa843c99")
                         },
                         new
                         {
-                            UserId = new Guid("d9f178d0-a1bf-4d93-b13f-dd9328c80b3a"),
-                            RoleId = new Guid("3c21b629-a968-4fe2-9fee-22be79d0a223")
+                            UserId = new Guid("2cba2e3a-ff88-4539-b688-e62f6bfd9651"),
+                            RoleId = new Guid("94653a75-4a52-4af3-b194-1c856db5999f")
                         });
                 });
 
@@ -359,7 +361,7 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1fd5e9d9-11da-4163-8f18-08f1e4299776"),
+                            Id = new Guid("215890fe-c504-4859-bb18-d1aef06df1f8"),
                             FirstName = "Jason",
                             LastName = "White"
                         });
@@ -385,17 +387,17 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("008b147a-235a-4e6c-a675-e42a89f15d95"),
+                            Id = new Guid("c4d9e0d6-c463-460a-8fff-1a985abbbbc7"),
                             Name = "Administration Module"
                         },
                         new
                         {
-                            Id = new Guid("be996882-2dda-492e-bc67-006c2c1ebab3"),
+                            Id = new Guid("4b22cedd-e1ee-4ebe-a428-611f8e5d1cd8"),
                             Name = "Dashboard Module"
                         },
                         new
                         {
-                            Id = new Guid("0c78ee77-95e7-44d9-bd83-e30439232f84"),
+                            Id = new Guid("df59d9a4-b645-41dd-b4cc-cb96193ddf5a"),
                             Name = "Security Module"
                         });
                 });
@@ -427,32 +429,32 @@ namespace Xyz.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("8e6ecacb-d781-4760-946a-fcf4f1b0d4cc"),
-                            ModulePermissionId = new Guid("008b147a-235a-4e6c-a675-e42a89f15d95"),
+                            Id = new Guid("697ddfb1-551c-49f2-951e-6878741afa25"),
+                            ModulePermissionId = new Guid("c4d9e0d6-c463-460a-8fff-1a985abbbbc7"),
                             Name = "Settings"
                         },
                         new
                         {
-                            Id = new Guid("ee62f516-df49-4105-af41-164f20aa13cc"),
-                            ModulePermissionId = new Guid("008b147a-235a-4e6c-a675-e42a89f15d95"),
+                            Id = new Guid("49889c3a-1652-4fc3-9381-e126642f7823"),
+                            ModulePermissionId = new Guid("c4d9e0d6-c463-460a-8fff-1a985abbbbc7"),
                             Name = "User Accounts"
                         },
                         new
                         {
-                            Id = new Guid("8c04ef5c-3cc9-447e-bd8d-669abf5801d6"),
-                            ModulePermissionId = new Guid("be996882-2dda-492e-bc67-006c2c1ebab3"),
+                            Id = new Guid("cf82079a-20a2-4785-b238-369f5c561b05"),
+                            ModulePermissionId = new Guid("4b22cedd-e1ee-4ebe-a428-611f8e5d1cd8"),
                             Name = "Dashboard Overview"
                         },
                         new
                         {
-                            Id = new Guid("b06e333b-7cc6-44d5-ad37-7effba966572"),
-                            ModulePermissionId = new Guid("0c78ee77-95e7-44d9-bd83-e30439232f84"),
+                            Id = new Guid("6ee950e1-f6f1-4e79-9ba7-e2cc5be4b452"),
+                            ModulePermissionId = new Guid("df59d9a4-b645-41dd-b4cc-cb96193ddf5a"),
                             Name = "Security General"
                         },
                         new
                         {
-                            Id = new Guid("9399ac6c-1c9a-4803-bfae-ec4ddc41341d"),
-                            ModulePermissionId = new Guid("0c78ee77-95e7-44d9-bd83-e30439232f84"),
+                            Id = new Guid("f3251c41-883e-4b73-8408-98e7e123ffb8"),
+                            ModulePermissionId = new Guid("df59d9a4-b645-41dd-b4cc-cb96193ddf5a"),
                             Name = "Security Permissions"
                         });
                 });
@@ -493,23 +495,19 @@ namespace Xyz.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasColumnOrder(0);
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("created_by_id")
-                        .HasColumnOrder(4);
+                        .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on")
-                        .HasColumnOrder(1);
+                        .HasColumnName("created_on");
 
                     b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("delete_on")
-                        .HasColumnOrder(3);
+                        .HasColumnName("delete_on");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -523,13 +521,11 @@ namespace Xyz.Infrastructure.Migrations
 
                     b.Property<Guid>("UpdatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("updated_by_id")
-                        .HasColumnOrder(5);
+                        .HasColumnName("updated_by_id");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_on")
-                        .HasColumnOrder(2);
+                        .HasColumnName("updated_on");
 
                     b.HasKey("Id")
                         .HasName("pk_template_module_permission_names");
@@ -665,23 +661,19 @@ namespace Xyz.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasColumnOrder(0);
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("created_by_id")
-                        .HasColumnOrder(4);
+                        .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on")
-                        .HasColumnOrder(1);
+                        .HasColumnName("created_on");
 
                     b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("delete_on")
-                        .HasColumnOrder(3);
+                        .HasColumnName("delete_on");
 
                     b.Property<Guid>("MakeId")
                         .HasColumnType("uuid")
@@ -697,13 +689,11 @@ namespace Xyz.Infrastructure.Migrations
 
                     b.Property<Guid>("UpdatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("updated_by_id")
-                        .HasColumnOrder(5);
+                        .HasColumnName("updated_by_id");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_on")
-                        .HasColumnOrder(2);
+                        .HasColumnName("updated_on");
 
                     b.Property<string>("Vin")
                         .IsRequired()
@@ -736,33 +726,27 @@ namespace Xyz.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasColumnOrder(0);
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("created_by_id")
-                        .HasColumnOrder(4);
+                        .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on")
-                        .HasColumnOrder(1);
+                        .HasColumnName("created_on");
 
                     b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("delete_on")
-                        .HasColumnOrder(3);
+                        .HasColumnName("delete_on");
 
                     b.Property<Guid>("UpdatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("updated_by_id")
-                        .HasColumnOrder(5);
+                        .HasColumnName("updated_by_id");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_on")
-                        .HasColumnOrder(2);
+                        .HasColumnName("updated_on");
 
                     b.HasKey("Id")
                         .HasName("pk_vehicle_makes");
@@ -781,33 +765,27 @@ namespace Xyz.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasColumnOrder(0);
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("created_by_id")
-                        .HasColumnOrder(4);
+                        .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on")
-                        .HasColumnOrder(1);
+                        .HasColumnName("created_on");
 
                     b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("delete_on")
-                        .HasColumnOrder(3);
+                        .HasColumnName("delete_on");
 
                     b.Property<Guid>("UpdatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("updated_by_id")
-                        .HasColumnOrder(5);
+                        .HasColumnName("updated_by_id");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_on")
-                        .HasColumnOrder(2);
+                        .HasColumnName("updated_on");
 
                     b.HasKey("Id")
                         .HasName("pk_vehicle_models");
@@ -826,33 +804,27 @@ namespace Xyz.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasColumnOrder(0);
+                        .HasColumnName("id");
 
                     b.Property<Guid>("CreatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("created_by_id")
-                        .HasColumnOrder(4);
+                        .HasColumnName("created_by_id");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_on")
-                        .HasColumnOrder(1);
+                        .HasColumnName("created_on");
 
                     b.Property<DateTime?>("DeleteOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("delete_on")
-                        .HasColumnOrder(3);
+                        .HasColumnName("delete_on");
 
                     b.Property<Guid>("UpdatedById")
                         .HasColumnType("uuid")
-                        .HasColumnName("updated_by_id")
-                        .HasColumnOrder(5);
+                        .HasColumnName("updated_by_id");
 
                     b.Property<DateTime>("UpdatedOn")
                         .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_on")
-                        .HasColumnOrder(2);
+                        .HasColumnName("updated_on");
 
                     b.HasKey("Id")
                         .HasName("pk_vehicle_types");

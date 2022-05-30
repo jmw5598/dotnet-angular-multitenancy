@@ -68,7 +68,7 @@ namespace Xyz.Api.Controllers
                 registrationUserAccount.UserModulePermissions = registrationUserAccount.UserModulePermissions
                     .Select(ump => 
                     {
-                        ump.AspNetUserId = newUserDto.Id;
+                        ump.UserId = newUserDto.Id;
                         return ump;
                     })
                     .ToList();
@@ -124,7 +124,7 @@ namespace Xyz.Api.Controllers
                 updatedUserAccount.UserModulePermissions = updatedUserAccount.UserModulePermissions
                     .Select(ump => 
                     {
-                        ump.AspNetUserId = updatedUserDto.Id;
+                        ump.UserId = updatedUserDto.Id;
                         return ump;
                     })
                     .ToList();

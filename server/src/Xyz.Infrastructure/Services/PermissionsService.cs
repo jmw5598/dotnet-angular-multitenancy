@@ -172,6 +172,8 @@ namespace Xyz.Infrastructure.Services
                     throw new Exception("Permission template with the giveng ID was not found!");
                 }
 
+                template.CreatedById = existingTemplateModulerPermissionName.CreatedById;
+
                 // @TODO(jason) This should update the template instead of delete and insert
                 // Will keep this for now but this should reassessed.
                 this._context.TemplateModulePermissionNames.Remove(existingTemplateModulerPermissionName);

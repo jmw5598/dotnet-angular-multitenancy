@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using System.Security.Claims;
+
 using Xyz.Core.Dtos;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Tenant;
@@ -68,7 +70,11 @@ namespace Xyz.Api.Controllers
         {
             try
             {
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
                 var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
+                templateModulePermissionName.CreatedById = new Guid(userId);
+                templateModulePermissionName.UpdatedById = new Guid(userId);
+                
                 return Ok(
                     await this._permissionsService
                         .SaveTemplateModulePermissionName(templateModulePermissionName)
@@ -132,7 +138,10 @@ namespace Xyz.Api.Controllers
         {
             try
             {
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "";
                 var templateModulePermissionName = createModulePermissionNameDto.ToTemplateModulePermissionName();
+                templateModulePermissionName.UpdatedById = new Guid(userId);
+
                 return Ok(await this._permissionsService
                     .UpdateTemplateModulePermissionName(templateModulePermissionNameId, templateModulePermissionName));
             }

@@ -67,7 +67,7 @@ namespace Xyz.Infrastructure.Services
                     .Include(mp => mp.UserPermissions)
                     .ThenInclude(up =>  up.Permission)
                     .Include(mp => mp.ModulePermission)
-                    .Where(ump => ump.AspNetUserId.ToString() == userId)
+                    .Where(ump => ump.UserId.ToString() == userId)
                     .OrderBy(um => um.ModulePermission.Name)
                     .Select(e => e.ToDto())
                     .ToListAsync();
@@ -111,7 +111,7 @@ namespace Xyz.Infrastructure.Services
                 var modulePermissions = this._applicationDbContext.UserModulePermissions
                     .Include(mp => mp.UserPermissions)
                     .Select(e => e)
-                    .Where(ump => ump.AspNetUserId.ToString() == userId);
+                    .Where(ump => ump.UserId.ToString() == userId);
 
                 this._applicationDbContext.UserModulePermissions.RemoveRange(modulePermissions);
                 await this._applicationDbContext.UserModulePermissions.AddRangeAsync(userModulePermissions);

@@ -1,12 +1,13 @@
-using Microsoft.EntityFrameworkCore;
+using Xyz.Core.Entities.Identity;
 using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Entities.Tenant
 {
-    [Index(nameof(AspNetUserId))]
     public class UserModulePermission : BaseTemplateModulePermission
     {
-        public Guid AspNetUserId { get; set; }
+        public Guid UserId { get; set; } = default!;
+        public virtual ApplicationUser User { get; set; } = default!;
+
         public virtual ICollection<UserPermission> UserPermissions { get; set; } = default!;
         public UserModulePermissionDto ToDto()
         {

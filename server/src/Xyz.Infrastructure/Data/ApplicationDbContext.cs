@@ -70,8 +70,8 @@ namespace Xyz.Infrastructure.Data
             modelBuilder.HandleCustomIdentityTableMapping();
 
             // modelBuilder.SeedRoles();
-            modelBuilder.SeedDevUser(); // Roles are created with this
             modelBuilder.SeedPermissions();
+            modelBuilder.SeedDevUser(); // Roles are created with this
         }
         
 
