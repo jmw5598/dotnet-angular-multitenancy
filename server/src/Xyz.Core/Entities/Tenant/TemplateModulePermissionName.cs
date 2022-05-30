@@ -16,7 +16,17 @@ namespace Xyz.Core.Entities.Tenant
                 Name = this.Name,
                 Description = this.Description,
                 CreatedOn = this.CreatedOn,
+                CreatedBy = new UserDto
+                {
+                    Id = this.CreatedBy.Id,
+                    UserName = this.CreatedBy.UserName
+                },
                 UpdatedOn = this.UpdatedOn,
+                UpdatedBy = new UserDto
+                {
+                    Id = this.UpdatedBy.Id,
+                    UserName = this.UpdatedBy.UserName
+                },
                 TemplateModulePermissions = this.TemplateModulePermissions
                     ?.Select(tmp => tmp.ToDto())
                     ?.ToList() ?? new List<TemplateModulePermissionDto> {}

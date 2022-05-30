@@ -29,7 +29,7 @@ export class SecurityPermissionsComponent {
         label: 'Name',
         property: 'name',
         type: ColumnType.TEXT,
-        width: '400px'
+        width: '300px'
       } as ColumnDefinition,
       {
         label: 'Description',
@@ -41,14 +41,26 @@ export class SecurityPermissionsComponent {
         label: 'Created On',
         property: 'createdOn',
         type: ColumnType.DATE,
+        width: '125px'
+      } as ColumnDefinition,
+      {
+        label: 'Created By',
+        property: 'createdBy.userName',
+        type: ColumnType.EMAIL,
         width: '200px'
       } as ColumnDefinition,
       {
         label: 'Updated On',
         property: 'updatedOn',
         type: ColumnType.DATE,
+        width: '125px'
+      } as ColumnDefinition,
+      {
+        label: 'Updated By',
+        property: 'updatedBy.userName',
+        type: ColumnType.EMAIL,
         width: '200px'
-      } as ColumnDefinition
+      } as ColumnDefinition,
     ]
   } as TableDefinition
 

@@ -59,7 +59,9 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                IQueryable<TemplateModulePermissionName> query = this._context.TemplateModulePermissionNames;
+                IQueryable<TemplateModulePermissionName> query = this._context.TemplateModulePermissionNames
+                    .Include(t => t.CreatedBy)
+                    .Include(t => t.UpdatedBy);
                 
                 if (filter?.Query != null)
                 {
