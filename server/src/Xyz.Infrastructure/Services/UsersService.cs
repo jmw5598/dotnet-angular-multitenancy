@@ -66,6 +66,9 @@ namespace Xyz.Infrastructure.Services
                 .ThenInclude(ur => ur.Role)
                 .Include(u => u.Profile);
 
+            // @TODO filter out user with ADMIN role (this user should never be modifiable from
+            //       user account forms page)
+
             if (filter?.Query != null)
             {
                 var queryTerm = filter.Query.Trim().ToLower();

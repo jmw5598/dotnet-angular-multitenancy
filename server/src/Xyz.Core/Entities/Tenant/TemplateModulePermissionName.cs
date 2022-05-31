@@ -16,17 +16,21 @@ namespace Xyz.Core.Entities.Tenant
                 Name = this.Name,
                 Description = this.Description,
                 CreatedOn = this.CreatedOn,
-                CreatedBy = new UserDto
-                {
-                    Id = this.CreatedBy.Id,
-                    UserName = this.CreatedBy.UserName
-                },
+                CreatedBy = this.CreatedBy != null ? 
+                    new UserDto
+                    {
+                        Id = this.CreatedBy.Id,
+                        UserName = this.CreatedBy.UserName
+                    }
+                    : null,
                 UpdatedOn = this.UpdatedOn,
-                UpdatedBy = new UserDto
-                {
-                    Id = this.UpdatedBy.Id,
-                    UserName = this.UpdatedBy.UserName
-                },
+                UpdatedBy = this.UpdatedBy != null 
+                    ? new UserDto
+                    {
+                        Id = this.UpdatedBy.Id,
+                        UserName = this.UpdatedBy.UserName
+                    } 
+                    : null,
                 TemplateModulePermissions = this.TemplateModulePermissions
                     ?.Select(tmp => tmp.ToDto())
                     ?.ToList() ?? new List<TemplateModulePermissionDto> {}
