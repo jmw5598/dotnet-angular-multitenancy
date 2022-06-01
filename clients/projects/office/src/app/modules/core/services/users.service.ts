@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+
 import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
 import { UserAccountDto } from '../dtos';
-import { ModulePermission, UserPermission } from '../entities';
-
-import { Page, PageRequest, UserAccount, ValidationResult } from '../models';
+import { UserPermission } from '../entities';
+import { Page, PageRequest, UserAccount, UserModulePermissions, UserSettings, ValidationResult } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -62,6 +62,18 @@ export class UsersService {
   public getUserPermissionsByUserId(userId: string): Observable<UserPermission[]> {
     return this.http.get<UserPermission[]>(
       `${this.environmentService.getBaseApiUrl()}/users/${userId}/permissions`
+    );
+  }
+
+  public getUserSettings(): Observable<UserSettings> {
+    return this.http.get<UserSettings>(
+      `${this.environmentService.getBaseApiUrl()}/users/settings`
+    );
+  }
+
+  public getUserPermissions(): Observable<UserModulePermissions> {
+    return this.http.get<UserModulePermissions>(
+      `${this.environmentService.getBaseApiUrl()}/users/permissions`
     );
   }
 }

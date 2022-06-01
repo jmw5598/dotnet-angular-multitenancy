@@ -9,32 +9,136 @@ using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
 using Xyz.Core.Entities.Identity;
+using Xyz.Core.Entities.Tenant;
 
 namespace Xyz.Infrastructure.Services
 {
     public class UsersService : IUsersService
     {
         private readonly ILogger<UsersService> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _applicationDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
 
         public UsersService(
             ILogger<UsersService> logger, 
-            ApplicationDbContext context,
+            ApplicationDbContext applicationDbContext,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager)
         {
             this._logger = logger;
-            this._context = context;
+            this._applicationDbContext = applicationDbContext;
             this._userManager = userManager;
             this._roleManager = roleManager;
         }
 
+        public async Task<UserSettings> GetUserSettings(string userId)
+        {
+            try
+            {
+                var user = await this._applicationDbContext.Users
+                    .Include(user => user.Profile)
+                    .Where(u => u.Id.ToString() == userId)
+                    .FirstOrDefaultAsync();
+
+                return await Task.FromResult(new UserSettings {
+                    UserDetails = new UserAccountDto
+                    {
+                        Id = user.Id,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        Profile = new Profile
+                        {
+                            Id = user.Profile.Id,
+                            FirstName = user.Profile.FirstName,
+                            LastName = user.Profile.LastName,
+                            AvatarUrl = "https://i.pravatar.cc/300",
+                        }
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user settings!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
+        public async Task<ICollection<UserModulePermissionDto>> GetUserModulePermissions(string userId)
+        {
+            try
+            {
+                // @TODO will have to rework the ordering here...
+                var modulePermissions = this._applicationDbContext.UserModulePermissions
+                    .Include(mp => mp.UserPermissions)
+                    .ThenInclude(up =>  up.Permission)
+                    .Include(mp => mp.ModulePermission)
+                    .Where(ump => ump.UserId.ToString() == userId)
+                    .OrderBy(um => um.ModulePermission.Name)
+                    .Select(e => e.ToDto())
+                    .ToListAsync();
+
+                modulePermissions.Result.Select(mp => {
+                    mp.UserPermissions = mp.UserPermissions.OrderBy(up => up?.Permission?.Name).ToList();
+                    return mp;
+                });
+
+                return await modulePermissions;
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user permissions!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
+        public async Task<ICollection<UserModulePermissionDto>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        {
+            try
+            {
+                await this._applicationDbContext.UserModulePermissions.AddRangeAsync(userModulePermissions);                
+                this._applicationDbContext.SaveChanges();
+                return userModulePermissions.Select(ump => ump.ToDto()).ToList();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error saving user permissions!";
+                this._logger.LogError(ex.ToString());
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
+        public async Task<ICollection<UserModulePermissionDto>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        {
+            try
+            {
+                var modulePermissions = this._applicationDbContext.UserModulePermissions
+                    .Include(mp => mp.UserPermissions)
+                    .Select(e => e)
+                    .Where(ump => ump.UserId.ToString() == userId);
+
+                this._applicationDbContext.UserModulePermissions.RemoveRange(modulePermissions);
+                await this._applicationDbContext.UserModulePermissions.AddRangeAsync(userModulePermissions);
+
+                this._applicationDbContext.SaveChanges();
+
+                return userModulePermissions.Select(ump => ump.ToDto()).ToList();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error saving user permissions!";
+                this._logger.LogError(ex.ToString());
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
 
         public async Task<ValidationResult> VerifyEmail(string email)
         {
-            var foundEmail = this._context.Users
+            var foundEmail = this._applicationDbContext.Users
                 .FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
             
             return await Task.FromResult(
@@ -47,7 +151,7 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<ValidationResult> VerifyUserName(string userName)
         {
-            var foundUserName = this._context.Users
+            var foundUserName = this._applicationDbContext.Users
                 .FirstOrDefault(user => user.UserName.ToLower() == userName.ToLower());
 
             return await Task.FromResult(
@@ -61,7 +165,7 @@ namespace Xyz.Infrastructure.Services
         // @TODO Rename this in the interface to SearchUsers
         public async Task<Page<UserAccountDto>> SearchUsers(BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
-            IQueryable<ApplicationUser> query = this._context.Users
+            IQueryable<ApplicationUser> query = this._applicationDbContext.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
                 .Include(u => u.Profile);
@@ -100,7 +204,7 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<UserAccountDto> CreateUserAccount(UserAccount userAccount)
         {
-            using var transaction = this._context.Database.BeginTransaction();
+            using var transaction = this._applicationDbContext.Database.BeginTransaction();
 
             try 
             {
@@ -147,7 +251,7 @@ namespace Xyz.Infrastructure.Services
         {
             try 
             {
-                var user = await this._context.Users
+                var user = await this._applicationDbContext.Users
                     .Include(u => u.Profile)
                     .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
@@ -163,8 +267,8 @@ namespace Xyz.Infrastructure.Services
                 user.Profile.LastName = userAccount.User.Profile.LastName;
                 user.Profile.AvatarUrl = userAccount.User.Profile.AvatarUrl;
 
-                this._context.Users.Update(user);
-                this._context.SaveChanges();
+                this._applicationDbContext.Users.Update(user);
+                this._applicationDbContext.SaveChanges();
 
                 return new UserAccountDto
                 {
@@ -191,7 +295,7 @@ namespace Xyz.Infrastructure.Services
         {
             try
             {
-                var user = await this._context.Users
+                var user = await this._applicationDbContext.Users
                     .Include(u => u.UserRoles)
                     .ThenInclude(ur => ur.Role)
                     .Include(u => u.Profile)

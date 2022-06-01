@@ -64,7 +64,6 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPlansService, PlansService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
-builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPermissionsService, PermissionsService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 

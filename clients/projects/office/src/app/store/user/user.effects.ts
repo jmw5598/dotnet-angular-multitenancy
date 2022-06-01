@@ -4,19 +4,19 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import * as fromUser from './user.actions';
 import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
-import { UserService } from "@xyz/office/modules/core/services/user.service";
+import { UsersService } from "@xyz/office/modules/core/services";
 
 @Injectable()
 export class UserEffects {
   constructor(
     private _actions: Actions,
-    private _userService: UserService
+    private _usersService: UsersService
   ) { }
 
   public getUserSettingsRequest$ = createEffect(() => this._actions
     .pipe(
       ofType(fromUser.getUserSettingsRequest),
-      switchMap(() => this._userService.getUserSettings()
+      switchMap(() => this._usersService.getUserSettings()
         .pipe(
           mergeMap(settings => of(fromUser.getUserSettingsRequestSuccess({ settings: settings }))),
           catchError(error => {
@@ -32,7 +32,7 @@ export class UserEffects {
   public getUserPermissionsRequest$ = createEffect(() => this._actions
     .pipe(
       ofType(fromUser.getUserPermissionsRequest),
-      switchMap(() => this._userService.getUserPermissions()
+      switchMap(() => this._usersService.getUserPermissions()
         .pipe(
           mergeMap(userModulePermissions => of(fromUser.getUserPermissionsRequestSuccess({ userModulePermissions: userModulePermissions }))),
           catchError(error => {

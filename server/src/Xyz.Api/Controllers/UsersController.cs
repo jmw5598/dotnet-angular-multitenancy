@@ -1,13 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
+using System.Security.Claims;
+
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
 using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
 using Xyz.Multitenancy.Multitenancy;
-
 using Xyz.Api.Models;
 
 namespace Xyz.Api.Controllers
@@ -17,18 +18,63 @@ namespace Xyz.Api.Controllers
     public class UsersController : ControllerBase
     {
         private ILogger<UsersController> _logger;
-        private IUsersService _usersService; // Multitenancy user specific stuff
-        private IUserService _userService; // Users Serviec to tenant speicific stuff
+        private IUsersService _usersService;
 
         public UsersController(
             ILogger<UsersController> logger, 
             IUsersService usersService,
-            IUserService userService,
             ITenantAccessor<Tenant> tenantAccessor)
         {
             this._logger = logger;
             this._usersService = usersService;
-            this._userService = userService;
+        }
+
+        [Authorize(Policy = PolicyNames.RequireTenant)]
+        [HttpGet("settings")]
+        public async Task<ActionResult<UserSettings>> GetUserSettings()
+        {
+            try
+            {
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized("Unauthorized!");
+                }
+
+                return Ok(await this._usersService.GetUserSettings(userId));
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user settings!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
+        }
+
+        [Authorize(Policy = PolicyNames.RequireTenant)]
+        [HttpGet("permissions")]
+        public async Task<ActionResult<UserModulePermissions>> GetUserPermissions()
+        {
+            try
+            {
+                string? userId = User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId == null)
+                {
+                    return Unauthorized("Unauthorized!");
+                }
+
+                return Ok(new UserModulePermissions {
+                    Modules = await this._usersService.GetUserModulePermissions(userId)
+                });
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error getting user permissions!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                return BadRequest(errorMessage);
+            }
         }
 
         [Authorize(Policy = PolicyNames.RequireTenant)]
@@ -73,7 +119,7 @@ namespace Xyz.Api.Controllers
                     })
                     .ToList();
 
-                var newUserModulePermissions = await this._userService
+                var newUserModulePermissions = await this._usersService
                     .SaveUserModulePermissions(newUserDto.Id.ToString(), registrationUserAccount.UserModulePermissions);
 
                 newUserDto.UserModulePermissions = newUserModulePermissions;
@@ -95,7 +141,7 @@ namespace Xyz.Api.Controllers
             try
             {
                 var userAccountDto = await this._usersService.GetUserAccountByUserId(userId);
-                var userModulePermissions = await this._userService.GetUserModulePermissions(userId);
+                var userModulePermissions = await this._usersService.GetUserModulePermissions(userId);
                 userAccountDto.UserModulePermissions = userModulePermissions;
                 return Ok(userAccountDto);
             }
@@ -129,7 +175,7 @@ namespace Xyz.Api.Controllers
                     })
                     .ToList();
 
-                var newUserModulePermissions = await this._userService
+                var newUserModulePermissions = await this._usersService
                     .UpdateUserModulePermissions(updatedUserDto.Id.ToString(), updatedUserAccount.UserModulePermissions);
 
                 updatedUserDto.UserModulePermissions = newUserModulePermissions;
@@ -150,7 +196,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._userService.GetUserModulePermissions(userId));
+                return Ok(await this._usersService.GetUserModulePermissions(userId));
             }
             catch (Exception ex)
             {
