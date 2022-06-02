@@ -8,5 +8,6 @@ namespace Xyz.Core.Interfaces
         public Task<object> Register(Registration registration);
         public Task<object> ForgotPassword();
         public Task<object> ChangePassword();
+        public Task<AuthenticatedUser> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest);
     }
 }

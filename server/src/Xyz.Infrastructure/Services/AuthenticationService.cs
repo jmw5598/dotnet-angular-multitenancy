@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -9,6 +10,7 @@ using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
+using Xyz.Infrastructure.Data;
 using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 
@@ -20,7 +22,8 @@ namespace Xyz.Infrastructure.Services
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly MultitenancyDbContext _context;
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly MultitenancyDbContext _multitenancyDbContext;
         private readonly ITokenService _tokenService;
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
 
@@ -30,7 +33,8 @@ namespace Xyz.Infrastructure.Services
             IConfiguration configuration,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            MultitenancyDbContext context,
+            ApplicationDbContext applicationDbContext,
+            MultitenancyDbContext multitenancyDbContext,
             ITokenService tokenService,
             ITenantAccessor<Tenant> tenanatAccessor)
         {
@@ -38,7 +42,8 @@ namespace Xyz.Infrastructure.Services
             this._configuration = configuration;
             this._userManager = userManager;
             this._roleManager = roleManager;
-            this._context = context;
+            this._applicationDbContext = applicationDbContext;
+            this._multitenancyDbContext = multitenancyDbContext;
             this._tokenService = tokenService;
             this._tenantAccessor = tenanatAccessor;
         }
@@ -73,12 +78,23 @@ namespace Xyz.Infrastructure.Services
 
                 var token = await this._tokenService.CreateJwtSecurityToken(authClaims);
 
+                var savedRefreshToken = await this._applicationDbContext.RefreshTokens
+                    .Where(t => t.UserId.ToString() == user.Id.ToString() && !t.IsBlacklisted)
+                    .FirstOrDefaultAsync();
+
+                if (savedRefreshToken == null)
+                {
+                    savedRefreshToken = new RefreshToken { UserId = user.Id };
+                    this._applicationDbContext.RefreshTokens.Add(savedRefreshToken);
+                    await this._applicationDbContext.SaveChangesAsync();
+                }
+
                 return new AuthenticatedUser
                 {
                     Status = AuthenticatedStatus.AUTHENTICATED,
                     AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
                     // @TODO actually create a refresh token
-                    RefreshToken = Guid.NewGuid().ToString()
+                    RefreshToken = savedRefreshToken.Token.ToString()
                 };
             }
             
@@ -87,13 +103,13 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> Register(Registration registration)
         {
-            using var transaction = this._context.Database.BeginTransaction();
+            using var transaction = this._applicationDbContext.Database.BeginTransaction();
 
             try 
             {
                 var role = await this._roleManager.FindByNameAsync(Roles.ADMIN);
 
-                var plan = this._context.Plans.Find(registration.Plan.Id);
+                var plan = this._multitenancyDbContext.Plans.Find(registration.Plan.Id);
 
                 if (plan == null)
                 {
@@ -160,6 +176,25 @@ namespace Xyz.Infrastructure.Services
         public async Task<object> ChangePassword()
         {
             return await Task.FromResult(new {});
+        }
+
+        public async Task<AuthenticatedUser> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest)
+        {
+            try 
+            {
+                // Check if access token is a valid token
+                // Check if refresh token is not blacklisted,
+                // If both pass, generate new authenticated user object and return
+                // Also update Login to check if a refresh token already exists for the user
+                // if it does user that refresh token else create/insert new one
+                return new AuthenticatedUser { };
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error refreshing access token!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
         }
     }
 }
