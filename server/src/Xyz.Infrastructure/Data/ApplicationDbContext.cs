@@ -28,9 +28,11 @@ namespace Xyz.Infrastructure.Data
     { 
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
         private readonly IOptions<TenantsConfiguration> _configuration;
+        
 
         // Identity Datasets
         public DbSet<Profile> Profiles => Set<Profile>();
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
 
         // Entity Datasets
@@ -38,7 +40,7 @@ namespace Xyz.Infrastructure.Data
         public DbSet<VehicleMake> VehicleMakes => Set<VehicleMake>();
         public DbSet<VehicleModel> VehicleModels => Set<VehicleModel>();
         public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
-        
+
         public DbSet<ModulePermission> ModulePermissions => Set<ModulePermission>();
         public DbSet<Permission> Permissions => Set<Permission>();
         public DbSet<UserModulePermission> UserModulePermissions => Set<UserModulePermission>();
