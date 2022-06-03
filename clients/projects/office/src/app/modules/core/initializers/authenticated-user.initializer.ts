@@ -13,8 +13,7 @@ export function authenticatedUserInitializer(
 
   return () => new Promise<boolean>(resolve => {
     if (user) {
-      store.dispatch(fromAuthentication.loginUserSuccess({ authenticatedUser: user }));
-      // store.dispatch(fromAuthentication.refreshToken());
+      store.dispatch(fromAuthentication.setAuthenticatedUser({ authenticatedUser: user }));
     } else {
       store.dispatch(fromAuthentication.setAuthenticatedUser({ authenticatedUser: null }))
     }
