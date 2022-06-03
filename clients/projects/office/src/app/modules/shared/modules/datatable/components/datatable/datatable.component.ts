@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef, EventEmitter, Output } from '@angular/core';
 
-import { Page } from '@xyz/office/modules/core/models';
+import { Page, PageRequest, Sort, SortDirection } from '@xyz/office/modules/core/models';
 import { ColumnType } from '../../models/column-type.enum';
 
 import { DEFAULT_XYZ_DATATABLE_SETTINGS, XyzDatatableSettings } from '../../models/datatable-settings.model';
@@ -29,6 +29,12 @@ export class XyzDatatableComponent implements OnInit {
     } as XyzDatatableSettings;
   }
 
+  @Input()
+  public defaultSort: Sort = {
+    column: 'id',
+    direction: SortDirection.Descend
+  } as Sort;
+
   public get settings(): XyzDatatableSettings {
     return this._settings;
   }
@@ -39,11 +45,47 @@ export class XyzDatatableComponent implements OnInit {
   @Input()
   public actionsWidth: string | null = '150px';
 
+  @Output()
+  public onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
+
   public ColumnType = ColumnType;
+  public SortDirection = SortDirection;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  public pageIndexChanged(page: number): void {
+    this.onPageChange.emit({
+      index: page - 1,
+      size: this.page?.current?.size || 10,
+      sort: this.page?.current?.sort 
+        ? { ...this.page.current.sort} as Sort 
+        : null
+    } as PageRequest);
+  }
+
+  public pageSizeChanged(size: number): void {
+    this.onPageChange.emit({
+      index: 0,
+      size: size || 20,
+      sort: this.page?.current?.sort 
+        ? { ...this.page.current.sort} as Sort 
+        : this.defaultSort
+    } as PageRequest);
+  }
+
+  public sortOrderChanged(column: string, direction: string | null): void {
+    console.log("direction is ", direction);
+    const sortDirection: SortDirection | null = direction ? (direction === 'ascend' ? SortDirection.Ascend : SortDirection.Descend) : null;
+    
+    this.onPageChange.emit({
+      index: 0, 
+      size: this.page?.current?.size || 10,
+      sort: sortDirection 
+        ? { column: column, direction: sortDirection } 
+        : this.defaultSort
+    });
+  }
 }

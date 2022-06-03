@@ -32,7 +32,13 @@ export class UsersService {
   }
 
   public searchUsers(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<UserAccountDto>> {
-    const queryParams: {[key: string]: string } = { query: filter?.query || '' };
+    const queryParams: {[key: string]: string } = { 
+      query: filter?.query || '',
+      size: pageRequest.size.toString(),
+      index: pageRequest.index.toString(),
+      column: pageRequest?.sort?.column?.toString() || '',
+      direction: pageRequest?.sort?.direction?.toString() || ''
+    };
     return this.http.get<Page<UserAccountDto>>(
       `${this.environmentService.getBaseApiUrl()}/users/search`,
       { params: queryParams }

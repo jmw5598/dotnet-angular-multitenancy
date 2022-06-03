@@ -42,8 +42,13 @@ export class PermissionsService {
   public searchTemplateModulePermissionNames(
     filter: BasicQuerySearchFilter, 
     pageRequest: PageRequest): Observable<Page<TemplateModulePermissionName>> {
-
-      const queryParams: {[key: string]: string } = { query: filter?.query || '' };
+      const queryParams: {[key: string]: string } = { 
+        query: filter?.query || '',
+        size: pageRequest.size.toString(),
+        index: pageRequest.index.toString(),
+        column: pageRequest?.sort?.column?.toString() || '',
+        direction: pageRequest?.sort?.direction?.toString() || ''
+      };
       return this._http.get<Page<TemplateModulePermissionName>>(
         `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/templates/search`,
         { params: queryParams }

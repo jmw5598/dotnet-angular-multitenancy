@@ -2,15 +2,30 @@
     [nzData]="page?.elements || []"
     [nzFrontPagination]="false"
     [nzTotal]="page?.totalElements || 0"
-    [nzPageIndex]="page?.current?.index || 0"
+    [nzPageIndex]="(page?.current?.index || 0) + 1"
     
     [nzScroll]="settings.scroll"
     [nzBordered]="settings.bordered"
-    [nzSize]="settings.size">
+    [nzSize]="settings.size"
+    [nzPageSizeOptions]="settings?.pageSizeChanger?.options || [10, 20, 30]"
+    [nzShowSizeChanger]="settings?.pageSizeChanger?.show || false"
+    (nzPageIndexChange)="pageIndexChanged($event)"
+    (nzPageSizeChange)="pageSizeChanged($event)">
   <thead *ngIf="definition?.columns?.length">
     <tr>
       <ng-container *ngFor="let column of definition?.columns">
-        <th [nzWidth]="column?.width || null">{{ column.label }}</th>
+        <ng-container *ngIf="(column?.sortable || false); else nonSortableColumnTemplate">
+        <th 
+            [nzWidth]="column?.width || null" 
+            
+            [nzSortFn]="column?.sortable || null" 
+            (nzSortOrderChange)="sortOrderChanged(column.property, $event)">
+          {{ column.label }}
+        </th>
+        </ng-container>
+        <ng-template #nonSortableColumnTemplate>
+          <th [nzWidth]="column?.width || null">{{ column.label }}</th>
+        </ng-template>
       </ng-container>
       <th *ngIf="actionsContent" [nzWidth]="actionsWidth" [nzRight]="true">Actions</th>
     </tr>

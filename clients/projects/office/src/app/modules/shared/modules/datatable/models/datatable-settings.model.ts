@@ -5,10 +5,16 @@ export interface XyzDatatableScrollConfig {
   y?: string
 }
 
+export interface XyzDatatablePageSizeChanger {
+  show: boolean,
+  options: number[]
+}
+
 export interface XyzDatatableSettings {
   bordered: boolean,
   size: XyzDatatableSize,
-  scroll: XyzDatatableScrollConfig
+  scroll: XyzDatatableScrollConfig,
+  pageSizeChanger: XyzDatatablePageSizeChanger
 }
 
 export const DEFAULT_XYZ_DATATABLE_SETTINGS: XyzDatatableSettings = {
@@ -16,5 +22,9 @@ export const DEFAULT_XYZ_DATATABLE_SETTINGS: XyzDatatableSettings = {
   size: 'middle',
   scroll: {
     y: '500px'
+  },
+  pageSizeChanger: {
+    show: true,
+    options: [10, 25, 50, 100]
   }
 };
