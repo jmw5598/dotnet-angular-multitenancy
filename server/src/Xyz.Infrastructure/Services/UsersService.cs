@@ -182,9 +182,41 @@ namespace Xyz.Infrastructure.Services
                         || user.Profile.FirstName.ToLower().Contains(queryTerm)
                         || user.Profile.LastName.ToLower().Contains(queryTerm));
             }
+
+            if (pageRequest.Sort != null)
+            {
+                switch (pageRequest.Sort.Column)
+                {
+                    case "userName":
+                        query = pageRequest.Sort.Direction == SortDirection.Ascend
+                            ? query.OrderBy(u => u.UserName)
+                            : query.OrderByDescending(u => u.UserName);
+                        break;
+                    case "email":
+                        query = pageRequest.Sort.Direction == SortDirection.Ascend
+                            ? query.OrderBy(u => u.Email)
+                            : query.OrderByDescending(u => u.Email);
+                        break;
+                    case "profile.firstName":
+                        query = pageRequest.Sort.Direction == SortDirection.Ascend
+                            ? query.OrderBy(u => u.Profile.FirstName)
+                            : query.OrderByDescending(u => u.Profile.FirstName);
+                        break;
+                    case "profile.lastName":
+                        query = pageRequest.Sort.Direction == SortDirection.Ascend
+                            ? query.OrderBy(u => u.Profile.LastName)
+                            : query.OrderByDescending(u => u.Profile.LastName);
+                        break;
+                    case "id":
+                    default:
+                        query = pageRequest.Sort.Direction == SortDirection.Ascend 
+                            ? query.OrderBy(t => t.Id)
+                            : query.OrderByDescending(t => t.Id);
+                        break;
+                }
+            }
                 
             var usersSource = query
-                .OrderBy(u => u.UserName)
                 .Select(u => new UserAccountDto
                 {
                     Id = u.Id,

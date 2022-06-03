@@ -70,10 +70,31 @@ namespace Xyz.Infrastructure.Services
                         template.Name.ToLower().Contains(queryTerm)
                             || template.Description.ToLower().Contains(queryTerm));
                 }
+
+                if (pageRequest.Sort != null)
+                {
+                    switch (pageRequest.Sort.Column)
+                    {
+                        case "description":
+                            query = pageRequest.Sort.Direction == SortDirection.Ascend
+                                ? query.OrderBy(t => t.Description)
+                                : query.OrderByDescending(t => t.Description);
+                            break;
+                        case "name":
+                            query = pageRequest.Sort.Direction == SortDirection.Ascend
+                                ? query.OrderBy(t => t.Name)
+                                : query.OrderByDescending(t => t.Name);
+                            break;
+                        case "id":
+                        default:
+                            query = pageRequest.Sort.Direction == SortDirection.Ascend 
+                                ? query.OrderBy(t => t.Id)
+                                : query.OrderByDescending(t => t.Id);
+                            break;
+                    }
+                }
                     
-                var templatesSource = query
-                    .OrderBy(template => template.Name)
-                    .Select(template => template.ToDto());
+                var templatesSource = query.Select(template => template.ToDto());
 
                 return await Page<TemplateModulePermissionNameDto>.From(templatesSource, pageRequest);
             }
@@ -174,7 +195,9 @@ namespace Xyz.Infrastructure.Services
                     throw new Exception("Permission template with the giveng ID was not found!");
                 }
 
+                template.CreatedOn = existingTemplateModulerPermissionName.CreatedOn;
                 template.CreatedById = existingTemplateModulerPermissionName.CreatedById;
+                template.UpdatedOn = DateTime.UtcNow;
 
                 // @TODO(jason) This should update the template instead of delete and insert
                 // Will keep this for now but this should reassessed.

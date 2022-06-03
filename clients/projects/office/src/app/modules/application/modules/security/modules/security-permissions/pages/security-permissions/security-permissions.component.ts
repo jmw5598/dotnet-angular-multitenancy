@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 
-import { Page, PageRequest } from '@xyz/office/modules/core/models';
+import { Page, PageRequest, Sort, SortDirection } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
@@ -10,6 +10,8 @@ import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/m
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 import * as fromSecurityPermissions from '../../store';
+import { defaultSecurityPermissionsSort } from '../../constants/sort.defaults';
+import { defaultSecurityPermissionsTableDefinition } from './security-permissions-table-definition.defaults';
 
 @Component({
   selector: 'xyz-security-permissions',
@@ -22,49 +24,10 @@ export class SecurityPermissionsComponent {
 
   public securityPermissionsTemplatePage$!: Observable<Page<TemplateModulePermissionName> | null>;
 
-  public securityPermissionsTemplateTableDefinition: TableDefinition = {
-    title: 'Named Template Permisssions',
-    columns: [
-      {
-        label: 'Name',
-        property: 'name',
-        type: ColumnType.TEXT,
-        width: '300px'
-      } as ColumnDefinition,
-      {
-        label: 'Description',
-        property: 'description',
-        type: ColumnType.TEXT,
-        width: '400px'
-      } as ColumnDefinition,
-      {
-        label: 'Created On',
-        property: 'createdOn',
-        type: ColumnType.DATE,
-        width: '125px'
-      } as ColumnDefinition,
-      {
-        label: 'Created By',
-        property: 'createdBy.userName',
-        type: ColumnType.EMAIL,
-        width: '200px'
-      } as ColumnDefinition,
-      {
-        label: 'Updated On',
-        property: 'updatedOn',
-        type: ColumnType.DATE,
-        width: '125px'
-      } as ColumnDefinition,
-      {
-        label: 'Updated By',
-        property: 'updatedBy.userName',
-        type: ColumnType.EMAIL,
-        width: '200px'
-      } as ColumnDefinition,
-    ]
-  } as TableDefinition
+  public securityPermissionsTemplateTableDefinition: TableDefinition = defaultSecurityPermissionsTableDefinition;
 
   private _defaultPageRequest: PageRequest = defaultPageRequest;
+  public defaultSort: Sort = defaultSecurityPermissionsSort;
 
   public templateModulePermissionsSearchFilter$: Observable<BasicQuerySearchFilter | null>;
   public templateModulePermissionsSearchFilter!: BasicQuerySearchFilter | null;
@@ -95,6 +58,10 @@ export class SecurityPermissionsComponent {
         templateModulePermissionNameId: templateModulePermissionName.id
       })
     )
+  }
+
+  public onSecurityPermissionsPageChange(pageRequest: PageRequest): void {
+    this._searchTemplateModulePermissions(this.templateModulePermissionsSearchFilter, pageRequest);
   }
 
   private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {

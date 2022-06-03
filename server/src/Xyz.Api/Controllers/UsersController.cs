@@ -81,10 +81,16 @@ namespace Xyz.Api.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<Page<UserAccountDto>>> SearchUsersByTenant(
             [FromQuery] string? query = null,
-            [FromQuery] int? index = 0,
-            [FromQuery] int? size = 20)
+            [FromQuery] string column = "userName",
+            [FromQuery] SortDirection direction = SortDirection.Ascend,
+            [FromQuery] int index = 0,
+            [FromQuery] int size = 10)
         {
-            var pageRequest = new PageRequest { Index = index ?? 0, Size = size ?? 20 };
+            var pageRequest = new PageRequest { 
+                Index = index, 
+                Size = size,
+                Sort = new Sort { Column = column, Direction = direction }    
+            };
             var querySearchFilter = new BasicQuerySearchFilter { Query = query };
 
             try

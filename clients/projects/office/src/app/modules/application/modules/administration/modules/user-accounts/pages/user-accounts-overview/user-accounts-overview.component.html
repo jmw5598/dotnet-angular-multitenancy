@@ -29,7 +29,9 @@
       <xyz-datatable      
           [page]="userAccountsPage$ | async"
           [definition]="userAccountsTableDefinition"
-          [actionsContent]="userAccountsActions">
+          [actionsContent]="userAccountsActions"
+          [defaultSort]="defaultSort"
+          (onPageChange)="onUserAccountsPageChange($event)">
       </xyz-datatable>
     </div>
     <ng-template #userAccountsActions let-row="row">

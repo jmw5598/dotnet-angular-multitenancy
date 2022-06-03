@@ -92,10 +92,16 @@ namespace Xyz.Api.Controllers
         [HttpGet("permissions/templates/search")]
         public async Task<ActionResult<IEnumerable<TemplateModulePermissionName>>> SearchTemplateModulePermissions(
             [FromQuery] string? query = null,
+            [FromQuery] string column = "name",
+            [FromQuery] SortDirection direction = SortDirection.Ascend,
             [FromQuery] int index = 0,
-            [FromQuery] int size = 20)
+            [FromQuery] int size = 10)
         {
-            var pageRequest = new PageRequest { Index = index, Size = size };
+            var pageRequest = new PageRequest { 
+                Index = index, Size = 
+                size, 
+                Sort = new Sort { Column = column, Direction = direction }
+            };
             var querySearchFilter = new BasicQuerySearchFilter { Query = query };
 
             try

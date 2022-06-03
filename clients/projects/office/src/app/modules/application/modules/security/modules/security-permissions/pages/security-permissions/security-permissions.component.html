@@ -25,7 +25,9 @@
       <xyz-datatable      
           [page]="securityPermissionsTemplatePage$ | async"
           [definition]="securityPermissionsTemplateTableDefinition"
-          [actionsContent]="securityPermissionsTemplateActions">
+          [actionsContent]="securityPermissionsTemplateActions"
+          [defaultSort]="defaultSort"
+          (onPageChange)="onSecurityPermissionsPageChange($event)">
       </xyz-datatable>
     </div>
     <ng-template #securityPermissionsTemplateActions let-row="row">

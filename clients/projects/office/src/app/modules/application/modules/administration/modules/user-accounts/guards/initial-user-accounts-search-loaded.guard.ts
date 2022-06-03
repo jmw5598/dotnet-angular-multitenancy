@@ -5,6 +5,7 @@ import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/m
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { Page, UserAccount } from '@xyz/office/modules/core/models';
 import { catchError, combineLatest, filter, mergeMap, Observable, of, switchMap, take, tap } from 'rxjs';
+import { defaultUserAccountsSort } from '../constants/sort.defaults';
 
 import * as fromUserAccounts from '../store';
 
@@ -34,7 +35,12 @@ export class InitialUserAccountsSearchLoadedGuard implements CanActivate {
         if (!page) {
           this._store.dispatch(fromUserAccounts.searchUserAccountsRequest({
             filter: filter || defaultBasicQuerySearchFilter,
-            pageRequest: defaultPageRequest
+            pageRequest: {
+              ...defaultPageRequest,
+              sort: {
+                ...defaultUserAccountsSort
+              }
+            }
           }));
         }
       }),
