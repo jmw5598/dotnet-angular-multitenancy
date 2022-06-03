@@ -44,6 +44,27 @@ export class AuthenticationEffects {
     { dispatch: false }
   );
 
+  public refrshRequest$ = createEffect(() => this._actions
+    .pipe(
+      ofType(fromAuthentication.refreshAccessTokenRequest),
+      exhaustMap(({ refreshTokenRequest }) => this._authenticationService.refreshToken(refreshTokenRequest)
+        .pipe(
+          mergeMap(authenticatedUser => {
+            this._authenticationService.cacheAuthenticatedUser(authenticatedUser);
+            return of(fromAuthentication.refreshAccessTokenRequestSuccess({ authenticatedUser: authenticatedUser }))
+          }),
+          catchError(error => {
+            console.log("effect, error refreshign access token")
+            return of(fromAuthentication.refreshAccessTokenRequestFailure({ message: {
+              status: ResponseStatus.ERROR,
+              message: error?.error?.message || 'Invalid username/password!'
+            } as ResponseMessage }))
+          })
+        )
+      )
+    )
+  );
+
   public passwordResetReqeust$ = createEffect(() => this._actions
     .pipe(
       ofType(fromAuthentication.passwordResetRequest),

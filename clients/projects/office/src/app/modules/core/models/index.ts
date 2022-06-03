@@ -9,6 +9,7 @@ export * from './authentication/registration-plan.model';
 export * from './authentication/registration-profile.model';
 export * from './authentication/registration-user.model';
 export * from './authentication/registration.model';
+export * from './authentication/refresh-token-request.model';
 
 // paging
 export * from './paging/page-request.model';

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { delay, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 
 import { EnvironmentService, ICacheService, CACHE_SERVICE } from '@xyz/office/modules/core/services';
 import { CacheKeys } from '../../constants';
@@ -11,7 +11,9 @@ import {
   PasswordReset, 
   ResponseMessage, 
   ResponseStatus,
-  Registration } from '@xyz/office/modules/core/models';
+  Registration,
+  RefreshTokenRequest } from '@xyz/office/modules/core/models';
+import { REQUIRES_AUTHENTICATION } from '../../core/interceptors';
 
 
 @Injectable({
@@ -43,6 +45,14 @@ export class AuthenticationService {
     return this._http.post<ResponseMessage>(
       `${this._environmentService.getBaseAuthUrl()}/register`,
       registration
+    );
+  }
+
+  public refreshToken(refreshTokenRequest: RefreshTokenRequest): Observable<AuthenticatedUser> {
+    return this._http.post<AuthenticatedUser>(
+      `${this._environmentService.getBaseAuthUrl()}/token/refresh`,
+      refreshTokenRequest,
+      { context: new HttpContext().set(REQUIRES_AUTHENTICATION, false) }
     );
   }
 

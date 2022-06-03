@@ -4,7 +4,8 @@ import {
   AuthenticatedUser, 
   ResponseMessage, 
   PasswordReset, 
-  Registration } from "@xyz/office/modules/core/models";
+  Registration,
+  RefreshTokenRequest } from "@xyz/office/modules/core/models";
 
 export const loginUserRequest = createAction(
   '[Authentication] Login User Request',
@@ -44,11 +45,6 @@ export const logoutUserSuccess = createAction(
   '[Authentication] Logout User Success'
 );
 
-export const refreshAccessToken = createAction(
-  '[Authentication] Refresh Access Token'
-  // @TODO accept props??
-);
-
 export const setAuthenticatedUser = createAction(
   '[Authentication] Set Authenticated User',
   props<{ authenticatedUser: AuthenticatedUser | null }>()
@@ -71,6 +67,26 @@ export const registrationRequestFailure = createAction(
 
 export const setRegistrationResponseMessage = createAction(
   '[Authentication] Set Registration Response Message',
+  props<{ message: ResponseMessage | null }>()
+);
+
+export const refreshAccessTokenRequest = createAction(
+  '[Authentication] Refresh Access Token Request',
+  props<{ refreshTokenRequest: RefreshTokenRequest }>()
+);
+
+export const refreshAccessTokenRequestSuccess = createAction(
+  '[Authentication] Refresh Access Token Request Success',
+  props<{ authenticatedUser: AuthenticatedUser }>()
+);
+
+export const refreshAccessTokenRequestFailure = createAction(
+  '[Authentication] Refresh Access Token Request Failure',
+  props<{ message: ResponseMessage }>()
+);
+
+export const setRefreshAccessTokenResponseMessage = createAction(
+  '[Authentication] Set Refresh Access Token Response Message',
   props<{ message: ResponseMessage | null }>()
 );
 

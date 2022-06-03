@@ -24,3 +24,8 @@ export const selectRegistartionResponseMessage = createSelector(
   selectAuthenticationState,
   (state: fromAuthentication.AuthenticationState) => state.registrationRequestResponseMessage
 );
+
+export const selectRefreshAccessTokenResponseMessage = createSelector(
+  selectAuthenticationState,
+  (state: fromAuthentication.AuthenticationState) => state.refreshAccessTokenResponseMessage
+);

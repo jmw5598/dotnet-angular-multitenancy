@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -93,7 +94,6 @@ namespace Xyz.Infrastructure.Services
                 {
                     Status = AuthenticatedStatus.AUTHENTICATED,
                     AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
-                    // @TODO actually create a refresh token
                     RefreshToken = savedRefreshToken.Token.ToString()
                 };
             }
@@ -182,12 +182,40 @@ namespace Xyz.Infrastructure.Services
         {
             try 
             {
-                // Check if access token is a valid token
-                // Check if refresh token is not blacklisted,
-                // If both pass, generate new authenticated user object and return
-                // Also update Login to check if a refresh token already exists for the user
-                // if it does user that refresh token else create/insert new one
-                return new AuthenticatedUser { };
+                var isAccessTokenValid = await this._tokenService
+                    .IsValidJwtSecurityToken(refreshTokenRequest.AccessToken);
+
+                if (!isAccessTokenValid)
+                {
+                    throw new Exception("Unable to refresh access token, the supplied access token was invalid!");
+                }
+
+                var savedRefreshToken = await this._applicationDbContext.RefreshTokens
+                    .Where(t => t.Token.ToString() == refreshTokenRequest.RefreshToken && !t.IsBlacklisted)
+                    .FirstOrDefaultAsync();
+
+                if (savedRefreshToken == null)
+                {
+                    throw new Exception("Unable to refresh access token, the supplied refresh token was invalid!");
+                }
+
+                var decodedAccessToken = await this._tokenService.DecodeJwtSecurityToken(refreshTokenRequest.AccessToken);
+
+                if (decodedAccessToken == null)
+                {
+                    throw new Exception("Unable to refresh access token, decoding existing token failed!");
+                }
+
+                var authClaims = decodedAccessToken.Claims.ToList();
+
+                var token = await this._tokenService.CreateJwtSecurityToken(authClaims);
+
+                return new AuthenticatedUser
+                {
+                    Status = AuthenticatedStatus.AUTHENTICATED,
+                    AccessToken = new JwtSecurityTokenHandler().WriteToken(token),
+                    RefreshToken = savedRefreshToken.Token.ToString()
+                };
             }
             catch (Exception ex)
             {

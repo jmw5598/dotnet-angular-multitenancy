@@ -22,7 +22,7 @@ namespace Xyz.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<object> Login([FromBody] LoginRequestDto loginRequestDto)
+        public async Task<ActionResult<AuthenticatedUser>> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             try
             {
@@ -102,6 +102,20 @@ namespace Xyz.Api.Controllers
             try
             {
                 return await this._authenticationService.ChangePassword();
+            }
+            catch (Exception e)
+            {
+                this._logger.LogError($"There was an error, {e.Message}");
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("token/refresh")]
+        public async Task<ActionResult<AuthenticatedUser>> RefreshAccessToken([FromBody] RefreshTokenRequest refreshTokenRequest)
+        {
+            try
+            {
+                return Ok(await this._authenticationService.RefreshAccessToken(refreshTokenRequest));
             }
             catch (Exception e)
             {

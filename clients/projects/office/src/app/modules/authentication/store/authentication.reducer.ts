@@ -7,6 +7,7 @@ export const authenticationFeatureKey = 'authentication';
 
 export interface AuthenticationState {
   loginResponseMessage: ResponseMessage | null,
+  refreshAccessTokenResponseMessage: ResponseMessage | null,
   authenticatedUser: AuthenticatedUser | null,
   passwordResetRequestResponseMessage: ResponseMessage | null,
   registrationRequestResponseMessage: ResponseMessage | null
@@ -14,6 +15,7 @@ export interface AuthenticationState {
 
 export const initialAuthenticationState: AuthenticationState = {
   loginResponseMessage: null,
+  refreshAccessTokenResponseMessage: null,
   authenticatedUser: null,
   passwordResetRequestResponseMessage: null,
   registrationRequestResponseMessage: null
@@ -52,20 +54,51 @@ const handleRegistrationRequestResponse = (state: AuthenticationState, { message
   registrationRequestResponseMessage: message
 } as AuthenticationState);
 
+const handleRefreshTokenRequestSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
+  ...state,
+  authenticatedUser: authenticatedUser
+} as AuthenticationState);
+
+const handleSetRefreshTokenResponseMessage = (state: AuthenticationState, { message }: any) => ({
+  ...state,
+  refreshAccessTokenResponseMessage: message
+} as AuthenticationState);
+
 export const reducer = createReducer(
   initialAuthenticationState,
-  on(fromAuthentication.loginUserSuccess, handleLoginUserSuccess),
-  on(fromAuthentication.loginUserFailure, handleLoginUserFailure),
+  on(
+    fromAuthentication.loginUserSuccess, 
+    handleLoginUserSuccess
+  ),
+  on(
+    fromAuthentication.loginUserFailure, 
+    handleLoginUserFailure
+  ),
   on(
     fromAuthentication.passwordResetRequestSuccess, 
     fromAuthentication.passwordResetRequestFailure, 
     handlePasswordResetRequestResponse),
-  on(fromAuthentication.logoutUserSuccess, handleLogoutUserSuccess),
-  on(fromAuthentication.setAuthenticatedUser, handleSetAuthenticatedUser),
+  on(
+    fromAuthentication.logoutUserSuccess, 
+    handleLogoutUserSuccess
+  ),
+  on(
+    fromAuthentication.setAuthenticatedUser, 
+    handleSetAuthenticatedUser
+  ),
   on(
     fromAuthentication.registrationRequestSuccess,
     fromAuthentication.registrationRequestFailure,
     fromAuthentication.setRegistrationResponseMessage,
     handleRegistrationRequestResponse
+  ),
+  on(
+    fromAuthentication.refreshAccessTokenRequestSuccess,
+    handleRefreshTokenRequestSuccess
+  ),
+  on(
+    fromAuthentication.refreshAccessTokenRequestFailure,
+    fromAuthentication.setRefreshAccessTokenResponseMessage,
+    handleSetRefreshTokenResponseMessage
   )
 );
