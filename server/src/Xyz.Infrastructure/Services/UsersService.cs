@@ -162,16 +162,13 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        // @TODO Rename this in the interface to SearchUsers
         public async Task<Page<UserAccountDto>> SearchUsers(BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
             IQueryable<ApplicationUser> query = this._applicationDbContext.Users
                 .Include(u => u.UserRoles)
                 .ThenInclude(ur => ur.Role)
-                .Include(u => u.Profile);
-
-            // @TODO filter out user with ADMIN role (this user should never be modifiable from
-            //       user account forms page)
+                .Include(u => u.Profile)
+                .Where(user => !user.UserRoles.Any(ur => ur.Role.Name == Roles.ADMIN));
 
             if (filter?.Query != null)
             {
@@ -248,7 +245,7 @@ namespace Xyz.Infrastructure.Services
                     throw new Exception("Error creating new user!");
                 }
 
-                var addRoleIdentityResult = await this._userManager.AddToRoleAsync(userAccount.User, Roles.ADMIN);
+                var addRoleIdentityResult = await this._userManager.AddToRoleAsync(userAccount.User, Roles.USER);
 
                 if (!addRoleIdentityResult.Succeeded)
                 {
