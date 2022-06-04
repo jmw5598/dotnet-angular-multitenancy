@@ -23,6 +23,7 @@ namespace Xyz.Multitenancy.Data
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.SeedPlans();
+            modelBuilder.SeedDevLocalhostTenant();
         }
 
         /// <summary>
