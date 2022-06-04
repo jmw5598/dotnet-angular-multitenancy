@@ -5,7 +5,7 @@ namespace Xyz.Core.Entities.Tenant
 {
     public class UserModulePermission : BaseTemplateModulePermission
     {
-        public Guid UserId { get; set; } = default!;
+        public Guid UserId { get; set; } = Guid.NewGuid();
         public virtual ApplicationUser User { get; set; } = default!;
 
         public virtual ICollection<UserPermission> UserPermissions { get; set; } = default!;

@@ -22,9 +22,6 @@ namespace Xyz.Multitenancy.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
-            modelBuilder.SeedDevLocalhostTenant(); // For Dev only
-            modelBuilder.SeedDevTenant();  // For Dev only
             modelBuilder.SeedPlans();
         }
 

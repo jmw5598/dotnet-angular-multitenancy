@@ -2,16 +2,18 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
+using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
+
 using Xyz.Infrastructure.Data;
+
 using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 
@@ -27,6 +29,7 @@ namespace Xyz.Infrastructure.Services
         private readonly MultitenancyDbContext _multitenancyDbContext;
         private readonly ITokenService _tokenService;
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
+        private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
 
 
         public AuthenticationService(
@@ -37,7 +40,8 @@ namespace Xyz.Infrastructure.Services
             ApplicationDbContext applicationDbContext,
             MultitenancyDbContext multitenancyDbContext,
             ITokenService tokenService,
-            ITenantAccessor<Tenant> tenanatAccessor)
+            ITenantAccessor<Tenant> tenanatAccessor,
+            IPasswordHasher<ApplicationUser> passwordHasher)
         {
             this._logger = logger;
             this._configuration = configuration;
@@ -47,6 +51,7 @@ namespace Xyz.Infrastructure.Services
             this._multitenancyDbContext = multitenancyDbContext;
             this._tokenService = tokenService;
             this._tenantAccessor = tenanatAccessor;
+            this._passwordHasher = passwordHasher;
         }
 
         public async Task<AuthenticatedUser> Login(Credentials credentials)
@@ -103,54 +108,12 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> Register(Registration registration)
         {
-            using var transaction = this._applicationDbContext.Database.BeginTransaction();
+            using var transaction = this._multitenancyDbContext.Database.BeginTransaction();
 
             try 
             {
-                var role = await this._roleManager.FindByNameAsync(Roles.ADMIN);
-
-                var plan = this._multitenancyDbContext.Plans.Find(registration.Plan.Id);
-
-                if (plan == null)
-                {
-                    throw new Exception("Error finding selected plan!");
-                }
-
-                var tenant = new Tenant
-                {
-                    Name = registration.Company.Name.ToLower().Replace(" " , ""),
-                    DisplayName = registration.Company.Name,
-                    Guid = Guid.NewGuid().ToString(),
-                    Company = registration.Company,
-                    IsActive = false,
-                    IsConfigured = false,
-                    TenantPlan = new TenantPlan
-                    {
-                        MaxUserCount = plan.MaxUserCount,
-                        PlanId = plan.Id,
-                        Price = plan.Price,
-                        RenewalRate = plan.RenewalRate
-                    },
-                    DomainNames = "",
-                    ConnectionString = "",
-                    IpAddresses = ""
-                };
-
-                registration.User.Profile = registration.Profile;
-
-                var userIdentityResult = await this._userManager.CreateAsync(registration.User, registration.RawPassword);
-                
-                if (!userIdentityResult.Succeeded)
-                {
-                    throw new Exception("Error creating new user!");
-                }
-
-                var addRoleIdentityResult = await this._userManager.AddToRoleAsync(registration.User, Roles.ADMIN);
-
-                if (!addRoleIdentityResult.Succeeded)
-                {
-                    throw new Exception("Error adding role to new user");
-                }
+                var tenant = await this._HandleMultitenancyTenatSetup(registration);
+                await this._HandleTenantDatabaseSetup(registration, tenant.ConnectionString);
 
                 transaction.Commit();
 
@@ -223,6 +186,136 @@ namespace Xyz.Infrastructure.Services
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 throw;
             }
+        }
+
+        private async Task _HandleTenantDatabaseSetup(Registration registration, string connectionString)
+        {
+            // Create application db context and scaffold new database
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseNpgsql(connectionString)
+                .UseSnakeCaseNamingConvention()
+                .Options;
+
+            using var newTenantDbContext = new ApplicationDbContext(options);
+            newTenantDbContext.Database.Migrate();
+
+            var transaction = newTenantDbContext.Database.BeginTransaction();
+            
+            try
+            {
+                var modulePermissions = await newTenantDbContext.ModulePermissions
+                    .Include(mp => mp.Permissions)
+                    .ToListAsync();
+
+                if (modulePermissions != null)
+                {
+                    registration.User.UserModulePermissions = 
+                        this._GenerateRootAdminUserModulePermissions(registration.User.Id, modulePermissions);
+                }
+
+                registration.User.Profile = registration.Profile;
+
+                var hashedPassword = _passwordHasher.HashPassword(registration.User, registration.RawPassword);
+                registration.User.SecurityStamp = Guid.NewGuid().ToString();
+                registration.User.PasswordHash = hashedPassword;
+
+                newTenantDbContext.Users.Add(registration.User);
+
+                // Add Admin role to root user
+                var rootUserAdminRole = await newTenantDbContext.Roles
+                    .Where(role => role.Name == Roles.ADMIN)
+                    .FirstOrDefaultAsync();
+                
+                if (rootUserAdminRole != null)
+                {
+                    newTenantDbContext.UserRoles.Add(new ApplicationUserRole
+                    {
+                        UserId = registration.User.Id,
+                        RoleId = rootUserAdminRole.Id
+                    });
+                }
+
+                newTenantDbContext.SaveChanges();
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                var erroMessage = "Error setting up tenant databse!";
+                this._logger.LogError(erroMessage, registration);
+                throw;
+            }
+        }
+
+        private async Task<Tenant> _HandleMultitenancyTenatSetup(Registration registration)
+        {
+            var plan = this._multitenancyDbContext.Plans.Find(registration.Plan.Id);
+
+            if (plan == null)
+            {
+                throw new Exception("Error finding selected plan!");
+            }
+
+            var tenantDatabaseName = registration.Company.Name.ToLower().Replace(" " , "");
+
+            var server = this._configuration["TenantConnectionStringParts:Server"];
+            var port = this._configuration["TenantConnectionStringParts:Port"];
+            var userId = this._configuration["TenantConnectionStringParts:UserId"];
+            var password = this._configuration["TenantConnectionStringParts:Password"];
+
+            var newTenantConnectionString = $"Server={server};Port={port};Database={tenantDatabaseName};User Id={userId};Password={password};";
+
+            var tenant = new Tenant
+            {
+                Name = tenantDatabaseName,
+                DisplayName = registration.Company.Name,
+                Guid = Guid.NewGuid().ToString(),
+                Company = registration.Company,
+                IsActive = true,
+                IsConfigured = true,
+                TenantPlan = new TenantPlan
+                {
+                    MaxUserCount = plan.MaxUserCount,
+                    PlanId = plan.Id,
+                    Price = plan.Price,
+                    RenewalRate = plan.RenewalRate
+                },
+                DomainNames = "",
+                ConnectionString = newTenantConnectionString,
+                IpAddresses = ""
+            };
+
+            this._multitenancyDbContext.Tenants.Add(tenant);
+            await this._multitenancyDbContext.SaveChangesAsync();
+
+            return tenant;
+        }
+
+        private ICollection<UserModulePermission> _GenerateRootAdminUserModulePermissions(
+            Guid UserId, ICollection<ModulePermission> modulePermissions)
+        {
+            return modulePermissions.Select(mp => {
+                var userModulePermissionId = Guid.NewGuid();
+                return new UserModulePermission
+                {
+                    Id = userModulePermissionId,
+                    HasAccess = true,
+                    ModulePermissionId = mp.Id,
+                    UserId = UserId,
+                    UserPermissions = mp.Permissions.Select(p =>
+                        new UserPermission
+                        {
+                            CanCreate = true,
+                            CanRead = true,
+                            CanUpdate = true,
+                            CanDelete = true,
+                            PermissionId = p.Id,
+                            UserModulePermissionId = userModulePermissionId
+                        }
+                    ).ToList()
+                };
+            }).ToList();
         }
     }
 }

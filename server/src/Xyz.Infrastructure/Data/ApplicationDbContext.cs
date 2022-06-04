@@ -68,12 +68,9 @@ namespace Xyz.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             modelBuilder.HandleCustomIdentityTableMapping();
-
-            // modelBuilder.SeedRoles();
+            modelBuilder.SeedRoles();
             modelBuilder.SeedPermissions();
-            modelBuilder.SeedDevUser(); // Roles are created with this
         }
         
 
