@@ -1,4 +1,5 @@
 using Xyz.Core.Models;
+using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Interfaces
 {
@@ -9,5 +10,6 @@ namespace Xyz.Core.Interfaces
         public Task<object> ForgotPassword();
         public Task<object> ChangePassword();
         public Task<AuthenticatedUser> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest);
+        public Task<Page<TenantDto>> SearchCompanies(BasicQuerySearchFilter filter, PageRequest pageRequest);
     }
 }

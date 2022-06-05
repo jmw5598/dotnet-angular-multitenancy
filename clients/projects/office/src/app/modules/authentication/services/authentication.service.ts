@@ -12,8 +12,12 @@ import {
   ResponseMessage, 
   ResponseStatus,
   Registration,
-  RefreshTokenRequest } from '@xyz/office/modules/core/models';
+  RefreshTokenRequest,
+  Page,
+  PageRequest } from '@xyz/office/modules/core/models';
 import { REQUIRES_AUTHENTICATION } from '../../core/interceptors';
+import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
+import { Tenant } from '../../core/entities';
 
 
 @Injectable({
@@ -53,6 +57,20 @@ export class AuthenticationService {
       `${this._environmentService.getBaseAuthUrl()}/token/refresh`,
       refreshTokenRequest,
       { context: new HttpContext().set(REQUIRES_AUTHENTICATION, false) }
+    );
+  }
+
+  public searchCompanies(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<Tenant>> {
+    const queryParams: {[key: string]: string } = { 
+      query: filter?.query || '',
+      size: pageRequest.size.toString(),
+      index: pageRequest.index.toString(),
+      column: pageRequest?.sort?.column?.toString() || '',
+      direction: pageRequest?.sort?.direction?.toString() || ''
+    };
+    return this._http.get<Page<Tenant>>(
+      `${this._environmentService.getBaseAuthUrl()}/companies/search`,
+      { params: queryParams }
     );
   }
 

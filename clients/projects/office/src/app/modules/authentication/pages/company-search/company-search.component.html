@@ -1,0 +1,46 @@
+<nz-card class="bordered-none" style="width:476px;" [@fadeAnimation]>
+  <form nz-form  class="w-100">
+    <nz-page-header nzTitle="Find Your Company" class="px-0 pb-3 pt-0"></nz-page-header>
+    <nz-form-item>
+      <nz-form-control>
+        <input
+          placeholder="Company Name"
+          nz-input
+          row="4"
+          (input)="onSearch($event)"
+          [nzAutocomplete]="companiesSearchResultsTemplate" />
+        <nz-autocomplete 
+            #companiesSearchResultsTemplate 
+            (selectionChange)="onSelection($event)">
+          <nz-auto-option 
+              *ngFor="let option of (searchCompaniesPage$ | async)?.elements" 
+              [nzValue]="option"
+              [nzLabel]="option?.company?.name || 'N/A'">
+            <div class="flex flex-row align-items-start">
+              <div class="mr-2">
+                <nz-avatar nzSize="small" nzIcon="user"></nz-avatar>
+              </div>
+              <div class="flex flex-column">
+                <span>{{ option.displayName }}</span>
+                <small>https://devcompany.localhost:4200</small>
+              </div>
+            </div>
+          </nz-auto-option>
+        </nz-autocomplete>
+      </nz-form-control>
+    </nz-form-item>
+    <button 
+        nz-button 
+        role="button"
+        type="button"
+        class="block w-100" 
+        [nzType]="'primary'" 
+        [disabled]="selectedCompany === null"
+        (click)="onLoginToCompany(selectedCompany)">
+      Log in to Company
+    </button>
+    <div class="text-center mt-4">
+      Or <a routerLink="/auth/register">register now!</a>
+    </div>
+  </form>
+</nz-card>

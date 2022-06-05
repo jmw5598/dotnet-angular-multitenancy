@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Xyz.Api.Models;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
+using Xyz.Core.Dtos;
 
 namespace Xyz.Api.Controllers
 {
@@ -121,6 +122,32 @@ namespace Xyz.Api.Controllers
             {
                 this._logger.LogError($"There was an error, {e.Message}");
                 return BadRequest(e.Message);
+            }
+        }
+
+        [HttpGet("companies/search")]
+        public async Task<ActionResult<Page<TenantDto>>> SearchCompanies(
+            [FromQuery] string? query = null,
+            [FromQuery] string column = "id",
+            [FromQuery] SortDirection direction = SortDirection.Ascend,
+            [FromQuery] int index = 0,
+            [FromQuery] int size = 10)
+        {
+            var filter = new BasicQuerySearchFilter { Query = query };
+            var pageRequest = new PageRequest { 
+                Index = index, 
+                Size = size,
+                Sort = new Sort { Column = column, Direction = direction }    
+            };
+            try
+            {
+                return Ok(await this._authenticationService.SearchCompanies(filter, pageRequest));
+            }
+            catch (Exception e)
+            {
+                var errorMessage = "Error searching companies!";
+                this._logger.LogError(errorMessage, new { Exception = e });
+                return BadRequest(errorMessage);
             }
         }
     }

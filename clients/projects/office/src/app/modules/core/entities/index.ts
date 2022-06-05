@@ -13,3 +13,4 @@ export * from './base-template-permission.entity';
 export * from './template-module-permission-name.entity';
 export * from './template-module-permission.entity';
 export * from './base-template-permission.entity';
+export * from './tenant.entity';

@@ -3,7 +3,15 @@ import { environment } from '@xyz/office/env/environment';
 
 export interface EnvironmentSettings {
   production: boolean,
-  api: ApiSettings
+  api: ApiSettings,
+  client: ClientSettings
+}
+
+export interface ClientSettings {
+  protocol: string,
+  subdomain: string,
+  domain: string,
+  port: string,
 }
 
 export interface ApiSettings {
@@ -28,6 +36,10 @@ export class EnvironmentService {
 
   public getEnvironmentSettings(): EnvironmentSettings {
     return this._env;
+  }
+
+  public getSection(section: string): any {
+    return {...this._env}[section];
   }
 
   public getBaseApiUrl(): string {

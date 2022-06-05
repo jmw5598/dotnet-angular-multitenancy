@@ -29,3 +29,8 @@ export const selectRefreshAccessTokenResponseMessage = createSelector(
   selectAuthenticationState,
   (state: fromAuthentication.AuthenticationState) => state.refreshAccessTokenResponseMessage
 );
+
+export const selectSearchCompaniesPage = createSelector(
+  selectAuthenticationState,
+  (state: fromAuthentication.AuthenticationState) => state.searchCompaniesPage
+);

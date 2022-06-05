@@ -1,3 +1,5 @@
+using Xyz.Core.Dtos;
+
 namespace Xyz.Core.Entities.Multitenancy
 {
     public class Company
@@ -6,5 +8,14 @@ namespace Xyz.Core.Entities.Multitenancy
         public string Name { get; set; } = default!;
 
         public ICollection<Tenant> Tenants { get; set; } = default!;
+    
+        public CompanyDto ToDto()
+        {
+            return new CompanyDto
+            {
+                Id = this.Id,
+                Name = this.Name
+            };
+        }
     }
 }

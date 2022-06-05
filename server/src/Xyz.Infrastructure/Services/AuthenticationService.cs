@@ -11,6 +11,7 @@ using Xyz.Core.Entities.Identity;
 using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
+using Xyz.Core.Dtos;
 
 using Xyz.Infrastructure.Data;
 
@@ -183,6 +184,32 @@ namespace Xyz.Infrastructure.Services
             catch (Exception ex)
             {
                 var errorMessage = "Error refreshing access token!";
+                this._logger.LogError(errorMessage, new { Exception = ex });
+                throw;
+            }
+        }
+
+        public async Task<Page<TenantDto>> SearchCompanies(BasicQuerySearchFilter filter, PageRequest pageRequest)
+        {
+            try
+            {
+                IQueryable<Tenant> query = this._multitenancyDbContext.Tenants.Include(t => t.Company)
+                    .Where(tenant => tenant.DisplayName.Trim().ToLower().IndexOf("localhost") == -1);
+
+                if (filter?.Query != null)
+                {
+                    var queryTerm = filter.Query.Trim().ToLower();
+                    query = query
+                        .Where(tenant => tenant.Company.Name.ToLower().Contains(queryTerm));
+                }
+                    
+                var tenantsSource = query.Select(tenant => tenant.ToDto());
+
+                return await Page<TenantDto>.From(tenantsSource, pageRequest);
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Error searching companies!";
                 this._logger.LogError(errorMessage, new { Exception = ex });
                 throw;
             }

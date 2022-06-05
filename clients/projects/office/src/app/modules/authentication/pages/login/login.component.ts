@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { Credentials, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
+import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable } from 'rxjs';
 
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
   public loginResponseMessage$!: Observable<ResponseMessage | null>;
 
   constructor(
+    private _environmentService: EnvironmentService,
     private _store: Store<fromAuthentication.AuthenticationState>,
     private _formBuilder: FormBuilder
   ) {
@@ -29,6 +31,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginResponseMessage$ = this._store.select(fromAuthentication.selectedLoginResponseMessage);
+  }
+
+  public get findCompanyUrl(): string {
+    const client: ClientSettings = this._environmentService.getSection("client");
+    return `${client.protocol}://${client.domain}${ client?.port ? ':' + client.port : ''}`;
   }
 
   public onLoginUser(credentials: Credentials): void {

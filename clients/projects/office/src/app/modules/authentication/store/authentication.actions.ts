@@ -1,11 +1,18 @@
 import { createAction, props } from "@ngrx/store";
+
+import { BasicQuerySearchFilter } from "../../shared/modules/query-search-filter";
+
 import { 
   Credentials, 
   AuthenticatedUser, 
   ResponseMessage, 
   PasswordReset, 
   Registration,
-  RefreshTokenRequest } from "@xyz/office/modules/core/models";
+  RefreshTokenRequest,
+  Page,
+  PageRequest } from "@xyz/office/modules/core/models";
+
+import { Tenant } from '@xyz/office/modules/core/entities';
 
 export const loginUserRequest = createAction(
   '[Authentication] Login User Request',
@@ -90,4 +97,22 @@ export const setRefreshAccessTokenResponseMessage = createAction(
   props<{ message: ResponseMessage | null }>()
 );
 
-// @TODO actions to actually do the reset and success/failure for that action
+export const searchCompaniesRequest = createAction(
+  '[Authentication] Search Companies Request',
+  props<{ filter: BasicQuerySearchFilter, pageRequest: PageRequest }>()
+);
+
+export const searchCompaniesRequestSuccess = createAction(
+  '[Authentication] Search Companies Request Success',
+  props<{ page: Page<Tenant> }>()
+);
+
+export const searchCompaniesRequestFailure = createAction(
+  '[Authentication] Search Companies Request Failure',
+  props<{ message: ResponseMessage  }>()
+);
+
+export const setSearchCompaniesPage = createAction(
+  '[Authentication] Set Search Companies Page',
+  props<{ page: Page<Tenant> | null  }>()
+);

@@ -11,6 +11,12 @@ export const environment = {
     port: '7133',
     apiSlug: 'api',
     authSlug: 'api/auth'
+  },
+  client: {
+    protocol: 'http',
+    subdomain: '',
+    domain: 'localhost',
+    port: '4200'
   }
 };
 

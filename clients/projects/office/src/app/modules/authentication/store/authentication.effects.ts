@@ -3,10 +3,11 @@ import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, mergeMap, of, switchMap, tap } from "rxjs";
 
-import { ResponseMessage, ResponseStatus, AuthenticatedUser } from "@xyz/office/modules/core/models";
+import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
 import { AuthenticationService } from "../services/authentication.service";
 
 import * as fromAuthentication from './authentication.actions';
+import { Tenant } from "../../core/entities";
 
 @Injectable()
 export class AuthenticationEffects {
@@ -109,6 +110,24 @@ export class AuthenticationEffects {
             } as ResponseMessage }));
           })
         )
+      )
+    )
+  );
+
+  public searchCompaniesRequest = createEffect(() => this._actions
+    .pipe(
+      ofType(fromAuthentication.searchCompaniesRequest),
+      switchMap(({ filter, pageRequest }) => 
+        this._authenticationService.searchCompanies(filter, pageRequest)
+          .pipe(
+            mergeMap((page: Page<Tenant>) => of(fromAuthentication.searchCompaniesRequestSuccess({ page: page }))),
+            catchError((error: any) => of(fromAuthentication.searchCompaniesRequestFailure({
+              message: {
+                status: ResponseStatus.ERROR,
+                message: error.error || 'Error searching companies!'
+              } as ResponseMessage
+            })))
+          )
       )
     )
   );

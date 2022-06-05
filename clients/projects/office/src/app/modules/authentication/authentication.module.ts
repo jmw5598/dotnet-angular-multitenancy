@@ -14,6 +14,8 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzStepsModule } from 'ng-zorro-antd/steps';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 
@@ -28,6 +30,7 @@ import { RegistrationProfileFormComponent } from './components/registration-prof
 import { RegistrationPlanFormComponent } from './components/registration-plan-form/registration-plan-form.component';
 import { RegistrationCompanyFormComponent } from './components/registration-company-form/registration-company-form.component';
 import { RegistrationCompleteComponent } from './components/registration-complete/registration-complete.component';
+import { CompanySearchComponent } from './pages/company-search/company-search.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,8 @@ import { RegistrationCompleteComponent } from './components/registration-complet
     RegistrationProfileFormComponent,
     RegistrationPlanFormComponent,
     RegistrationCompanyFormComponent,
-    RegistrationCompleteComponent
+    RegistrationCompleteComponent,
+    CompanySearchComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +62,9 @@ import { RegistrationCompleteComponent } from './components/registration-complet
     NzSpinModule,
     NzStepsModule,
     NzIconModule,
-    NzSelectModule
+    NzSelectModule,
+    NzAutocompleteModule,
+    NzAvatarModule
   ]
 })
 export class AuthenticationModule { }

@@ -2,6 +2,8 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
+using Xyz.Core.Dtos;
+
 namespace Xyz.Core.Entities.Multitenancy
 {
     /// <summary>
@@ -48,5 +50,16 @@ namespace Xyz.Core.Entities.Multitenancy
         
         public Guid TenantPlanId { get; set; } = default!;
         public TenantPlan TenantPlan { get; set; } = default!;
+
+        public TenantDto ToDto()
+        {
+            return new TenantDto
+            {
+                Id = this.Id,
+                Name = this.Name,
+                DisplayName = this.DisplayName,
+                Company = this.Company.ToDto()
+            };
+        }
     }
 }
