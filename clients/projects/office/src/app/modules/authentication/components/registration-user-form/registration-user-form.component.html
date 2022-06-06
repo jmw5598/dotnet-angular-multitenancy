@@ -7,7 +7,6 @@
       </nz-input-group>
       <ng-template #emailErrorTemplate let-control>
         <ng-container *ngIf="control.hasError('required')">Email is required!</ng-container>
-        <ng-container *ngIf="control.hasError('emailExists')">Email already exists!</ng-container>
         <ng-container *ngIf="control.hasError('email')">Invalid email format!</ng-container>
       </ng-template>
     </nz-form-control>
