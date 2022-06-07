@@ -284,20 +284,20 @@ namespace Xyz.Infrastructure.Services
                 throw new Exception("Error finding selected plan!");
             }
 
-            var tenantDatabaseName = registration.Company.Name.ToLower().Replace(" " , "");
+            var tenantGuid = Guid.NewGuid();
 
             var server = this._configuration["TenantConnectionStringParts:Server"];
             var port = this._configuration["TenantConnectionStringParts:Port"];
             var userId = this._configuration["TenantConnectionStringParts:UserId"];
             var password = this._configuration["TenantConnectionStringParts:Password"];
 
-            var newTenantConnectionString = $"Server={server};Port={port};Database={tenantDatabaseName};User Id={userId};Password={password};";
+            var newTenantConnectionString = $"Server={server};Port={port};Database={tenantGuid.ToString()};User Id={userId};Password={password};";
 
             var tenant = new Tenant
             {
                 Name = registration.Subdomain,
                 DisplayName = registration.Company.Name,
-                Guid = Guid.NewGuid().ToString(),
+                Guid = tenantGuid.ToString(),
                 Company = registration.Company,
                 IsActive = true,
                 IsConfigured = true,
