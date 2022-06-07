@@ -45,6 +45,7 @@ namespace Xyz.Api.Models
                 {
                     Id = new Guid(this.Plan.Id)
                 },
+                Subdomain = this.Company.Subdomain,
                 RawPassword = this.User.Password
             };
         }

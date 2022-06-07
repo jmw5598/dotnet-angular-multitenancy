@@ -1,6 +1,7 @@
 <nz-card class="bordered-none" style="width:476px;" [@fadeAnimation]>
   <form nz-form [formGroup]="loginForm" class="w-100" (ngSubmit)="onLoginUser(loginForm.value)">
-    <nz-page-header nzTitle="Log In" class="px-0 pb-3 pt-0"></nz-page-header>
+    <nz-page-header nzTitle="Log In" class="px-0 pb-0 pt-0"></nz-page-header>
+    <h4 class="mb-3" style="font-style: italic;">Welcome {{ (tenant$ | async)?.company?.name }}</h4>
     <nz-alert
       class="mx-0 mb-4"
       *ngIf="loginResponseMessage$ | async as message"

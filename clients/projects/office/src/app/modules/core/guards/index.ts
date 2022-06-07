@@ -1,6 +1,7 @@
 export * from './available-plans-loaded.guard';
 export * from './assignable-permissions-loaded.guard';
 export * from './assignable-permissions-loaded.guard';
+export * from './tenant-loaded-from-subdomain.guard';
 
 // Permissions
 export * from './permissions/can-create-permission.guard';

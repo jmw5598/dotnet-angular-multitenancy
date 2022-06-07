@@ -7,9 +7,9 @@
       [nzCurrent]="currentStepIndex" 
       nzDirection="horizontal" 
       nzSize="small">
+    <nz-step nzTitle="Company"></nz-step>
     <nz-step nzTitle="Login"></nz-step>
     <nz-step nzTitle="Profile"></nz-step>
-    <nz-step nzTitle="Company"></nz-step>
     <nz-step nzTitle="Plan"></nz-step>
     <nz-step nzTitle="Complete"></nz-step>
   </nz-steps>
@@ -20,11 +20,13 @@
       (ngSubmit)="onRegister(registerForm.value)">
     <ng-container [ngSwitch]="currentStepIndex">
 
-      <!-- User Details Step-->
+      <!-- Company Step -->
       <ng-container *ngSwitchCase="0">
-        <xyz-registration-user-form></xyz-registration-user-form>
+        <xyz-registration-company-form 
+            [clientSettings]="clientSettings">
+        </xyz-registration-company-form>
         <button 
-            [disabled]="registerForm?.get('user')?.invalid"
+            [disabled]="registerForm?.get('company')?.invalid"
             class="mr-1"
             type="button"
             *ngIf="currentStepIndex < 3" 
@@ -33,10 +35,33 @@
             (click)="onNextStep()">
           <span>Next</span>
         </button>
+        
+      </ng-container>
+
+      <!-- User Details Step-->
+      <ng-container *ngSwitchCase="1">
+        <xyz-registration-user-form></xyz-registration-user-form>
+        <button 
+            class="mr-1"
+            type="button"
+            nz-button 
+            nzType="default" 
+            (click)="onPreviousStep()">
+          <span>Previous</span>
+        </button>
+        <button 
+            [disabled]="registerForm?.get('user')?.invalid"
+            class="mr-1"
+            type="button"
+            nz-button 
+            nzType="default" 
+            (click)="onNextStep()">
+          <span>Next</span>
+        </button>
       </ng-container>
 
       <!-- Profile Step -->
-      <ng-container *ngSwitchCase="1">
+      <ng-container *ngSwitchCase="2">
         <xyz-registration-profile-form></xyz-registration-profile-form>
         <button 
             class="mr-1"
@@ -57,27 +82,7 @@
         </button>
       </ng-container>
 
-      <!-- Company Step -->
-      <ng-container *ngSwitchCase="2">
-        <xyz-registration-company-form></xyz-registration-company-form>
-        <button 
-            class="mr-1"
-            type="button"
-            nz-button 
-            nzType="default" 
-            (click)="onPreviousStep()">
-          <span>Previous</span>
-        </button>
-        <button 
-            [disabled]="registerForm?.get('company')?.invalid"
-            class="mr-1"
-            type="button"
-            nz-button 
-            nzType="default" 
-            (click)="onNextStep()">
-          <span>Next</span>
-        </button>
-      </ng-container>
+      
 
       <!-- Plan Step -->
       <ng-container *ngSwitchCase="3">

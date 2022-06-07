@@ -1,13 +1,19 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Credentials, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { Observable } from 'rxjs';
+
+import { Tenant } from '@xyz/office/modules/core/entities';
+
+import * as fromRoot from '@xyz/office/store';
+import * as fromTenant from '@xyz/office/store/tenant';
 
 import * as fromAuthentication from '../../store';
+
 
 @Component({
   selector: 'xyz-login',
@@ -20,17 +26,20 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
 
   public loginResponseMessage$!: Observable<ResponseMessage | null>;
+  public tenant$: Observable<Tenant | null>;
 
   constructor(
     private _environmentService: EnvironmentService,
-    private _store: Store<fromAuthentication.AuthenticationState>,
+    private _store: Store<fromRoot.RootState>,
     private _formBuilder: FormBuilder
   ) {
     this.loginForm = this._buildLoginForm();
+    this.loginResponseMessage$ = this._store.select(fromAuthentication.selectedLoginResponseMessage);
+    this.tenant$ = this._store.select(fromTenant.selectTenant);
   }
 
   ngOnInit(): void {
-    this.loginResponseMessage$ = this._store.select(fromAuthentication.selectedLoginResponseMessage);
+    
   }
 
   public get findCompanyUrl(): string {

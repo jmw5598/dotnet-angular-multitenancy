@@ -28,6 +28,8 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   public searchCompaniesPage$: Observable<Page<Tenant> | null>;
   public defaultSearchCompaniesPageRequest: PageRequest = defaultPageRequest;
 
+  public clientSettings: ClientSettings | null = null;
+
   constructor(
     @Inject(DOCUMENT)
     private _document: Document,
@@ -35,6 +37,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     private _store: Store<fromAuthentication.AuthenticationState>
   ) {
     this.searchCompaniesPage$ = this._store.select(fromAuthentication.selectSearchCompaniesPage);
+    this.clientSettings = this._environmentService.getSection('client');
   }
 
   ngOnInit(): void {

@@ -22,7 +22,9 @@
               </div>
               <div class="flex flex-column">
                 <span>{{ option.displayName }}</span>
-                <small>https://devcompany.localhost:4200</small>
+                <small>
+                  {{ clientSettings?.protocol }}://{{ option?.name }}.{{ clientSettings?.domain }}{{ clientSettings?.port ? ':' + clientSettings?.port : '' }}
+                </small>
               </div>
             </div>
           </nz-auto-option>

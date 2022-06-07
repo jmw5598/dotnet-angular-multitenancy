@@ -7,3 +7,4 @@ export * from './plans.service';
 export * from './files.service';
 export * from './permissions.service';
 export * from './users.service';
+export * from './tenants.service';

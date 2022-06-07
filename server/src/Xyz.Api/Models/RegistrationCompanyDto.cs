@@ -6,5 +6,8 @@ namespace Xyz.Api.Models
     {
         [Required]
         public string Name { get; set; } = default!;
+
+        [Required]
+        public string Subdomain { get; set; } = default!;
     }
 }

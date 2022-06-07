@@ -11,6 +11,7 @@ import * as fromAuthentication from '../../store';
 import * as fromPlans from '@xyz/office/store/plans';
 import * as fromRoot from '@xyz/office/store';
 import { Plan } from '@xyz/office/modules/core/entities';
+import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
 @Component({
   selector: 'xyz-register',
@@ -27,11 +28,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public registrationResponseMessage$!: Observable<ResponseMessage | null>;
   public availablePlans$!: Observable<Plan[] | null>;
 
+  public clientSettings: ClientSettings;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _store: Store<fromRoot.RootState>,
-    private _userValidators: UserValidators
+    private _userValidators: UserValidators,
+    private _environmentService: EnvironmentService
   ) {
+    this.clientSettings = this._environmentService.getSection('client');
+    
     this.registerForm = this._formBuilder.group({
       user: this._formBuilder.group({
         username: ['', [
@@ -56,7 +62,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         lastName: ['', [Validators.required]]
       }),
       company: this._formBuilder.group({
-        name: ['', [Validators.required]]
+        name: ['', [Validators.required]],
+        subdomain: ['', [Validators.required]]
       }),
       plan: this._formBuilder.group({
         id: [null, [Validators.required]]

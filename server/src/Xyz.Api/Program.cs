@@ -66,6 +66,7 @@ builder.Services.AddScoped<IPlansService, PlansService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IPermissionsService, PermissionsService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
+builder.Services.AddScoped<ITenantsService, TenantsService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>

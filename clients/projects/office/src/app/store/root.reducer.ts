@@ -8,13 +8,15 @@ import * as fromPlans from './plans';
 import * as fromUser from './user';
 import * as fromFiles from './files';
 import * as fromPermissions from './permissions';
+import * as fromTenant from './tenant';
 
 export interface RootState {
   [fromAuthentication.authenticationFeatureKey]: fromAuthentication.AuthenticationState,
   [fromPlans.plansFeatureKey]: fromPlans.PlansState,
   [fromUser.userFeatureKey]: fromUser.UserState,
   [fromFiles.filesFeatureKey]: fromFiles.FilesState,
-  [fromPermissions.permissionsFeatureKey]: fromPermissions.PermissionsState
+  [fromPermissions.permissionsFeatureKey]: fromPermissions.PermissionsState,
+  [fromTenant.tenantFeatureKey]: fromTenant.TenantState,
   // router: fromRouter.RouterReducerState<any>;
 }
 
@@ -25,12 +27,14 @@ export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<RootState, Acti
     [fromPlans.plansFeatureKey]: fromPlans.reducer,
     [fromUser.userFeatureKey]: fromUser.reducer,
     [fromFiles.filesFeatureKey]: fromFiles.reducer,
-    [fromPermissions.permissionsFeatureKey]: fromPermissions.reducer
+    [fromPermissions.permissionsFeatureKey]: fromPermissions.reducer,
+    [fromTenant.tenantFeatureKey]: fromTenant.reducer,
     // router: fromRouter.routerReducer,
   }),
 });
 
 import { MetaReducer } from "@ngrx/store";
+import { TenantEffects } from "./tenant";
 
 export function logger(reducer: ActionReducer<RootState>): ActionReducer<RootState> {
   return (state, action) => {
@@ -65,5 +69,6 @@ export const rootEffects: any[] = [
   fromPlans.PlansEffects,
   fromUser.UserEffects,
   fromFiles.FilesEffects,
-  fromPermissions.PermissionsEffects
+  fromPermissions.PermissionsEffects,
+  fromTenant.TenantEffects
 ];

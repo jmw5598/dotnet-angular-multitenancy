@@ -295,7 +295,7 @@ namespace Xyz.Infrastructure.Services
 
             var tenant = new Tenant
             {
-                Name = tenantDatabaseName,
+                Name = registration.Subdomain,
                 DisplayName = registration.Company.Name,
                 Guid = Guid.NewGuid().ToString(),
                 Company = registration.Company,
@@ -308,7 +308,7 @@ namespace Xyz.Infrastructure.Services
                     Price = plan.Price,
                     RenewalRate = plan.RenewalRate
                 },
-                DomainNames = "",
+                DomainNames = registration.Subdomain,
                 ConnectionString = newTenantConnectionString,
                 IpAddresses = ""
             };

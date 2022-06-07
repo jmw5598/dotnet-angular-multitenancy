@@ -7,4 +7,11 @@
       </nz-input-group>
     </nz-form-control>
   </nz-form-item>
+  <nz-form-item>
+    <nz-form-control nzErrorTip="Please input a different company url!">
+      <nz-input-group nzAddOnBefore="http://" nzAddOnAfter=".localhost:4200">
+        <input readonly type="text" nz-input formControlName="subdomain" placeholder="Company URL Preview" />
+      </nz-input-group>
+    </nz-form-control>
+  </nz-form-item>
 </div>

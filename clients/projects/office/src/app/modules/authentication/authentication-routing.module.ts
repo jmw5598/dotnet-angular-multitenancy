@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { TenantLoadedFromSubdomainGuard } from "../core/guards";
 
 import { AvailablePlansLoadedGuard } from "../core/guards/available-plans-loaded.guard";
 import { IsLoadedFromSubdomainGuard } from "./guards/is-loaded-from-subdomain.guard";
@@ -25,7 +26,10 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        canActivate: [IsNotLoadedFromSubdomainGuard],
+        canActivate: [
+          IsNotLoadedFromSubdomainGuard,
+          TenantLoadedFromSubdomainGuard
+        ],
         component: LoginComponent
       },
       {
