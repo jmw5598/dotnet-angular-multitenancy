@@ -11,8 +11,8 @@ namespace Xyz.Api.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private ILogger<AuthenticationController> _logger;
-        private IAuthenticationService _authenticationService;
+        private readonly ILogger<AuthenticationController> _logger;
+        private readonly IAuthenticationService _authenticationService;
 
         public AuthenticationController(
             ILogger<AuthenticationController> logger,

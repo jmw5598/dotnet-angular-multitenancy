@@ -10,6 +10,7 @@ using System.Text.Json.Serialization;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Interfaces;
+using Xyz.Core.Models.Configuration;
 using Xyz.Infrastructure.Data;
 using Xyz.Infrastructure.Services;
 using Xyz.Multitenancy.Data;
@@ -53,9 +54,14 @@ var tenantsConfiguration = new ConfigurationBuilder()
     )
     .Build();
 
+var tenantConnectionSettings = configuration.GetSection("TenantConnectionSettings");
+var smtpSettings = configuration.GetSection("SmtpSettings");
+
+// Configuration Options Deps
 builder.Services.Configure<MultitenancyConfiguration>(multitenancyConfiguration);
 builder.Services.Configure<TenantsConfiguration>(tenantsConfiguration);
-
+builder.Services.Configure<TenantConnectionSettings>(tenantConnectionSettings);
+builder.Services.Configure<SmtpSettings>(smtpSettings);
 
 // Add servicse
 builder.Services.AddScoped<ITenantAccessor<Tenant>, TenantAccessor<Tenant>>();
@@ -66,6 +72,7 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IPermissionsService, PermissionsService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ITenantsService, TenantsService>();
+builder.Services.AddScoped<IEmailingService, EmailingService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>
@@ -105,12 +112,14 @@ builder.Services.AddAuthentication(options => {
 // Add Policy authorizing user with tenant
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy(PolicyNames.RequireTenant,
+    options.AddPolicy(
+        Xyz.Multitenancy.Security.PolicyNames.RequireTenant,
         policy =>
         {
             policy.AddRequirements(new InCurrentTenantRequirement(new HttpContextAccessor()));
             policy.RequireAuthenticatedUser();
-        });
+        }
+    );
 });
 
 

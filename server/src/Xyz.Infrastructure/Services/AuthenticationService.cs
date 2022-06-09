@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,6 +10,7 @@ using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Entities.Tenant;
 using Xyz.Core.Models;
+using Xyz.Core.Models.Configuration;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Dtos;
 
@@ -23,7 +24,7 @@ namespace Xyz.Infrastructure.Services
     public class AuthenticationService : IAuthenticationService
     {
         private readonly ILogger<AuthenticationService> _logger;
-        private readonly IConfiguration _configuration;
+        private readonly IOptions<TenantConnectionSettings> _tenantConnectionSettings;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
         private readonly ApplicationDbContext _applicationDbContext;
@@ -31,21 +32,23 @@ namespace Xyz.Infrastructure.Services
         private readonly ITokenService _tokenService;
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
+        private readonly IEmailingService _emailingService;
 
 
         public AuthenticationService(
             ILogger<AuthenticationService> logger, 
-            IConfiguration configuration,
+            IOptions<TenantConnectionSettings> tenantConnectionSettings,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
             ApplicationDbContext applicationDbContext,
             MultitenancyDbContext multitenancyDbContext,
             ITokenService tokenService,
             ITenantAccessor<Tenant> tenanatAccessor,
-            IPasswordHasher<ApplicationUser> passwordHasher)
+            IPasswordHasher<ApplicationUser> passwordHasher,
+            IEmailingService emailingService)
         {
             this._logger = logger;
-            this._configuration = configuration;
+            this._tenantConnectionSettings = tenantConnectionSettings;
             this._userManager = userManager;
             this._roleManager = roleManager;
             this._applicationDbContext = applicationDbContext;
@@ -53,6 +56,7 @@ namespace Xyz.Infrastructure.Services
             this._tokenService = tokenService;
             this._tenantAccessor = tenanatAccessor;
             this._passwordHasher = passwordHasher;
+            this._emailingService = emailingService;
         }
 
         public async Task<AuthenticatedUser> Login(Credentials credentials)
@@ -134,6 +138,13 @@ namespace Xyz.Infrastructure.Services
 
         public async Task<object> ForgotPassword()
         {
+            var emailRequest = new EmailRequest
+            {
+                To = "jmw5598@gmail.com",
+                Subject = "Testing",
+                Body = "Testing Body"
+            };
+            await this._emailingService.SendEmailAsync(emailRequest);
             return await Task.FromResult(new {});
         }
 
@@ -286,13 +297,6 @@ namespace Xyz.Infrastructure.Services
 
             var tenantGuid = Guid.NewGuid();
 
-            var server = this._configuration["TenantConnectionStringParts:Server"];
-            var port = this._configuration["TenantConnectionStringParts:Port"];
-            var userId = this._configuration["TenantConnectionStringParts:UserId"];
-            var password = this._configuration["TenantConnectionStringParts:Password"];
-
-            var newTenantConnectionString = $"Server={server};Port={port};Database={tenantGuid.ToString()};User Id={userId};Password={password};";
-
             var tenant = new Tenant
             {
                 Name = registration.Subdomain,
@@ -309,7 +313,7 @@ namespace Xyz.Infrastructure.Services
                     RenewalRate = plan.RenewalRate
                 },
                 DomainNames = registration.Subdomain,
-                ConnectionString = newTenantConnectionString,
+                ConnectionString = this._GenerateDefaultTenantConnectionString(tenantGuid.ToString()),
                 IpAddresses = ""
             };
 
@@ -343,6 +347,17 @@ namespace Xyz.Infrastructure.Services
                     ).ToList()
                 };
             }).ToList();
+        }
+
+        private string _GenerateDefaultTenantConnectionString(string database)
+        {
+            var connectionSettings = this._tenantConnectionSettings.Value;
+            var server = connectionSettings.Server;
+            var port = connectionSettings.Port;
+            var user = connectionSettings.UserId;
+            var password = connectionSettings.Password;
+            return $@"Server={server};Port={port};Database={database};User Id={user};Password={password};";
+
         }
     }
 }
