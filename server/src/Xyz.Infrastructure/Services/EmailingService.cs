@@ -38,13 +38,20 @@ namespace Xyz.Infrastructure.Services
             try {
                 smtp.Connect(smtpSettings.Host, smtpSettings.Port, SecureSocketOptions.StartTls);
                 smtp.Authenticate(smtpSettings.User, smtpSettings.Password);
-                smtp.Send(email);
+                var response = smtp.Send(email);
+
+                if (!response.Trim().ToLower().StartsWith("ok"))
+                {
+                    throw new Exception("Error sending email", new Exception(response));
+                }
+
                 smtp.Disconnect(true);
 
                 return await Task.FromResult(true);
             }
             catch (Exception ex)
             {
+                smtp.Disconnect(true);
                 var erroMessage = "Error sending email!";
                 var logData = new { Exception = ex.Message, EmailRequest = request };
                 this._logger.LogError(erroMessage, logData);
