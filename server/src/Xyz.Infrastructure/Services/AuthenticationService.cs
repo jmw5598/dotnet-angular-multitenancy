@@ -140,7 +140,7 @@ namespace Xyz.Infrastructure.Services
         {
             var emailRequest = new EmailRequest
             {
-                To = "jmw5598@gmail.com",
+                To = "fonziebononzie@gmail.com",
                 Subject = "Testing",
                 Body = "Testing Body"
             };
