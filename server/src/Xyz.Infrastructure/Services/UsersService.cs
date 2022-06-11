@@ -263,8 +263,7 @@ namespace Xyz.Infrastructure.Services
                         FirstName = userAccount.User.Profile.FirstName,
                         LastName = userAccount.User.Profile.LastName,
                         AvatarUrl = "https://i.pravatar.cc/300",
-                    },
-                    Roles = userAccount.User.UserRoles.Select(u => u.Role).ToList()
+                    }
                 };
             }
             catch (Exception e)
@@ -308,8 +307,7 @@ namespace Xyz.Infrastructure.Services
                         FirstName = user.Profile.FirstName,
                         LastName = user.Profile.LastName,
                         AvatarUrl = "https://i.pravatar.cc/300",
-                    },
-                    Roles = user.UserRoles.Select(u => u.Role).ToList()
+                    }
                 };
             }
             catch (Exception e)
