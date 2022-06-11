@@ -10,6 +10,7 @@ using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Api.Models;
+using Xyz.Api.Security;
 
 namespace Xyz.Api.Controllers
 {
@@ -106,6 +107,7 @@ namespace Xyz.Api.Controllers
         }
 
         [Authorize(Policy = PolicyNames.RequireTenant)]
+        [Authorize(Policy = TenantPolicyNames.RequireCanTenantCreateUser)]
         [HttpPost]
         public async Task<ActionResult<UserAccountDto>> CreateUserAccount(CreateUserAccountDto createUserAccountDto)
         {   

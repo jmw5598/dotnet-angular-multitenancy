@@ -47,12 +47,18 @@ export class UserAccountsEffects {
                 message: 'Successfully create new user account!'
               } as ResponseMessage
             }))),
-            catchError((error: any) => of(fromUserAccounts.createUserAccountRequestFailure({
-              message: {
-                status: ResponseStatus.ERROR,
-                message: error.error || 'Error creating new user account!'
-              } as ResponseMessage
-            })))
+            catchError((error: any) => {
+              const message: string = error?.status === 403 
+                ? 'Forbidden, you have reached your max allowed user!' 
+                : error?.error ? error?.error : 'Error creating new user account!';
+              
+                return of(fromUserAccounts.createUserAccountRequestFailure({
+                message: {
+                  status: ResponseStatus.ERROR,
+                  message: message
+                } as ResponseMessage
+              }))
+            })
           )
       )
     )

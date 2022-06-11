@@ -4,17 +4,35 @@ namespace Xyz.Core.Util
     {
         public static string GenerateNewTenantRegistrationVerificationEmail()
         {
-            return $"";
+            // @TODO generate tenant registration verification link
+            var verificationLink = "";
+            return @$"
+                <h1>New Company Verification</h1>
+                <p>Use the link below to verify your new company account, link is valid for 24 hours.</p>
+                <a href=""""{verificationLink}"""">{verificationLink}</a>
+            ";
         }
 
         public static string GenerateNewUserAccountRegistrationVerificationEmail()
         {
-            return $"";
+            // @TODO generate user account registration verification link
+            var verificationLink = "";
+            return @$"
+                <h1>User Account Verification</h1>
+                <p>Use the link below to verify your new user account, link is valid for 24 hours.</p>
+                <a href=""""{verificationLink}"""">{verificationLink}</a>
+            ";
         }
         
         public static string GeneratePasswordResetRequestEmail()
         {
-            return $"";
+            // @TODO generate password reqset link for email
+            var passwordResetLink = "";
+            return @$"
+                <h1>Password Reset Request</h1>
+                <p>Use the link below to reset your password, link is valid for 24 hours.</p>
+                <a href=""""{passwordResetLink}"""">{passwordResetLink}</a>
+            ";
         }
     }
 }

@@ -70,7 +70,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
           if (shouldReturn) {
             this._location.back();
           }
-        } else {
+        } else if (message?.status === ResponseStatus.ERROR) {
           this._messageService.error(message?.message || 'Error!')
         }
         this._store.dispatch(fromUserAccounts.setCreateUserAccountRequestResponseMessage({ message: null } ))

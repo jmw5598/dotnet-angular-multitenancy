@@ -18,6 +18,8 @@ using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Models;
 using Xyz.Multitenancy.Security;
 
+using Xyz.Api.Security;
+
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
@@ -28,6 +30,7 @@ builder.Services.AddControllers()
     {
         // serialize enums as strings in api responses (e.g. Role)
         x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         x.JsonSerializerOptions.WriteIndented = true;
     });
     
@@ -120,6 +123,15 @@ builder.Services.AddAuthorization(options =>
         policy =>
         {
             policy.AddRequirements(new InCurrentTenantRequirement(new HttpContextAccessor()));
+            policy.RequireAuthenticatedUser();
+        }
+    );
+
+    options.AddPolicy(
+        Xyz.Api.Security.TenantPolicyNames.RequireCanTenantCreateUser,
+        policy =>
+        {
+            policy.AddRequirements(new TenantCanCreateUserRequirement(new HttpContextAccessor()));
             policy.RequireAuthenticatedUser();
         }
     );

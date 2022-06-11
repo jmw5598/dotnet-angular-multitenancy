@@ -90,6 +90,7 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.createUserAccountRequestSuccess,
     fromUserAccounts.setCreateUserAccountRequestResponseMessage,
+    fromUserAccounts.createUserAccountRequestFailure,
     handleCreateUserAccountRequestSuccess
   ),
   on(
