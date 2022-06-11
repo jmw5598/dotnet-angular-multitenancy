@@ -7,8 +7,8 @@ namespace Xyz.Core.Interfaces
 {
     public interface ITokenService
     {
-        public Task<JwtSecurityToken> CreateJwtSecurityToken(IEnumerable<Claim> claims);
-        public Task<JwtSecurityToken> DecodeJwtSecurityToken(string token);
-        public Task<bool> IsValidJwtSecurityToken(string token);
+        public Task<JwtSecurityToken> CreateJwtSecurityTokenAsync(IEnumerable<Claim> claims);
+        public Task<JwtSecurityToken> DecodeJwtSecurityTokenAsync(string token);
+        public Task<bool> IsValidJwtSecurityTokenAsync(string token);
     }
 }

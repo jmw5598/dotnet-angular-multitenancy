@@ -42,7 +42,7 @@ namespace Xyz.Api.Controllers
                     return Unauthorized("Unauthorized!");
                 }
 
-                return Ok(await this._usersService.GetUserSettings(userId));
+                return Ok(await this._usersService.GetUserSettingsAsync(userId));
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace Xyz.Api.Controllers
                 }
 
                 return Ok(new UserModulePermissions {
-                    Modules = await this._usersService.GetUserModulePermissions(userId)
+                    Modules = await this._usersService.GetUserModulePermissionsAsync(userId)
                 });
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace Xyz.Api.Controllers
 
             try
             {
-                return Ok(await this._usersService.SearchUsers(querySearchFilter, pageRequest));
+                return Ok(await this._usersService.SearchUsersAsync(querySearchFilter, pageRequest));
             }
             catch (Exception ex)
             {
@@ -114,7 +114,7 @@ namespace Xyz.Api.Controllers
                 var registrationUserAccount = createUserAccountDto.ToUserAccount();
 
                 var newUserDto = await this._usersService
-                    .CreateUserAccount(registrationUserAccount);
+                    .CreateUserAccountAsync(registrationUserAccount);
                 
                 // Assigns new AspNetUserId to the UserModulePermissions
                 registrationUserAccount.UserModulePermissions = registrationUserAccount.UserModulePermissions
@@ -126,7 +126,7 @@ namespace Xyz.Api.Controllers
                     .ToList();
 
                 var newUserModulePermissions = await this._usersService
-                    .SaveUserModulePermissions(newUserDto.Id.ToString(), registrationUserAccount.UserModulePermissions);
+                    .SaveUserModulePermissionsAsync(newUserDto.Id.ToString(), registrationUserAccount.UserModulePermissions);
 
                 newUserDto.UserModulePermissions = newUserModulePermissions;
                 
@@ -146,8 +146,8 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                var userAccountDto = await this._usersService.GetUserAccountByUserId(userId);
-                var userModulePermissions = await this._usersService.GetUserModulePermissions(userId);
+                var userAccountDto = await this._usersService.GetUserAccountByUserIdAsync(userId);
+                var userModulePermissions = await this._usersService.GetUserModulePermissionsAsync(userId);
                 userAccountDto.UserModulePermissions = userModulePermissions;
                 return Ok(userAccountDto);
             }
@@ -170,7 +170,7 @@ namespace Xyz.Api.Controllers
                 var updatedUserAccount = updateUserAccountDto.ToUserAccount();
 
                 var updatedUserDto = await this._usersService
-                    .UpdateUserAccount(userId, updatedUserAccount);
+                    .UpdateUserAccountAsync(userId, updatedUserAccount);
                 
                 // Assigns new AspNetUserId to the UserModulePermissions
                 updatedUserAccount.UserModulePermissions = updatedUserAccount.UserModulePermissions
@@ -182,7 +182,7 @@ namespace Xyz.Api.Controllers
                     .ToList();
 
                 var newUserModulePermissions = await this._usersService
-                    .UpdateUserModulePermissions(updatedUserDto.Id.ToString(), updatedUserAccount.UserModulePermissions);
+                    .UpdateUserModulePermissionsAsync(updatedUserDto.Id.ToString(), updatedUserAccount.UserModulePermissions);
 
                 updatedUserDto.UserModulePermissions = newUserModulePermissions;
                 
@@ -202,7 +202,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._usersService.GetUserModulePermissions(userId));
+                return Ok(await this._usersService.GetUserModulePermissionsAsync(userId));
             }
             catch (Exception ex)
             {
@@ -217,7 +217,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._usersService.VerifyEmail(email));
+                return Ok(await this._usersService.VerifyEmailAsync(email));
             }
             catch (Exception ex)
             {
@@ -232,7 +232,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._usersService.VerifyUserName(userName));
+                return Ok(await this._usersService.VerifyUserNameAsync(userName));
             }
             catch (Exception ex)
             {

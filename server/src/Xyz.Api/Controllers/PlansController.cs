@@ -23,7 +23,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._plansService.FindAll());
+                return Ok(await this._plansService.FindAllAsync());
             }
             catch (Exception ex)
             {

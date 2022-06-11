@@ -25,7 +25,7 @@ namespace Xyz.Infrastructure.Services
             this._configuration = configuration;
         }
 
-        public async Task<JwtSecurityToken> CreateJwtSecurityToken(IEnumerable<Claim> claims)
+        public async Task<JwtSecurityToken> CreateJwtSecurityTokenAsync(IEnumerable<Claim> claims)
         {
             var authSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(this._configuration[this._jwtSecrityKey]));
@@ -41,7 +41,7 @@ namespace Xyz.Infrastructure.Services
             return token;
         }
 
-        public async Task<JwtSecurityToken> DecodeJwtSecurityToken(string token)
+        public async Task<JwtSecurityToken> DecodeJwtSecurityTokenAsync(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var authSigningKey = new SymmetricSecurityKey(
@@ -58,7 +58,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<bool> IsValidJwtSecurityToken(string token)
+        public async Task<bool> IsValidJwtSecurityTokenAsync(string token)
         {
             if (token == null) return false;
 

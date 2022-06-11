@@ -5,11 +5,11 @@ namespace Xyz.Core.Interfaces
 {
     public interface IAuthenticationService
     {
-        public Task<AuthenticatedUser> Login(Credentials crendentials);
-        public Task<object> Register(Registration registration);
-        public Task<object> ForgotPassword();
-        public Task<object> ChangePassword();
-        public Task<AuthenticatedUser> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest);
-        public Task<Page<TenantDto>> SearchCompanies(BasicQuerySearchFilter filter, PageRequest pageRequest);
+        public Task<AuthenticatedUser> LoginAsync(Credentials crendentials);
+        public Task<object> RegisterAsync(Registration registration);
+        public Task<object> ForgotPasswordAsync();
+        public Task<object> ChangePasswordAsync();
+        public Task<AuthenticatedUser> RefreshAccessTokenAsync(RefreshTokenRequest refreshTokenRequest);
+        public Task<Page<TenantDto>> SearchCompaniesAsync(BasicQuerySearchFilter filter, PageRequest pageRequest);
     }
 }

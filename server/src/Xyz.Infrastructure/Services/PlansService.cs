@@ -20,7 +20,7 @@ namespace Xyz.Infrastructure.Services
             this._context = context;
         }
 
-        public async Task<IEnumerable<Plan>> FindAll()
+        public async Task<IEnumerable<Plan>> FindAllAsync()
         {
             return await this._context.Plans.Select(p => p).ToListAsync();
         }

@@ -6,13 +6,13 @@ namespace Xyz.Core.Interfaces
 {
     public interface IPermissionsService
     {
-        Task<IEnumerable<Permission>> FindAll();
-        Task<IEnumerable<ModulePermission>> FindAllModulePermissions();
-        Task<IEnumerable<TemplateModulePermissionNameDto>> FindAllTemplateModulePermissionNames();
-        Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNames(PageRequest pageRequest, BasicQuerySearchFilter filter);
-        Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionName(TemplateModulePermissionName template);
-        Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameById(string templateModulePermissionNameId);
-        Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameById(string templateModulePermissionNameId);
-        Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionName(string templateModulePermissionNameId, TemplateModulePermissionName template);
+        Task<IEnumerable<Permission>> FindAllAsync();
+        Task<IEnumerable<ModulePermission>> FindAllModulePermissionsAsync();
+        Task<IEnumerable<TemplateModulePermissionNameDto>> FindAllTemplateModulePermissionNamesAsync();
+        Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNamesAsync(PageRequest pageRequest, BasicQuerySearchFilter filter);
+        Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionNameAsync(TemplateModulePermissionName template);
+        Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameByIdAsync(string templateModulePermissionNameId);
+        Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameByIdAsync(string templateModulePermissionNameId);
+        Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionNameAsync(string templateModulePermissionNameId, TemplateModulePermissionName template);
     }
 }

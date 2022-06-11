@@ -27,7 +27,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._tenantsService.FindTenantFromSubdomain(subdomain));
+                return Ok(await this._tenantsService.FindTenantFromSubdomainAsync(subdomain));
             }
             catch (Exception ex)
             {

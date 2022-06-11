@@ -32,7 +32,7 @@ namespace Xyz.Infrastructure.Services
             this._roleManager = roleManager;
         }
 
-        public async Task<UserSettings> GetUserSettings(string userId)
+        public async Task<UserSettings> GetUserSettingsAsync(string userId)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermissionDto>> GetUserModulePermissions(string userId)
+        public async Task<ICollection<UserModulePermissionDto>> GetUserModulePermissionsAsync(string userId)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermissionDto>> SaveUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        public async Task<ICollection<UserModulePermissionDto>> SaveUserModulePermissionsAsync(string  userId, ICollection<UserModulePermission> userModulePermissions)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ICollection<UserModulePermissionDto>> UpdateUserModulePermissions(string  userId, ICollection<UserModulePermission> userModulePermissions)
+        public async Task<ICollection<UserModulePermissionDto>> UpdateUserModulePermissionsAsync(string  userId, ICollection<UserModulePermission> userModulePermissions)
         {
             try
             {
@@ -136,7 +136,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<ValidationResult> VerifyEmail(string email)
+        public async Task<ValidationResult> VerifyEmailAsync(string email)
         {
             var foundEmail = this._applicationDbContext.Users
                 .FirstOrDefault(user => user.Email.ToLower() == email.ToLower());
@@ -149,7 +149,7 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<ValidationResult> VerifyUserName(string userName)
+        public async Task<ValidationResult> VerifyUserNameAsync(string userName)
         {
             var foundUserName = this._applicationDbContext.Users
                 .FirstOrDefault(user => user.UserName.ToLower() == userName.ToLower());
@@ -162,7 +162,7 @@ namespace Xyz.Infrastructure.Services
             );
         }
 
-        public async Task<Page<UserAccountDto>> SearchUsers(BasicQuerySearchFilter filter, PageRequest pageRequest)
+        public async Task<Page<UserAccountDto>> SearchUsersAsync(BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
             IQueryable<ApplicationUser> query = this._applicationDbContext.Users
                 .Include(u => u.UserRoles)
@@ -231,7 +231,7 @@ namespace Xyz.Infrastructure.Services
             return await Page<UserAccountDto>.From(usersSource, pageRequest);
         }
 
-        public async Task<UserAccountDto> CreateUserAccount(UserAccount userAccount)
+        public async Task<UserAccountDto> CreateUserAccountAsync(UserAccount userAccount)
         {
             using var transaction = this._applicationDbContext.Database.BeginTransaction();
 
@@ -276,7 +276,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<UserAccountDto> UpdateUserAccount(string userId, UserAccount userAccount)
+        public async Task<UserAccountDto> UpdateUserAccountAsync(string userId, UserAccount userAccount)
         {
             try 
             {
@@ -320,7 +320,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<UserAccountDto> GetUserAccountByUserId(string userId)
+        public async Task<UserAccountDto> GetUserAccountByUserIdAsync(string userId)
         {
             try
             {

@@ -33,7 +33,7 @@ namespace Xyz.Api.Controllers
                     Password = loginRequestDto.Password
                 };
 
-                var authenticatedUser = await this._authenticationService.Login(credentials);
+                var authenticatedUser = await this._authenticationService.LoginAsync(credentials);
 
                 if (authenticatedUser == null)
                 {
@@ -67,7 +67,7 @@ namespace Xyz.Api.Controllers
             try
             {
                 return Ok(
-                    await this._authenticationService.Register(registrationDto.ToRegistration())
+                    await this._authenticationService.RegisterAsync(registrationDto.ToRegistration())
                 );
             }
             catch (Exception e)
@@ -88,7 +88,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return await this._authenticationService.ForgotPassword();
+                return await this._authenticationService.ForgotPasswordAsync();
             }
             catch (Exception e)
             {
@@ -102,7 +102,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return await this._authenticationService.ChangePassword();
+                return await this._authenticationService.ChangePasswordAsync();
             }
             catch (Exception e)
             {
@@ -116,7 +116,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._authenticationService.RefreshAccessToken(refreshTokenRequest));
+                return Ok(await this._authenticationService.RefreshAccessTokenAsync(refreshTokenRequest));
             }
             catch (Exception e)
             {
@@ -141,7 +141,7 @@ namespace Xyz.Api.Controllers
             };
             try
             {
-                return Ok(await this._authenticationService.SearchCompanies(filter, pageRequest));
+                return Ok(await this._authenticationService.SearchCompaniesAsync(filter, pageRequest));
             }
             catch (Exception e)
             {

@@ -59,7 +59,7 @@ namespace Xyz.Infrastructure.Services
             this._emailingService = emailingService;
         }
 
-        public async Task<AuthenticatedUser> Login(Credentials credentials)
+        public async Task<AuthenticatedUser> LoginAsync(Credentials credentials)
         {
             var tenant = this._tenantAccessor.Tenant;
 
@@ -87,7 +87,7 @@ namespace Xyz.Infrastructure.Services
                     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
                 }
 
-                var token = await this._tokenService.CreateJwtSecurityToken(authClaims);
+                var token = await this._tokenService.CreateJwtSecurityTokenAsync(authClaims);
 
                 var savedRefreshToken = await this._applicationDbContext.RefreshTokens
                     .Where(t => t.UserId.ToString() == user.Id.ToString() && !t.IsBlacklisted)
@@ -111,7 +111,7 @@ namespace Xyz.Infrastructure.Services
             return null;
         }
 
-        public async Task<object> Register(Registration registration)
+        public async Task<object> RegisterAsync(Registration registration)
         {
             using var transaction = this._multitenancyDbContext.Database.BeginTransaction();
 
@@ -136,7 +136,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<object> ForgotPassword()
+        public async Task<object> ForgotPasswordAsync()
         {
             var emailRequest = new EmailRequest
             {
@@ -148,17 +148,17 @@ namespace Xyz.Infrastructure.Services
             return await Task.FromResult(new {});
         }
 
-        public async Task<object> ChangePassword()
+        public async Task<object> ChangePasswordAsync()
         {
             return await Task.FromResult(new {});
         }
 
-        public async Task<AuthenticatedUser> RefreshAccessToken(RefreshTokenRequest refreshTokenRequest)
+        public async Task<AuthenticatedUser> RefreshAccessTokenAsync(RefreshTokenRequest refreshTokenRequest)
         {
             try 
             {
                 var isAccessTokenValid = await this._tokenService
-                    .IsValidJwtSecurityToken(refreshTokenRequest.AccessToken);
+                    .IsValidJwtSecurityTokenAsync(refreshTokenRequest.AccessToken);
 
                 if (!isAccessTokenValid)
                 {
@@ -174,7 +174,7 @@ namespace Xyz.Infrastructure.Services
                     throw new Exception("Unable to refresh access token, the supplied refresh token was invalid!");
                 }
 
-                var decodedAccessToken = await this._tokenService.DecodeJwtSecurityToken(refreshTokenRequest.AccessToken);
+                var decodedAccessToken = await this._tokenService.DecodeJwtSecurityTokenAsync(refreshTokenRequest.AccessToken);
 
                 if (decodedAccessToken == null)
                 {
@@ -183,7 +183,7 @@ namespace Xyz.Infrastructure.Services
 
                 var authClaims = decodedAccessToken.Claims.ToList();
 
-                var token = await this._tokenService.CreateJwtSecurityToken(authClaims);
+                var token = await this._tokenService.CreateJwtSecurityTokenAsync(authClaims);
 
                 return new AuthenticatedUser
                 {
@@ -200,7 +200,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<Page<TenantDto>> SearchCompanies(BasicQuerySearchFilter filter, PageRequest pageRequest)
+        public async Task<Page<TenantDto>> SearchCompaniesAsync(BasicQuerySearchFilter filter, PageRequest pageRequest)
         {
             try
             {

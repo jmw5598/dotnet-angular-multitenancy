@@ -4,6 +4,6 @@ namespace Xyz.Core.Interfaces
 {
     public interface ITenantsService
     {
-        public Task<TenantDto> FindTenantFromSubdomain(string subdomain);
+        public Task<TenantDto> FindTenantFromSubdomainAsync(string subdomain);
     }
 }

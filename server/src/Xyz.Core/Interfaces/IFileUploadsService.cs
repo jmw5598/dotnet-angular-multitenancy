@@ -4,6 +4,6 @@ namespace Xyz.Core.Interfaces
 {
     public interface IFilesService
     {
-        public Task<object> UploadAvatar(object file);
+        public Task<object> UploadAvatarAsync(object file);
     }
 }

@@ -21,7 +21,7 @@ namespace Xyz.Infrastructure.Services
             this._context = context;
         }
 
-        public async Task<object> UploadAvatar(object file)
+        public async Task<object> UploadAvatarAsync(object file)
         {
             throw new NotImplementedException();
         }

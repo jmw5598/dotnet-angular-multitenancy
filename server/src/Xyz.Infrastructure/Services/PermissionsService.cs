@@ -22,14 +22,14 @@ namespace Xyz.Infrastructure.Services
             this._context = context;
         }
 
-        public async Task<IEnumerable<Permission>> FindAll()
+        public async Task<IEnumerable<Permission>> FindAllAsync()
         {
             return await this._context.Permissions
                 .Select(p => p)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<ModulePermission>> FindAllModulePermissions()
+        public async Task<IEnumerable<ModulePermission>> FindAllModulePermissionsAsync()
         {
             return await this._context.ModulePermissions
                 .Include(m => m.Permissions.OrderBy(p => p.Name))
@@ -38,7 +38,7 @@ namespace Xyz.Infrastructure.Services
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<TemplateModulePermissionNameDto>> FindAllTemplateModulePermissionNames()
+        public async Task<IEnumerable<TemplateModulePermissionNameDto>> FindAllTemplateModulePermissionNamesAsync()
         {
             try
             {
@@ -55,7 +55,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNames(PageRequest pageRequest, BasicQuerySearchFilter filter)
+        public async Task<Page<TemplateModulePermissionNameDto>> SearchTemplateModulePermissionNamesAsync(PageRequest pageRequest, BasicQuerySearchFilter filter)
         {
             try
             {
@@ -106,7 +106,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionName(TemplateModulePermissionName template)
+        public async Task<TemplateModulePermissionNameDto> SaveTemplateModulePermissionNameAsync(TemplateModulePermissionName template)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameById(string templateModulePermissionNameId)
+        public async Task<TemplateModulePermissionNameDto> FindTemplateModulePermissionNameByIdAsync(string templateModulePermissionNameId)
         {
             try
             {
@@ -153,7 +153,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameById(string templateModulePermissionNameId)
+        public async Task<TemplateModulePermissionNameDto> DeleteTemplateModulerPermissionNameByIdAsync(string templateModulePermissionNameId)
         {
             try
             {
@@ -182,7 +182,7 @@ namespace Xyz.Infrastructure.Services
             }
         }
 
-        public async Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionName(string templateModulePermissionNameId, TemplateModulePermissionName template)
+        public async Task<TemplateModulePermissionNameDto> UpdateTemplateModulePermissionNameAsync(string templateModulePermissionNameId, TemplateModulePermissionName template)
         {
             try
             {

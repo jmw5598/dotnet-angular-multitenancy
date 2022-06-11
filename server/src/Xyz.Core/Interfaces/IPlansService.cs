@@ -4,6 +4,6 @@ namespace Xyz.Core.Interfaces
 {
     public interface IPlansService
     {
-        Task<IEnumerable<Plan>> FindAll();
+        Task<IEnumerable<Plan>> FindAllAsync();
     }
 }

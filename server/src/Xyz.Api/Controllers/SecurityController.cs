@@ -39,7 +39,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._permissionsService.FindAllModulePermissions());
+                return Ok(await this._permissionsService.FindAllModulePermissionsAsync());
             }
             catch (Exception ex)
             {
@@ -54,7 +54,7 @@ namespace Xyz.Api.Controllers
         {
             try
             {
-                return Ok(await this._permissionsService.FindAllTemplateModulePermissionNames());
+                return Ok(await this._permissionsService.FindAllTemplateModulePermissionNamesAsync());
             }
             catch (Exception ex)
             {
@@ -77,7 +77,7 @@ namespace Xyz.Api.Controllers
                 
                 return Ok(
                     await this._permissionsService
-                        .SaveTemplateModulePermissionName(templateModulePermissionName)
+                        .SaveTemplateModulePermissionNameAsync(templateModulePermissionName)
                 );
             }
             catch (Exception ex)
@@ -108,7 +108,7 @@ namespace Xyz.Api.Controllers
             {
                 return Ok(
                     await this._permissionsService
-                        .SearchTemplateModulePermissionNames(pageRequest, querySearchFilter)
+                        .SearchTemplateModulePermissionNamesAsync(pageRequest, querySearchFilter)
                 );
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace Xyz.Api.Controllers
             try
             {
                 return Ok(await this._permissionsService
-                    .FindTemplateModulePermissionNameById(templateModulePermissionNameId)
+                    .FindTemplateModulePermissionNameByIdAsync(templateModulePermissionNameId)
                 );
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace Xyz.Api.Controllers
                 templateModulePermissionName.UpdatedById = new Guid(userId);
 
                 return Ok(await this._permissionsService
-                    .UpdateTemplateModulePermissionName(templateModulePermissionNameId, templateModulePermissionName));
+                    .UpdateTemplateModulePermissionNameAsync(templateModulePermissionNameId, templateModulePermissionName));
             }
             catch (Exception ex)
             {
@@ -167,7 +167,7 @@ namespace Xyz.Api.Controllers
             try
             {
                 return Ok(await this._permissionsService
-                    .DeleteTemplateModulerPermissionNameById(templateModulePermissionNameId));
+                    .DeleteTemplateModulerPermissionNameByIdAsync(templateModulePermissionNameId));
             }
             catch (Exception ex)
             {

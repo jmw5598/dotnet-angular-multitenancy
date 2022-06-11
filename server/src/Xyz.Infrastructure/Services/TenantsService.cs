@@ -19,7 +19,7 @@ namespace Xyz.Infrastructure.Services
         }
 
 
-        public async Task<TenantDto> FindTenantFromSubdomain(string subdomain)
+        public async Task<TenantDto> FindTenantFromSubdomainAsync(string subdomain)
         {
             try
             {
