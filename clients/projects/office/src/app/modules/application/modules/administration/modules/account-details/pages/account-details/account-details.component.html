@@ -1,0 +1,33 @@
+<nz-page-header style="background: white;" class="bordered-bottom" nzTitle="Account Details" nzBackIcon>
+  <nz-breadcrumb nz-page-header-breadcrumb>
+    <nz-breadcrumb-item>
+      <a>Administration</a>
+    </nz-breadcrumb-item>
+    <nz-breadcrumb-item>
+      <a>Account Details</a>
+    </nz-breadcrumb-item>
+    <!-- <nz-breadcrumb-item>{{ currentSelectedTab }}</nz-breadcrumb-item> -->
+  </nz-breadcrumb>
+</nz-page-header>
+
+<div class="p-4" [@fadeAnimation]>
+  <nz-card class="w-100 p-0">
+    <nz-tabset
+        nzLinkRouter
+        nzType="card">
+      <nz-tab *ngFor="let link of defaultAccountDetailsNavigationLinks">
+        <a 
+            *nzTabLink 
+            nz-tab-link 
+            [routerLink]="[link.routerLink]" 
+            [queryParams]="link.queryParams" 
+            [queryParamsHandling]="link.queryParamsHandling">
+          {{ link.label }}
+        </a>
+      </nz-tab>
+    </nz-tabset>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </nz-card>
+</div>

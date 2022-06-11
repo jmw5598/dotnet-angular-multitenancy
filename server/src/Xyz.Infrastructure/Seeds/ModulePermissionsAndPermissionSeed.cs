@@ -33,6 +33,13 @@ namespace Xyz.Infrastructure.Seeds
                 ModulePermissionId = administrationModulePermission.Id
             };
 
+            var accountDetailsPermission = new Permission
+            {
+                Id = new Guid("0d27494f-c802-4804-8ea4-9fb5e6cacc44"),
+                Name = "Account Details",
+                ModulePermissionId = administrationModulePermission.Id
+            };
+
             // Dashboard Module
             var dashboardModulePermission = new ModulePermission
             {
@@ -82,7 +89,8 @@ namespace Xyz.Infrastructure.Seeds
                     securityPermissionsPermission,
                     dashboardOverviewPermission,
                     settingsPermissions,
-                    userAccountsPermission
+                    userAccountsPermission,
+                    accountDetailsPermission
                 }
             };
         }

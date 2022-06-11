@@ -32,15 +32,20 @@ export const defaultNavigationMenu: NavigationLink[] = [
     requiredModulePermissionName: ModulePermissionNames.ADMINISTRATION_MODULE,
     children: [
       {
-        label: 'Settings',
-        routerLink: '/admin/settings',
-        requiredPermissionName: PermissionNames.SETTINGS
+        label: 'Account Details',
+        routerLink: '/admin/account-details',
+        requiredPermissionName: PermissionNames.ACCOUNT_DETAILS
       },
       {
         label: 'User Accounts',
         routerLink: '/admin/user-accounts',
         requiredPermissionName: PermissionNames.USER_ACCOUNTS
-      }
+      },
+      {
+        label: 'Settings',
+        routerLink: '/admin/settings',
+        requiredPermissionName: PermissionNames.SETTINGS
+      },
     ]
   },
   {

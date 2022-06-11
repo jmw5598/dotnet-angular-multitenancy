@@ -15,6 +15,7 @@ export enum PermissionNames {
   SECURITY_GENERAL = 'Security General',
   SECURITY_PERMISSIONS = 'Security Permissions',
   SETTINGS = 'Settings',
+  ACCOUNT_DETAILS = 'Account Details'
 }
 
 export type UserModulePermissionsMap = {

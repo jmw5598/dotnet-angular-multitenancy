@@ -17,6 +17,14 @@ const routes: Routes = [
     loadChildren: () => import('./modules/user-accounts/user-accounts.module').then(m => m.UserAccountsModule)
   },
   {
+    path: 'account-details',
+    canActivate: [HasPermissionGuard],
+    data: {
+      requiredPermissionName: PermissionNames.ACCOUNT_DETAILS
+    },
+    loadChildren: () => import('./modules/account-details/account-details.module').then(m => m.AccountDetailsModule)
+  },
+  {
     path: '**',
     redirectTo: 'settings',
     pathMatch: 'full'
