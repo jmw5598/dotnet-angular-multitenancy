@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { Registration, ResponseMessage } from '@xyz/office/modules/core/models';
-import { MatchValidators, UserValidators, ValidationPatterns } from '@xyz/office/modules/core/validators';
+import { CompanyNameValidators, MatchValidators, UserValidators, ValidationPatterns } from '@xyz/office/modules/core/validators';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Observable } from 'rxjs';
 
@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _store: Store<fromRoot.RootState>,
-    private _userValidators: UserValidators,
+    private _companyNameValidators: CompanyNameValidators,
     private _environmentService: EnvironmentService
   ) {
     this.clientSettings = this._environmentService.getSection('client');
@@ -62,7 +62,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
         lastName: ['', [Validators.required]]
       }),
       company: this._formBuilder.group({
-        name: ['', [Validators.required]],
+        name: ['', [
+          Validators.required], [
+            this._companyNameValidators.validateCompanyName()
+          ]],
         subdomain: ['', [Validators.required]]
       }),
       plan: this._formBuilder.group({

@@ -1,10 +1,14 @@
 <div [formGroup]="formGroup">
   <h3 class="my-5">Company Details</h3>
   <nz-form-item>
-    <nz-form-control nzErrorTip="Please input your Company Name!">
+    <nz-form-control [nzErrorTip]="companyNameErrorTemplates">
       <nz-input-group nzPrefixIcon="user">
         <input type="text" nz-input formControlName="name" placeholder="Company Name" />
       </nz-input-group>
+      <ng-template #companyNameErrorTemplates let-control>
+        <ng-container *ngIf="control.hasError('required')">Please input your Company Name!</ng-container>
+        <ng-container *ngIf="control.hasError('companyExists')">Company Name already exists!</ng-container>
+      </ng-template>
     </nz-form-control>
   </nz-form-item>
   <nz-form-item>

@@ -75,6 +75,7 @@ builder.Services.AddScoped<IPermissionsService, PermissionsService>();
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ITenantsService, TenantsService>();
 builder.Services.AddScoped<IEmailingService, EmailingService>();
+builder.Services.AddScoped<ICompaniesService, CompaniesService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>
