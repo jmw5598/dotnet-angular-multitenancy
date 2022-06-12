@@ -11,6 +11,9 @@ import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 
+import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
+import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
+
 import { AccountDetailsRoutingModule } from './account-details-routing.module';
 import { AccountDetailsComponent } from './pages/account-details/account-details.component';
 import { AccountInformationComponent } from './pages/account-information/account-information.component';
@@ -25,6 +28,8 @@ import { BillingComponent } from './pages/billing/billing.component';
   imports: [
     CommonModule,
     AccountDetailsRoutingModule,
+    XyzDatatableModule,
+    XyzQuerySearchFilterModule,
     NzIconModule,
     NzButtonModule,
     NzPageHeaderModule,

@@ -56,8 +56,4 @@ export class UserAccountsOverviewComponent {
       pageRequest: pageRequest
     }));
   }
-
-  public edit(user: UserAccountDto): void {
-    console.log("Editing: ", user)
-  }
 }
