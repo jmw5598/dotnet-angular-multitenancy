@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Xyz.Core.Models;
 
+using Xyz.Core.Dtos;
+
 namespace Xyz.Core.Entities.Multitenancy
 {
     public class TenantPlan
@@ -16,6 +18,18 @@ namespace Xyz.Core.Entities.Multitenancy
         public Tenant Tenant { get; set; } = default!;
 
         public Guid PlanId { get; set; } = default!;
-        public Plan Plan { get; set; } = default!;
+        public virtual Plan? Plan { get; set; } = default!;
+
+        public TenantPlanDto ToDto()
+        {
+            return new TenantPlanDto
+            {
+                Id = this.Id,
+                RenewalRate = this.RenewalRate,
+                MaxUserCount = this.MaxUserCount,
+                Price = this.Price,
+                Plan = this.Plan?.ToDto() ?? null
+            };
+        }
     }
 }

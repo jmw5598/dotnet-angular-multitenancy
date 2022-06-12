@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Xyz.Core.Models;
+using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Entities.Multitenancy
 {
@@ -13,5 +14,17 @@ namespace Xyz.Core.Entities.Multitenancy
         [Column(TypeName = "varchar(24)")]
         public SubscriptionRenewalRate RenewalRate { get; set; } = default!;
         public int MaxUserCount { get; set; }
+
+        public PlanDto ToDto()
+        {
+            return new PlanDto
+            {
+                Id = this.Id,
+                Name = this.Name,
+                Price = this.Price,
+                RenewalRate = this.RenewalRate,
+                MaxUserCount = this.MaxUserCount
+            };
+        }
     }
 }

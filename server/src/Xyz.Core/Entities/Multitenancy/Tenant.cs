@@ -49,7 +49,7 @@ namespace Xyz.Core.Entities.Multitenancy
         public Company Company { get; set; } = default!;
         
         public Guid TenantPlanId { get; set; } = default!;
-        public TenantPlan TenantPlan { get; set; } = default!;
+        public virtual TenantPlan? TenantPlan { get; set; } = default!;
 
         public TenantDto ToDto()
         {
@@ -58,7 +58,9 @@ namespace Xyz.Core.Entities.Multitenancy
                 Id = this.Id,
                 Name = this.Name,
                 DisplayName = this.DisplayName,
-                Company = this.Company.ToDto()
+                IsActive = this.IsActive,
+                Company = this.Company.ToDto(),
+                TenantPlan = this.TenantPlan?.ToDto() ?? null
             };
         }
     }
