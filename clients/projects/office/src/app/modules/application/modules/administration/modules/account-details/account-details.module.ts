@@ -10,6 +10,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 
 import { XyzDatatableModule } from '@xyz/office/modules/shared/modules/datatable';
 import { XyzQuerySearchFilterModule } from '@xyz/office/modules/shared/modules/query-search-filter';
@@ -38,7 +39,8 @@ import { BillingComponent } from './pages/billing/billing.component';
     NzGridModule,
     NzTabsModule,
     NzStatisticModule,
-    NzDividerModule
+    NzDividerModule,
+    NzDescriptionsModule,
   ]
 })
 export class AccountDetailsModule { }
