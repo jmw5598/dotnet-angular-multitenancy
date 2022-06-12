@@ -12,22 +12,85 @@
 
 <div class="p-4" [@fadeAnimation]>
   <nz-card class="w-100 p-0">
-    <nz-tabset
-        nzLinkRouter
-        nzType="card">
-      <nz-tab *ngFor="let link of defaultAccountDetailsNavigationLinks">
-        <a 
-            *nzTabLink 
-            nz-tab-link 
-            [routerLink]="[link.routerLink]" 
-            [queryParams]="link.queryParams" 
-            [queryParamsHandling]="link.queryParamsHandling">
-          {{ link.label }}
-        </a>
-      </nz-tab>
-    </nz-tabset>
-    <div>
-      <router-outlet></router-outlet>
-    </div>
+    <nz-page-header>
+      <nz-page-header-title>Overview</nz-page-header-title>
+      <nz-page-header-content>
+
+        <!-- Overview Stats -->
+        <ng-container *ngIf="(tenantStatistics$ | async) as stats">
+          <nz-row [nzGutter]="[16, 16]" class="mb-5">
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    nzTitle="Status" 
+                    [nzValue]="stats?.tenant?.isActive ? 'Active' : 'Inactive'">
+                </nz-statistic>
+              </nz-card>            
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    nzTitle="Plan" 
+                    [nzValue]="stats?.tenant?.tenantPlan?.plan?.name || 'N/A'">
+                </nz-statistic>
+              </nz-card>            
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    [nzTitle]="'Cost ' + ((stats?.tenant?.tenantPlan?.renewalRate | titlecase) || 'N/A')" 
+                    [nzValue]="((stats?.tenant?.tenantPlan?.price || 0) | currency) || 'N/A'">
+                </nz-statistic>            
+              </nz-card>            
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    nzTitle="Users" 
+                    [nzValue]="(stats?.userAccountsCount || 0) + ' / ' + (stats?.tenant?.tenantPlan?.maxUserCount || 0)">
+                </nz-statistic>              
+              </nz-card>
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    nzTitle="Last Invoice" 
+                    [nzValue]="(stats?.lastInvoiceDate | date: 'MM/dd/yyyy') || 'N/A'">
+                </nz-statistic>              
+              </nz-card>
+            </nz-col>
+            <nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="6" [nzXXl]="4">
+              <nz-card>
+                <nz-statistic 
+                    nzTitle="Next Invoice" 
+                    [nzValue]="(stats?.nextInvoiceDate | date: 'MM/dd/yyyy') || 'N/A'">
+                </nz-statistic>              
+              </nz-card>
+            </nz-col>
+          </nz-row>
+        </ng-container>
+
+        <nz-divider></nz-divider>
+
+        <!-- Tabsets -->
+        <nz-tabset
+            nzLinkRouter
+            nzType="card">
+          <nz-tab *ngFor="let link of defaultAccountDetailsNavigationLinks">
+            <a 
+                *nzTabLink 
+                nz-tab-link 
+                [routerLink]="[link.routerLink]" 
+                [queryParams]="link.queryParams" 
+                [queryParamsHandling]="link.queryParamsHandling">
+              {{ link.label }}
+            </a>
+          </nz-tab>
+        </nz-tabset>
+        <div>
+          <router-outlet></router-outlet>
+        </div>
+      </nz-page-header-content>
+    </nz-page-header>
   </nz-card>
 </div>

@@ -6,5 +6,7 @@ namespace Xyz.Core.Models
     {
         public TenantDto Tenant { get; set; } = default!;
         public int UserAccountsCount { get; set; } = default!;
+        public DateTime? LastInvoiceDate { get; set; } = null!;
+        public DateTime? NextInvoiceDate { get; set; } = null!;
     }
 }

@@ -3,6 +3,10 @@ import { Action, combineReducers, createFeatureSelector } from '@ngrx/store';
 import * as fromUserAccounts from '../modules/user-accounts/store/user-accounts.reducer';
 import { UserAccountsEffects } from '../modules/user-accounts/store/user-accounts.effects';
 
+import * as fromAccountDetails from '../modules/account-details/store/account-details/account-details.reducer';
+import { AccountDetailsEffects } from '../modules/account-details/store/account-details/account-details.effects';
+
+
 import * as fromAccountInformation from '../modules/account-details/store/account-information/account-information.reducer';
 import { AccountInformationEffects } from '../modules/account-details/store/account-information/account-information.effects';
 
@@ -13,6 +17,7 @@ export const administrationFeatureKey = 'administration';
 
 export interface AdministrationState {
   [fromUserAccounts.userAccountsFeatureKey]: fromUserAccounts.UserAccountsState,
+  [fromAccountDetails.accountDetailsFeatureKey]: fromAccountDetails.AccountDetailsState,
   [fromAccountInformation.accountInfomrationFeatureKey]: fromAccountInformation.AccountInformationState,
   [fromBilling.billingFeatureKey]: fromBilling.BillingState,
 }
@@ -20,6 +25,7 @@ export interface AdministrationState {
 export function reducers(state: AdministrationState | undefined, action: Action) {
   return combineReducers({
     [fromUserAccounts.userAccountsFeatureKey]: fromUserAccounts.reducer,
+    [fromAccountDetails.accountDetailsFeatureKey]: fromAccountDetails.reducer,
     [fromAccountInformation.accountInfomrationFeatureKey]: fromAccountInformation.reducer,
     [fromBilling.billingFeatureKey]: fromBilling.reducer,
   })(state, action);
@@ -27,6 +33,7 @@ export function reducers(state: AdministrationState | undefined, action: Action)
 
 export const adminsitrationEffects = [
   UserAccountsEffects,
+  AccountDetailsEffects,
   AccountInformationEffects,
   BillingEffects,
 ];

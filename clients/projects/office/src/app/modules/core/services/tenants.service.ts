@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tenant } from '../entities';
+import { TenantStatistics } from '../models';
 import { EnvironmentService } from './environment.service';
 
 @Injectable({
@@ -20,6 +21,12 @@ export class TenantsService {
     return this._http.get<Tenant>(
       `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/from-subdomain`,
       { params: queryParms }
+    );
+  }
+
+  public getTenantStatistics(): Observable<TenantStatistics> {
+    return this._http.get<TenantStatistics>(
+      `${this._environmentService.getBaseApiUrl()}/${this._endpointSlug}/statistics`
     );
   }
 }

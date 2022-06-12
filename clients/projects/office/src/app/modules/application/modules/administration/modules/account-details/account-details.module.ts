@@ -7,7 +7,9 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzTabsModule } from 'ng-zorro-antd/tabs'
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
+import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 import { AccountDetailsRoutingModule } from './account-details-routing.module';
 import { AccountDetailsComponent } from './pages/account-details/account-details.component';
@@ -29,7 +31,9 @@ import { BillingComponent } from './pages/billing/billing.component';
     NzBreadCrumbModule,
     NzCardModule,
     NzGridModule,
-    NzTabsModule
+    NzTabsModule,
+    NzStatisticModule,
+    NzDividerModule
   ]
 })
 export class AccountDetailsModule { }
