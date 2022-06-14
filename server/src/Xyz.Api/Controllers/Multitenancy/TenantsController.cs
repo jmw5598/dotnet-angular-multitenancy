@@ -10,7 +10,7 @@ using Xyz.Core.Entities.Multitenancy;
 using Xyz.Multitenancy.Security;
 using Xyz.Multitenancy.Multitenancy;
 
-namespace Xyz.Api.Controllers
+namespace Xyz.Api.Controllers.Multitenancy
 {
     [Route("api/[controller]")]
     [ApiController]

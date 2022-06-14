@@ -1,5 +1,6 @@
 using Xyz.Core.Entities.Tenant;
-using Xyz.Core.Models;
+using Xyz.Core.Models.Paging;
+using Xyz.Core.Models.SearchFilters;
 using Xyz.Core.Dtos;
 
 namespace Xyz.Core.Interfaces

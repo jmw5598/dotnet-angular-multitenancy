@@ -6,6 +6,8 @@ using System.Security.Claims;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models;
+using Xyz.Core.Models.Paging;
+using Xyz.Core.Models.SearchFilters;
 using Xyz.Core.Dtos;
 using Xyz.Multitenancy.Security;
 using Xyz.Multitenancy.Multitenancy;

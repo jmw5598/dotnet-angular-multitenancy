@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Xyz.Core.Models;
 using Xyz.Core.Interfaces;
 
-namespace Xyz.Api.Controllers
+namespace Xyz.Api.Controllers.Multitenancy
 {
     [Route("api/[controller]")]
     [ApiController]

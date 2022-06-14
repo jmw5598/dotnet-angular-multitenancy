@@ -1,4 +1,4 @@
-namespace Xyz.Core.Models
+namespace Xyz.Core.Models.SearchFilters
 {
     public class BasicQuerySearchFilter
     {

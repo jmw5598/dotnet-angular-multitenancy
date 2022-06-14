@@ -7,6 +7,8 @@ using System.Data;
 using Xyz.Infrastructure.Data;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Models;
+using Xyz.Core.Models.Paging;
+using Xyz.Core.Models.SearchFilters;
 using Xyz.Core.Dtos;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Entities.Tenant;
@@ -40,6 +42,11 @@ namespace Xyz.Infrastructure.Services
                     .Include(user => user.Profile)
                     .Where(u => u.Id.ToString() == userId)
                     .FirstOrDefaultAsync();
+
+                if (user == null)
+                {
+                    throw new Exception("User with the supplied ID was not found!");
+                }
 
                 return await Task.FromResult(new UserSettings {
                     UserDetails = new UserAccountDto

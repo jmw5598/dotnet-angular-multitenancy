@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using Xyz.Api.Models;
 using Xyz.Core.Models;
+using Xyz.Core.Models.Paging;
+using Xyz.Core.Models.SearchFilters;
 using Xyz.Core.Interfaces;
 using Xyz.Core.Dtos;
 
