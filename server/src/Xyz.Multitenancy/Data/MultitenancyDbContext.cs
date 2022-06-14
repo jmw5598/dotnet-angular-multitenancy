@@ -13,6 +13,7 @@ namespace Xyz.Multitenancy.Data
         public DbSet<Plan> Plans => Set<Plan>();
         public DbSet<Company> Companies => Set<Company>();
         public DbSet<TenantPlan> TenantPlans => Set<TenantPlan>();
+        public DbSet<BillingInvoice> BillingInvoices => Set<BillingInvoice>();
 
         public MultitenancyDbContext(DbContextOptions<MultitenancyDbContext> options) : base(options)
         {
