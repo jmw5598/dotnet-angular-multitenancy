@@ -15,7 +15,11 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
   @Input()
   public set filter(filter: DateRangeQuerySearchFilter | null) {
     if (filter) {
-      this.form.patchValue({ ...filter }, { emitEvent: false });
+      this.form.patchValue({ 
+        query: filter?.query || null,
+        startDate: filter?.startDate ? new Date(Date.parse(filter.startDate || '')) : null,
+        endDate: filter?.endDate ? new Date(Date.parse(filter?.endDate || '')) : null
+      }, { emitEvent: false });
     }
   }
 
@@ -48,7 +52,8 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
     this._listenForSearchQueryChanges();
   }
 
-  public onSearch(filter: DateRangeQuerySearchFilter): void {
+  public onSearch(filterForm: any): void {
+    const filter: DateRangeQuerySearchFilter = this._formValueToSearchFilter(filterForm);
     this.onSearchChanges.emit(filter);
   }
 
@@ -63,7 +68,18 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(this.debounceTime)
       )
-      .subscribe((filter: DateRangeQuerySearchFilter) => this.onSearchChanges.emit(filter));
+      .subscribe((filterForm: any) => {
+        const filter: DateRangeQuerySearchFilter = this._formValueToSearchFilter(filterForm);
+        this.onSearchChanges.emit(filter)
+      });
+  }
+
+  private _formValueToSearchFilter(formValue: any): DateRangeQuerySearchFilter {
+    return {
+      query: formValue.query,
+      startDate: formValue.startDate ? (formValue.startDate as Date).toISOString() : '',
+      endDate: formValue.endDate ? (formValue.endDate as Date).toISOString() : ''
+    } as DateRangeQuerySearchFilter;
   }
 
   ngOnDestroy(): void {

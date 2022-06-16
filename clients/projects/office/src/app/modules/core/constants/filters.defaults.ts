@@ -4,10 +4,8 @@ export const defaultBasicQuerySearchFilter: BasicQuerySearchFilter = {
   query: ''
 } as BasicQuerySearchFilter;
 
-export const defaultDateRangeQuerySearchFilter = (): DateRangeQuerySearchFilter => {
-  return {
-    query: '',
-    startDate: null,
-    endDate: null
-  } as DateRangeQuerySearchFilter
-};
+export const defaultDateRangeQuerySearchFilter: DateRangeQuerySearchFilter = {
+  query: '',
+  startDate: null,
+  endDate: null
+} as DateRangeQuerySearchFilter;

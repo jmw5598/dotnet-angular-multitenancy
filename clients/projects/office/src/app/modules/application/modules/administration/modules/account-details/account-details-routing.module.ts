@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { HasPermissionGuard } from "@xyz/office/modules/core/guards";
 
 import { PermissionNames } from "@xyz/office/modules/core/models";
+import { InitialBillingInvoicesSearchLoadedGuard } from "./guards/initial-billing-invoices-search-loaded.guard";
 import { TenantStatisticsLoadedGuard } from "./guards/tenant-statistics-loaded.guard";
 import { AccountDetailsComponent } from "./pages/account-details/account-details.component";
 import { AccountInformationComponent } from "./pages/account-information/account-information.component";
@@ -20,6 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'billing',
+        canActivate: [InitialBillingInvoicesSearchLoadedGuard],
         component: BillingComponent
       },
       {

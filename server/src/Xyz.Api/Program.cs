@@ -10,9 +10,11 @@ using System.Text.Json.Serialization;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Interfaces;
+using Xyz.Core.Interfaces.Multitenancy;
 using Xyz.Core.Models.Configuration;
 using Xyz.Infrastructure.Data;
 using Xyz.Infrastructure.Services;
+using Xyz.Infrastructure.Services.Multitenancy;
 using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Models;
@@ -78,6 +80,7 @@ builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<ITenantsService, TenantsService>();
 builder.Services.AddScoped<IEmailingService, EmailingService>();
 builder.Services.AddScoped<ICompaniesService, CompaniesService>();
+builder.Services.AddScoped<IBillingService, BillingService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>

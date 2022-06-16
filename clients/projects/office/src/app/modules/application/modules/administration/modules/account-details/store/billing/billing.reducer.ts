@@ -15,9 +15,27 @@ export interface BillingState {
 
 export const initialBillingState: BillingState = {
   billingInvoicesPage: null,
-  billingInvoicesSearchFilter: defaultDateRangeQuerySearchFilter()
+  billingInvoicesSearchFilter: defaultDateRangeQuerySearchFilter
 }
 
+const handleSearchBillingInvoicesRequestSuccess = (state: BillingState, { page }: any) => ({
+  ...state,
+  billingInvoicesPage: page
+} as BillingState);
+
+const handleSetBillingInvoicesSearchFilter = (state: BillingState, { filter }: any) => ({
+  ...state,
+  billingInvoicesSearchFilter: filter
+} as BillingState);
+
 export const reducer = createReducer(
-  initialBillingState
+  initialBillingState,
+  on(
+    fromBilling.searchBillingInvoicesRequestSuccess,
+    handleSearchBillingInvoicesRequestSuccess
+  ),
+  on(
+    fromBilling.setBillingInvoicesSearchFilter,
+    handleSetBillingInvoicesSearchFilter
+  )
 );

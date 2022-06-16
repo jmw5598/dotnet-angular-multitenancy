@@ -38,7 +38,6 @@ export class RegistrationCompanyFormComponent implements OnInit, OnDestroy {
   }
 
   public _listenForDomainFieldChanges(): void {
-    console.log("should listen for company name chagnes");
     this.formGroup?.get('name')?.valueChanges
       .pipe(
         takeUntil(this._destroy$),

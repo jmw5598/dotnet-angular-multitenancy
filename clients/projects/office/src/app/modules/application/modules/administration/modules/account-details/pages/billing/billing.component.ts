@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { defaultPageRequest } from '@xyz/office/modules/core/constants';
+import { defaultDateRangeQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { BillingInvoice } from '@xyz/office/modules/core/entities';
 import { Page, PageRequest, Sort } from '@xyz/office/modules/core/models';
 import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
@@ -38,12 +38,8 @@ export class BillingComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public onUserAccountsPageChange(pageRequest: PageRequest): void {
-    // this._searchUserAccounts(this.userAccountsSearchFilter, pageRequest);
-  }
-
   public onSearchFilterChanges(filter: DateRangeQuerySearchFilter): void {
-    // this._store.dispatch(fromBilling.setUserAccountsSearchFilter({ filter: filter }));
+    this._store.dispatch(fromBilling.setBillingInvoicesSearchFilter({ filter: filter }));
     this._searchBillingInvoices(filter, this._defaultPageRequest);
   }
 
@@ -52,9 +48,9 @@ export class BillingComponent implements OnInit {
   }
 
   private _searchBillingInvoices(filter: DateRangeQuerySearchFilter | null, pageRequest: PageRequest): void {
-    // this._store.dispatch(fromUserAccounts.searchUserAccountsRequest({
-    //   filter: filter || defaultBasicQuerySearchFilter,
-    //   pageRequest: pageRequest
-    // }));
+    this._store.dispatch(fromBilling.searchBillingInvoicesRequest({
+      filter: filter || defaultDateRangeQuerySearchFilter,
+      pageRequest: pageRequest
+    }));
   }
 }
