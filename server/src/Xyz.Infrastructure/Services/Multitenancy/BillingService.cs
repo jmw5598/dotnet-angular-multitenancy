@@ -47,7 +47,7 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 {
                     query = query
                         .Where(bi => bi.TransactionDate.Date >= filter.StartDate.Value.Date)
-                        .Where(bi => bi.TransactionDate.Date <= filter.EndDate.Value.Date);
+                        .Where(bi => bi.TransactionDate.Date <= filter.EndDate.Value.AddDays(1).Date);
                 }
                 else if (filter?.StartDate != null)
                 {
@@ -57,7 +57,7 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 else if (filter?.EndDate != null)
                 {
                     query = query
-                        .Where(bi => bi.TransactionDate.Date <= filter.EndDate.Value.Date);
+                        .Where(bi => bi.TransactionDate.Date <= filter.EndDate.Value.AddDays(1).Date);
                 }
 
                 if (pageRequest.Sort != null)
