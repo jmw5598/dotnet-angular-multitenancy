@@ -128,7 +128,14 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
         const blankFormGroup = buildUserAccountUpdateForm(this._formBuilder, userModulerPermissions);
-        this.updateUserAccountForm.patchValue({ ...blankFormGroup?.value });
+        const userModulePermissionsFormGroup = blankFormGroup.get('userModulePermissions');
+
+        console.log("reset permissions ", userModulePermissionsFormGroup);
+        if ( userModulePermissionsFormGroup) {
+          this.updateUserAccountForm
+            ?.get('userModulePermissions')
+            ?.patchValue([ ...(userModulePermissionsFormGroup.value || []) ]);
+        }
       });
   }
   

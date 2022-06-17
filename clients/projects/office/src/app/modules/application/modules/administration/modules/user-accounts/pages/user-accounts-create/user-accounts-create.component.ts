@@ -126,7 +126,14 @@ export class UserAccountsCreateComponent implements OnDestroy {
       .subscribe(assignableModulePermissions => {
         const userModulerPermissions: UserModulePermission[] = mapAssignableModulePermissionsToUserModulePermissions(assignableModulePermissions || []) || [];
         const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
-        this.createUserAccountForm.patchValue({ ...blankFormGroup?.value });
+        const userModulePermissionsFormGroup = blankFormGroup.get('userModulePermissions');
+
+        console.log("reset permissions ", userModulePermissionsFormGroup);
+        if ( userModulePermissionsFormGroup) {
+          this.createUserAccountForm
+            ?.get('userModulePermissions')
+            ?.patchValue([ ...(userModulePermissionsFormGroup.value || []) ]);
+        }
       });
   }
 

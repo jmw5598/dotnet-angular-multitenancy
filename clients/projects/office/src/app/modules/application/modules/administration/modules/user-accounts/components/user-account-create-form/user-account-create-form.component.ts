@@ -47,7 +47,6 @@ export class UserAccountCreateFormComponent implements OnInit {
   }
 
   public onApplyTemplateModulerPermissionName(templateModulePermissionName: TemplateModulePermissionName | null): void {
-    // @TODO load template module permissions and patch to form
     this.isLoadingTemplate = true;
     this.onTemplateModulePermissionNameSelected.emit(templateModulePermissionName);
     setTimeout(() => {
