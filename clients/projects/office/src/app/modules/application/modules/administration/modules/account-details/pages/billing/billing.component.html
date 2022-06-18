@@ -36,7 +36,7 @@
               [filter]="billingInvoicesSearchFilter$ | async"
               startDateLabel="Transaction Start Date"
               endDateLabel="Transaction End Date"
-              (onSearchChanges)="onSearchFilterChanges($event)">
+              (searchChange)="onSearchFilterChanges($event)">
           </xyz-date-range-query-search-filter>
         </div>
         <xyz-datatable      
@@ -44,7 +44,7 @@
             [definition]="billingInvoicesTableDefinition"
             [actionsContent]="billingInvoicesActions"
             [defaultSort]="defaultSort"
-            (onPageChange)="onBillingInvoicesPageChange($event)">
+            (pageChange)="onBillingInvoicesPageChange($event)">
         </xyz-datatable>
         <ng-template #billingInvoicesActions let-row="row">
           <nz-button-group>

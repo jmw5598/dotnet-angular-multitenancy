@@ -29,7 +29,7 @@
     <form class="block" [formGroup]="createUserAccountForm">
       <xyz-user-account-create-form
           [templateModulePermissionNames]="templateModulePermissionNames$ | async"
-          (onTemplateModulePermissionNameSelected)="onTemplateModulePermissionNameSelected($event)">
+          (selectTemplateModulePermissionName)="onTemplateModulePermissionNameSelected($event)">
       </xyz-user-account-create-form>
     </form>
   </nz-card>

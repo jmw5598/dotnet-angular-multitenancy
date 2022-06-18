@@ -36,7 +36,7 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
   public dateFormat: string = 'MM/dd/yyyy';
 
   @Output()
-  public onSearchChanges: EventEmitter<DateRangeQuerySearchFilter> = new EventEmitter<DateRangeQuerySearchFilter>();
+  public searchChange: EventEmitter<DateRangeQuerySearchFilter> = new EventEmitter<DateRangeQuerySearchFilter>();
 
   public form: FormGroup;
 
@@ -54,7 +54,7 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
 
   public onSearch(filterForm: any): void {
     const filter: DateRangeQuerySearchFilter = this._formValueToSearchFilter(filterForm);
-    this.onSearchChanges.emit(filter);
+    this.searchChange.emit(filter);
   }
 
   public onDateRangeChange(dates: any): void {
@@ -70,7 +70,7 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
       )
       .subscribe((filterForm: any) => {
         const filter: DateRangeQuerySearchFilter = this._formValueToSearchFilter(filterForm);
-        this.onSearchChanges.emit(filter)
+        this.searchChange.emit(filter)
       });
   }
 

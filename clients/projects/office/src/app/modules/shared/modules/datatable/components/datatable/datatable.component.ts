@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, TemplateRef, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, TemplateRef, EventEmitter, Output } from '@angular/core';
 
 import { Page, PageRequest, Sort, SortDirection } from '@xyz/office/modules/core/models';
 import { ColumnType } from '../../models/column-type.enum';
@@ -12,7 +12,7 @@ import { TableDefinition } from '../../models/table-definition.model';
   styleUrls: ['./datatable.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class XyzDatatableComponent implements OnInit {
+export class XyzDatatableComponent {
   @Input()
   public definition: TableDefinition | null = null;
 
@@ -46,18 +46,15 @@ export class XyzDatatableComponent implements OnInit {
   public actionsWidth: string | null = '150px';
 
   @Output()
-  public onPageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
+  public pageChange: EventEmitter<PageRequest> = new EventEmitter<PageRequest>();
 
   public ColumnType = ColumnType;
   public SortDirection = SortDirection;
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
   public pageIndexChanged(page: number): void {
-    this.onPageChange.emit({
+    this.pageChange.emit({
       index: page - 1,
       size: this.page?.current?.size || 10,
       sort: this.page?.current?.sort 
@@ -67,7 +64,7 @@ export class XyzDatatableComponent implements OnInit {
   }
 
   public pageSizeChanged(size: number): void {
-    this.onPageChange.emit({
+    this.pageChange.emit({
       index: 0,
       size: size || 20,
       sort: this.page?.current?.sort 
@@ -77,10 +74,11 @@ export class XyzDatatableComponent implements OnInit {
   }
 
   public sortOrderChanged(column: string, direction: string | null): void {
-    console.log("direction is ", direction);
-    const sortDirection: SortDirection | null = direction ? (direction === 'ascend' ? SortDirection.Ascend : SortDirection.Descend) : null;
+    const sortDirection: SortDirection | null = direction 
+      ? (direction === 'ascend' ? SortDirection.Ascend : SortDirection.Descend) 
+      : null;
     
-    this.onPageChange.emit({
+    this.pageChange.emit({
       index: 0, 
       size: this.page?.current?.size || 10,
       sort: sortDirection 

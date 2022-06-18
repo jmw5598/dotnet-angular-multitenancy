@@ -26,8 +26,8 @@
     <form class="block" [formGroup]="updateUserAccountForm">
       <xyz-user-account-update-form
           [templateModulePermissionNames]="templateModulePermissionNames$ | async"
-          (onTemplateModulePermissionNameSelected)="onTemplateModulePermissionNameSelected($event)"
-          (onIssuePasswordResetRequest)="onIssuePasswordResetRequest($event)">
+          (selectTemplateModulePermissionName)="onTemplateModulePermissionNameSelected($event)"
+          (issuePasswordResetRequest)="onIssuePasswordResetRequest($event)">
       </xyz-user-account-update-form>
     </form>
   </nz-card>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { defaultDateRangeQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
@@ -17,7 +17,7 @@ import { defaultBillingInvoicesTableDefinition } from './billing-invoices-table-
   styleUrls: ['./billing.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class BillingComponent implements OnInit {
+export class BillingComponent {
   private _defaultPageRequest: PageRequest = defaultPageRequest;
   public defaultSort: Sort = defaultUserAccountsSort;
 
@@ -33,9 +33,6 @@ export class BillingComponent implements OnInit {
     this.billingInvoicesPage$ = this._store.select(fromBilling.selectBillingInvoicesPage);
     this.billingInvoicesSearchFilter$ = this._store.select(fromBilling.selectBillingInvoicesSearchFilter)
       .pipe(tap(filter => this.billingInvoicesSearchFilter = filter));
-  }
-
-  ngOnInit(): void {
   }
 
   public onSearchFilterChanges(filter: DateRangeQuerySearchFilter): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
@@ -9,11 +9,6 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class SecurityGeneralComponent implements OnInit {
-
+export class SecurityGeneralComponent {
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

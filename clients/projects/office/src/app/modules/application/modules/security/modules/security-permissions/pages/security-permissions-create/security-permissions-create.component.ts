@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
@@ -23,7 +23,7 @@ import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class SecurityPermissionsCreateComponent implements OnInit {
+export class SecurityPermissionsCreateComponent {
   public createTemplateModulePermissionNameForm!: FormGroup;
 
   constructor(
@@ -41,9 +41,6 @@ export class SecurityPermissionsCreateComponent implements OnInit {
           this.createTemplateModulePermissionNameForm = 
           buildTemplateModulePermissionNameForm(this._formBuilder, templateModulerPermissions || []);
       });
-  }
-
-  ngOnInit(): void {
   }
 
   public onCreateTempalteModulePermissionName(template: TemplateModulePermissionName, shouldReturn: boolean): void {

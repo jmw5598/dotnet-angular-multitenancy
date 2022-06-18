@@ -24,7 +24,7 @@ export class BasicQuerySearchFilterComponent implements OnInit, OnDestroy {
   public debounceTime: number = 500;
 
   @Output()
-  public onSearchChanges: EventEmitter<BasicQuerySearchFilter> = new EventEmitter<BasicQuerySearchFilter>();
+  public searchChange: EventEmitter<BasicQuerySearchFilter> = new EventEmitter<BasicQuerySearchFilter>();
 
   public form: FormGroup;
 
@@ -39,7 +39,7 @@ export class BasicQuerySearchFilterComponent implements OnInit, OnDestroy {
   }
 
   public onSearch(filter: BasicQuerySearchFilter): void {
-    this.onSearchChanges.emit(filter);
+    this.searchChange.emit(filter);
   }
 
   private _listenForSearchQueryChanges(): void {
@@ -49,7 +49,7 @@ export class BasicQuerySearchFilterComponent implements OnInit, OnDestroy {
         distinctUntilChanged(),
         debounceTime(this.debounceTime)
       )
-      .subscribe((filter: BasicQuerySearchFilter) => this.onSearchChanges.emit(filter));
+      .subscribe((filter: BasicQuerySearchFilter) => this.searchChange.emit(filter));
   }
 
   ngOnDestroy(): void {

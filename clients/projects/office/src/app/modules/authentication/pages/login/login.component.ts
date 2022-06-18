@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -22,7 +22,7 @@ import * as fromAuthentication from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   public loginForm: FormGroup;
 
   public loginResponseMessage$!: Observable<ResponseMessage | null>;
@@ -36,10 +36,6 @@ export class LoginComponent implements OnInit {
     this.loginForm = this._buildLoginForm();
     this.loginResponseMessage$ = this._store.select(fromAuthentication.selectedLoginResponseMessage);
     this.tenant$ = this._store.select(fromTenant.selectTenant);
-  }
-
-  ngOnInit(): void {
-    
   }
 
   public get findCompanyUrl(): string {

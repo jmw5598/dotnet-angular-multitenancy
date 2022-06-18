@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'xyz-error-unauthorized',
@@ -6,11 +6,6 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./error-unauthorized.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ErrorUnauthorizedComponent implements OnInit {
-
+export class ErrorUnauthorizedComponent {
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

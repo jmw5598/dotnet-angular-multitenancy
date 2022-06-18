@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 @Component({
@@ -8,11 +8,6 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class ServiceComponent implements OnInit {
-
+export class ServiceComponent {
   constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

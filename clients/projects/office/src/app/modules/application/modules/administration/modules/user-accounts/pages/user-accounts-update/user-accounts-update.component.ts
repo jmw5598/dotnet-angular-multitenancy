@@ -41,7 +41,6 @@ export class UserAccountsUpdateComponent implements OnInit, OnDestroy {
     this._selectState();
   }
 
-
   ngOnInit(): void {
     this._listenForSelectedUserAccountChanges();
   }

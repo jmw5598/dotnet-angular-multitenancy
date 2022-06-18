@@ -23,7 +23,7 @@
       <div class="mb-3 flex flex-row">
         <xyz-basic-query-search-filter
             [filter]="userAccountsSearchFilter$ | async"
-            (onSearchChanges)="onSearchFilterChanges($event)">
+            (searchChange)="onSearchFilterChanges($event)">
         </xyz-basic-query-search-filter>
       </div>
       <xyz-datatable      
@@ -31,7 +31,7 @@
           [definition]="userAccountsTableDefinition"
           [actionsContent]="userAccountsActions"
           [defaultSort]="defaultSort"
-          (onPageChange)="onUserAccountsPageChange($event)">
+          (pageChange)="onUserAccountsPageChange($event)">
       </xyz-datatable>
     </div>
     <ng-template #userAccountsActions let-row="row">

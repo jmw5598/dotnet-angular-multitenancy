@@ -16,7 +16,7 @@ export class UserAccountCreateFormComponent implements OnInit {
   public templateModulePermissionNames: TemplateModulePermissionName[] | null = [];
 
   @Output()
-  public onTemplateModulePermissionNameSelected: EventEmitter<TemplateModulePermissionName | null> = 
+  public selectTemplateModulePermissionName: EventEmitter<TemplateModulePermissionName | null> = 
     new EventEmitter<TemplateModulePermissionName | null>();
 
   public userAccountForm!: FormGroup;
@@ -48,7 +48,7 @@ export class UserAccountCreateFormComponent implements OnInit {
 
   public onApplyTemplateModulerPermissionName(templateModulePermissionName: TemplateModulePermissionName | null): void {
     this.isLoadingTemplate = true;
-    this.onTemplateModulePermissionNameSelected.emit(templateModulePermissionName);
+    this.selectTemplateModulePermissionName.emit(templateModulePermissionName);
     setTimeout(() => {
       this.isLoadingTemplate = false;
       this._changeDetectorRef.markForCheck();

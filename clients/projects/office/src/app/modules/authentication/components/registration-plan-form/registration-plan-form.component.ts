@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ControlContainer, FormGroup } from '@angular/forms';
 
 import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
@@ -9,7 +9,7 @@ import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
   styleUrls: ['./registration-plan-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegistrationPlanFormComponent implements OnInit {
+export class RegistrationPlanFormComponent {
   @Input()
   public plans: Plan[] | null = null;
 
@@ -18,8 +18,5 @@ export class RegistrationPlanFormComponent implements OnInit {
   constructor(private _controlContainer: ControlContainer) {
     this.formGroup = (this._controlContainer.control as FormGroup).get('plan') as FormGroup;
     console.log('plans form group ', this.formGroup);
-  }
-
-  ngOnInit(): void {
   }
 }

@@ -16,11 +16,11 @@ export class UserAccountUpdateFormComponent implements OnInit {
   public templateModulePermissionNames: TemplateModulePermissionName[] | null = [];
 
   @Output()
-  public onTemplateModulePermissionNameSelected: EventEmitter<TemplateModulePermissionName | null> = 
+  public selectTemplateModulePermissionName: EventEmitter<TemplateModulePermissionName | null> = 
     new EventEmitter<TemplateModulePermissionName | null>();
 
   @Output()
-  public onIssuePasswordResetRequest: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public issuePasswordResetRequest: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public userAccountForm!: FormGroup;
 
@@ -50,15 +50,15 @@ export class UserAccountUpdateFormComponent implements OnInit {
     return formGroup.get('userPermissions') as FormArray;
   }
 
-  public issuePasswordResetRequest(shouldIssue: boolean): void {
+  public onIssuePasswordResetRequest(shouldIssue: boolean): void {
     this.hasIssuedPasswordResetRequest = true;
-    this.onIssuePasswordResetRequest.emit(shouldIssue);
+    this.issuePasswordResetRequest.emit(shouldIssue);
   }
 
   public onApplyTemplateModulerPermissionName(templateModulePermissionName: TemplateModulePermissionName | null): void {
     // @TODO load template module permissions and patch to form
     this.isLoadingTemplate = true;
-    this.onTemplateModulePermissionNameSelected.emit(templateModulePermissionName);
+    this.selectTemplateModulePermissionName.emit(templateModulePermissionName);
     setTimeout(() => {
       this.isLoadingTemplate = false;
       this._changeDetectorRef.markForCheck();

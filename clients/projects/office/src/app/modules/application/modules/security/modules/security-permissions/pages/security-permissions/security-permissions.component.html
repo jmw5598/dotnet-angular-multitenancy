@@ -20,14 +20,14 @@
       <div class="mb-3 flex flex-row">
         <xyz-basic-query-search-filter
             [filter]="templateModulePermissionsSearchFilter$ | async"
-            (onSearchChanges)="onSearchFilterChanges($event)"></xyz-basic-query-search-filter>
+            (searchChange)="onSearchFilterChanges($event)"></xyz-basic-query-search-filter>
       </div>
       <xyz-datatable      
           [page]="securityPermissionsTemplatePage$ | async"
           [definition]="securityPermissionsTemplateTableDefinition"
           [actionsContent]="securityPermissionsTemplateActions"
           [defaultSort]="defaultSort"
-          (onPageChange)="onSecurityPermissionsPageChange($event)">
+          (pageChange)="onSecurityPermissionsPageChange($event)">
       </xyz-datatable>
     </div>
     <ng-template #securityPermissionsTemplateActions let-row="row">

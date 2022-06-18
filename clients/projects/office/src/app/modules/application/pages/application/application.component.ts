@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -17,7 +17,7 @@ import * as fromUser from '@xyz/office/store/user';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class ApplicationComponent implements OnInit {
+export class ApplicationComponent {
   public isCollapsed$: Observable<boolean>;
   public defaultNavigationMenu: NavigationLink[] = defaultNavigationMenu;
 
@@ -32,9 +32,6 @@ export class ApplicationComponent implements OnInit {
     this.isCollapsed$ = this._navigationMenuService.isCollapsed();
     this.userModulePermissionsMap$ = this._store.select(fromUser.selectUserModulePermissionsMap);
     this.userSettings$ = this._store.select(fromUser.selectUserSettings);
-  }
-
-  ngOnInit(): void {
   }
 
   public onToggleNavigationMenu(): void {

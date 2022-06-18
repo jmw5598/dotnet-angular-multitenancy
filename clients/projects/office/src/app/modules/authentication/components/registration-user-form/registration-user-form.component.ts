@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ControlContainer, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,13 +7,10 @@ import { ControlContainer, FormGroup } from '@angular/forms';
   styleUrls: ['./registration-user-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RegistrationUserFormComponent implements OnInit {
+export class RegistrationUserFormComponent {
   public formGroup: FormGroup;
 
   constructor(private _controlContainer: ControlContainer) {
     this.formGroup = (this._controlContainer.control as FormGroup).get('user') as FormGroup;
-  }
-
-  ngOnInit(): void {
   }
 }
