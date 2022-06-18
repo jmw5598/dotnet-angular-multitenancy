@@ -1,6 +1,6 @@
-using Xyz.Core.Models;
+using Xyz.Core.Models.Multitenancy;
 
-namespace Xyz.Core.Dtos
+namespace Xyz.Core.Dtos.Multitenancy
 {
     public class PlanDto
     {

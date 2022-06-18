@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Tenants;
 
 namespace Xyz.Core.Entities.Identity
 {

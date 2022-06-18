@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
 using Xyz.Core.Dtos;
-using Xyz.Core.Entities.Tenant;
-using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Entities.Tenants;
 using Xyz.Core.Entities.Identity;
-using Xyz.Core.Models;
+using Xyz.Core.Models.Tenants;
 
 namespace Xyz.Api.Models
 {

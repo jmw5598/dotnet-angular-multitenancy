@@ -1,4 +1,4 @@
-namespace Xyz.Core.Dtos
+namespace Xyz.Core.Dtos.Multitenancy
 {
     public class TenantDto
     {

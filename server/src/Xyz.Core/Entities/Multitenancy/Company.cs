@@ -1,4 +1,4 @@
-using Xyz.Core.Dtos;
+using Xyz.Core.Dtos.Multitenancy;
 
 namespace Xyz.Core.Entities.Multitenancy
 {

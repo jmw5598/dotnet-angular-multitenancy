@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Xyz.Core.Models;
-using Xyz.Core.Dtos;
+using Xyz.Core.Models.Multitenancy;
+using Xyz.Core.Dtos.Multitenancy;
 
 namespace Xyz.Core.Entities.Multitenancy
 {

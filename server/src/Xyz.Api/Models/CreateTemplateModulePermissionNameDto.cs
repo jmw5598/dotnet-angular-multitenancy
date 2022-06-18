@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using Xyz.Core.Dtos;
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Tenants;
 
 namespace Xyz.Api.Models
 {

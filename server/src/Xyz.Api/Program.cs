@@ -9,12 +9,14 @@ using System.Text.Json.Serialization;
 
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
-using Xyz.Core.Interfaces;
 using Xyz.Core.Interfaces.Multitenancy;
+using Xyz.Core.Interfaces.Tenants;
 using Xyz.Core.Models.Configuration;
+
 using Xyz.Infrastructure.Data;
-using Xyz.Infrastructure.Services;
 using Xyz.Infrastructure.Services.Multitenancy;
+using Xyz.Infrastructure.Services.Tenants;
+
 using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Models;

@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations.Schema;
 
-using Xyz.Core.Dtos;
+using Xyz.Core.Dtos.Multitenancy;
 
 namespace Xyz.Core.Entities.Multitenancy
 {

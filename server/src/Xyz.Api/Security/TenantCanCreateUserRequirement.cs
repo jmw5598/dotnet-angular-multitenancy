@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Data;
 using Xyz.Infrastructure.Data;
-using Xyz.Core.Models;
+using Xyz.Core.Models.Tenants;
 
 namespace Xyz.Api.Security
 {

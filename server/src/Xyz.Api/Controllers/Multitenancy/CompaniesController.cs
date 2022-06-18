@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 using Xyz.Core.Models;
-using Xyz.Core.Interfaces;
+using Xyz.Core.Interfaces.Multitenancy;
 
 namespace Xyz.Api.Controllers.Multitenancy
 {

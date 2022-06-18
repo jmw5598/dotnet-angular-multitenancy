@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 
 using Xyz.Core.Entities.Multitenancy;
-using Xyz.Core.Models;
+using Xyz.Core.Models.Multitenancy;
 
 namespace Xyz.Multitenancy.Extensions
 {

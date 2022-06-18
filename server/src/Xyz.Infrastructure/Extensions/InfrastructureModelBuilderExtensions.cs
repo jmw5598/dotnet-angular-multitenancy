@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 
 using Xyz.Core.Entities.Identity;
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Tenants;
 using Xyz.Infrastructure.Seeds;
 
 namespace Xyz.Infrastructure.Extensions

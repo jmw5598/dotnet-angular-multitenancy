@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
-using Xyz.Api.Models;
 using Xyz.Core.Models;
-using Xyz.Core.Interfaces;
-using Xyz.Core.Dtos;
+using Xyz.Core.Models.Multitenancy;
+using Xyz.Core.Interfaces.Multitenancy;
+using Xyz.Core.Dtos.Multitenancy;
 using Xyz.Core.Entities.Multitenancy;
 
 using Xyz.Multitenancy.Security;
@@ -16,12 +16,12 @@ namespace Xyz.Api.Controllers.Multitenancy
     [ApiController]
     public class TenantsController : ControllerBase
     {
-        private ILogger<AuthenticationController> _logger;
+        private ILogger<TenantsController> _logger;
         private ITenantsService _tenantsService;
         private ITenantAccessor<Tenant> _tenantAccessor;
 
         public TenantsController(
-            ILogger<AuthenticationController> logger,
+            ILogger<TenantsController> logger,
             ITenantsService tenantsService,
             ITenantAccessor<Tenant> tenantAccessor)
         {

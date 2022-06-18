@@ -1,4 +1,4 @@
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Tenants;
 
 namespace Xyz.Infrastructure.Seeds
 {

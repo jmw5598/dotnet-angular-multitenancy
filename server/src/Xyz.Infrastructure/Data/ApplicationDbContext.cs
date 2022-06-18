@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Xyz.Multitenancy.Models;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Core.Entities.Multitenancy;
-using Xyz.Core.Entities.Tenant;
+using Xyz.Core.Entities.Tenants;
 using Xyz.Core.Entities.Identity;
 using Xyz.Infrastructure.Extensions;
 

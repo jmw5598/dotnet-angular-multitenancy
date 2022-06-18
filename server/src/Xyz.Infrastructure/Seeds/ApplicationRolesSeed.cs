@@ -1,5 +1,5 @@
 using Xyz.Core.Entities.Identity;
-using Xyz.Core.Models;
+using Xyz.Core.Models.Tenants;
 
 namespace Xyz.Infrastructure.Seeds
 {
