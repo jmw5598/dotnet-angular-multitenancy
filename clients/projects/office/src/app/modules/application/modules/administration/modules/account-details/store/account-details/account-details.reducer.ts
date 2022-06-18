@@ -22,6 +22,7 @@ export const reducer = createReducer(
   initialAccountDetailsState,
   on(
     fromAccountDetails.getTenantStatisticsRequestSuccess,
+    fromAccountDetails.setTenantStatistics,
     handleGetTenantStatisticsRequestSuccess
   )
 );

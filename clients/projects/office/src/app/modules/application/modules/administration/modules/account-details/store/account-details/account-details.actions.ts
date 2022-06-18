@@ -14,3 +14,8 @@ export const getTenantStatisticsRequestFailure = createAction(
   '[Account Details] Get Tenant Statistics Request Failure',
   props<{ message: ResponseMessage }>()
 );
+
+export const setTenantStatistics = createAction(
+  '[Account Details] Set Tenant Statistics',
+  props<{ tenantStatistics: TenantStatistics | null }>()
+);

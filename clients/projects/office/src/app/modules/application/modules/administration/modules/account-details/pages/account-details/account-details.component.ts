@@ -1,5 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { NavigationLink, TabNavigationLink, TenantStatistics } from '@xyz/office/modules/core/models';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { TabNavigationLink, TenantStatistics } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
 import { defaultAccountDetailsNavigationLinks } from './account-details-navigation-links.defaults';
@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeAnimation]
 })
-export class AccountDetailsComponent implements OnInit {
+export class AccountDetailsComponent implements OnDestroy {
   public defaultAccountDetailsNavigationLinks: TabNavigationLink[] = defaultAccountDetailsNavigationLinks
 
   public tenantStatistics$: Observable<TenantStatistics | null>;
@@ -26,6 +26,11 @@ export class AccountDetailsComponent implements OnInit {
     this.tenantStatistics$ = this._store.select(fromAccountDetails.selectTenantStatistics);
   }
 
-  ngOnInit(): void {
+  ngOnDestroy(): void {
+    this._store.dispatch(
+      fromAccountDetails.setTenantStatistics({ 
+        tenantStatistics: null
+      })
+    );
   }
 }
