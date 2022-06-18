@@ -1,15 +1,54 @@
-<nz-page-header class="pt-0 pb-4 px-4">
-  <nz-page-header-title>Your Account</nz-page-header-title>
-  <nz-page-header-content>
-    TODO - Account information here....
-  </nz-page-header-content>
-</nz-page-header>
-
-<nz-divider></nz-divider>
-
-<nz-page-header class="pt-0 pb-4 px-4">
-  <nz-page-header-title>Your Company</nz-page-header-title>
-  <nz-page-header-content>
-    TODO - Company information here....
-  </nz-page-header-content>
-</nz-page-header>
+<nz-row [nzGutter]="[0, 0]">
+  <nz-col [nzSm]="24" [nzMd]="24" [nzLg]="12">
+    <nz-page-header class="px-4 py-0">
+      <nz-page-header-title>Your Account</nz-page-header-title>
+      <nz-page-header-extra>
+        <button 
+            nz-button 
+            nzType="default">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+      </nz-page-header-extra>
+      <nz-page-header-content>
+        <nz-list nzBordered>
+          <nz-list-item>
+            <span>First Name</span>
+            Jason
+          </nz-list-item>
+          <nz-list-item>
+            <span>Last Name</span>
+            White
+          </nz-list-item>
+          <nz-list-item>
+            <span>Email</span>
+            jmw5598@gmail.com
+          </nz-list-item>
+        </nz-list>
+      </nz-page-header-content>
+    </nz-page-header>
+  </nz-col>
+  <nz-col [nzSm]="24" [nzMd]="24" [nzLg]="12">
+    <nz-page-header class="pt-0 pb-4 px-4">
+      <nz-page-header-title>Your Company</nz-page-header-title>
+      <nz-page-header-extra>
+        <button 
+            nz-button 
+            nzType="default">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+      </nz-page-header-extra>
+      <nz-page-header-content>
+        <nz-list nzBordered>
+          <nz-list-item>
+            <span>Company</span>
+            Dev Company
+          </nz-list-item>
+          <nz-list-item>
+            <span>Subdomain</span>
+            http://devcompany123124.localhost:4200/
+          </nz-list-item>
+        </nz-list>
+      </nz-page-header-content>
+    </nz-page-header>
+  </nz-col>
+</nz-row>

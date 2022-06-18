@@ -1,49 +1,72 @@
-<nz-page-header class="pt-0 pb-4 px-4">
-  <nz-page-header-title>Billing</nz-page-header-title>
-  <nz-page-header-content>
-    TODO - Billing information here....
-  </nz-page-header-content>
-</nz-page-header>
-
-<nz-divider></nz-divider>
-
-<nz-page-header class="pt-0 pb-4 px-4">
-  <nz-page-header-title>Invoices</nz-page-header-title>
-  <nz-page-header-content>
-    <div class="mb-3 block">
-      <xyz-date-range-query-search-filter
-          [filter]="billingInvoicesSearchFilter$ | async"
-          startDateLabel="Transaction Start Date"
-          endDateLabel="Transaction End Date"
-          (onSearchChanges)="onSearchFilterChanges($event)">
-      </xyz-date-range-query-search-filter>
-    </div>
-    <xyz-datatable      
-        [page]="billingInvoicesPage$ | async"
-        [definition]="billingInvoicesTableDefinition"
-        [actionsContent]="billingInvoicesActions"
-        [defaultSort]="defaultSort"
-        (onPageChange)="onBillingInvoicesPageChange($event)">
-    </xyz-datatable>
-    <ng-template #billingInvoicesActions let-row="row">
-      <nz-button-group>
-        <a 
-            class=""
+<nz-row [nzGutter]="[0, 0]">
+  <nz-col [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="12">
+    <nz-page-header class="px-4 py-0">
+      <nz-page-header-title>Billing</nz-page-header-title>
+      <nz-page-header-extra>
+        <button 
             nz-button 
-            nzType="default" 
-            nzSize="small"
-            title="Download PDF">
-          <i nz-icon nzType="file-pdf"></i>
-        </a>
-        <a 
-            class=""
-            nz-button 
-            nzType="default" 
-            nzSize="small"
-            title="Print">
-          <i nz-icon nzType="printer"></i>
-        </a>
-      </nz-button-group>
-    </ng-template>
-  </nz-page-header-content>
-</nz-page-header>
+            nzType="default">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+        </button>
+      </nz-page-header-extra>
+      <nz-page-header-content>
+        <nz-list nzBordered>
+          <nz-list-item>
+            <span>Plan</span>
+            Basic
+          </nz-list-item>
+          <nz-list-item>
+            <span>Cost Monthly</span>
+            $100
+          </nz-list-item>
+          <nz-list-item>
+            <span>Payment Method</span>
+            Stripe (VISA)
+          </nz-list-item>
+        </nz-list>
+      </nz-page-header-content>
+    </nz-page-header>
+  </nz-col>
+  <nz-col [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="12">
+    <nz-page-header class="pt-0 pb-4 px-4">
+      <nz-page-header-title>Invoices</nz-page-header-title>
+      <nz-page-header-content>
+        <div class="mb-3 block">
+          <xyz-date-range-query-search-filter
+              [filter]="billingInvoicesSearchFilter$ | async"
+              startDateLabel="Transaction Start Date"
+              endDateLabel="Transaction End Date"
+              (onSearchChanges)="onSearchFilterChanges($event)">
+          </xyz-date-range-query-search-filter>
+        </div>
+        <xyz-datatable      
+            [page]="billingInvoicesPage$ | async"
+            [definition]="billingInvoicesTableDefinition"
+            [actionsContent]="billingInvoicesActions"
+            [defaultSort]="defaultSort"
+            (onPageChange)="onBillingInvoicesPageChange($event)">
+        </xyz-datatable>
+        <ng-template #billingInvoicesActions let-row="row">
+          <nz-button-group>
+            <a 
+                class=""
+                nz-button 
+                nzType="default" 
+                nzSize="small"
+                title="Download PDF">
+              <i nz-icon nzType="file-pdf"></i>
+            </a>
+            <a 
+                class=""
+                nz-button 
+                nzType="default" 
+                nzSize="small"
+                title="Print">
+              <i nz-icon nzType="printer"></i>
+            </a>
+          </nz-button-group>
+        </ng-template>
+      </nz-page-header-content>
+    </nz-page-header>
+  </nz-col>
+</nz-row>
