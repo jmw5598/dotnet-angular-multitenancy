@@ -1,13 +1,13 @@
-import { Inject, Injectable } from "@angular/core";
-import { Router } from "@angular/router";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { catchError, exhaustMap, mergeMap, of, switchMap, tap } from "rxjs";
+import { Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { catchError, exhaustMap, mergeMap, of, switchMap, tap } from 'rxjs';
 
-import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
-import { AuthenticationService } from "../services/authentication.service";
+import { ResponseMessage, ResponseStatus, Page } from '@xyz/office/modules/core/models';
+import { AuthenticationService } from '../services/authentication.service';
 
 import * as fromAuthentication from './authentication.actions';
-import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 @Injectable()
 export class AuthenticationEffects {
@@ -55,7 +55,7 @@ export class AuthenticationEffects {
             return of(fromAuthentication.refreshAccessTokenRequestSuccess({ authenticatedUser: authenticatedUser }))
           }),
           catchError(error => {
-            console.log("effect, error refreshign access token")
+            console.log('effect, error refreshign access token')
             return of(fromAuthentication.refreshAccessTokenRequestFailure({ message: {
               status: ResponseStatus.ERROR,
               message: error?.error?.message || 'Invalid username/password!'

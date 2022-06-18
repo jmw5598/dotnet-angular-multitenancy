@@ -2,7 +2,7 @@ import {
   ModulePermission, 
   Permission, 
   TemplateModulePermission, 
-  TemplatePermission } from "@xyz/office/modules/core/entities/tenants";
+  TemplatePermission } from '@xyz/office/modules/core/entities/tenants';
 
 
 export const mapAssignableModulePermissionsToTemplateModulePermissions = (modulePermissions: ModulePermission[]): TemplateModulePermission[] => {

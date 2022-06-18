@@ -1,6 +1,6 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
-import { BasicQuerySearchFilter } from "../../shared/modules/query-search-filter";
+import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
 
 import { 
   Credentials, 
@@ -10,7 +10,7 @@ import {
   Registration,
   RefreshTokenRequest,
   Page,
-  PageRequest } from "@xyz/office/modules/core/models";
+  PageRequest } from '@xyz/office/modules/core/models';
 
 import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 

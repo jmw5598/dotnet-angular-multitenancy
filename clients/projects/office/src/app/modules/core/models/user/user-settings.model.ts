@@ -1,4 +1,4 @@
-import { UserAccountDto } from "../../dtos";
+import { UserAccountDto } from '../../dtos';
 
 export interface UserSettings {
   userDetails: UserAccountDto

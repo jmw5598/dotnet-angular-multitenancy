@@ -1,5 +1,5 @@
-import { BaseEntity } from "./base.entity";
-import { Profile } from "./profile.entity";
+import { BaseEntity } from './base.entity';
+import { Profile } from './profile.entity';
 
 export interface User extends BaseEntity{
   userName: string,

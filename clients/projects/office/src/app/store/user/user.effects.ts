@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { catchError, mergeMap, of, switchMap } from "rxjs";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Injectable } from '@angular/core';
+import { catchError, mergeMap, of, switchMap } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import * as fromUser from './user.actions';
-import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
-import { UsersService } from "@xyz/office/modules/core/services/tenants";
+import { ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
+import { UsersService } from '@xyz/office/modules/core/services/tenants';
 
 @Injectable()
 export class UserEffects {

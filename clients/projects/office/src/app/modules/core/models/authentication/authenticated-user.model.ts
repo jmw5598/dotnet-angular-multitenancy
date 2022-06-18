@@ -1,4 +1,4 @@
-import { AuthenticatedStatus } from "./authenticated-status.enum";
+import { AuthenticatedStatus } from './authenticated-status.enum';
 
 export interface AuthenticatedUser {
   status: AuthenticatedStatus,

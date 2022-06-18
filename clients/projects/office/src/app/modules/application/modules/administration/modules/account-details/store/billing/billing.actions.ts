@@ -1,8 +1,8 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
-import { BillingInvoice } from "@xyz/office/modules/core/entities/multitenancy";
-import { Page, PageRequest, ResponseMessage } from "@xyz/office/modules/core/models";
-import { DateRangeQuerySearchFilter } from "@xyz/office/modules/shared/modules/query-search-filter";
+import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
+import { Page, PageRequest, ResponseMessage } from '@xyz/office/modules/core/models';
+import { DateRangeQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 export const getBillingDetails = createAction(
   '[Billing] Get Billing Details Request',

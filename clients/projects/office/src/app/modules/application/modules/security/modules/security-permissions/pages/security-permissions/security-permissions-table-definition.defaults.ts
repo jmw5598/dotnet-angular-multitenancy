@@ -1,4 +1,4 @@
-import { ColumnDefinition, ColumnType, TableDefinition } from "@xyz/office/modules/shared/modules/datatable";
+import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 
 export const defaultSecurityPermissionsTableDefinition: TableDefinition = {
   title: 'Named Template Permisssions',

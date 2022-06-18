@@ -1,4 +1,4 @@
-import { Permission } from "./permission.entity";
+import { Permission } from './permission.entity';
 
 export interface BaseTemplatePermission {
   id: string,

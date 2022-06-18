@@ -1,4 +1,4 @@
-import { InjectionToken } from "@angular/core";
+import { InjectionToken } from '@angular/core';
 
 export const CACHE_SERVICE: InjectionToken<string> = new InjectionToken<string>('CACHE_SERVICE');
 

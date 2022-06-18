@@ -1,4 +1,4 @@
-import { Sort, SortDirection } from "@xyz/office/modules/core/models";
+import { Sort, SortDirection } from '@xyz/office/modules/core/models';
 
 export const defaultSecurityPermissionsSort: Sort  = {
   column: 'name',

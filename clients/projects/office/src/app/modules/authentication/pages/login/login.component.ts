@@ -39,7 +39,7 @@ export class LoginComponent {
   }
 
   public get findCompanyUrl(): string {
-    const client: ClientSettings = this._environmentService.getSection("client");
+    const client: ClientSettings = this._environmentService.getSection('client');
     return `${client.protocol}://${client.domain}${ client?.port ? ':' + client.port : ''}`;
   }
 

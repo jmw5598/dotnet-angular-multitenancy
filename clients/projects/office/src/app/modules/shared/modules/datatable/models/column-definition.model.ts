@@ -1,4 +1,4 @@
-import { ColumnType } from "./column-type.enum";
+import { ColumnType } from './column-type.enum';
 
 export interface ColumnDefinition {
   label: string,

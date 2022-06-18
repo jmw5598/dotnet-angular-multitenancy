@@ -128,7 +128,7 @@ export class UserAccountsCreateComponent implements OnDestroy {
         const blankFormGroup = buildUserAccountCreateForm(this._formBuilder, this._userValidators, userModulerPermissions);
         const userModulePermissionsFormGroup = blankFormGroup.get('userModulePermissions');
 
-        console.log("reset permissions ", userModulePermissionsFormGroup);
+        console.log('reset permissions ', userModulePermissionsFormGroup);
         if ( userModulePermissionsFormGroup) {
           this.createUserAccountForm
             ?.get('userModulePermissions')

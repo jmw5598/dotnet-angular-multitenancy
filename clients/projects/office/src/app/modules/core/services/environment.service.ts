@@ -55,7 +55,7 @@ export class EnvironmentService {
   }
 
   public getSubdomain(): string {
-    const hostnameParts: string[] = this._window.location.hostname.split(".");
+    const hostnameParts: string[] = this._window.location.hostname.split('.');
     return hostnameParts?.length > 1 ? hostnameParts[0] : '';
   }
 }

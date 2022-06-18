@@ -4,9 +4,9 @@ import {
   TemplateModulePermission, 
   User, 
   UserModulePermission, 
-  UserPermission } from "@xyz/office/modules/core/entities/tenants";
+  UserPermission } from '@xyz/office/modules/core/entities/tenants';
 
-import { UserAccount } from "@xyz/office/modules/core/models";
+import { UserAccount } from '@xyz/office/modules/core/models';
 
 export const mapAssignableModulePermissionsToUserModulePermissions = (modulePermissions: ModulePermission[]): UserModulePermission[] => {
   return modulePermissions

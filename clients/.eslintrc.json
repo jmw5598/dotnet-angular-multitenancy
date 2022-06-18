@@ -34,6 +34,14 @@
             "prefix": "xyz",
             "style": "kebab-case"
           }
+        ],
+        "@typescript-eslint/quotes": [
+          "error",
+          "single",
+          {
+            "avoidEscape": true,
+            "allowTemplateLiterals": true
+          }
         ]
       }
     },

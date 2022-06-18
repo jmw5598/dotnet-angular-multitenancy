@@ -1,5 +1,5 @@
-import { createAction, props } from "@ngrx/store";
-import { ResponseMessage, TenantStatistics } from "@xyz/office/modules/core/models";
+import { createAction, props } from '@ngrx/store';
+import { ResponseMessage, TenantStatistics } from '@xyz/office/modules/core/models';
 
 export const getTenantStatisticsRequest = createAction(
   '[Account Details] Get Tenant Statistics Request',

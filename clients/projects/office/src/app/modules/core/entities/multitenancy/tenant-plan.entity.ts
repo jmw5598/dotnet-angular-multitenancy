@@ -1,4 +1,4 @@
-import { Plan } from "./plan.entity";
+import { Plan } from './plan.entity';
 
 export interface TenantPlan {
   id: string,

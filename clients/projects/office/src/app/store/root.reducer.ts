@@ -1,5 +1,5 @@
-import { InjectionToken } from "@angular/core";
-import { Action, ActionReducer, ActionReducerMap } from "@ngrx/store";
+import { InjectionToken } from '@angular/core';
+import { Action, ActionReducer, ActionReducerMap } from '@ngrx/store';
 
 import { environment } from '@xyz/office/env/environment';
 
@@ -33,8 +33,8 @@ export const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<RootState, Acti
   }),
 });
 
-import { MetaReducer } from "@ngrx/store";
-import { TenantEffects } from "./tenant";
+import { MetaReducer } from '@ngrx/store';
+import { TenantEffects } from './tenant';
 
 export function logger(reducer: ActionReducer<RootState>): ActionReducer<RootState> {
   return (state, action) => {

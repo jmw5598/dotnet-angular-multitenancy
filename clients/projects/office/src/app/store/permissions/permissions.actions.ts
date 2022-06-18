@@ -1,7 +1,7 @@
-import { createAction, props } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
 
-import { ModulePermission } from "@xyz/office/modules/core/entities/tenants";
-import { ResponseMessage } from "@xyz/office/modules/core/models";
+import { ModulePermission } from '@xyz/office/modules/core/entities/tenants';
+import { ResponseMessage } from '@xyz/office/modules/core/models';
 
 export const getAssignableModulePermissionsRequest = createAction(
   '[Security Permissions] Get Assignable Module Permissions Request'

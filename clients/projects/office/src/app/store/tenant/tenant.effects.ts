@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
-import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 
-import { TenantsService } from "@xyz/office/modules/core/services/multitenancy";
-import { catchError, mergeMap, of, switchMap } from "rxjs";
+import { TenantsService } from '@xyz/office/modules/core/services/multitenancy';
+import { catchError, mergeMap, of, switchMap } from 'rxjs';
 
 import * as fromTenants from './tenant.actions';
 

@@ -1,4 +1,4 @@
-import { createSelector } from "@ngrx/store";
+import { createSelector } from '@ngrx/store';
 
 import * as fromAdministration from '../../../../store';
 import * as fromAccountDetails from './account-details.reducer';

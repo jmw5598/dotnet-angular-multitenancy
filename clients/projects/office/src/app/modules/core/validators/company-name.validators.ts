@@ -1,8 +1,8 @@
-import { Injectable } from "@angular/core";
-import { AbstractControl, AsyncValidatorFn } from "@angular/forms";
-import { catchError, debounceTime, filter, map, Observable, of, switchMap, take } from "rxjs";
-import { ValidationResult } from "../models";
-import { CompaniesService } from "@xyz/office/modules/core/services/multitenancy";
+import { Injectable } from '@angular/core';
+import { AbstractControl, AsyncValidatorFn } from '@angular/forms';
+import { catchError, debounceTime, filter, map, Observable, of, switchMap, take } from 'rxjs';
+import { ValidationResult } from '../models';
+import { CompaniesService } from '@xyz/office/modules/core/services/multitenancy';
 
 @Injectable({
   providedIn: 'root'

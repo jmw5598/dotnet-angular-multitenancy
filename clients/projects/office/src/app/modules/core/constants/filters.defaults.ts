@@ -1,4 +1,4 @@
-import { BasicQuerySearchFilter, DateRangeQuerySearchFilter } from "../../shared/modules/query-search-filter";
+import { BasicQuerySearchFilter, DateRangeQuerySearchFilter } from '../../shared/modules/query-search-filter';
 
 export const defaultBasicQuerySearchFilter: BasicQuerySearchFilter = {
   query: ''

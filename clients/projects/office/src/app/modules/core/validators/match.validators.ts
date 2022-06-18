@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormGroup } from '@angular/forms';
 
 export class MatchValidators {
   public static mustMatch(controlName: string, matchingControlName: string) {

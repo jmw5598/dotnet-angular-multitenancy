@@ -1,4 +1,4 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromTenant from './tenant.reducer';
 
 export const selectTenantState = createFeatureSelector<fromTenant.TenantState>(

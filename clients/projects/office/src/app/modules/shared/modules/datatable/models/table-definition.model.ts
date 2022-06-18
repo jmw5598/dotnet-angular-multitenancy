@@ -1,4 +1,4 @@
-import { ColumnDefinition } from "./column-definition.model";
+import { ColumnDefinition } from './column-definition.model';
 
 export interface TableDefinition {
   title: string,

@@ -1,4 +1,4 @@
-import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 export interface TenantStatistics {
   tenant: Tenant,

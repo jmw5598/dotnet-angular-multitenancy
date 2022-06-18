@@ -17,7 +17,7 @@ export class IsLoadedFromSubdomainGuard implements CanActivate {
     const subdomain: string = this._environmentService.getSubdomain(); 
 
     if (subdomain && subdomain?.trim()?.length) {
-      this._router.navigateByUrl("/auth/login");
+      this._router.navigateByUrl('/auth/login');
     }
 
     return of(true);

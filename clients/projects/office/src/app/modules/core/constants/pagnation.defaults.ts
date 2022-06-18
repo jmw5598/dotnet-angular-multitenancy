@@ -1,4 +1,4 @@
-import { PageRequest, Sort, SortDirection } from "../models";
+import { PageRequest, Sort, SortDirection } from '../models';
 
 export const defaultPageRequest: PageRequest = {
   index: 0,

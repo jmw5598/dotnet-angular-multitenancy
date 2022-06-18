@@ -1,5 +1,5 @@
-import { QueryParamsHandling } from "@angular/router";
-import { ModulePermissionNames, PermissionNames } from "../user/user-permissions.model";
+import { QueryParamsHandling } from '@angular/router';
+import { ModulePermissionNames, PermissionNames } from '../user/user-permissions.model';
 
 export interface NavigationLink {
   label: string,

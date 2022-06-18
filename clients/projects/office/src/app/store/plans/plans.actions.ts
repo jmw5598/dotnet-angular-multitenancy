@@ -1,6 +1,6 @@
-import { createAction, props } from "@ngrx/store";
-import { Plan } from "@xyz/office/modules/core/entities/multitenancy";
-import { ResponseMessage } from "@xyz/office/modules/core/models";
+import { createAction, props } from '@ngrx/store';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
+import { ResponseMessage } from '@xyz/office/modules/core/models';
 
 export const getPlansRequest = createAction(
   '[Plans] Get Plans Request'

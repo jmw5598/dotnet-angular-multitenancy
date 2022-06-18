@@ -1,5 +1,5 @@
-import { Company } from "./company.entity"
-import { TenantPlan } from "./tenant-plan.entity"
+import { Company } from './company.entity'
+import { TenantPlan } from './tenant-plan.entity'
 
 export interface Tenant {
   id: string,

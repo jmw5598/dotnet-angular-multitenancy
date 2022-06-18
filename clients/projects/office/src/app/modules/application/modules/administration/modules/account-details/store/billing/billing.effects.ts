@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { catchError, mergeMap, of, switchMap } from "rxjs";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Injectable } from '@angular/core';
+import { catchError, mergeMap, of, switchMap } from 'rxjs';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 
 import { BillingService } from '@xyz/office/modules/core/services/multitenancy';
 import { Page, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';

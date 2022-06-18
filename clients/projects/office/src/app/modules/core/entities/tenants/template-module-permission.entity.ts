@@ -1,6 +1,6 @@
-import { BaseTemplateModulePermission } from "./base-template-module-permission.entity";
-import { TemplateModulePermissionName } from "./template-module-permission-name.entity";
-import { TemplatePermission } from "./template-permission.entity";
+import { BaseTemplateModulePermission } from './base-template-module-permission.entity';
+import { TemplateModulePermissionName } from './template-module-permission-name.entity';
+import { TemplatePermission } from './template-permission.entity';
 
 export interface TemplateModulePermission extends BaseTemplateModulePermission {
   templateModulePermissionNameId: string,

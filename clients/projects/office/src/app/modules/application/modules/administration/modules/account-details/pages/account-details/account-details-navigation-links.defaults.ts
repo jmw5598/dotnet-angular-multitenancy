@@ -1,4 +1,4 @@
-import { ModulePermissionNames, TabNavigationLink } from "@xyz/office/modules/core/models";
+import { ModulePermissionNames, TabNavigationLink } from '@xyz/office/modules/core/models';
 
 export const defaultAccountDetailsNavigationLinks: TabNavigationLink[] = [
   {

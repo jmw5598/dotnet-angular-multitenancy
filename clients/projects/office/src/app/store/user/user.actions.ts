@@ -1,5 +1,5 @@
-import { createAction, props } from "@ngrx/store";
-import { ResponseMessage, UserModulePermissions, UserSettings } from "@xyz/office/modules/core/models";
+import { createAction, props } from '@ngrx/store';
+import { ResponseMessage, UserModulePermissions, UserSettings } from '@xyz/office/modules/core/models';
 
 export const getUserSettingsRequest = createAction(
   '[User] Get User Settings Request'

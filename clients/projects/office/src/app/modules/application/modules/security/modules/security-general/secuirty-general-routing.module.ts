@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
-import { SecurityGeneralComponent } from "./pages/security-general/security-general.component";
+import { SecurityGeneralComponent } from './pages/security-general/security-general.component';
 
 const routes: Routes = [
   {

@@ -1,13 +1,13 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AssignablePermissionsLoadedGuard } from '@xyz/office/modules/core/guards';
 
-import { InitialTemplateModulePermissionNamesSearchLoadedGuard } from "./guards/initial-template-module-permission-names-search-loaded.guard";
-import { SelectedTemplateModulePermissionNameLoadedGuard } from "./guards/selected-template-module-permission-name-loaded.guard";
-import { SecurityPermissionsCreateComponent } from "./pages/security-permissions-create/security-permissions-create.component";
-import { SecurityPermissionsUpdateComponent } from "./pages/security-permissions-update/security-permissions-update.component";
-import { SecurityPermissionsComponent } from "./pages/security-permissions/security-permissions.component";
+import { InitialTemplateModulePermissionNamesSearchLoadedGuard } from './guards/initial-template-module-permission-names-search-loaded.guard';
+import { SelectedTemplateModulePermissionNameLoadedGuard } from './guards/selected-template-module-permission-name-loaded.guard';
+import { SecurityPermissionsCreateComponent } from './pages/security-permissions-create/security-permissions-create.component';
+import { SecurityPermissionsUpdateComponent } from './pages/security-permissions-update/security-permissions-update.component';
+import { SecurityPermissionsComponent } from './pages/security-permissions/security-permissions.component';
 
 const routes: Routes = [
   {

@@ -1,6 +1,6 @@
-import { createReducer, on } from "@ngrx/store";
-import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
-import { AuthenticatedUser, Page, ResponseMessage } from "../../core/models";
+import { createReducer, on } from '@ngrx/store';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
+import { AuthenticatedUser, Page, ResponseMessage } from '../../core/models';
 
 import * as fromAuthentication from './authentication.actions';
 

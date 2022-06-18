@@ -1,4 +1,4 @@
-import { UserModulePermission, UserPermission } from "@xyz/office/modules/core/entities/tenants";
+import { UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 
 export enum ModulePermissionNames {
   ADMINISTRATION_MODULE = 'Administration Module',

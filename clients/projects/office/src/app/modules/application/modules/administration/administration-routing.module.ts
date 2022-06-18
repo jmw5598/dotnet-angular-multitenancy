@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import { HasPermissionGuard } from "@xyz/office/modules/core/guards";
-import { PermissionNames } from "@xyz/office/modules/core/models";
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HasPermissionGuard } from '@xyz/office/modules/core/guards';
+import { PermissionNames } from '@xyz/office/modules/core/models';
 
 const routes: Routes = [
   {

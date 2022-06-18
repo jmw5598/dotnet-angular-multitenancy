@@ -58,7 +58,7 @@ export class DateRangeQuerySearchFilterComponent implements OnInit, OnDestroy {
   }
 
   public onDateRangeChange(dates: any): void {
-    console.log("dates are ", dates);
+    console.log('dates are ', dates);
   }
 
   private _listenForSearchQueryChanges(): void {

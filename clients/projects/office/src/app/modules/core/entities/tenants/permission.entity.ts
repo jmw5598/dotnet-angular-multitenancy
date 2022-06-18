@@ -1,4 +1,4 @@
-import { ModulePermission } from "./module-permission.entity";
+import { ModulePermission } from './module-permission.entity';
 
 export interface Permission {
   id: string,
