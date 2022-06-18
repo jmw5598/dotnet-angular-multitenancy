@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 import { Page, ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
-import { PermissionsService } from '@xyz/office/modules/core/services';
+import { PermissionsService } from '@xyz/office/modules/core/services/tenants';
 import { catchError, exhaustMap, mergeMap, of, switchMap } from 'rxjs';
 
 import * as fromSecurityPermissions from './security-permissions.actions';

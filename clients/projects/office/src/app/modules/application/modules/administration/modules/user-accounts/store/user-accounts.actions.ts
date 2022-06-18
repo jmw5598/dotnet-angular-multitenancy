@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 

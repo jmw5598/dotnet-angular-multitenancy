@@ -3,7 +3,7 @@ import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { TemplateModulePermissionName, UserModulePermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserModulePermission } from '@xyz/office/modules/core/entities/tenants';
 import { ResponseStatus, UserAccount } from '@xyz/office/modules/core/models';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';

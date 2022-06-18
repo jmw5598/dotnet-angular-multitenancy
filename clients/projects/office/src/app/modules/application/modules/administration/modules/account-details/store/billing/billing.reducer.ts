@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { defaultDateRangeQuerySearchFilter } from '@xyz/office/modules/core/constants';
-import { BillingInvoice } from '@xyz/office/modules/core/entities';
+import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
 import { Page } from '@xyz/office/modules/core/models';
 import { DateRangeQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 

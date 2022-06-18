@@ -15,9 +15,10 @@ import {
   RefreshTokenRequest,
   Page,
   PageRequest } from '@xyz/office/modules/core/models';
+  
 import { REQUIRES_AUTHENTICATION } from '../../core/interceptors';
 import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
-import { Tenant } from '../../core/entities';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 
 @Injectable({

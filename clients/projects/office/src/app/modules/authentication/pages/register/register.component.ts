@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import * as fromAuthentication from '../../store';
 import * as fromPlans from '@xyz/office/store/plans';
 import * as fromRoot from '@xyz/office/store';
-import { Plan } from '@xyz/office/modules/core/entities';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
 @Component({

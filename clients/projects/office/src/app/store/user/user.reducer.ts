@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
+import { UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 
 import { 
   UserModulePermissionsMap, 
@@ -9,7 +9,6 @@ import {
   ModulePermissionNames, 
   UserPermissionsMap, 
   PermissionNames} from '@xyz/office/modules/core/models';
-import { map } from 'rxjs';
 
 import * as fromUser from './user.actions';
 

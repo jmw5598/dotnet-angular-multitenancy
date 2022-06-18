@@ -1,5 +1,9 @@
-import { ModulePermission, Permission, TemplateModulePermission } from "@xyz/office/modules/core/entities";
-import { TemplatePermission } from "@xyz/office/modules/core/entities/template-permission.entity";
+import { 
+  ModulePermission, 
+  Permission, 
+  TemplateModulePermission, 
+  TemplatePermission } from "@xyz/office/modules/core/entities/tenants";
+
 
 export const mapAssignableModulePermissionsToTemplateModulePermissions = (modulePermissions: ModulePermission[]): TemplateModulePermission[] => {
   return modulePermissions

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 
 import * as fromUserAccounts from '../store';
-import { UserPermission } from '@xyz/office/modules/core/entities';
+import { UserPermission } from '@xyz/office/modules/core/entities/tenants';
 
 @Injectable({
   providedIn: 'root'

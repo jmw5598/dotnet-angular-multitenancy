@@ -7,7 +7,7 @@ import { Credentials, ResponseMessage, ResponseStatus } from '@xyz/office/module
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 
-import { Tenant } from '@xyz/office/modules/core/entities';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 import * as fromRoot from '@xyz/office/store';
 import * as fromTenant from '@xyz/office/store/tenant';

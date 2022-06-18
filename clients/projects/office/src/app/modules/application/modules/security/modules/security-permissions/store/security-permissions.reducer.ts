@@ -1,10 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
 import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
-import { elementAt } from 'rxjs';
 
 import * as fromSecurityPermissions from './security-permissions.actions';
 

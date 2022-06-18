@@ -4,7 +4,7 @@ import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromPermissions from '../../../store/permissions';
-import { ModulePermission } from '@xyz/office/modules/core/entities';
+import { ModulePermission } from '@xyz/office/modules/core/entities/tenants';
 
 @Injectable({
   providedIn: 'root'

@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } fro
 import { Store } from '@ngrx/store';
 import { catchError, combineLatest, filter, mergeMap, Observable, of, switchMap, take, tap } from 'rxjs';
 
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
-import { Page, SortDirection } from '@xyz/office/modules/core/models';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
+import { Page } from '@xyz/office/modules/core/models';
 import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 
 import * as fromSecurityPermissions from '../store';

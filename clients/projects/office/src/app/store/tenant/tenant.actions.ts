@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { Tenant } from "@xyz/office/modules/core/entities";
+import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
 import { ResponseMessage } from "@xyz/office/modules/core/models";
 
 export const getTenantFromSubdomainRequest = createAction(

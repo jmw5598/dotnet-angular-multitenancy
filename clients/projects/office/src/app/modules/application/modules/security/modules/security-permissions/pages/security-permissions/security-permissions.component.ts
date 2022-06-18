@@ -2,10 +2,10 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 
-import { Page, PageRequest, Sort, SortDirection } from '@xyz/office/modules/core/models';
+import { Page, PageRequest, Sort } from '@xyz/office/modules/core/models';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { ColumnDefinition, ColumnType, TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 import { defaultBasicQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 

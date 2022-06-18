@@ -1,5 +1,5 @@
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { TemplateModulePermission, UserModulePermission } from "@xyz/office/modules/core/entities";
+import { FormArray, FormBuilder, Validators } from "@angular/forms";
+import { TemplateModulePermission } from "@xyz/office/modules/core/entities/tenants";
 
 export const buildTemplateModulePermissionNameForm = (
   formBuilder: FormBuilder,

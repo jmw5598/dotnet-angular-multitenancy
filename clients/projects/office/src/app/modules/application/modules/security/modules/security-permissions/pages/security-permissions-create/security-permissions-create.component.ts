@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 
 import { buildTemplateModulePermissionNameForm } from '../../components/template-module-permission-name-form/template-module-permission-name-form.builder';
 import { mapAssignableModulePermissionsToTemplateModulePermissions } from '../../utils';

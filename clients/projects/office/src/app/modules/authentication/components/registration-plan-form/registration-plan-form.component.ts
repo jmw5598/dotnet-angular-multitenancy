@@ -1,7 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ControlContainer, FormGroup } from '@angular/forms';
 
-import { Plan } from '@xyz/office/modules/core/entities';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
 
 @Component({
   selector: 'xyz-registration-plan-form',

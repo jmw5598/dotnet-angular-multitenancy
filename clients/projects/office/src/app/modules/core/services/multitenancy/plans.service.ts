@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Plan } from '../entities';
-import { AbstractCrudService } from './abstract-crud.service';
-import { EnvironmentService } from './environment.service';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
+import { AbstractCrudService } from '../abstract-crud.service';
+import { EnvironmentService } from '../environment.service';
 
 @Injectable({
   providedIn: 'root'

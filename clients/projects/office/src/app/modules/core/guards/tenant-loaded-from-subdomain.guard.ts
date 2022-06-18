@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import * as fromRoot from '@xyz/office/store';
 import * as fromTenant from '@xyz/office/store/tenant';
 
-import { Tenant } from '../entities';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 import { EnvironmentService } from '../services';
 
 @Injectable({

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tenant } from '../entities';
-import { TenantStatistics } from '../models';
-import { EnvironmentService } from './environment.service';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
+import { TenantStatistics } from '../../models';
+import { EnvironmentService } from '../environment.service';
 
 @Injectable({
   providedIn: 'root'

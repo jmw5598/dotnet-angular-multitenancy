@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
-import { TemplateModulePermissionName } from '../entities';
+import { TemplateModulePermissionName, ModulePermission } from '@xyz/office/modules/core/entities/tenants';
 
-import { ModulePermission } from '../entities';
-import { Page, PageRequest } from '../models';
-import { EnvironmentService } from './environment.service';
+import { Page, PageRequest } from '../../models';
+import { EnvironmentService } from '../environment.service';
 
 @Injectable({
   providedIn: 'root'

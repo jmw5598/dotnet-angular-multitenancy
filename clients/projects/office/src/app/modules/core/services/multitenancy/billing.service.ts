@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { DateRangeQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
-import { BillingInvoice } from '../../entities';
+import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
 import { Page, PageRequest } from '../../models';
 import { EnvironmentService } from '../environment.service';
 

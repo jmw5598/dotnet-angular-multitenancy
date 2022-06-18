@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 
 import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 

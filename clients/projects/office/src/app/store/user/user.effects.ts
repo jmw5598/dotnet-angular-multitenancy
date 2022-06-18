@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import * as fromUser from './user.actions';
 import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
-import { UsersService } from "@xyz/office/modules/core/services";
+import { UsersService } from "@xyz/office/modules/core/services/tenants";
 
 @Injectable()
 export class UserEffects {

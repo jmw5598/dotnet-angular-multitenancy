@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
-import { UserAccountDto } from '../dtos';
-import { UserPermission } from '../entities';
-import { Page, PageRequest, UserAccount, UserModulePermissions, UserSettings, ValidationResult } from '../models';
-import { EnvironmentService } from './environment.service';
+import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
+import { UserAccountDto } from '../../dtos';
+import { UserPermission } from '@xyz/office/modules/core/entities/tenants';
+import { Page, PageRequest, UserAccount, UserModulePermissions, UserSettings, ValidationResult } from '../../models';
+import { EnvironmentService } from '../environment.service';
 
 @Injectable({
   providedIn: 'root'

@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, mergeMap, of, switchMap } from "rxjs";
 
-import { PermissionsService } from "@xyz/office/modules/core/services";
+import { PermissionsService } from "@xyz/office/modules/core/services/tenants";
 import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";
-import { ModulePermission } from "@xyz/office/modules/core/entities";
+import { ModulePermission } from "@xyz/office/modules/core/entities/tenants";
 
 import * as fromPermissions from './permissions.actions';
 

@@ -6,7 +6,7 @@ import { filter, Observable, skip, Subject, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-import { TemplateModulePermission, TemplateModulePermissionName, User, UserModulePermission, UserPermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserModulePermission } from '@xyz/office/modules/core/entities/tenants';
 import { ResponseStatus } from '@xyz/office/modules/core/models';
 import { UserValidators } from '@xyz/office/modules/core/validators';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';

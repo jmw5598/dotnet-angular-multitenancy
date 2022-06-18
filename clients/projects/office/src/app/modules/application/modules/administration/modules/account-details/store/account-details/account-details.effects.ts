@@ -3,7 +3,7 @@ import { catchError, mergeMap, of, switchMap } from "rxjs";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import * as fromAccountDetails from './account-details.actions';
-import { TenantsService } from "@xyz/office/modules/core/services";
+import { TenantsService } from "@xyz/office/modules/core/services/multitenancy";
 import { ResponseMessage, ResponseStatus, TenantStatistics } from "@xyz/office/modules/core/models";
 
 @Injectable()

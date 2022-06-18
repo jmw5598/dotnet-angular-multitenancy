@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import { defaultDateRangeQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { Page } from '@xyz/office/modules/core/models';
-import { BillingInvoice } from '@xyz/office/modules/core/entities';
+import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
 
 import * as fromBilling from '../store/billing';
 

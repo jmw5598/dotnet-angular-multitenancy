@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 
 import * as fromSecurityPermissions from '../store';
 

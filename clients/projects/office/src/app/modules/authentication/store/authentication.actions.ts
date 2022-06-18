@@ -12,7 +12,7 @@ import {
   Page,
   PageRequest } from "@xyz/office/modules/core/models";
 
-import { Tenant } from '@xyz/office/modules/core/entities';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 export const loginUserRequest = createAction(
   '[Authentication] Login User Request',

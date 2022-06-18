@@ -1,5 +1,5 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { UserModulePermission } from "@xyz/office/modules/core/entities";
+import { UserModulePermission } from "@xyz/office/modules/core/entities/tenants";
 import { MatchValidators, UserValidators, ValidationPatterns } from "@xyz/office/modules/core/validators";
 
 export const buildUserAccountCreateForm = (

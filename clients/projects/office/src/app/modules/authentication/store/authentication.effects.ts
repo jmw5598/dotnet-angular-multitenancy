@@ -7,7 +7,7 @@ import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/
 import { AuthenticationService } from "../services/authentication.service";
 
 import * as fromAuthentication from './authentication.actions';
-import { Tenant } from "../../core/entities";
+import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
 
 @Injectable()
 export class AuthenticationEffects {

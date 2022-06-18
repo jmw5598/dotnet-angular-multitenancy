@@ -1,4 +1,4 @@
-import { User, UserModulePermission } from "../../entities";
+import { User, UserModulePermission } from "@xyz/office/modules/core/entities/tenants";
 
 export interface UserAccount {
   user: User,

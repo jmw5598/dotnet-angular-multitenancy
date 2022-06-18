@@ -1,4 +1,4 @@
-import { Role, UserModulePermission, Profile } from "../entities";
+import { Role, UserModulePermission, Profile } from "../entities/tenants";
 
 export interface UserAccountDto {
   id: string,

@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Plan } from '@xyz/office/modules/core/entities';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
 import * as fromPlans from './plans.actions';
 
 export const plansFeatureKey = 'plans';

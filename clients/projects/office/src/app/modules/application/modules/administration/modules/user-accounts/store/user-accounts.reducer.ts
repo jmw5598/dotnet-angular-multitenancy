@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constants';
 
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { ModulePermission, TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 

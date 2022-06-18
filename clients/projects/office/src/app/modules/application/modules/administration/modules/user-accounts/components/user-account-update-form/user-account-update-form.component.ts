@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
 import { AbstractControl, ControlContainer, FormArray, FormGroup } from '@angular/forms';
-import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 import { EnvironmentService } from '@xyz/office/modules/core/services';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable, Observer } from 'rxjs';

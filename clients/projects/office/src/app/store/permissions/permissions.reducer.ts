@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { ModulePermission } from '@xyz/office/modules/core/entities';
+import { ModulePermission } from '@xyz/office/modules/core/entities/tenants';
 
 import * as fromPermissions from './permissions.actions';
 

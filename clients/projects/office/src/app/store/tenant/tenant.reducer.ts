@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { Tenant } from "@xyz/office/modules/core/entities";
+import { Tenant } from "@xyz/office/modules/core/entities/multitenancy";
 
 import * as fromTenant from './tenant.actions';
 

@@ -4,8 +4,8 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 
 import { ResponseMessage, ResponseStatus, Page } from "@xyz/office/modules/core/models";
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
-import { TemplateModulePermissionName, UserPermission } from "@xyz/office/modules/core/entities";
-import { PermissionsService, UsersService } from "@xyz/office/modules/core/services";
+import { TemplateModulePermissionName, UserPermission } from "@xyz/office/modules/core/entities/tenants";
+import { PermissionsService, UsersService } from "@xyz/office/modules/core/services/tenants";
 
 import * as fromUserAccounts from './user-accounts.actions';
 

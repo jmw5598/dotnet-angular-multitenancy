@@ -1,8 +1,7 @@
-import { BaseEntity } from "../base.entity";
-import { Tenant } from "../tenant.entity";
+import { BaseMultitenancyEntity } from "./base-multitenancy.entity";
+import { Tenant } from "./tenant.entity";
 
-export interface BillingInvoice extends BaseEntity {
-  id: string,
+export interface BillingInvoice extends BaseMultitenancyEntity {
   transactionDate: Date,
   amount: number,
   status: string,

@@ -6,7 +6,7 @@ import { NzAutocompleteOptionComponent } from 'ng-zorro-antd/auto-complete';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Page, PageRequest } from '@xyz/office/modules/core/models';
-import { Tenant } from '@xyz/office/modules/core/entities';
+import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 import { defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';

@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { catchError, mergeMap, of, switchMap } from "rxjs";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 
-import { PlansService } from "@xyz/office/modules/core/services";
+import { PlansService } from "@xyz/office/modules/core/services/multitenancy";
 
 import * as fromPlans from './plans.actions';
 import { ResponseMessage, ResponseStatus } from "@xyz/office/modules/core/models";

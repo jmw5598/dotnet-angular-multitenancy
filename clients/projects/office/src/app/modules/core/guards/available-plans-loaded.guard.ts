@@ -4,7 +4,7 @@ import { catchError, filter, Observable, of, switchMap, take, tap } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromRoot from '@xyz/office/store';
-import { Plan } from '../entities';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
 import * as fromPlans from '@xyz/office/store/plans';
 
 @Injectable({

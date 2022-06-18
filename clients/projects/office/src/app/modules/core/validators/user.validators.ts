@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidatorFn } from "@angular/forms";
 import { catchError, debounceTime, filter, map, Observable, of, switchMap, take } from "rxjs";
 import { ValidationResult } from "../models";
-import { UsersService } from "../services/users.service";
+import { UsersService } from "@xyz/office/modules/core/services/tenants";
 
 @Injectable({
   providedIn: 'root'

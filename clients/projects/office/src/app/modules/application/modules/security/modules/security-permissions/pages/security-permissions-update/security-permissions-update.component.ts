@@ -7,7 +7,7 @@ import { filter, Observable, Subject, take, takeUntil } from 'rxjs';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities';
+import { TemplateModulePermission, TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 import { ResponseStatus } from '@xyz/office/modules/core/models';
 import { removeEmptyKeys } from '@xyz/office/modules/shared/utils';
 
