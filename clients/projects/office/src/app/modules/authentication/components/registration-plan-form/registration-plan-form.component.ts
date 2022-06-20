@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, Input, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ControlContainer, FormControl, FormGroup, Validators } from '@angular/forms';
-import { StripeCardElementOptions, StripeElementsOptions, StripeElementClasses, StripeCardElementChangeEvent } from '@stripe/stripe-js';
+import { StripeCardElementOptions, StripeElementsOptions, StripeElementClasses, StripeCardElementChangeEvent, Token, CreateTokenCardData } from '@stripe/stripe-js';
 
 import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
-import { StripeCardNumberComponent } from 'ngx-stripe';
+import { RegistrationPaymentDetails } from '@xyz/office/modules/core/models/authentication/registration-payment-details.model';
+import { StripeCardComponent, StripeCardNumberComponent, StripeService } from 'ngx-stripe';
 import { defaultStripeCardElementOptions, defaultStripElementsOptions } from './registration-plan-form-stripe-options.defaults';
 
 @Component({
@@ -13,7 +14,7 @@ import { defaultStripeCardElementOptions, defaultStripElementsOptions } from './
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RegistrationPlanFormComponent {
-  @ViewChild(StripeCardNumberComponent, { static: false }) 
+  @ViewChild(StripeCardComponent, { static: false }) 
   public card!: StripeCardNumberComponent;
 
   @Input()
@@ -29,7 +30,8 @@ export class RegistrationPlanFormComponent {
 
   constructor(
     private _controlContainer: ControlContainer,
-    private _changeDetectorRef: ChangeDetectorRef
+    private _changeDetectorRef: ChangeDetectorRef,
+    private _stripeService: StripeService
   ) {
     this.parentForm = this._controlContainer.control as FormGroup as FormGroup;
     this.formGroup = (this._controlContainer.control as FormGroup).get('plan') as FormGroup;
@@ -57,10 +59,43 @@ export class RegistrationPlanFormComponent {
 
   public onCardInformationChange(event: StripeCardElementChangeEvent): void {
     if (event.complete && !event.error) {
-      console.log("card change complete, get token", event, this.card);
+      const paymentDetails: RegistrationPaymentDetails = this.paymentDetailsFormGroup.value;
+      this._stripeService.createToken(
+          this.card.element, {
+            name: `${paymentDetails.firstName} ${paymentDetails.lastName}`,
+            address_line1: paymentDetails.street,
+            address_city: paymentDetails.city,
+            address_state: paymentDetails.city,
+            address_zip: paymentDetails.zip,
+            address_country: 'United States'
+          } as CreateTokenCardData
+        )
+        .subscribe(({token, error}) => {
+          if (error) {
+            this._resetPaymentDetailsFormGroup();
+          } else {
+            console.log("token is ", token);
+            this.paymentDetailsFormGroup.get('cardDetails')?.patchValue({
+              isValid: true,
+              brand: token?.card?.brand || null,
+              token: token?.id || null
+            });
+            setTimeout(() => this._changeDetectorRef.markForCheck(), 100);
+          }
+        });
     } else {
-      console.log("setting payment id token to null");
+      this._resetPaymentDetailsFormGroup();
     }
+  }
+
+  private _resetPaymentDetailsFormGroup(): void {
+    this.paymentDetailsFormGroup.patchValue({
+      cardDetails: {
+        isValid: null,
+        brand: null,
+        token: null
+      }
+    });
   }
 
   private _buildPaymentDetailsFormGroup(): FormGroup {
@@ -71,7 +106,11 @@ export class RegistrationPlanFormComponent {
       city: new FormControl(null, [Validators.required]),
       state: new FormControl(null, [Validators.required]),
       zip: new FormControl(null, [Validators.required]),
-      cardToken: new FormControl(null, [Validators.required])
+      cardDetails: new FormGroup({
+        isValid: new FormControl(null, [Validators.required]),
+        brand: new FormControl(null, [Validators.required]),
+        token: new FormControl(null, [Validators.required])
+      })
     });
   }
 }

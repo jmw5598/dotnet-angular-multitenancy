@@ -1,3 +1,4 @@
+import { RegistrationCardDetails } from './registration-card-details.model';
 import { RegistrationCompany } from './registration-company.model';
 import { RegistrationPlan } from './registration-plan.model';
 import { RegistrationProfile } from './registration-profile.model';
@@ -7,5 +8,6 @@ export interface Registration {
   user: RegistrationUser,
   profile: RegistrationProfile,
   company: RegistrationCompany,
-  plan: RegistrationPlan
+  plan: RegistrationPlan,
+  cardDetails: RegistrationCardDetails 
 }

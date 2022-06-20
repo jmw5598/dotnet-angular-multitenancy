@@ -10,6 +10,7 @@ export * from './authentication/registration-profile.model';
 export * from './authentication/registration-user.model';
 export * from './authentication/registration.model';
 export * from './authentication/refresh-token-request.model';
+export * from './authentication/registration-card-details.model';
 
 // paging
 export * from './paging/page-request.model';

@@ -1,17 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 import { Registration, ResponseMessage } from '@xyz/office/modules/core/models';
 import { CompanyNameValidators, MatchValidators, UserValidators, ValidationPatterns } from '@xyz/office/modules/core/validators';
 import { fadeAnimation } from '@xyz/office/modules/shared/animations';
-import { Observable } from 'rxjs';
+import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
+import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
 import * as fromAuthentication from '../../store';
 import * as fromPlans from '@xyz/office/store/plans';
 import * as fromRoot from '@xyz/office/store';
-import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
-import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
 @Component({
   selector: 'xyz-register',
