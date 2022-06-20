@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 
+import { NgxStripeModule } from 'ngx-stripe';
+
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
@@ -45,7 +47,8 @@ const storeModuleRuntimeChecks = {
     StoreModule.forRoot(ROOT_REDUCERS, { metaReducers, runtimeChecks: storeModuleRuntimeChecks }),
     EffectsModule.forRoot([...rootEffects]),
     StoreDevtoolsModule.instrument({ name: 'Xyz Project Store', logOnly: environment.production, }),
-    NzMessageModule
+    NzMessageModule,
+    NgxStripeModule.forRoot(environment.stripe.publishableKey),
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US },

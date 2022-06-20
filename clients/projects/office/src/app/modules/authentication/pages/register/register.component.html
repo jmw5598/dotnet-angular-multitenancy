@@ -26,7 +26,7 @@
             [clientSettings]="clientSettings">
         </xyz-registration-company-form>
         <button 
-            [disabled]="registerForm?.get('company')?.invalid"
+            [disabled]="registerForm?.get('company')?.invalid || registerForm?.pending"
             class="mr-1"
             type="button"
             *ngIf="currentStepIndex < 3" 
@@ -50,7 +50,7 @@
           <span>Previous</span>
         </button>
         <button 
-            [disabled]="registerForm?.get('user')?.invalid"
+            [disabled]="registerForm?.get('user')?.invalid || registerForm?.pending"
             class="mr-1"
             type="button"
             nz-button 
@@ -72,7 +72,7 @@
           <span>Previous</span>
         </button>
         <button 
-            [disabled]="registerForm?.get('profile')?.invalid"
+            [disabled]="registerForm?.get('profile')?.invalid || registerForm?.pending"
             class="mr-1"
             type="button"
             nz-button 
@@ -81,8 +81,6 @@
           <span>Next</span>
         </button>
       </ng-container>
-
-      
 
       <!-- Plan Step -->
       <ng-container *ngSwitchCase="3">
@@ -98,7 +96,7 @@
           <span>Previous</span>
         </button>
         <button 
-            [disabled]="registerForm.get('plan')?.invalid"
+            [disabled]="registerForm?.invalid"
             type="submit"
             nz-button 
             nzType="primary">

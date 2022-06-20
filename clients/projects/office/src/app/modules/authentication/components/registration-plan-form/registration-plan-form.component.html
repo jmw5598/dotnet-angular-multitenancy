@@ -1,14 +1,106 @@
 <div [formGroup]="formGroup">
-  <h3 class="my-5">Select a Plan</h3>
-  <nz-form-item *ngIf="plans">
-    <nz-form-control nzErrorTip="Please select a Plan!">
-      <nz-select formControlName="id">
-        <nz-option 
-            *ngFor="let plan of plans" 
-            [nzValue]="plan.id"
-            [nzLabel]="plan.name + ' - ' + (plan.renewalRate | titlecase) + ' (' + plan.maxUserCount + ' Users)'">
-        </nz-option>
-      </nz-select>
-    </nz-form-control>
-  </nz-form-item>
+  
+  <!-- Plan Options Section -->
+  <ng-container *ngIf="plans">
+    <h3 class="mt-5 mb-3 fw-bold">Select a Plan</h3>
+    <!-- Plan Selections -->
+    <nz-row [nzGutter]="[16,16]">
+      <nz-col [nzSpan]="24">
+        <nz-form-item *ngIf="plans">
+          <nz-form-control nzErrorTip="Please select a Plan!">
+            <nz-select formControlName="id" (ngModelChange)="onSelectedPlanChange($event)">
+              <nz-option 
+                  *ngFor="let plan of plans" 
+                  [nzValue]="plan.id"
+                  [nzLabel]="plan.name + ' - ' + (plan.renewalRate | titlecase) + ' (' + plan.maxUserCount + ' Users)'">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+
+    <!-- Payment Information Section -->
+    <ng-container *ngIf="selectedPlan?.paymentRequired" [formGroup]="paymentDetailsFormGroup">
+      <h3 class="mt-0 mb-3 fw-bold">Payment Details</h3>
+
+      <!-- Payment First & Last Name-->
+      <nz-row [nzGutter]="[16, 16]">
+        <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your First Name!">
+              <nz-input-group nzPrefixIcon="user">
+                <input type="text" nz-input formControlName="firstName" placeholder="First Name" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Last Name!">
+              <nz-input-group nzPrefixIcon="user">
+                <input type="text" nz-input formControlName="lastName" placeholder="Last Name" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Payment Address Details -->
+      <nz-row [nzGutter]="[16,16]">
+        <nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Street!">
+              <nz-input-group nzPrefixIcon="home">
+                <input type="text" nz-input formControlName="street" placeholder="Street" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="12">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your City!">
+              <nz-input-group nzPrefixIcon="home">
+                <input type="text" nz-input formControlName="city" placeholder="City" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your State!">
+              <nz-input-group nzPrefixIcon="home">
+                <input type="text" nz-input formControlName="state" placeholder="State" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+        <nz-col [nzXs]="24" [nzSm]="24" [nzMd]="6">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Please input your Zip!">
+              <nz-input-group nzPrefixIcon="home">
+                <input type="text" nz-input formControlName="zip" placeholder="Zip" />
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+      <!-- Card Details (Stripe Element)-->
+      <nz-row [nzGutter]="[16, 16]">
+        <nz-col [nzSpan]="24">
+          <nz-form-item>
+            <nz-form-control nzErrorTip="Card is required">
+              <ngx-stripe-card
+                  [options]="cardOptions"
+                  (change)="onCardInformationChange($event)"
+                  [elementsOptions]="elementsOptions">
+              </ngx-stripe-card>
+            </nz-form-control>
+          </nz-form-item>
+        </nz-col>
+      </nz-row>
+
+    </ng-container>
+  </ng-container>
 </div>

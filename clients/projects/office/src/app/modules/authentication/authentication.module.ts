@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgxStripeModule } from 'ngx-stripe';
+
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -16,6 +18,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 
@@ -51,6 +54,7 @@ import { CompanySearchComponent } from './pages/company-search/company-search.co
     CommonModule,
     AuthenticationRoutingModule,
     ReactiveFormsModule,
+    NgxStripeModule,
     NzCheckboxModule,
     NzFormModule,
     NzInputModule,
@@ -64,7 +68,8 @@ import { CompanySearchComponent } from './pages/company-search/company-search.co
     NzIconModule,
     NzSelectModule,
     NzAutocompleteModule,
-    NzAvatarModule
+    NzAvatarModule, 
+    NzDividerModule,
   ]
 })
 export class AuthenticationModule { }

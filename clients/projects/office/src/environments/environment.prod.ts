@@ -13,5 +13,8 @@ export const environment = {
     subdomain: '',
     domain: 'localhost',
     port: '4200'
+  },
+  stripe: {
+    publishableKey: ''
   }
 };
