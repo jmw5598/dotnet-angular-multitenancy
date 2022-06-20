@@ -3,21 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Models.Multitenancy;
 
+using Xyz.Multitenancy.Seeds;
+
 namespace Xyz.Multitenancy.Extensions
 {
     public static class MultitenancyModelBuilderExtensions
     {
         public static void SeedPlans(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Plan>().HasData(
-                new Plan {
-                    Id = Guid.NewGuid(),
-                    Name = "Free",
-                    Price = 0.00M,
-                    RenewalRate = SubscriptionRenewalRate.MONTHLY,
-                    MaxUserCount = 5
-                }
-            );
+            modelBuilder.Entity<Plan>().HasData(PlansSeed.Get());
         }
 
         public static void SeedDevLocalhostTenant(this ModelBuilder modelBuilder)
@@ -30,13 +24,13 @@ namespace Xyz.Multitenancy.Extensions
                 Name = "Localhost"
             };
 
-            var plan = new Plan
-            {
-                Id = Guid.NewGuid(),
-                MaxUserCount = 10,
-                Name = "Basic",
-                Price = 0,
-                RenewalRate = SubscriptionRenewalRate.MONTHLY
+            var plan = PlansSeed.Get().FirstOrDefault() ?? new Plan {
+                Id = new Guid("81048da5-948f-4304-a5b2-908ac1ee44b7"),
+                Name = "Free",
+                Price = 0.00M,
+                PaymentRequired = false,
+                RenewalRate = SubscriptionRenewalRate.MONTHLY,
+                MaxUserCount = 2
             };
 
             var tenantPlan = new TenantPlan
@@ -64,7 +58,6 @@ namespace Xyz.Multitenancy.Extensions
             };
             
             modelBuilder.Entity<Company>().HasData(company);
-            modelBuilder.Entity<Plan>().HasData(plan);
             modelBuilder.Entity<TenantPlan>().HasData(tenantPlan);
             modelBuilder.Entity<Tenant>().HasData(tenant);
         }

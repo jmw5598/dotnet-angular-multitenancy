@@ -10,6 +10,7 @@ namespace Xyz.Core.Entities.Multitenancy
         public Guid Id { get; set; } = default!;
         public string Name { get; set; } = default!;
         public decimal Price { get; set; }
+        public Boolean PaymentRequired { get; set; } = true;
 
         [Column(TypeName = "varchar(24)")]
         public SubscriptionRenewalRate RenewalRate { get; set; } = default!;
@@ -22,6 +23,7 @@ namespace Xyz.Core.Entities.Multitenancy
                 Id = this.Id,
                 Name = this.Name,
                 Price = this.Price,
+                PaymentRequired = this.PaymentRequired,
                 RenewalRate = this.RenewalRate,
                 MaxUserCount = this.MaxUserCount
             };
