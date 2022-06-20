@@ -1,13 +1,14 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { defaultDateRangeQuerySearchFilter, defaultPageRequest } from '@xyz/office/modules/core/constants';
-import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
+import { BillingInvoice, Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 import { Page, PageRequest, Sort } from '@xyz/office/modules/core/models';
 import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { DateRangeQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 import { Observable, tap } from 'rxjs';
 import { defaultUserAccountsSort } from '../../../user-accounts/constants/sort.defaults';
 
+import * as fromTenant from '@xyz/office/store/tenant';
 import * as fromBilling from '../../store/billing';
 import { defaultBillingInvoicesTableDefinition } from './billing-invoices-table-definition.defaults';
 
@@ -27,12 +28,15 @@ export class BillingComponent {
 
   public billingInvoicesTableDefinition: TableDefinition = defaultBillingInvoicesTableDefinition;
 
+  public tenant$: Observable<Tenant | null>;
+
   constructor(
     private _store: Store<fromBilling.BillingState>
   ) {
     this.billingInvoicesPage$ = this._store.select(fromBilling.selectBillingInvoicesPage);
     this.billingInvoicesSearchFilter$ = this._store.select(fromBilling.selectBillingInvoicesSearchFilter)
       .pipe(tap(filter => this.billingInvoicesSearchFilter = filter));
+    this.tenant$ = this._store.select(fromTenant.selectTenant);
   }
 
   public onSearchFilterChanges(filter: DateRangeQuerySearchFilter): void {

@@ -34,6 +34,8 @@ namespace Xyz.Infrastructure.Services.Multitenancy
             {
                 var tenant = await this._multitenancyDbContext.Tenants
                     .Include(tenant => tenant.Company)
+                    .Include(tenant => tenant.TenantPlan)
+                    .ThenInclude(tenantPlan => tenantPlan.Plan)
                     .Where(tenant => tenant.Name.Trim().ToLower() == subdomain.Trim().ToLower())
                     .FirstOrDefaultAsync();
 

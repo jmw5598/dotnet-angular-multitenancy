@@ -10,14 +10,14 @@
         </button>
       </nz-page-header-extra>
       <nz-page-header-content>
-        <nz-list nzBordered>
+        <nz-list nzBordered *ngIf="(tenant$ | async) as tenant">
           <nz-list-item>
             <span>Plan</span>
-            Basic
+            {{ tenant?.tenantPlan?.plan?.name }}
           </nz-list-item>
           <nz-list-item>
-            <span>Cost Monthly</span>
-            $100
+            <span>Cost {{ tenant?.tenantPlan?.renewalRate | titlecase }}</span>
+            {{ tenant?.tenantPlan?.price | currency }}
           </nz-list-item>
           <nz-list-item>
             <span>Payment Method</span>

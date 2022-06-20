@@ -49,7 +49,7 @@ namespace Xyz.Core.Entities.Multitenancy
         public Company Company { get; set; } = default!;
         
         public Guid TenantPlanId { get; set; } = default!;
-        public virtual TenantPlan? TenantPlan { get; set; } = default!;
+        public virtual TenantPlan TenantPlan { get; set; } = default!;
 
         public TenantDto ToDto()
         {

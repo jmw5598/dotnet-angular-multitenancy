@@ -1,7 +1,7 @@
 <nz-row [nzGutter]="[0, 0]">
   <nz-col [nzSm]="24" [nzMd]="24" [nzLg]="12">
     <nz-page-header class="px-4 py-0">
-      <nz-page-header-title>Your Account</nz-page-header-title>
+      <nz-page-header-title>Your Profile</nz-page-header-title>
       <nz-page-header-extra>
         <button 
             nz-button 
@@ -38,14 +38,14 @@
         </button>
       </nz-page-header-extra>
       <nz-page-header-content>
-        <nz-list nzBordered>
+        <nz-list nzBordered *ngIf="(tenant$ | async) as tenant">
           <nz-list-item>
             <span>Company</span>
-            Dev Company
+            {{ tenant?.company?.name }}
           </nz-list-item>
           <nz-list-item>
             <span>Subdomain</span>
-            http://devcompany123124.localhost:4200/
+            {{ tenant.name }}
           </nz-list-item>
         </nz-list>
       </nz-page-header-content>

@@ -2,7 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthenticatedGuard } from '@xyz/office/modules/authentication/guards';
-import { UserModulePermissionsLoadedGuard, UserSettingsLoadedGuard } from './modules/core/guards';
+import { 
+  TenantLoadedFromSubdomainGuard, 
+  UserModulePermissionsLoadedGuard, 
+  UserSettingsLoadedGuard } from './modules/core/guards';
 
 const routes: Routes = [
   {
@@ -20,7 +23,8 @@ const routes: Routes = [
     canActivate: [
       AuthenticatedGuard,
       UserSettingsLoadedGuard,
-      UserModulePermissionsLoadedGuard
+      UserModulePermissionsLoadedGuard,
+      TenantLoadedFromSubdomainGuard
     ],
     loadChildren: () => 
       import('./modules/application/application.module').then(m => m.ApplicationModule)
