@@ -63,9 +63,9 @@ export class RegistrationPlanFormComponent {
       this._stripeService.createToken(
           this.card.element, {
             name: `${paymentDetails.firstName} ${paymentDetails.lastName}`,
-            address_line1: paymentDetails.street,
+            address_line1: paymentDetails.address,
             address_city: paymentDetails.city,
-            address_state: paymentDetails.city,
+            address_state: paymentDetails.state,
             address_zip: paymentDetails.zip,
             address_country: 'United States'
           } as CreateTokenCardData
@@ -102,7 +102,7 @@ export class RegistrationPlanFormComponent {
     return new FormGroup({
       firstName: new FormControl(null, [Validators.required]),
       lastName: new FormControl(null, [Validators.required]),
-      street: new FormControl(null, [Validators.required]),
+      address: new FormControl(null, [Validators.required]),
       city: new FormControl(null, [Validators.required]),
       state: new FormControl(null, [Validators.required]),
       zip: new FormControl(null, [Validators.required]),

@@ -20,6 +20,8 @@ namespace Xyz.Api.Models
         [Required]
         public RegistrationPlanDto Plan { get; set; } = null!;
 
+        public RegistrationPaymentDetailsDto? PaymentDetails { get; set; } = null!;
+
         public Registration ToRegistration()
         {
             return new Registration

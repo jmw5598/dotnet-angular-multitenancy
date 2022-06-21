@@ -63,6 +63,7 @@ var tenantsConfiguration = new ConfigurationBuilder()
 var tenantConnectionSettings = configuration.GetSection("TenantConnectionSettings");
 var smtpSettings = configuration.GetSection("SmtpSettings");
 var clientSettings = configuration.GetSection("ClientSettings");
+var stripeSettings = configuration.GetSection("StripeSettings");
 
 // Configuration Options Deps
 builder.Services.Configure<MultitenancyConfiguration>(multitenancyConfiguration);
@@ -70,6 +71,7 @@ builder.Services.Configure<TenantsConfiguration>(tenantsConfiguration);
 builder.Services.Configure<TenantConnectionSettings>(tenantConnectionSettings);
 builder.Services.Configure<SmtpSettings>(smtpSettings);
 builder.Services.Configure<ClientSettings>(clientSettings);
+builder.Services.Configure<StripeSettings>(stripeSettings);
 
 // Add servicse
 builder.Services.AddScoped<ITenantAccessor<Tenant>, TenantAccessor<Tenant>>();
