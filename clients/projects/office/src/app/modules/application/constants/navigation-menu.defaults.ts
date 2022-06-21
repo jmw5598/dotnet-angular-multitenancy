@@ -3,26 +3,26 @@ import { NavigationLink, ModulePermissionNames, PermissionNames } from '@xyz/off
 export const defaultNavigationMenu: NavigationLink[] = [
   {
     label: 'Dashboard',
-    routerLink: '/dashboard',
-    icon: '/dashboard',
+    routerLink: '/app/dashboard',
+    icon: 'dashboard',
     requiredModulePermissionName: ModulePermissionNames.DASHBOARD_MODULE,
     children: [
       {
         label: 'Overview',
-        routerLink: '/dashboard/overview',
+        routerLink: '/app/dashboard/overview',
         requiredPermissionName: PermissionNames.DASHBOARD_OVERVIEW
       },
     ]
   },
   {
     label: 'Service',
-    routerLink: '/service',
+    routerLink: '/app/service',
     icon: 'calendar',
     requiredModulePermissionName: ModulePermissionNames.SERVICE_MODULE
   },
   {
     label: 'Inventory',
-    routerLink: '/inventory',
+    routerLink: '/app/inventory',
     icon: 'tags',
     requiredModulePermissionName: ModulePermissionNames.INVENTORY_MODULE
   },
@@ -33,17 +33,17 @@ export const defaultNavigationMenu: NavigationLink[] = [
     children: [
       {
         label: 'Account Details',
-        routerLink: '/admin/account-details',
+        routerLink: '/app/admin/account-details',
         requiredPermissionName: PermissionNames.ACCOUNT_DETAILS
       },
       {
         label: 'User Accounts',
-        routerLink: '/admin/user-accounts',
+        routerLink: '/app/admin/user-accounts',
         requiredPermissionName: PermissionNames.USER_ACCOUNTS
       },
       {
         label: 'Settings',
-        routerLink: '/admin/settings',
+        routerLink: '/app/admin/settings',
         requiredPermissionName: PermissionNames.SETTINGS
       },
     ]
@@ -55,12 +55,12 @@ export const defaultNavigationMenu: NavigationLink[] = [
     children: [
       {
         label: 'General',
-        routerLink: '/security/general',
+        routerLink: '/app/security/general',
         requiredPermissionName: PermissionNames.SECURITY_GENERAL
       },
       {
         label: 'Permissions',
-        routerLink: '/security/permissions',
+        routerLink: '/app/security/permissions',
         requiredPermissionName: PermissionNames.SECURITY_PERMISSIONS
       }
     ]

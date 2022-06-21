@@ -40,6 +40,10 @@ export class LoggingInComponent implements OnInit {
       filter(([settings, permissions]) => !!settings && !!permissions),
       take(1)
     )
-    .subscribe(([settings, permissions]) => this._router.navigateByUrl('/'));
+    .subscribe(([settings, permissions]) => {
+      console.log("logging in success directing");
+      
+      this._router.navigateByUrl('/app/dashboard')
+    });
   }
 }

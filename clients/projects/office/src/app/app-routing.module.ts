@@ -9,17 +9,7 @@ import {
 
 const routes: Routes = [
   {
-    path: 'auth',
-    loadChildren: () => 
-      import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule)
-  },
-  {
-    path: 'error',
-    loadChildren: () => 
-      import('./modules/errors/errors.module').then(m => m.ErrorsModule)
-  },
-  {
-    path: '',
+    path: 'app',
     canActivate: [
       AuthenticatedGuard,
       UserSettingsLoadedGuard,
@@ -30,8 +20,18 @@ const routes: Routes = [
       import('./modules/application/application.module').then(m => m.ApplicationModule)
   },
   {
+    path: 'error',
+    loadChildren: () => 
+      import('./modules/errors/errors.module').then(m => m.ErrorsModule)
+  },
+  {
+    path: '',
+    loadChildren: () => 
+      import('./modules/authentication/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
     path: '**',
-    redirectTo: 'auth',
+    redirectTo: 'app',
     pathMatch: 'full'
   }
 ];

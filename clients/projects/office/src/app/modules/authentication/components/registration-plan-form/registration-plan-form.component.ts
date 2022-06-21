@@ -74,7 +74,6 @@ export class RegistrationPlanFormComponent {
           if (error) {
             this._resetPaymentDetailsFormGroup();
           } else {
-            console.log("token is ", token);
             this.paymentDetailsFormGroup.get('cardDetails')?.patchValue({
               isValid: true,
               brand: token?.card?.brand || null,

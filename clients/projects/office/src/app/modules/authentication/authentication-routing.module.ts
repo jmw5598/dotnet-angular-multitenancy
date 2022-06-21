@@ -16,7 +16,7 @@ import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'accounts',
     component: AuthenticationComponent,
     children: [
       {
@@ -24,6 +24,30 @@ const routes: Routes = [
         canActivate: [IsLoadedFromSubdomainGuard],
         component: CompanySearchComponent
       },
+      {
+        path: 'register',
+        canActivate: [
+          IsLoadedFromSubdomainGuard,
+          AvailablePlansLoadedGuard
+        ],
+        component: RegisterComponent
+      },
+      {
+        path: '**',
+        redirectTo: 'company-search',
+        pathMatch: 'full'
+      }
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthenticationComponent,
+    children: [
+      // {
+      //   path: 'company-search',
+      //   canActivate: [IsLoadedFromSubdomainGuard],
+      //   component: CompanySearchComponent
+      // },
       {
         path: 'login',
         canActivate: [
@@ -46,19 +70,16 @@ const routes: Routes = [
         component: ForgotPasswordComponent
       },
       {
-        path: 'register',
-        canActivate: [
-          IsLoadedFromSubdomainGuard,
-          AvailablePlansLoadedGuard
-        ],
-        component: RegisterComponent
-      },
-      {
         path: '**',
         redirectTo: 'login',
         pathMatch: 'full'
       }
     ]
+  },
+  {
+    path: '**',
+    redirectTo: 'auth',
+    pathMatch: 'full'
   }
 ]
 
