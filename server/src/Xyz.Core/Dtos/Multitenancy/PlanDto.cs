@@ -10,5 +10,6 @@ namespace Xyz.Core.Dtos.Multitenancy
         public bool PaymentRequired { get; set; } = true!;
         public SubscriptionRenewalRate RenewalRate { get; set; } = default!;
         public int MaxUserCount { get; set; }
+        public string? ExternalPlanId { get; set; } = default!;
     }
 }

@@ -4,5 +4,6 @@ export interface Plan {
   price: number,
   paymentRequired: boolean,
   renewalRate: string,
-  maxUserCount: number
+  maxUserCount: number,
+  externalPlanId?: string,
 }

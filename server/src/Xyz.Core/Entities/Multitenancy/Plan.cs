@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Xyz.Core.Models.Multitenancy;
@@ -5,6 +6,7 @@ using Xyz.Core.Dtos.Multitenancy;
 
 namespace Xyz.Core.Entities.Multitenancy
 {
+    [Index(nameof(ExternalPlanId), IsUnique = true)]
     public class Plan
     {
         public Guid Id { get; set; } = default!;
@@ -16,6 +18,9 @@ namespace Xyz.Core.Entities.Multitenancy
         public SubscriptionRenewalRate RenewalRate { get; set; } = default!;
         public int MaxUserCount { get; set; }
 
+        [Column(TypeName = "varchar(256)")]
+        public string? ExternalPlanId { get; set; } = default!;
+
         public PlanDto ToDto()
         {
             return new PlanDto
@@ -25,7 +30,8 @@ namespace Xyz.Core.Entities.Multitenancy
                 Price = this.Price,
                 PaymentRequired = this.PaymentRequired,
                 RenewalRate = this.RenewalRate,
-                MaxUserCount = this.MaxUserCount
+                MaxUserCount = this.MaxUserCount,
+                ExternalPlanId = this.ExternalPlanId
             };
         }
     }
