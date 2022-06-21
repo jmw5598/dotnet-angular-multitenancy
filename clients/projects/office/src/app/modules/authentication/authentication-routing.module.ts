@@ -16,7 +16,7 @@ import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
   {
-    path: 'accounts',
+    path: 'tenants',
     component: AuthenticationComponent,
     children: [
       {
@@ -43,11 +43,6 @@ const routes: Routes = [
     path: 'auth',
     component: AuthenticationComponent,
     children: [
-      // {
-      //   path: 'company-search',
-      //   canActivate: [IsLoadedFromSubdomainGuard],
-      //   component: CompanySearchComponent
-      // },
       {
         path: 'login',
         canActivate: [
