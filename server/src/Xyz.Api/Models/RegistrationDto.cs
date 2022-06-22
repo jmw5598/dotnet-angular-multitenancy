@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Xyz.Core.Entities.Multitenancy;
 using Xyz.Core.Entities.Identity;
 using Xyz.Core.Models;
+using Xyz.Core.Models.Multitenancy;
 
 namespace Xyz.Api.Models
 {
@@ -47,6 +48,23 @@ namespace Xyz.Api.Models
                 {
                     Id = new Guid(this.Plan.Id)
                 },
+                PaymentDetails = this.PaymentDetails != null 
+                    ? new PaymentDetails {
+                        FirstName = this.PaymentDetails.FirstName,
+                        LastName = this.PaymentDetails.LastName,
+                        Address = this.PaymentDetails.Address,
+                        City = this.PaymentDetails.City,
+                        State = this.PaymentDetails.State,
+                        Zip = this.PaymentDetails.Zip,
+                        PaymentProcessor = PaymentProcessor.STRIPE,
+                        CardDetails = new CardDetails
+                        {
+                            IsValid = this.PaymentDetails.CardDetails.IsValid,
+                            Brand = this.PaymentDetails.CardDetails.Brand,
+                            Token = this.PaymentDetails.CardDetails.Token
+                        }
+                    } 
+                    : null,
                 Subdomain = this.Company.Subdomain,
                 RawPassword = this.User.Password
             };

@@ -6,6 +6,7 @@ namespace Xyz.Core.Interfaces.Multitenancy
 {
     public interface IBillingService
     {
+        // public Task<
         public Task<Page<BillingInvoiceDto>> SearchBillingInvoices(
             string tenantId, DateRangeQuerySearchFilter filter, PageRequest pageRequest);
     }
