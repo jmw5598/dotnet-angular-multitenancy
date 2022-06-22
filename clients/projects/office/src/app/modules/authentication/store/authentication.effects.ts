@@ -1,13 +1,12 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, exhaustMap, mergeMap, of, switchMap, tap } from 'rxjs';
 
-import { ResponseMessage, ResponseStatus, Page } from '@xyz/office/modules/core/models';
+import { ResponseMessage, ResponseStatus } from '@xyz/office/modules/core/models';
 import { AuthenticationService } from '../services/authentication.service';
 
 import * as fromAuthentication from './authentication.actions';
-import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
 
 @Injectable()
 export class AuthenticationEffects {
@@ -90,45 +89,6 @@ export class AuthenticationEffects {
         this._authenticationService.removeCachedAuthenticatedUser();
         return of(fromAuthentication.logoutUserSuccess());
       })
-    )
-  );
-
-  public registrationRequest$ = createEffect(() => this._actions
-    .pipe(
-      ofType(fromAuthentication.registrationRequest),
-      exhaustMap(({ registration }) => this._authenticationService.register(registration)
-        .pipe(
-          mergeMap(responseMessage => {
-            return of(fromAuthentication.registrationRequestSuccess({ 
-              message: responseMessage 
-            }));
-          }),
-          catchError(error => {
-            return of(fromAuthentication.registrationRequestFailure({ message: {
-              status: ResponseStatus.ERROR,
-              message: error?.error?.message || 'New registration failed. Please try again!'
-            } as ResponseMessage }));
-          })
-        )
-      )
-    )
-  );
-
-  public searchCompaniesRequest = createEffect(() => this._actions
-    .pipe(
-      ofType(fromAuthentication.searchCompaniesRequest),
-      switchMap(({ filter, pageRequest }) => 
-        this._authenticationService.searchCompanies(filter, pageRequest)
-          .pipe(
-            mergeMap((page: Page<Tenant>) => of(fromAuthentication.searchCompaniesRequestSuccess({ page: page }))),
-            catchError((error: any) => of(fromAuthentication.searchCompaniesRequestFailure({
-              message: {
-                status: ResponseStatus.ERROR,
-                message: error.error || 'Error searching companies!'
-              } as ResponseMessage
-            })))
-          )
-      )
     )
   );
 }

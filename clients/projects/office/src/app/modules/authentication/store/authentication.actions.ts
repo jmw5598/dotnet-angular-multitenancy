@@ -1,18 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 
-import { BasicQuerySearchFilter } from '../../shared/modules/query-search-filter';
-
 import { 
   Credentials, 
   AuthenticatedUser, 
   ResponseMessage, 
-  PasswordReset, 
-  Registration,
-  RefreshTokenRequest,
-  Page,
-  PageRequest } from '@xyz/office/modules/core/models';
-
-import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
+  PasswordReset,
+  RefreshTokenRequest } from '@xyz/office/modules/core/models';
 
 export const loginUserRequest = createAction(
   '[Authentication] Login User Request',
@@ -57,26 +50,6 @@ export const setAuthenticatedUser = createAction(
   props<{ authenticatedUser: AuthenticatedUser | null }>()
 );
 
-export const registrationRequest = createAction(
-  '[Authentication] Registration Request',
-  props<{ registration: Registration }>()
-);
-
-export const registrationRequestSuccess = createAction(
-  '[Authentication] Registration Request Success',
-  props<{ message: ResponseMessage | null }>()
-);
-
-export const registrationRequestFailure = createAction(
-  '[Authentication] Registration Request Failure',
-  props<{ message: ResponseMessage | null }>()
-);
-
-export const setRegistrationResponseMessage = createAction(
-  '[Authentication] Set Registration Response Message',
-  props<{ message: ResponseMessage | null }>()
-);
-
 export const refreshAccessTokenRequest = createAction(
   '[Authentication] Refresh Access Token Request',
   props<{ refreshTokenRequest: RefreshTokenRequest }>()
@@ -95,24 +68,4 @@ export const refreshAccessTokenRequestFailure = createAction(
 export const setRefreshAccessTokenResponseMessage = createAction(
   '[Authentication] Set Refresh Access Token Response Message',
   props<{ message: ResponseMessage | null }>()
-);
-
-export const searchCompaniesRequest = createAction(
-  '[Authentication] Search Companies Request',
-  props<{ filter: BasicQuerySearchFilter, pageRequest: PageRequest }>()
-);
-
-export const searchCompaniesRequestSuccess = createAction(
-  '[Authentication] Search Companies Request Success',
-  props<{ page: Page<Tenant> }>()
-);
-
-export const searchCompaniesRequestFailure = createAction(
-  '[Authentication] Search Companies Request Failure',
-  props<{ message: ResponseMessage  }>()
-);
-
-export const setSearchCompaniesPage = createAction(
-  '[Authentication] Set Search Companies Page',
-  props<{ page: Page<Tenant> | null  }>()
 );

@@ -44,34 +44,13 @@ export class AuthenticationService {
       status: ResponseStatus.SUCCESS,
       message: 'Success, please check your email!'
     } as ResponseMessage)
-  }
-
-  public register(registration: Registration): Observable<ResponseMessage> {
-    return this._http.post<ResponseMessage>(
-      `${this._environmentService.getBaseAuthUrl()}/register`,
-      registration
-    );
-  }
+  } 
 
   public refreshToken(refreshTokenRequest: RefreshTokenRequest): Observable<AuthenticatedUser> {
     return this._http.post<AuthenticatedUser>(
       `${this._environmentService.getBaseAuthUrl()}/token/refresh`,
       refreshTokenRequest,
       { context: new HttpContext().set(REQUIRES_AUTHENTICATION, false) }
-    );
-  }
-
-  public searchCompanies(filter: BasicQuerySearchFilter, pageRequest: PageRequest): Observable<Page<Tenant>> {
-    const queryParams: {[key: string]: string } = { 
-      query: filter?.query || '',
-      size: pageRequest.size.toString(),
-      index: pageRequest.index.toString(),
-      column: pageRequest?.sort?.column?.toString() || '',
-      direction: pageRequest?.sort?.direction?.toString() || ''
-    };
-    return this._http.get<Page<Tenant>>(
-      `${this._environmentService.getBaseAuthUrl()}/companies/search`,
-      { params: queryParams }
     );
   }
 

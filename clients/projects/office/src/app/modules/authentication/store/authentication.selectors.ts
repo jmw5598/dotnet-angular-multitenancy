@@ -20,17 +20,7 @@ export const selectedPasswordResetRequestResponseMessage = createSelector(
   (state: fromAuthentication.AuthenticationState) => state.passwordResetRequestResponseMessage
 );
 
-export const selectRegistartionResponseMessage = createSelector(
-  selectAuthenticationState,
-  (state: fromAuthentication.AuthenticationState) => state.registrationRequestResponseMessage
-);
-
 export const selectRefreshAccessTokenResponseMessage = createSelector(
   selectAuthenticationState,
   (state: fromAuthentication.AuthenticationState) => state.refreshAccessTokenResponseMessage
-);
-
-export const selectSearchCompaniesPage = createSelector(
-  selectAuthenticationState,
-  (state: fromAuthentication.AuthenticationState) => state.searchCompaniesPage
 );

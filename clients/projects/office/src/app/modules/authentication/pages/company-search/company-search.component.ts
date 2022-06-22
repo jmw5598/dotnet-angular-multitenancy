@@ -11,7 +11,7 @@ import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query
 import { defaultPageRequest } from '@xyz/office/modules/core/constants';
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
-import * as fromAuthentication from '../../store';
+import * as fromTenant from '@xyz/office/store/tenant';
 
 @Component({
   selector: 'xyz-company-search',
@@ -34,9 +34,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     @Inject(DOCUMENT)
     private _document: Document,
     private _environmentService: EnvironmentService,
-    private _store: Store<fromAuthentication.AuthenticationState>
+    private _store: Store<fromTenant.TenantState>
   ) {
-    this.searchCompaniesPage$ = this._store.select(fromAuthentication.selectSearchCompaniesPage);
+    this.searchCompaniesPage$ = this._store.select(fromTenant.selectSearchCompaniesPage);
     this.clientSettings = this._environmentService.getSection('client');
   }
 
@@ -71,12 +71,12 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
       )
       .subscribe((filter: BasicQuerySearchFilter) => {
         if (filter?.query?.trim().length) {
-          this._store.dispatch(fromAuthentication.searchCompaniesRequest({
+          this._store.dispatch(fromTenant.searchCompaniesRequest({
             filter: filter,
             pageRequest: defaultPageRequest
           }));
         } else {
-          this._store.dispatch(fromAuthentication.setSearchCompaniesPage({ page: null }));
+          this._store.dispatch(fromTenant.setSearchCompaniesPage({ page: null }));
         }
         
       })

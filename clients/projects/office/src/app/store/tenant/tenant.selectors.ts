@@ -9,3 +9,13 @@ export const selectTenant = createSelector(
   selectTenantState,
   (state: fromTenant.TenantState) => state.tenant
 );
+
+export const selectSearchCompaniesPage = createSelector(
+  selectTenantState,
+  (state: fromTenant.TenantState) => state.searchCompaniesPage
+);
+
+export const selectRegistartionResponseMessage = createSelector(
+  selectTenantState,
+  (state: fromTenant.TenantState) => state.registrationRequestResponseMessage
+);

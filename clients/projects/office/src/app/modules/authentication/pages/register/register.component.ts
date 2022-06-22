@@ -9,7 +9,7 @@ import { fadeAnimation } from '@xyz/office/modules/shared/animations';
 import { Plan } from '@xyz/office/modules/core/entities/multitenancy';
 import { ClientSettings, EnvironmentService } from '@xyz/office/modules/core/services';
 
-import * as fromAuthentication from '../../store';
+import * as fromTenants from '@xyz/office/store/tenant';
 import * as fromPlans from '@xyz/office/store/plans';
 import * as fromRoot from '@xyz/office/store';
 
@@ -75,7 +75,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.registrationResponseMessage$ = this._store.select(fromAuthentication.selectRegistartionResponseMessage);
+    this.registrationResponseMessage$ = this._store.select(fromTenants.selectRegistartionResponseMessage);
     this.availablePlans$ = this._store.select(fromPlans.selectAvailablePlans);
   }
 
@@ -88,12 +88,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   public onRegister(registration: Registration): void {
-    this._store.dispatch(fromAuthentication.registrationRequest({ registration: registration }));
+    this._store.dispatch(fromTenants.registrationRequest({ registration: registration }));
     this.currentStepIndex +=1;
   }
 
   ngOnDestroy(): void {
     this.registerForm.reset();
-    this._store.dispatch(fromAuthentication.setRegistrationResponseMessage({ message: null }));
+    this._store.dispatch(fromTenants.setRegistrationResponseMessage({ message: null }));
   }
 }

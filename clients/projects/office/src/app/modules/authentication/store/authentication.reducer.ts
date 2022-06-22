@@ -1,6 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Tenant } from '@xyz/office/modules/core/entities/multitenancy';
-import { AuthenticatedUser, Page, ResponseMessage } from '../../core/models';
+import { AuthenticatedUser, ResponseMessage } from '../../core/models';
 
 import * as fromAuthentication from './authentication.actions';
 
@@ -11,8 +10,6 @@ export interface AuthenticationState {
   refreshAccessTokenResponseMessage: ResponseMessage | null,
   authenticatedUser: AuthenticatedUser | null,
   passwordResetRequestResponseMessage: ResponseMessage | null,
-  registrationRequestResponseMessage: ResponseMessage | null,
-  searchCompaniesPage: Page<Tenant> | null,
 }
 
 export const initialAuthenticationState: AuthenticationState = {
@@ -20,8 +17,6 @@ export const initialAuthenticationState: AuthenticationState = {
   refreshAccessTokenResponseMessage: null,
   authenticatedUser: null,
   passwordResetRequestResponseMessage: null,
-  registrationRequestResponseMessage: null,
-  searchCompaniesPage: null
 }
 
 const handleLoginUserSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
@@ -52,11 +47,6 @@ const handleSetAuthenticatedUser = (state: AuthenticationState, { authenticatedU
   authenticatedUser: authenticatedUser
 } as AuthenticationState);
 
-const handleRegistrationRequestResponse = (state: AuthenticationState, { message }: any) => ({
-  ...state,
-  registrationRequestResponseMessage: message
-} as AuthenticationState);
-
 const handleRefreshTokenRequestSuccess = (state: AuthenticationState, { authenticatedUser }: any) => ({
   ...state,
   authenticatedUser: authenticatedUser
@@ -65,11 +55,6 @@ const handleRefreshTokenRequestSuccess = (state: AuthenticationState, { authenti
 const handleSetRefreshTokenResponseMessage = (state: AuthenticationState, { message }: any) => ({
   ...state,
   refreshAccessTokenResponseMessage: message
-} as AuthenticationState);
-
-const handleSearchCompaniesRequestSuccess = (state: AuthenticationState, { page }: any) => ({
-  ...state,
-  searchCompaniesPage: page
 } as AuthenticationState);
 
 export const reducer = createReducer(
@@ -95,12 +80,6 @@ export const reducer = createReducer(
     handleSetAuthenticatedUser
   ),
   on(
-    fromAuthentication.registrationRequestSuccess,
-    fromAuthentication.registrationRequestFailure,
-    fromAuthentication.setRegistrationResponseMessage,
-    handleRegistrationRequestResponse
-  ),
-  on(
     fromAuthentication.refreshAccessTokenRequestSuccess,
     handleRefreshTokenRequestSuccess
   ),
@@ -108,10 +87,5 @@ export const reducer = createReducer(
     fromAuthentication.refreshAccessTokenRequestFailure,
     fromAuthentication.setRefreshAccessTokenResponseMessage,
     handleSetRefreshTokenResponseMessage
-  ),
-  on(
-    fromAuthentication.searchCompaniesRequestSuccess,
-    fromAuthentication.setSearchCompaniesPage,
-    handleSearchCompaniesRequestSuccess
   )
 );
