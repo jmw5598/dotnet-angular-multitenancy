@@ -243,6 +243,7 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                     Price = plan.Price,
                     RenewalRate = plan.RenewalRate
                 },
+                PaymentDetails = registration.PaymentDetails != null ? registration.PaymentDetails : null,
                 DomainNames = registration.Subdomain,
                 ConnectionString = this._GenerateDefaultTenantConnectionString(tenantGuid.ToString()),
                 IpAddresses = ""

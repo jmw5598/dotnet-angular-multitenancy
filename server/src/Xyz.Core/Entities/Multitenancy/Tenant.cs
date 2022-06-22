@@ -52,7 +52,7 @@ namespace Xyz.Core.Entities.Multitenancy
         public virtual TenantPlan TenantPlan { get; set; } = default!;
 
         public Guid? PaymentDetailsId { get; set; } = default!;
-        public virtual PaymentDetails PaymentDetails { get; set; } = default!;
+        public virtual PaymentDetails? PaymentDetails { get; set; } = default!;
 
         public TenantDto ToDto()
         {
