@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: {
-    protocol: 'https',
+    protocol: 'http',
     subdomain: '',
     domain: 'localhost',
     port: '7133',
@@ -19,7 +19,7 @@ export const environment = {
     port: '4200'
   },
   stripe: {
-    publishableKey: 'pk_test_nDR7IWEIGLp4a1SBtqKH5eyg'
+    publishableKey: 'pk_test_51LBoQtL7sSBhqolv5kxNEVt2eWXOVCYnE9BGN4T2ZVZA65ZuYWh1OmkyW059QSCpvHA9OOzhO1hEFqFXsWuoexMS00BlaeNFkv'
   }
 };
 
