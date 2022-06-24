@@ -231,8 +231,8 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 billingInvoice.PeriodStartDate = invoice.PeriodStart;
                 billingInvoice.PeriodEndDate = invoice.PeriodEnd;
                 billingInvoice.PaidDate = invoice.StatusTransitions.PaidAt;
-                billingInvoice.AmountPaid = invoice.AmountPaid;
-                billingInvoice.AmountDue = invoice.AmountDue;
+                billingInvoice.AmountPaid = invoice.AmountPaid / 100;
+                billingInvoice.AmountDue = invoice.AmountDue / 100;
                 billingInvoice.Status = invoice.Paid ? BillingInvoiceStatus.Paid : BillingInvoiceStatus.Unpaid;
                 billingInvoice.BillingReason = invoice.BillingReason;
                 billingInvoice.InvoiceUrl = invoice.HostedInvoiceUrl;
@@ -250,8 +250,8 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                     PeriodStartDate = invoice.PeriodStart,
                     PeriodEndDate = invoice.PeriodEnd,
                     PaidDate = invoice.StatusTransitions.PaidAt,
-                    AmountPaid = invoice.AmountPaid,
-                    AmountDue = invoice.AmountDue,
+                    AmountPaid = invoice.AmountPaid / 100,
+                    AmountDue = invoice.AmountDue / 100,
                     Status = invoice.Paid ? BillingInvoiceStatus.Paid : BillingInvoiceStatus.Unpaid,
                     BillingReason = invoice.BillingReason,
                     InvoiceUrl = invoice.HostedInvoiceUrl,
