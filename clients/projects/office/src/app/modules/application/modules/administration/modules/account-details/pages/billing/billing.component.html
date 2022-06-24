@@ -53,16 +53,20 @@
                 nz-button 
                 nzType="default" 
                 nzSize="small"
-                title="Download PDF">
-              <i nz-icon nzType="file-pdf"></i>
+                title="View Invoice"
+                [href]="row?.invoiceUrl"
+                target="_blank">
+              <i nz-icon nzType="eye"></i>
             </a>
             <a 
                 class=""
                 nz-button 
                 nzType="default" 
                 nzSize="small"
-                title="Print">
-              <i nz-icon nzType="printer"></i>
+                title="View Pdf"
+                [href]="row?.invoicePdfUrl"
+                target="_blank">
+              <i nz-icon nzType="file-pdf"></i>
             </a>
           </nz-button-group>
         </ng-template>

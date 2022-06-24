@@ -38,9 +38,7 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 if (filter?.Query != null)
                 {
                     var queryTerm = filter.Query.Trim().ToLower();
-                    query = query.Where(bi => 
-                        bi.AmountPaid.ToString().Contains(queryTerm)
-                            || nameof(bi.Status).ToString().ToLower().Contains(queryTerm));
+                    query = query.Where(bi => nameof(bi.Status).ToString().ToLower().Contains(queryTerm));
                 }
 
                 if (filter?.StartDate != null && filter?.EndDate != null)
@@ -69,15 +67,15 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                                 ? query.OrderBy(bi => bi.TransactionDate)
                                 : query.OrderByDescending(bi => bi.TransactionDate);
                             break;
-                        case "amountPaid":
-                            query = pageRequest.Sort.Direction == SortDirection.Ascend
-                                ? query.OrderBy(bi => bi.AmountPaid)
-                                : query.OrderByDescending(bi => bi.AmountPaid);
-                            break;
                         case "status":
                             query = pageRequest.Sort.Direction == SortDirection.Ascend
                                 ? query.OrderBy(bi => bi.Status)
                                 : query.OrderByDescending(bi => bi.Status);
+                            break;
+                        case "billingReason":
+                            query = pageRequest.Sort.Direction == SortDirection.Ascend
+                                ? query.OrderBy(bi => bi.BillingReason)
+                                : query.OrderByDescending(bi => bi.BillingReason);
                             break;
                         default:
                             query = query.OrderByDescending(t => t.TransactionDate);
