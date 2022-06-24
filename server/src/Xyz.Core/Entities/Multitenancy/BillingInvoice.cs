@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 using Xyz.Core.Models;
@@ -5,6 +6,7 @@ using Xyz.Core.Models.Multitenancy;
 
 namespace Xyz.Core.Entities.Multitenancy
 {
+    [Index(nameof(ExternalTransactionId), IsUnique = true)]
     public class BillingInvoice : BaseEntity
     {
         public DateTime TransactionDate { get; set; } = default!;
@@ -16,6 +18,8 @@ namespace Xyz.Core.Entities.Multitenancy
         public Guid TenantId { get; set; } = default!;
         public virtual Tenant Tenant { get; set; } = default!;
 
+        [Column(TypeName = "varchar(256)")]
+        public string ExternalTransactionId { get; set; } = default!;
         public BillingInvoiceDto ToDto()
         {
             return new BillingInvoiceDto
@@ -24,7 +28,8 @@ namespace Xyz.Core.Entities.Multitenancy
                 TransactionDate = this.TransactionDate,
                 Amount = this.Amount,
                 Status = this.Status,
-                TenantId = this.TenantId
+                TenantId = this.TenantId,
+                ExternalTransactionId = this.ExternalTransactionId
             };
         }
     }

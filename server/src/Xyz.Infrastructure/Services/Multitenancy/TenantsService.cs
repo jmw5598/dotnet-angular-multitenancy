@@ -14,6 +14,7 @@ using Xyz.Core.Models.Tenants;
 using Xyz.Core.Models.Configuration;
 using Xyz.Core.Models.SearchFilters;
 using Xyz.Core.Models.Paging;
+using Xyz.Core.Models.Multitenancy.Payments;
 using Xyz.Multitenancy.Data;
 
 using Xyz.Infrastructure.Data;
@@ -27,19 +28,22 @@ namespace Xyz.Infrastructure.Services.Multitenancy
         private readonly MultitenancyDbContext _multitenancyDbContext;
         private readonly ApplicationDbContext _applicationDbContext;
         private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
+        private readonly IPaymentProcessorService _paymentProcessorService;
 
         public TenantsService(
             ILogger<TenantsService> logger, 
             MultitenancyDbContext multitenancyDbContext,
             ApplicationDbContext applicationDbContext,
             IOptions<TenantConnectionSettings> tenantConnectionSettings,
-            IPasswordHasher<ApplicationUser> passwordHasher)
+            IPasswordHasher<ApplicationUser> passwordHasher,
+            IPaymentProcessorService paymentProcessorService)
         {
             this._logger = logger;
             this._multitenancyDbContext = multitenancyDbContext;
             this._applicationDbContext = applicationDbContext;
             this._tenantConnectionSettings = tenantConnectionSettings;
             this._passwordHasher = passwordHasher;
+            this._paymentProcessorService = paymentProcessorService;
         }
 
 
@@ -226,6 +230,19 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 throw new Exception("Error finding selected plan!");
             }
 
+            CreateCustomerResponse? createCustomerResponse = null;
+            CreateSubscriptionResponse? createSubscriptionResponse = null;
+
+            if (registration.PaymentDetails != null)
+            {
+                createCustomerResponse = await this._HandleCreateCustomer(registration);
+                createSubscriptionResponse = await this._HandleCreateSubscription(createCustomerResponse.CustomerId, plan.ExternalPlanId ?? "");
+                
+                registration.Company.ExternalCustomerId = createCustomerResponse.CustomerId;
+                registration.PaymentDetails.ExternalSubscriptionId = createSubscriptionResponse.SubscriptionId;
+                registration.PaymentDetails.CardDetails.ExternalDefaultPaymentSourceId = createCustomerResponse.DefaultSourceId;
+            }
+
             var tenantGuid = Guid.NewGuid();
 
             var tenant = new Tenant
@@ -253,6 +270,54 @@ namespace Xyz.Infrastructure.Services.Multitenancy
             await this._multitenancyDbContext.SaveChangesAsync();
 
             return tenant;
+        }
+
+        private async Task<CreatePaymentMethodResponse> _HandleCreatePaymentMethod(Registration registration)
+        {
+            if (registration.PaymentDetails == null)
+            {
+                throw new Exception("No payment details were providied");
+            }
+
+            return await this._paymentProcessorService.CreatePaymentMethod(
+                new CreatePaymentMethodRequest 
+                {
+                    Token = registration.PaymentDetails.CardDetails.Token
+                }
+            );
+        }
+
+        private async Task<CreateCustomerResponse> _HandleCreateCustomer(Registration registration)
+        {
+            if (registration.PaymentDetails == null)
+            {
+                throw new Exception("No payment details were providied!");
+            }
+
+            return await this._paymentProcessorService.CreateCustomer(
+                new CreateCustomerRequest
+                {
+                    FirstName = registration.PaymentDetails.FirstName,
+                    LastName = registration.PaymentDetails.LastName,
+                    Email = registration.User.Email,
+                    Address = registration.PaymentDetails.Address,
+                    City = registration.PaymentDetails.City,
+                    State = registration.PaymentDetails.State,
+                    Zip = registration.PaymentDetails.Zip,
+                    Source = registration.PaymentDetails.CardDetails.Token
+                }
+            );
+        }
+
+        private async Task<CreateSubscriptionResponse> _HandleCreateSubscription(string customerId, string externalPlanId)
+        {
+            return await this._paymentProcessorService.CreateSubscription(
+                new CreateSubscriptionRequest
+                {
+                    CustomerId = customerId,
+                    ExternalPlanId = externalPlanId
+                }
+            );
         }
 
         private ICollection<UserModulePermission> _GenerateRootAdminUserModulePermissions(

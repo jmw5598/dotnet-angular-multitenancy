@@ -85,6 +85,7 @@ builder.Services.AddScoped<ITenantsService, TenantsService>();
 builder.Services.AddScoped<IEmailingService, EmailingService>();
 builder.Services.AddScoped<ICompaniesService, CompaniesService>();
 builder.Services.AddScoped<IBillingService, BillingService>();
+builder.Services.AddScoped<IPaymentProcessorService, StripePaymentProcessorService>();
 
 // Context for authenticating and tenant resolution
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>

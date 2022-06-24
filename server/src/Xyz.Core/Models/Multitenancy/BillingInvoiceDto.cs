@@ -7,5 +7,6 @@ namespace Xyz.Core.Models.Multitenancy
         public decimal Amount { get; set; } = default!;
         public TransactionStatus Status { get; set; } = default!;
         public Guid TenantId { get; set; } = default!;
+        public string ExternalTransactionId { get; set; } = default!;
     }
 }

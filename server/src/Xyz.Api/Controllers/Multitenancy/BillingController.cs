@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
 
+using Xyz.Core.Models.Configuration;
 using Xyz.Core.Models.Paging;
 using Xyz.Core.Models.Multitenancy;
 using Xyz.Core.Entities.Multitenancy;
@@ -10,6 +12,8 @@ using Xyz.Multitenancy.Data;
 using Xyz.Multitenancy.Multitenancy;
 using Xyz.Multitenancy.Security;
 
+using Stripe;
+
 namespace Xyz.Api.Controllers.Multitenancy
 {
     [Route("api/admin/[controller]")]
@@ -17,20 +21,49 @@ namespace Xyz.Api.Controllers.Multitenancy
     public class BillingController : ControllerBase
     {
         private readonly ILogger<BillingController> _logger;
+        private readonly IOptions<StripeSettings> _stripeSettings;
         private readonly ITenantAccessor<Tenant> _tenantAccessor;
         private readonly MultitenancyDbContext _multitenancyDbContext;
         private readonly IBillingService _billingService;
+        private readonly IPaymentProcessorService _paymentProcessorService;
 
         public BillingController(
             ILogger<BillingController> logger,
+            IOptions<StripeSettings> stripeSettings,
             ITenantAccessor<Tenant> tenantAccessor,
             MultitenancyDbContext multitenancyDbContext,
-            IBillingService billingService)
+            IBillingService billingService,
+            IPaymentProcessorService paymentProcessorService)
         {
             this._logger = logger;
+            this._stripeSettings = stripeSettings;
             this._tenantAccessor = tenantAccessor;
             this._multitenancyDbContext = multitenancyDbContext;
             this._billingService = billingService;
+            this._paymentProcessorService = paymentProcessorService;
+        }
+
+        [HttpPost("stripe/webhook")]
+        public async Task<object> StripeWebhook()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+            Event stripeEvent;
+            try
+            {
+                stripeEvent = EventUtility.ConstructEvent(
+                    json, Request.Headers["Stripe-Signature"], this._stripeSettings.Value.SecretKey);
+                
+                await this._paymentProcessorService.ProcessWebhook<Event>(stripeEvent);
+                
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                var errorMessage = "Something went wrong when processing Stripe event!";
+                var errorData = new { Exception = ex.Message, Event = json };
+                this._logger.LogError(errorMessage, errorData);
+                return BadRequest();
+            }
         }
 
         [HttpGet("invoices/search")]
