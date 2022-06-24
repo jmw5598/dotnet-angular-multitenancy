@@ -39,7 +39,7 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                 {
                     var queryTerm = filter.Query.Trim().ToLower();
                     query = query.Where(bi => 
-                        bi.Amount.ToString().Contains(queryTerm)
+                        bi.AmountPaid.ToString().Contains(queryTerm)
                             || nameof(bi.Status).ToString().ToLower().Contains(queryTerm));
                 }
 
@@ -69,10 +69,10 @@ namespace Xyz.Infrastructure.Services.Multitenancy
                                 ? query.OrderBy(bi => bi.TransactionDate)
                                 : query.OrderByDescending(bi => bi.TransactionDate);
                             break;
-                        case "amount":
+                        case "amountPaid":
                             query = pageRequest.Sort.Direction == SortDirection.Ascend
-                                ? query.OrderBy(bi => bi.Amount)
-                                : query.OrderByDescending(bi => bi.Amount);
+                                ? query.OrderBy(bi => bi.AmountPaid)
+                                : query.OrderByDescending(bi => bi.AmountPaid);
                             break;
                         case "status":
                             query = pageRequest.Sort.Direction == SortDirection.Ascend
