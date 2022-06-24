@@ -7,6 +7,7 @@ using Xyz.Core.Models.Configuration;
 using Xyz.Core.Interfaces.Multitenancy;
 using Xyz.Core.Models.Multitenancy.Payments;
 using Xyz.Core.Entities.Multitenancy;
+using Xyz.Core.Models.Multitenancy;
 using Xyz.Multitenancy.Data;
 
 namespace Xyz.Infrastructure.Services.Multitenancy
@@ -176,33 +177,20 @@ namespace Xyz.Infrastructure.Services.Multitenancy
 
         private async Task _HandleInvoicePaidEvent(Event stripeEvent)
         {
+            await this._HandleAndProcessInvoiceFromEvent(stripeEvent);
+            return;
+        }
 
-            var invoice = stripeEvent.Data.Object as Invoice;
+        private async Task _HandleInvoicePaymentFailed(Event stripeEvent)
+        {
+            await this._HandleAndProcessInvoiceFromEvent(stripeEvent);
+            return;
+        }
 
-            if (invoice == null)
-            {
-                return;
-            }
-            // @TODO Handle paid invoices
-
-            // Get tenant base don external customer id
-            var tenant = await this._multitenancyDbContext.Tenants
-                .Where(tenant => tenant.Company.ExternalCustomerId == invoice.Customer.Id)
-                .FirstOrDefaultAsync();
-
-            if (tenant == null)
-            {
-                return;
-            }
-
-            var billingInvoice = new BillingInvoice
-            {
-                TenantId = tenant.Id
-            };
-
-            this._multitenancyDbContext.BillingInvoices.Add(billingInvoice);
-            this._multitenancyDbContext.SaveChanges();
-
+        private async Task _HandleCustomerSubscriptionDeleted(Event stripeEvent)
+        {
+            await Task.FromResult<bool>(true);
+            // @TODO Handle this
             return;
         }
 
@@ -215,17 +203,69 @@ namespace Xyz.Infrastructure.Services.Multitenancy
             return;
         }
 
-        private async Task _HandleCustomerSubscriptionDeleted(Event stripeEvent)
+        private async Task _HandleAndProcessInvoiceFromEvent(Event stripeEvent)
         {
-            await Task.FromResult<bool>(true);
-            // @TODO Handle this
-            return;
-        }
+            var invoice = stripeEvent.Data.Object as Invoice;
 
-        private async Task _HandleInvoicePaymentFailed(Event stripeEvent)
-        {
-            //@TODO Handle failed payments
-            await Task.FromResult<bool>(true);
+            if (invoice == null)
+            {
+                return;
+            }
+
+            var billingInvoice = await this._multitenancyDbContext.BillingInvoices
+                .Where(bi => bi.ExternalInvoiceId == invoice.Id)
+                .FirstOrDefaultAsync();
+
+            var tenant = await this._multitenancyDbContext.Tenants
+                .Where(tenant => tenant.Company.ExternalCustomerId == invoice.CustomerId)
+                .FirstOrDefaultAsync();
+
+            if (tenant == null)
+            {
+                return;
+            }
+
+            if (billingInvoice != null)
+            {
+                billingInvoice.TransactionDate =  invoice.Created;
+                billingInvoice.PeriodStartDate = invoice.PeriodStart;
+                billingInvoice.PeriodEndDate = invoice.PeriodEnd;
+                billingInvoice.PaidDate = invoice.StatusTransitions.PaidAt;
+                billingInvoice.AmountPaid = invoice.AmountPaid;
+                billingInvoice.AmountDue = invoice.AmountDue;
+                billingInvoice.Status = invoice.Paid ? BillingInvoiceStatus.Paid : BillingInvoiceStatus.Unpaid;
+                billingInvoice.BillingReason = invoice.BillingReason;
+                billingInvoice.InvoiceUrl = invoice.HostedInvoiceUrl;
+                billingInvoice.InvoicePdfUrl = invoice.InvoicePdf;
+                billingInvoice.ExternalInvoiceId = invoice.Id;
+                billingInvoice.TenantId = tenant.Id;
+                billingInvoice.UpdatedOn = DateTime.UtcNow;
+                this._multitenancyDbContext.BillingInvoices.Update(billingInvoice);
+            }
+            else 
+            {
+                billingInvoice = new BillingInvoice
+                {
+                    TransactionDate =  invoice.Created,
+                    PeriodStartDate = invoice.PeriodStart,
+                    PeriodEndDate = invoice.PeriodEnd,
+                    PaidDate = invoice.StatusTransitions.PaidAt,
+                    AmountPaid = invoice.AmountPaid,
+                    AmountDue = invoice.AmountDue,
+                    Status = invoice.Paid ? BillingInvoiceStatus.Paid : BillingInvoiceStatus.Unpaid,
+                    BillingReason = invoice.BillingReason,
+                    InvoiceUrl = invoice.HostedInvoiceUrl,
+                    InvoicePdfUrl = invoice.InvoicePdf,
+                    ExternalInvoiceId = invoice.Id,
+                    TenantId = tenant.Id
+                };
+                this._multitenancyDbContext.BillingInvoices.Add(billingInvoice);
+            }
+
+            tenant.IsActive = invoice.Paid;
+
+            this._multitenancyDbContext.Tenants.Update(tenant);
+            this._multitenancyDbContext.SaveChanges();
             return;
         }
     }

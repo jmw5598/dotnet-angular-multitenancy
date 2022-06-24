@@ -6,7 +6,7 @@ namespace Xyz.Core.Models.Multitenancy
         public DateTime TransactionDate { get; set; } = default!;
         public DateTime PeriodStartDate { get; set; } = default!;
         public DateTime PeriodEndDate { get; set; } = default!;
-        public DateTime PaidDate { get; set; } = default!;
+        public DateTime? PaidDate { get; set; } = default!;
         public decimal AmountPaid { get; set; } = default!;
         public decimal AmountDue { get; set; } = default!;
         public BillingInvoiceStatus Status { get; set; } = default!;
