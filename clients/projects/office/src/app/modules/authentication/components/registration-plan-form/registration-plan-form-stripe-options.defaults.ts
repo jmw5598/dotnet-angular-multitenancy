@@ -1,4 +1,4 @@
-import { StripeCardElementOptions, StripeElementsOptions } from "@stripe/stripe-js";
+import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 
 export const defaultStripeCardElementOptions: StripeCardElementOptions = {
   classes: {

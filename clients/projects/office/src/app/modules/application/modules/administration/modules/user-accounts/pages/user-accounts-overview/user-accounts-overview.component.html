@@ -22,13 +22,20 @@
     <div>
       <div class="mb-3 flex flex-row">
         <xyz-basic-query-search-filter
+            class="flex-grow-1"
             [filter]="userAccountsSearchFilter$ | async"
             (searchChange)="onSearchFilterChanges($event)">
         </xyz-basic-query-search-filter>
+        <xyz-datatable-widget-column-editor
+            class="ml-3"
+            [tableDefinition]="userAccountsTableDefinition$ | async"
+            (applyColumnChanges)="onApplyColumnChanges($event)"
+            (resetColumnChanges)="onResetColumnChanges($event)">
+        </xyz-datatable-widget-column-editor>
       </div>
       <xyz-datatable      
           [page]="userAccountsPage$ | async"
-          [definition]="userAccountsTableDefinition"
+          [definition]="userAccountsTableDefinition$ | async"
           [actionsContent]="userAccountsActions"
           [defaultSort]="defaultSort"
           (pageChange)="onUserAccountsPageChange($event)">

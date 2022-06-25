@@ -1,4 +1,4 @@
-import { RegistrationCardDetails } from "./registration-card-details.model";
+import { RegistrationCardDetails } from './registration-card-details.model';
 
 export interface RegistrationPaymentDetails {
   firstName: string,

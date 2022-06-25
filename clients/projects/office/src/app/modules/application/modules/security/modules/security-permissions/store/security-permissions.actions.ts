@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 import { Page, PageRequest, ResponseMessage } from '@xyz/office/modules/core/models';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
@@ -103,4 +104,13 @@ export const deleteTemplateModulePermissionNameRequestFailure = createAction(
 export const setDeleteTemplateModulePermissionNameResponseMessage = createAction(
   '[Security Permissions] Set Delete Template Module Permission Name Response Message',
   props<{ message: ResponseMessage }>()
+);
+
+export const setSecurityPermissionsTableDefinition = createAction(
+  '[Security Permissions] Set Security Permissions Table Definition',
+  props<{ tableDefinition: TableDefinition | null }>()
+);
+
+export const resetSecurityPermissionsTableDefinition = createAction(
+  '[SecurityPermissions] Reset Security Permissions Table Definition'
 );

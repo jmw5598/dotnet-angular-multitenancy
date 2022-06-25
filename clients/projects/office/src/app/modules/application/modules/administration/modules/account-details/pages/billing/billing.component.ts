@@ -10,7 +10,6 @@ import { defaultUserAccountsSort } from '../../../user-accounts/constants/sort.d
 
 import * as fromTenant from '@xyz/office/store/tenant';
 import * as fromBilling from '../../store/billing';
-import { defaultBillingInvoicesTableDefinition } from './billing-invoices-table-definition.defaults';
 
 @Component({
   selector: 'xyz-billing',
@@ -26,7 +25,7 @@ export class BillingComponent {
   public billingInvoicesSearchFilter$: Observable<DateRangeQuerySearchFilter | null>;
   public billingInvoicesSearchFilter!: DateRangeQuerySearchFilter | null;
 
-  public billingInvoicesTableDefinition: TableDefinition = defaultBillingInvoicesTableDefinition;
+  public billingInvoicesTableDefinition$: Observable<TableDefinition | null>;
 
   public tenant$: Observable<Tenant | null>;
 
@@ -36,6 +35,7 @@ export class BillingComponent {
     this.billingInvoicesPage$ = this._store.select(fromBilling.selectBillingInvoicesPage);
     this.billingInvoicesSearchFilter$ = this._store.select(fromBilling.selectBillingInvoicesSearchFilter)
       .pipe(tap(filter => this.billingInvoicesSearchFilter = filter));
+    this.billingInvoicesTableDefinition$ = this._store.select(fromBilling.selectBillingInvoicesTableDefinition);
     this.tenant$ = this._store.select(fromTenant.selectTenant);
   }
 
@@ -46,6 +46,20 @@ export class BillingComponent {
 
   public onBillingInvoicesPageChange(pageRequest: PageRequest): void {
     this._searchBillingInvoices(this.billingInvoicesSearchFilter, pageRequest);
+  }
+
+  public onApplyColumnChanges(tableDefinition: TableDefinition | null): void {
+    this._store.dispatch(
+      fromBilling.setBillingInvoicesTableDefinition({
+        tableDefinition: tableDefinition
+      })
+    );
+  }
+
+  public onResetColumnChanges(shouldReset: boolean): void {
+    if (shouldReset) {
+      this._store.dispatch(fromBilling.resetBillingInvoicesTableDefinition());
+    }
   }
 
   private _searchBillingInvoices(filter: DateRangeQuerySearchFilter | null, pageRequest: PageRequest): void {

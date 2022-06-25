@@ -23,13 +23,13 @@ import { defaultUserAccountsTableDefinition } from './user-accounts-table-defini
 export class UserAccountsOverviewComponent {
   public userAccountsPage$!: Observable<Page<UserAccountDto> | null>;
 
-  public userAccountsTableDefinition: TableDefinition = defaultUserAccountsTableDefinition;
-
   private _defaultPageRequest: PageRequest = defaultPageRequest;
   public defaultSort: Sort = defaultUserAccountsSort;
 
   public userAccountsSearchFilter$: Observable<BasicQuerySearchFilter | null>;
   public userAccountsSearchFilter!: BasicQuerySearchFilter | null;
+
+  public userAccountsTableDefinition$: Observable<TableDefinition | null>;
 
   constructor(
     private _store: Store<fromUserAccounts.UserAccountsState>
@@ -39,6 +39,7 @@ export class UserAccountsOverviewComponent {
       .pipe(tap(filter => this.userAccountsSearchFilter = filter));
 
     this.userAccountsPage$ = this._store.select(fromUserAccounts.selectUserAccountsPage);
+    this.userAccountsTableDefinition$ = this._store.select(fromUserAccounts.selectUserAccountsTableDefinition);
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
@@ -48,6 +49,20 @@ export class UserAccountsOverviewComponent {
 
   public onUserAccountsPageChange(pageRequest: PageRequest): void {
     this._searchUserAccounts(this.userAccountsSearchFilter, pageRequest);
+  }
+
+  public onApplyColumnChanges(tableDefinition: TableDefinition | null): void {
+    this._store.dispatch(
+      fromUserAccounts.setUserAccountsTableDefinition({
+        tableDefinition: tableDefinition
+      })
+    );
+  }
+
+  public onResetColumnChanges(shouldReset: boolean): void {
+    if (shouldReset) {
+      this._store.dispatch(fromUserAccounts.resetUserAccountsTableDefinition());
+    }
   }
 
   private _searchUserAccounts(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {

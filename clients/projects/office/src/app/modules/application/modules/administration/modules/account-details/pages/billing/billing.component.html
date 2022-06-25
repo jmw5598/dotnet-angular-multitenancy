@@ -31,17 +31,24 @@
     <nz-page-header class="pt-0 pb-4 px-4">
       <nz-page-header-title>Invoices</nz-page-header-title>
       <nz-page-header-content>
-        <div class="mb-3 block">
+        <div class="mb-3 flex flex-row">
           <xyz-date-range-query-search-filter
+              class="flex-grow-1"
               [filter]="billingInvoicesSearchFilter$ | async"
               startDateLabel="Transaction Start Date"
               endDateLabel="Transaction End Date"
               (searchChange)="onSearchFilterChanges($event)">
           </xyz-date-range-query-search-filter>
+          <xyz-datatable-widget-column-editor
+              class="ml-3"
+              [tableDefinition]="billingInvoicesTableDefinition$ | async"
+              (applyColumnChanges)="onApplyColumnChanges($event)"
+              (resetColumnChanges)="onResetColumnChanges($event)">
+          </xyz-datatable-widget-column-editor>
         </div>
         <xyz-datatable      
             [page]="billingInvoicesPage$ | async"
-            [definition]="billingInvoicesTableDefinition"
+            [definition]="billingInvoicesTableDefinition$ | async"
             [actionsContent]="billingInvoicesActions"
             [defaultSort]="defaultSort"
             (pageChange)="onBillingInvoicesPageChange($event)">

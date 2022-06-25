@@ -2,6 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { BillingInvoice } from '@xyz/office/modules/core/entities/multitenancy';
 import { Page, PageRequest, ResponseMessage } from '@xyz/office/modules/core/models';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { DateRangeQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 export const getBillingDetails = createAction(
@@ -26,4 +27,13 @@ export const searchBillingInvoicesRequestFailure = createAction(
 export const setBillingInvoicesSearchFilter = createAction(
   '[Billing] Set Billing Invoices Search Filter',
   props<{ filter: DateRangeQuerySearchFilter | null }>()
+);
+
+export const setBillingInvoicesTableDefinition = createAction(
+  '[Billing] Set Billing Invoices Table Definition',
+  props<{ tableDefinition: TableDefinition | null }>()
+);
+
+export const resetBillingInvoicesTableDefinition = createAction(
+  '[Billing] Reset Billing Invoices Table Definition'
 );

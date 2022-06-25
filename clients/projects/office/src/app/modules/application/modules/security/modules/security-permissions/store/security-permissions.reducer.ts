@@ -3,7 +3,9 @@ import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constant
 import { TemplateModulePermissionName } from '@xyz/office/modules/core/entities/tenants';
 
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
+import { getDefaultSecurityPermissionsTableDefinition } from '../pages/security-permissions/security-permissions-table-definition.defaults';
 
 import * as fromSecurityPermissions from './security-permissions.actions';
 
@@ -15,6 +17,7 @@ export interface SecurityPermissionsState {
   deleteTemplateModulePermissionNameResponseMessage: ResponseMessage | null,
   templateModulePermissionNamesPage: Page<any> | null,
   templateModulePermissionsSearchFilter: BasicQuerySearchFilter | null,
+  securityPermissionsTableDefinition: TableDefinition | null,
   selectedTemplateModulePermissionName: TemplateModulePermissionName | null,
 }
 
@@ -24,6 +27,7 @@ export const initialSecurityPermissionsState: SecurityPermissionsState = {
   deleteTemplateModulePermissionNameResponseMessage: null,
   templateModulePermissionNamesPage: null,
   templateModulePermissionsSearchFilter: defaultBasicQuerySearchFilter,
+  securityPermissionsTableDefinition: getDefaultSecurityPermissionsTableDefinition(),
   selectedTemplateModulePermissionName: null,
 }
 
@@ -84,6 +88,16 @@ const handleSetDeleteTemplatePermissionModuleNameResponseMessage = (state: Secur
   deleteTemplateModulePermissionNameResponseMessage: message
 } as SecurityPermissionsState);
 
+const handleSetSecurityPermissionsTableDefinition = (state: SecurityPermissionsState, { tableDefinition }: any) => ({
+  ...state,
+  securityPermissionsTableDefinition: tableDefinition
+} as SecurityPermissionsState);
+
+const handleResetSecurityPermissionsTableDefinition = (state: SecurityPermissionsState) => ({
+  ...state,
+  securityPermissionsTableDefinition: getDefaultSecurityPermissionsTableDefinition()
+} as SecurityPermissionsState);
+
 export const reducer = createReducer(
   initialSecurityPermissionsState,
   on(
@@ -116,5 +130,13 @@ export const reducer = createReducer(
   on(
     fromSecurityPermissions.setDeleteTemplateModulePermissionNameResponseMessage,
     handleSetDeleteTemplatePermissionModuleNameResponseMessage
+  ),
+  on(
+    fromSecurityPermissions.setSecurityPermissionsTableDefinition,
+    handleSetSecurityPermissionsTableDefinition
+  ),
+  on(
+    fromSecurityPermissions.resetSecurityPermissionsTableDefinition,
+    handleResetSecurityPermissionsTableDefinition
   )
 );

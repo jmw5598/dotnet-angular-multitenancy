@@ -4,7 +4,9 @@ import { defaultBasicQuerySearchFilter } from '@xyz/office/modules/core/constant
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 import { Page, ResponseMessage } from '@xyz/office/modules/core/models';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
+import { getDefaultUserAccountsTableDefinition } from '../pages/user-accounts-overview/user-accounts-table-definition.defaults';
 
 import * as fromUserAccounts from './user-accounts.actions';
 
@@ -13,6 +15,7 @@ export const userAccountsFeatureKey = 'userAccounts';
 export interface UserAccountsState {
   userAccountsPage: Page<UserAccountDto> | null,
   userAccountsSearchFilter: BasicQuerySearchFilter | null,
+  userAccountsTableDefinition: TableDefinition | null,
   createUserAccountResponseMessage: ResponseMessage | null,
   updateUserAccountResponseMessage: ResponseMessage | null,
   selectedUserAccount: UserAccountDto | null,
@@ -24,6 +27,7 @@ export interface UserAccountsState {
 export const initialUserAccountsState: UserAccountsState = {
   userAccountsPage: null,
   userAccountsSearchFilter: defaultBasicQuerySearchFilter,
+  userAccountsTableDefinition: getDefaultUserAccountsTableDefinition(),
   createUserAccountResponseMessage: null,
   updateUserAccountResponseMessage: null,
   selectedUserAccount: null,
@@ -72,6 +76,16 @@ const handleGetTemplateModulePermissionNamesRequestSuccess = (state: UserAccount
 const handleGetTemplateModulePermissionNameByIdRequestSuccess = (state: UserAccountsState, { templateModulePermissionName }: any) => ({
   ...state,
   selectedTemplateModulePermissionName: templateModulePermissionName
+} as UserAccountsState);
+
+const handleSetUserAccountsTableDefinition = (state: UserAccountsState, { tableDefinition }: any) => ({
+  ...state,
+  userAccountsTableDefinition: tableDefinition
+} as UserAccountsState);
+
+const handleResetUserAccountsTableDefinition = (state: UserAccountsState) => ({
+  ...state,
+  userAccountsTableDefinition: getDefaultUserAccountsTableDefinition()
 } as UserAccountsState);
 
 const handleResetSelectedUserAccountStateSlice = (state: UserAccountsState) => ({
@@ -124,5 +138,13 @@ export const reducer = createReducer(
   on(
     fromUserAccounts.resetSelectedUserAccountStateSlice,
     handleResetSelectedUserAccountStateSlice
+  ),
+  on(
+    fromUserAccounts.setUserAccountsTableDefinition,
+    handleSetUserAccountsTableDefinition
+  ),
+  on(
+    fromUserAccounts.resetUserAccountsTableDefinition,
+    handleResetUserAccountsTableDefinition
   )
 );

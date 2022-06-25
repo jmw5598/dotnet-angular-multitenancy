@@ -19,12 +19,20 @@
     <div>
       <div class="mb-3 flex flex-row">
         <xyz-basic-query-search-filter
+            class="flex-grow-1"
             [filter]="templateModulePermissionsSearchFilter$ | async"
-            (searchChange)="onSearchFilterChanges($event)"></xyz-basic-query-search-filter>
+            (searchChange)="onSearchFilterChanges($event)">
+        </xyz-basic-query-search-filter>
+        <xyz-datatable-widget-column-editor
+            class="ml-3"
+            [tableDefinition]="securityPermissionsTemplateTableDefinition$ | async"
+            (applyColumnChanges)="onApplyColumnChanges($event)"
+            (resetColumnChanges)="onResetColumnChanges($event)">
+        </xyz-datatable-widget-column-editor>
       </div>
       <xyz-datatable      
           [page]="securityPermissionsTemplatePage$ | async"
-          [definition]="securityPermissionsTemplateTableDefinition"
+          [definition]="securityPermissionsTemplateTableDefinition$ | async"
           [actionsContent]="securityPermissionsTemplateActions"
           [defaultSort]="defaultSort"
           (pageChange)="onSecurityPermissionsPageChange($event)">

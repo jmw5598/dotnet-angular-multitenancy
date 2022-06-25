@@ -17,3 +17,8 @@ export const selectBillingInvoicesSearchFilter = createSelector(
   selectBillingState,
   (state: fromBilling.BillingState) => state.billingInvoicesSearchFilter
 );
+
+export const selectBillingInvoicesTableDefinition = createSelector(
+  selectBillingState,
+  (state: fromBilling.BillingState) => state.billingInvoicesTableDefinition
+);

@@ -21,10 +21,9 @@ import { defaultSecurityPermissionsTableDefinition } from './security-permission
   animations: [fadeAnimation]
 })
 export class SecurityPermissionsComponent {
-
   public securityPermissionsTemplatePage$!: Observable<Page<TemplateModulePermissionName> | null>;
+  public securityPermissionsTemplateTableDefinition$: Observable<TableDefinition | null>;
 
-  public securityPermissionsTemplateTableDefinition: TableDefinition = defaultSecurityPermissionsTableDefinition;
 
   private _defaultPageRequest: PageRequest = defaultPageRequest;
   public defaultSort: Sort = defaultSecurityPermissionsSort;
@@ -41,6 +40,9 @@ export class SecurityPermissionsComponent {
 
     this.securityPermissionsTemplatePage$ = this._store
       .select(fromSecurityPermissions.selectTemplateModulePermissionNamesPage);
+
+    this.securityPermissionsTemplateTableDefinition$ = this._store
+      .select(fromSecurityPermissions.selectSecurityPermissionsTableDefinition);
   }
 
   public onSearchFilterChanges(filter: BasicQuerySearchFilter): void {
@@ -62,6 +64,20 @@ export class SecurityPermissionsComponent {
 
   public onSecurityPermissionsPageChange(pageRequest: PageRequest): void {
     this._searchTemplateModulePermissions(this.templateModulePermissionsSearchFilter, pageRequest);
+  }
+
+  public onApplyColumnChanges(tableDefinition: TableDefinition | null): void {
+    this._store.dispatch(
+      fromSecurityPermissions.setSecurityPermissionsTableDefinition({
+        tableDefinition: tableDefinition
+      })
+    );
+  }
+
+  public onResetColumnChanges(shouldReset: boolean): void {
+    if (shouldReset) {
+      this._store.dispatch(fromSecurityPermissions.resetSecurityPermissionsTableDefinition());
+    }
   }
 
   private _searchTemplateModulePermissions(filter: BasicQuerySearchFilter | null, pageRequest: PageRequest): void {

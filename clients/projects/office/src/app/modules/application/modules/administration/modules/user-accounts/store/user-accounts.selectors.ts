@@ -47,3 +47,8 @@ export const selectSelectedTemplateModulePermissionName = createSelector(
   selectUserAccountsState,
   (state: fromUserAccounts.UserAccountsState) => state.selectedTemplateModulePermissionName
 );
+
+export const selectUserAccountsTableDefinition = createSelector(
+  selectUserAccountsState,
+  (state: fromUserAccounts.UserAccountsState) => state.userAccountsTableDefinition
+);

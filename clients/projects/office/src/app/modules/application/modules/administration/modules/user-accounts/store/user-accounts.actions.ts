@@ -3,6 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { UserAccountDto } from '@xyz/office/modules/core/dtos';
 import { TemplateModulePermissionName, UserPermission } from '@xyz/office/modules/core/entities/tenants';
 import { Page, PageRequest, ResponseMessage, UserAccount } from '@xyz/office/modules/core/models';
+import { TableDefinition } from '@xyz/office/modules/shared/modules/datatable';
 import { BasicQuerySearchFilter } from '@xyz/office/modules/shared/modules/query-search-filter';
 
 export const searchUserAccountsRequest = createAction(
@@ -141,4 +142,13 @@ export const setSelectedTemplateModulePermissionName = createAction(
 
 export const resetSelectedUserAccountStateSlice = createAction(
   '[User Accounts] Reset Selected User Account State Slice'
+);
+
+export const setUserAccountsTableDefinition = createAction(
+  '[User Accounts] Set User Accounts Table Definition',
+  props<{ tableDefinition: TableDefinition | null }>()
+);
+
+export const resetUserAccountsTableDefinition = createAction(
+  '[User Accounts] Reset User Accounts Table Definition'
 );
