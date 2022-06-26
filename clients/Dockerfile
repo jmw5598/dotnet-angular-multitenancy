@@ -1,10 +1,11 @@
 # Build Stage
 FROM node:latest AS build-env
 WORKDIR /source
+ARG ANGULAR_ENVIRONMENT
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
-RUN npm run build --  --prod -c production
+RUN npm run build -- -c "$ANGULAR_ENVIRONMENT"
 
 ### STAGE 2: Run ###
 FROM nginx:latest
