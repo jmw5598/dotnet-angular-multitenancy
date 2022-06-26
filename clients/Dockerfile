@@ -11,3 +11,5 @@ RUN npm run build -- -c "$ANGULAR_ENVIRONMENT"
 FROM nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build-env /source/dist/* /usr/share/nginx/html
+
+EXPOSE 80
