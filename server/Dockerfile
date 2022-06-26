@@ -1,27 +1,22 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0-focal AS build-env
-WORKDIR /app
+# Build Stage
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /source
 
 # Copy Everything
 COPY . ./
 
 # Restore as distinct layers
-RUN dotnet restore
+RUN dotnet restore --disable-parallel
 
 # Build libraries
-RUN dotnet publish src/Xyz.Core -c Release -o out/Xyz.Core/
-RUN dotnet publish src/Xyz.Multitenancy -c Release -o out/Xyz.Multitenancy/
-RUN dotnet publish src/Xyz.Infrastructure -c Release -o out/Xyz.Infrastructure/
-RUN dotnet publish src/Xyz.Api -c Release -o out/Xyz.Api/
+RUN dotnet publish -c Release -o out --no-restore
 
-# Copy over lib json files
-COPY src/Xyz.Infrastructure/*.json out/Xyz.Infrastructure/
-COPY src/Xyz.Multitenancy/*.json out/Xyz.Multitenancy/
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0-focal
+# Run Stage
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=build-env /source/out .
 
-# EXPOSE 5000
+EXPOSE 5000
 
-# CMD ["ls -la", "/app/out"]
-ENTRYPOINT ["dotnet", "Xyz.Api/Xyz.Api.dll"]
+ENTRYPOINT ["dotnet", "Xyz.Api.dll"]

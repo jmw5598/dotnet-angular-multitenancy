@@ -41,33 +41,15 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add configurations
-var multitenancyConfiguration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile(
-        @Directory.GetCurrentDirectory() + "/../Xyz.Multitenancy/config.json", 
-        optional: false, 
-        reloadOnChange: true
-    )
-    .Build();
-
-var tenantsConfiguration = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile(
-        @Directory.GetCurrentDirectory() + "/../Xyz.Multitenancy/tenants.json", 
-        optional: false, 
-        reloadOnChange: true
-    )
-    .Build();
-
+// Configuration Sections
+var multitenancyConnectionSettings = configuration.GetSection("MultitenancyConnectionSettings");
 var tenantConnectionSettings = configuration.GetSection("TenantConnectionSettings");
 var smtpSettings = configuration.GetSection("SmtpSettings");
 var clientSettings = configuration.GetSection("ClientSettings");
 var stripeSettings = configuration.GetSection("StripeSettings");
 
 // Configuration Options Deps
-builder.Services.Configure<MultitenancyConfiguration>(multitenancyConfiguration);
-builder.Services.Configure<TenantsConfiguration>(tenantsConfiguration);
+builder.Services.Configure<MultitenancyConnectionSettings>(multitenancyConnectionSettings);
 builder.Services.Configure<TenantConnectionSettings>(tenantConnectionSettings);
 builder.Services.Configure<SmtpSettings>(smtpSettings);
 builder.Services.Configure<ClientSettings>(clientSettings);
@@ -87,15 +69,20 @@ builder.Services.AddScoped<ICompaniesService, CompaniesService>();
 builder.Services.AddScoped<IBillingService, BillingService>();
 builder.Services.AddScoped<IPaymentProcessorService, StripePaymentProcessorService>();
 
-// Context for authenticating and tenant resolution
+var server = multitenancyConnectionSettings["Server"];
+var port = multitenancyConnectionSettings["Port"];
+var user = multitenancyConnectionSettings["UserId"];
+var password = multitenancyConnectionSettings["Password"];
+var database = multitenancyConnectionSettings["Database"];
+var connectionString = $@"Server={server};Port={port};Database={database};User Id={user};Password={password};";
+
+// Multitenancy context (shared db)
 builder.Services.AddDbContext<MultitenancyDbContext>(options =>
-    options.UseNpgsql(multitenancyConfiguration.GetConnectionString("XyzMultitenancy"))
-        .UseSnakeCaseNamingConvention());
+    options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
 // Tenant specific context for tenant database, this is dynamically set after tenant is resolved per request
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
-    options.UseNpgsql(multitenancyConfiguration.GetConnectionString("XyzMultitenancy"))
-        .UseSnakeCaseNamingConvention());
+    options.UseNpgsql(connectionString).UseSnakeCaseNamingConvention());
 
 // For Identity
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>()
